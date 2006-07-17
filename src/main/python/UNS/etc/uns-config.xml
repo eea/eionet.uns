@@ -9,7 +9,7 @@
 	</logger>
 	<!-- MySQL DB server access parameters -->
 	<dbserver>
-		<host>reportnet.ceetel.net</host>
+		<host>reportnet</host>
 		<port>3306</port>
 		<username>uns_developer</username>
 		<password>reportnet</password>

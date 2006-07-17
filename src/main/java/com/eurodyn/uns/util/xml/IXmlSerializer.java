@@ -3,6 +3,7 @@ package com.eurodyn.uns.util.xml;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+
 public interface IXmlSerializer {
 	
 	public ByteArrayOutputStream serializeToOutStream() throws XmlException;

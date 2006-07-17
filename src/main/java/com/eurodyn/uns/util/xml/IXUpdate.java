@@ -25,6 +25,7 @@ package com.eurodyn.uns.util.xml;
 public interface IXUpdate {
 
 	
+	
 	public void insertElement(String parentElementName, String elementName) throws XmlException;
 
 	public void insertAttribute(String parentElementName, String attributeName, String attributeValue) throws XmlException;

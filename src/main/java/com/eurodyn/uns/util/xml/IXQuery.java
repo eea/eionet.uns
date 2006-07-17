@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.w3c.dom.Node;
 
+
 public interface IXQuery {
 	
 	/**

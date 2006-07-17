@@ -27,6 +27,7 @@ import org.w3c.dom.Document;
 
 public interface IXmlCtx {
 
+	
 	public void setWellFormednessChecking() throws XmlException;
 
 

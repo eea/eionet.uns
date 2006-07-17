@@ -23,6 +23,7 @@ package com.eurodyn.uns.util.xml;
 
 public class ErrorStorage {
 
+	
 	private String errorMessage = "";
 	private String waringMessage = "";
 	private String fatalErrorMessage = "";
