@@ -27,6 +27,7 @@ import com.eurodyn.uns.dao.ldap.LdapDaoFactory;
 
 public abstract class DAOFactory {
     
+	
     public static final int HIBERNATE = 1;
     public static final int LDAP = 2;
     public static final int JDBC = 3;

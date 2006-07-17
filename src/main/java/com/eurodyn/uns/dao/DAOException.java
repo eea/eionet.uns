@@ -21,6 +21,7 @@
 
 package com.eurodyn.uns.dao;
 
+
 public class DAOException extends Exception {
 
 	private static final long serialVersionUID = -1684638067057404487L;

@@ -256,6 +256,7 @@
      Work as a single product. In such a case, You must make sure the
      requirements of this License are fulfilled for the Covered Code.
 
+
 4. Inability to Comply Due to Statute or Regulation.
 
      If it is impossible for You to comply with any of the terms of this

@@ -58,7 +58,7 @@
          -->
     <parameter>
       <name>url</name>
-      <value>jdbc:mysql://reportnet.ceetel.net:3306/UNS2_DEV?useUnicode=true&amp;characterEncoding=UTF-8</value>
+      <value>jdbc:mysql://reportnet:3306/UNS2_DEV?useUnicode=true&amp;characterEncoding=UTF-8</value>
     </parameter>
   </ResourceParams>
 </Context>
