@@ -101,7 +101,7 @@ public class DashTemplateActions extends DashTemplateForm {
 			addSystemErrorMessage();
 		}
 
-		return "dashTemplates";
+		return null;
 	}
 
 

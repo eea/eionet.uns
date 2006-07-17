@@ -1,12 +1,12 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <t:div id="formInitialization" rendered="#{ not templatesBean.preparedNotificationTemplates}" />
 <h:form>
-	<h:panelGrid columns="1">
+	<h:panelGrid columns="1" style="width:99%">
 		<htm:h1>
 			<h:outputText value="Templates for generating notifications" />
 		</htm:h1>
 		<t:div style="width:97%;">
-			<t:dataTable style="width:100%" styleClass="sortable" rowClasses="zebraeven," columnClasses=" ,,textAlignCenter" var="template" value="#{templatesBean.notificationTemplates}" preserveDataModel="true" sortColumn="#{templatesBean.st.sort}" sortAscending="#{templatesBean.st.ascending}" preserveSort="true">
+			<t:dataTable style="width:100%" styleClass="sortable" rowClasses="zebraeven," columnClasses="width30,,textAlignCenter" var="template" value="#{templatesBean.notificationTemplates}" preserveDataModel="true" sortColumn="#{templatesBean.st.sort}" sortAscending="#{templatesBean.st.ascending}" preserveSort="true">
 				<h:column>
 					<f:facet name="header">
 						<t:commandSortHeader value="#{msg['label.common.name']}" title="#{'name'!= templatesBean.st.sort ? msg['table.sortable']:( templatesBean.st.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" columnName="name" arrow="false" immediate="true">

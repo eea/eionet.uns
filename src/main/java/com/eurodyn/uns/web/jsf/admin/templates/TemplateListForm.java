@@ -51,13 +51,14 @@ public class TemplateListForm extends BaseBean {
 	public boolean isPreparedStylesheets() {
 		try {
 			if (isRenderPhase()) {
-				if (stylesheets == null) {
+				if (stylesheets == null || reset) {
 					Dto dto = new Dto();
 					String order = st.isAscending() ? "asc" : "desc";
 					dto.put("orderProperty", st.getSort());
 					dto.put("order", order);
 					// getExternalContext().getSessionMap().remove("dashTemplate");
 					stylesheets = (List) xslFacade.getStylesheets(dto).get("list");
+					reset = false;
 				}
 				st.sort(stylesheets);
 
@@ -69,7 +70,7 @@ public class TemplateListForm extends BaseBean {
 		return true;
 	}
 
-	public List getNotificationTemplates() {
+	public List getNotificationTemplates() {		
 		return notificationTemplates;
 	}
 
@@ -77,7 +78,7 @@ public class TemplateListForm extends BaseBean {
 		this.notificationTemplates = notificationTemplates;
 	}
 
-	public List getStylesheets() {
+	public List getStylesheets() {		
 		return stylesheets;
 	}
 

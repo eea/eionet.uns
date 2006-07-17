@@ -20,10 +20,19 @@
 
 
 import os
-from UNSConstants import UNS_PRODUCT_HOME
 from xml.dom.minidom import parse,Document
 
-uns_config_file =  os.path.join(UNS_PRODUCT_HOME,"etc/uns-config.xml")
+
+UNS_RESOURCE_HOME=os.environ.get( 'UNS_RESOURCE_HOME' )
+message=None
+if not UNS_RESOURCE_HOME: message='You need to specify UNS_RESOURCE_HOME system variable'
+if message:
+    print message
+    sys.exit(1)
+
+
+uns_config_file =  os.path.join(UNS_RESOURCE_HOME,"uns-config.xml")
+
 uns_config_dom  = parse(open(uns_config_file))
 
 

@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
@@ -77,7 +79,7 @@ public class ConfigActions extends BaseBean {
 			configManager.updateConfiguration(configMap);
 			addInfoMessage(null, "msg.updateSuccess", null);
 		} catch (javax.naming.CommunicationException ce) {
-			addErrorMessagePlain(null, "Unable to connect " + ldapUrl);			
+			addErrorMessagePlain(null, "Unable to connect " + ldapUrl);
 		} catch (Exception e) {
 			// logger.error(e.getMessage(), e);
 			e.printStackTrace();
@@ -142,18 +144,20 @@ public class ConfigActions extends BaseBean {
 			props.put("mail.smtp.auth", useauth.toString());
 
 			SimpleAuthenticator auth = new SimpleAuthenticator(username, password);
-			Session mailSession = Session.getDefaultInstance(props, auth);
-			mailSession.setDebug(true);
+			Session mailSession = Session.getInstance(props, auth);
+			// mailSession.setDebug(true);
 			SMTPTransport t = (SMTPTransport) mailSession.getTransport("smtp");
 			t.connect();
+			returnToOriginal("pop3server");
 			configManager.updateConfiguration(configMap);
 			addInfoMessage(null, "msg.updateSuccess", null);
-		} catch (RuntimeException e) {
+			if (t != null)
+				t.close();
+		} catch (javax.mail.MessagingException e) {
 			addErrorMessagePlain(null, e.getMessage());
 		} catch (Exception e) {
-			addErrorMessagePlain(null, e.getMessage());
 			logger.error(e.getMessage(), e);
-			// addSystemErrorMessage();
+			addSystemErrorMessage();
 		}
 
 		return null;
@@ -173,18 +177,20 @@ public class ConfigActions extends BaseBean {
 			props.put("mail.pop3.port", port);
 
 			SimpleAuthenticator auth = new SimpleAuthenticator(username, password);
-			Session mailSession = Session.getDefaultInstance(props, auth);
-			mailSession.setDebug(true);
+			Session mailSession = Session.getInstance(props, auth);
+			// mailSession.setDebug(true);
 			Store store = mailSession.getStore("pop3");
 			store.connect();
+			returnToOriginal("smtpserver");
 			configManager.updateConfiguration(configMap);
 			addInfoMessage(null, "msg.updateSuccess", null);
-		} catch (RuntimeException e) {
+			if (store != null)
+				store.close();
+		} catch (javax.mail.MessagingException e) {
 			addErrorMessagePlain(null, e.getMessage());
 		} catch (Exception e) {
-			addErrorMessagePlain(null, e.getMessage());
 			logger.error(e.getMessage(), e);
-			// addSystemErrorMessage();
+			addSystemErrorMessage();
 		}
 
 		return null;
@@ -230,6 +236,18 @@ public class ConfigActions extends BaseBean {
 
 	public void setConfigMap(Map configMap) {
 		this.configMap = configMap;
+	}
+
+	private void returnToOriginal(String firstKayPart) {
+		Set configMapKeys = configMap.keySet();
+		for (Iterator iter = configMapKeys.iterator(); iter.hasNext();) {
+			String key = (String) iter.next();
+			if (key.startsWith(firstKayPart)) {
+				ConfigElement configElement = (ConfigElement) configMap.get(key);
+				configElement.setTempValue(configElement.getValue());
+			}
+
+		}
 	}
 
 }

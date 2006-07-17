@@ -1,13 +1,13 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <t:div id="formInitialization" rendered="#{ not subscriptionsBean.preparedSubscriptions}" />
 <h:form>
-	<h:panelGrid columns="1">
+	<h:panelGrid columns="1" style="width:99%">
 		<htm:h1>
 			<h:outputText value="Existing subscriptions list" />
 		</htm:h1>
 
 		<t:div style="width:97%;" rendered="#{ not empty subscriptionsBean.subscriptions}">
-			<t:dataTable columnClasses=",,textAlignCenter,textAlignCenter,textAlignCenter" style="width:100%" styleClass="sortable" rowClasses="zebraeven," var="subscription" value="#{subscriptionsBean.subscriptions}" preserveDataModel="true" sortColumn="#{subscriptionsBean.st.sort}" sortAscending="#{subscriptionsBean.st.ascending}" preserveSort="true">
+			<t:dataTable columnClasses="width30,,textAlignCenter,textAlignCenter,textAlignCenter" style="width:100%" styleClass="sortable" rowClasses="zebraeven," var="subscription" value="#{subscriptionsBean.subscriptions}" preserveDataModel="true" sortColumn="#{subscriptionsBean.st.sort}" sortAscending="#{subscriptionsBean.st.ascending}" preserveSort="true">
 				<h:column>
 					<f:facet name="header">
 						<t:commandSortHeader columnName="channel.title" value="#{msg['label.common.title']}" title="#{'title'!= subscriptionsBean.st.sort ? msg['table.sortable']:( subscriptionsBean.st.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" arrow="false" immediate="true">

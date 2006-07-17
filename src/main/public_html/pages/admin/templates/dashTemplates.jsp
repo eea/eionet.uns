@@ -1,13 +1,13 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <t:div id="formInitialization" rendered="#{ not templatesBean.preparedStylesheets}" />
 <h:form>
-	<h:panelGrid columns="1">
+	<h:panelGrid columns="1" style="width:99%" >
 		<htm:h1>
 			<h:outputText value="Stylesheets for rendering channles content" />
 		</htm:h1>
 
 		<t:div style="width:97%;" rendered="#{ not empty templatesBean.stylesheets}">
-			<t:dataTable style="width:100%" styleClass="sortable" rowClasses="zebraeven," var="stylesheet" value="#{templatesBean.stylesheets}" preserveDataModel="true" sortColumn="#{templatesBean.st.sort}" sortAscending="#{templatesBean.st.ascending}" preserveSort="true">
+			<t:dataTable style="width:99%"  columnClasses="width30,width30,textAlignCenter," styleClass="sortable" rowClasses="zebraeven," var="stylesheet" value="#{templatesBean.stylesheets}" preserveDataModel="true" sortColumn="#{templatesBean.st.sort}" sortAscending="#{templatesBean.st.ascending}" preserveSort="true">
 				<h:column>
 					<f:facet name="header">
 						<t:commandSortHeader value="#{msg['label.table.xsl.xsl']}" title="#{'name'!= templatesBean.st.sort ? msg['table.sortable']:( templatesBean.st.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" columnName="name" arrow="false" immediate="true">
@@ -55,7 +55,7 @@
 						<h:graphicImage url="/images/test.gif" alt="Test stylesheet" title="Test stylesheet" />
 						<t:updateActionListener property="#{dashTemplateBean.stylesheet}" value="#{stylesheet}" />
 					</t:commandLink>
-					<t:commandLink rendered="#{stylesheet.channelsCount  == 0 }" action="#{dashTemplateBean.remove}" immediate="true">
+					<t:commandLink rendered="#{stylesheet.channelsCount  == 0 }" action="#{dashTemplateBean.remove}" immediate="true" actionListener="#{templatesBean.reset}"   onclick="if (!approve('Are you sure you want to remove the {} stylesheet',['#{stylesheet.name}'])) return false;" >
 						<h:graphicImage url="/images/delete.gif" alt="Delete stylesheet" title="Delete stylesheet" />
 						<t:updateActionListener property="#{dashTemplateBean.stylesheet}" value="#{stylesheet}" />
 					</t:commandLink>
