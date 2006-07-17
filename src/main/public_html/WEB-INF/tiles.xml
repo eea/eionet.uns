@@ -1,0 +1,229 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+                                   "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+
+<tiles-definitions>
+
+    <definition name="uns.layout" path="/pages/template/template.jsp" >
+        <put name="header" value="/pages/common/header.jsp" />
+        <put name="menu" value="/pages/common/navigation.jsp" />
+        <put name="footer" value="/pages/common/footer.jsp" />
+        <put name="actionReport" value="/pages/common/actionReport.jsp" />
+    	<put name="submenu" value="" type="string" />
+    	<put name="selectedMenu" value="" type="string" />  
+        <put name="selectedSubMenu" value="" type="string" />    	  	
+    </definition>
+
+
+    <definition name="/home.tiles" extends="uns.layout" >
+        <put name="body" value="/pages/home.jsp" />
+    </definition>
+
+
+
+    <!-- dashboard start  -->    
+    <definition name="dashboard.tiles" extends="uns.layout" >
+    	<put name="selectedMenu" value="dashboard" type="string" />
+        <put name="body" value="/pages/rss/dashboard.jsp" />
+    </definition>
+    <definition name="rssReader.tiles" extends="uns.layout" >
+    	<put name="selectedMenu" value="dashboard" type="string" />
+        <put name="body" value="/pages/rss/rssReader.jsp" />
+    </definition>
+    <!-- dashboard end  -->    
+
+    <definition name="/login.tiles" extends="uns.layout" >
+        <put name="body" value="/pages/login.jsp" />
+    </definition>
+
+
+    
+    <!-- config start  -->
+    <definition name="layout.config" extends="uns.layout">
+    	<put name="selectedMenu" value="config" type="string" />
+    	<put name="submenu" value="/pages/admin/config/config_submenu.jsp" />
+    </definition> 
+    <definition name="/admin/config/general.tiles" extends="layout.config" >
+        <put name="selectedSubMenu" value="general" type="string" />
+        <put name="body" value="/pages/admin/config/general.jsp" />
+    </definition>
+    <definition name="/admin/config/ldap.tiles" extends="layout.config" >
+        <put name="selectedSubMenu" value="ldap" type="string" />
+        <put name="body" value="/pages/admin/config/ldap.jsp" />
+    </definition>
+    <definition name="/admin/config/database.tiles" extends="layout.config" >
+        <put name="selectedSubMenu" value="database" type="string" />
+        <put name="body" value="/pages/admin/config/database.jsp" />
+    </definition>
+    <definition name="/admin/config/mail.tiles" extends="layout.config" >
+        <put name="selectedSubMenu" value="mail" type="string" />
+        <put name="body" value="/pages/admin/config/mail.jsp" />
+    </definition>
+    <definition name="/admin/config/jabber.tiles" extends="layout.config" >
+        <put name="selectedSubMenu" value="jabber" type="string" />
+        <put name="body" value="/pages/admin/config/jabber.jsp" />
+    </definition>
+    <!-- config end  -->
+
+
+    <!-- channels start  -->    
+    <definition name="layout.channels" extends="uns.layout">
+    	<put name="selectedMenu" value="channels" type="string" />
+    	<put name="submenu" value="/pages/admin/channels/channels_submenu.jsp" />
+    </definition> 
+    <definition name="/admin/channels/pullChannels.tiles" extends="layout.channels" >
+        <put name="selectedSubMenu" value="pullChannels" type="string" />
+        <put name="body" value="/pages/admin/channels/pullChannels.jsp" />
+    </definition>
+    <definition name="/admin/channels/channelUrl.tiles" extends="layout.channels" >
+        <put name="selectedSubMenu" value="pullChannels" type="string" />
+        <put name="body" value="/pages/admin/channels/channelUrl.jsp" />
+    </definition>
+    <definition name="/admin/channels/channel.tiles" extends="layout.channels" >
+        <put name="body" value="/pages/admin/channels/channel.jsp" />
+    </definition>
+    <definition name="/admin/channels/channelPreview.tiles" extends="layout.channels" >
+        <put name="body" value="/pages/admin/channels/channelPreview.jsp" />
+    </definition>
+    <definition name="/admin/channels/channelTemplates.tiles" extends="layout.channels" >
+        <put name="body" value="/pages/admin/channels/channelTemplates.jsp" />
+    </definition>
+    <definition name="/admin/channels/choosable.tiles" extends="layout.channels" >
+        <put name="body" value="/pages/admin/channels/choosable.jsp" />
+    </definition>
+    <definition name="/admin/channels/pushChannels.tiles" extends="layout.channels" >
+        <put name="selectedSubMenu" value="pushChannels" type="string"  />
+        <put name="body" value="/pages/admin/channels/pushChannels.jsp" />
+    </definition>    
+    <definition name="/admin/channels/metadataElements.tiles" extends="layout.channels" >
+        <put name="body" value="/pages/admin/channels/metadataElements.jsp" />
+    </definition>    
+    <!-- channels end  -->
+
+
+    
+    
+    
+
+
+    
+    
+    
+    <!-- templates start  -->
+    <definition name="layout.templates" extends="uns.layout">
+    	<put name="submenu" value="/pages/admin/templates/templates_submenu.jsp"/>    	    
+    	<put name="selectedMenu" value="templates" type="string" />
+    </definition>    
+
+    <definition name="/admin/templates/dashTemplates.tiles" extends="layout.templates" >
+        <put name="selectedSubMenu" value="dashTemplates" type="string" />
+        <put name="body" value="/pages/admin/templates/dashTemplates.jsp" />
+    </definition>
+    <definition name="/admin/templates/dashTemplate.tiles" extends="layout.templates" >
+        <put name="selectedSubMenu" value="dashTemplates" type="string" />
+        <put name="body" value="/pages/admin/templates/dashTemplate.jsp" />
+    </definition>
+    <definition name="/admin/templates/testChannelsList.tiles" extends="layout.templates" >
+        <put name="selectedSubMenu" value="dashTemplates" type="string" />
+        <put name="body" value="/pages/admin/templates/testChannelsList.jsp" />
+    </definition>
+    <definition name="/admin/templates/testStylesheet.tiles" extends="layout.templates" >
+        <put name="selectedSubMenu" value="dashTemplates" type="string" />
+        <put name="body" value="/pages/admin/templates/testStylesheet.jsp" />
+    </definition>
+
+
+    
+    <definition name="/admin/templates/notificationTemplates.tiles" extends="layout.templates" >
+		<put name="selectedSubMenu" value="notificationTemplates" type="string" />
+        <put name="body" value="/pages/admin/templates/notificationTemplates.jsp" />
+    </definition>
+    <definition name="/admin/templates/notificationTemplate.tiles" extends="layout.templates" >
+		<put name="selectedSubMenu" value="notificationTemplates" type="string" />    
+        <put name="body" value="/pages/admin/templates/notificationTemplate.jsp" />
+    </definition>
+    <definition name="/admin/templates/notificationTemplateTestResult.tiles" extends="layout.templates" >
+		<put name="selectedSubMenu" value="notificationTemplates" type="string" />    
+        <put name="body" value="/pages/admin/templates/notificationTemplateTestResult.jsp" />
+    </definition>
+    <definition name="/admin/templates/testNotifChannelsList.tiles" extends="layout.templates" >
+		<put name="selectedSubMenu" value="notificationTemplates" type="string" />    
+        <put name="body" value="/pages/admin/templates/testNotifChannelsList.jsp" />
+    </definition>
+    <!-- templates end  -->
+
+
+
+
+
+
+    <!-- reports start  -->
+    <definition name="layout.reports" extends="uns.layout">
+    	<put name="submenu" value="/pages/admin/reports/reports_submenu.jsp"/>    	    
+    	<put name="selectedMenu" value="reports" type="string" />
+    </definition>    
+
+    <definition name="/admin/reports/report_criteria.tiles" extends="layout.reports" >
+        <put name="selectedSubMenu" value="throughput" type="string" />
+        <put name="body" value="/pages/admin/reports/report_criteria.jsp" />
+    </definition>
+    <definition name="/admin/reports/notification_throughput.tiles" extends="layout.reports" >
+        <put name="selectedSubMenu" value="throughput" type="string" />
+        <put name="body" value="/pages/admin/reports/notification_throughput.jsp" />
+    </definition>
+    <definition name="/admin/reports/failed_notifications.tiles" extends="layout.reports" >
+        <put name="selectedSubMenu" value="failed" type="string" />
+        <put name="body" value="/pages/admin/reports/failed_notifications.jsp" />
+    </definition>
+    <!-- reports end  -->
+
+
+
+
+
+
+
+
+
+	<!-- subscriptons start  -->
+    <definition name="layout.subscriptions" extends="uns.layout">
+    	<put name="selectedMenu" value="subscriptions" type="string" />
+    	<put name="submenu" value="/pages/subscriptions/subscriptions_submenu.jsp"/>    	
+    </definition>    	      
+    <definition name="subscriptions/availableChannels.tiles" extends="layout.subscriptions" >
+    	<put name="selectedSubMenu" value="avChannels" type="string" />
+        <put name="body" value="/pages/subscriptions/availableChannels.jsp" />
+    </definition>
+    <definition name="subscriptions/subscriptions.tiles" extends="layout.subscriptions" >
+    	<put name="selectedSubMenu" value="subscriptions" type="string" />
+        <put name="body" value="/pages/subscriptions/subscriptions.jsp" />
+    </definition>
+    <definition name="subscriptions/subscription.tiles" extends="layout.subscriptions" >
+        <put name="body" value="/pages/subscriptions/subscription.jsp" />
+    </definition>
+    <definition name="subscriptions/userPreferences.tiles" extends="layout.subscriptions" >
+        <put name="selectedSubMenu" value="preferences" type="string" />
+        <put name="body" value="/pages/subscriptions/userPreferences.jsp" />
+    </definition>    
+    <definition name="subscriptions/unsubscribe.tiles" extends="layout.subscriptions" >
+        <put name="selectedSubMenu" value="subscriptions" type="string" />
+        <put name="body" value="/pages/subscriptions/unsubscribe.jsp" />
+    </definition>    
+    <!-- subscriptons end  -->       
+
+
+
+	<!-- rpc start  -->
+    <definition name="layout.rpc" extends="uns.layout">
+    	<put name="selectedMenu" value="channels" type="string" />
+    </definition>    	      
+    <definition name="xmlrpc/rpcUserChannels.tiles" extends="layout.rpc" >
+        <put name="body" value="/pages/xmlrpc/rpcUserChannels.jsp" />
+    </definition>
+    <definition name="xmlrpc/rpcChannel.tiles" extends="layout.rpc" >
+        <put name="body" value="/pages/xmlrpc/rpcChannel.jsp" />
+    </definition>
+    <!-- rpc end  -->       
+
+
+</tiles-definitions>

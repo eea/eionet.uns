@@ -1,0 +1,17 @@
+/*#portal-subnav li a {
+	width: 85pt;
+	margin: -2;
+}
+units? px?
+*/
+#portal-columns {
+	float: left;
+}
+
+.boxcontent {
+	/*width: 100%;*/
+}
+
+.box h4 {
+	width: 160px;
+}

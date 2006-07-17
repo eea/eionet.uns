@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="JSFProcess">
+ <PROCESS-ITEM ENTITY="JSFProcessGroup" NAME="rules:*" PATH="*" SHAPE="32,273,0,0">
+  <PROCESS-ITEM ENTITY="JSFProcessItem" ID="rules:*:0" NAME="item" PATH="*">
+   <PROCESS-ITEM-OUTPUT ENTITY="JSFProcessItemOutput"
+    ID="success:#{loginBean.login}:#home.tiles" NAME="output"
+    PATH="/home.tiles" TARGET="rules:#home.tiles" TITLE="#{loginBean.login}:success"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="JSFProcessGroup" NAME="rules:#admin#templates*"
+  PATH="/admin/templates*" SHAPE="32,385,0,0">
+  <PROCESS-ITEM ENTITY="JSFProcessItem" ID="rules:#admin#templates*:0"
+   NAME="item" PATH="/admin/templates*">
+   <PROCESS-ITEM-OUTPUT ENTITY="JSFProcessItemOutput"
+    ID="editDashTemplate::#admin#templates#editDashTemplate.jsp"
+    NAME="output" PATH="/admin/templates/editDashTemplate.jsp"
+    TARGET="rules:#admin#templates#editDashTemplate.jsp" TITLE="editDashTemplate"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="JSFProcessGroup"
+  NAME="rules:#admin#channels#channelUrl.jsp"
+  PATH="/admin/channels/channelUrl.jsp" SHAPE="272,33,0,0"/>
+ <PROCESS-ITEM ENTITY="JSFProcessGroup"
+  NAME="rules:#admin#templates#editDashTemplate.jsp"
+  PATH="/admin/templates/editDashTemplate.jsp" SHAPE="240,401,0,0">
+  <PROCESS-ITEM ENTITY="JSFProcessItem"
+   ID="rules:#admin#templates#editDashTemplate.jsp:0" NAME="item" PATH="/admin/templates/editDashTemplate.jsp">
+   <PROCESS-ITEM-OUTPUT ENTITY="JSFProcessItemOutput"
+    ID="cancel::#admin#templates#dashTemplates.jsp" NAME="output"
+    PATH="/admin/templates/dashTemplates.jsp"
+    TARGET="rules:#admin#templates#dashTemplates.jsp" TITLE="cancel"/>
+   <PROCESS-ITEM-OUTPUT ENTITY="JSFProcessItemOutput"
+    ID="save::#admin#templates#dashTemplates.jsp" NAME="output1"
+    PATH="/admin/templates/dashTemplates.jsp"
+    TARGET="rules:#admin#templates#dashTemplates.jsp" TITLE="save"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="JSFProcessGroup"
+  NAME="rules:#admin#channels#pullChannels.jsp"
+  PATH="/admin/channels/pullChannels.jsp" SHAPE="48,161,0,0"/>
+ <PROCESS-ITEM ENTITY="JSFProcessGroup"
+  NAME="rules:#admin#channels#editPullChannel.jsp"
+  PATH="/admin/channels/editPullChannel.jsp" SHAPE="496,17,0,0">
+  <PROCESS-ITEM ENTITY="JSFProcessItem"
+   ID="rules:#admin#channels#editPullChannel.jsp:0" NAME="item" PATH="/admin/channels/editPullChannel.jsp">
+   <PROCESS-ITEM-OUTPUT ENTITY="JSFProcessItemOutput"
+    ID="successUpdate::#admin#channels#pullChannels.jsp" NAME="output"
+    PATH="/admin/channels/pullChannels.jsp"
+    TARGET="rules:#admin#channels#pullChannels.jsp" TITLE="successUpdate"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="JSFProcessGroup" NAME="rules:#home.tiles"
+  PATH="/home.tiles" SHAPE="240,289,0,0"/>
+ <PROCESS-ITEM ENTITY="JSFProcessGroup"
+  NAME="rules:#admin#channels#channelPreview.jsp"
+  PATH="/admin/channels/channelPreview.jsp" SHAPE="720,33,0,0"/>
+ <PROCESS-ITEM ENTITY="JSFProcessGroup"
+  NAME="rules:#admin#templates#dashTemplates.jsp"
+  PATH="/admin/templates/dashTemplates.jsp" SHAPE="464,385,0,0"/>
+ <PROCESS-ITEM ENTITY="JSFProcessGroup" NAME="rules:#admin#channels#*"
+  PATH="/admin/channels/*" SHAPE="48,529,0,0">
+  <PROCESS-ITEM ENTITY="JSFProcessItem" ID="rules:#admin#channels#*:0"
+   NAME="item" PATH="/admin/channels/*">
+   <PROCESS-ITEM-OUTPUT ENTITY="JSFProcessItemOutput"
+    ID="channelUrl::#admin#channels#channelUrl.jsp" NAME="output"
+    PATH="/admin/channels/channelUrl.jsp"
+    TARGET="rules:#admin#channels#channelUrl.jsp" TITLE="channelUrl"/>
+   <PROCESS-ITEM-OUTPUT ENTITY="JSFProcessItemOutput"
+    ID="editPullChannel::#admin#channels#editPullChannel.jsp"
+    NAME="output1" PATH="/admin/channels/editPullChannel.jsp"
+    TARGET="rules:#admin#channels#editPullChannel.jsp" TITLE="editPullChannel"/>
+   <PROCESS-ITEM-OUTPUT ENTITY="JSFProcessItemOutput"
+    ID="cancel::#admin#channels#pullChannels.jsp" NAME="output2"
+    PATH="/admin/channels/pullChannels.jsp"
+    TARGET="rules:#admin#channels#pullChannels.jsp" TITLE="cancel"/>
+   <PROCESS-ITEM-OUTPUT ENTITY="JSFProcessItemOutput"
+    ID="successUpdate::#admin#channels#pullChannels.jsp" NAME="output3"
+    PATH="/admin/channels/pullChannels.jsp"
+    TARGET="rules:#admin#channels#pullChannels.jsp" TITLE="successUpdate"/>
+   <PROCESS-ITEM-OUTPUT ENTITY="JSFProcessItemOutput"
+    ID="templates::#admin#channels#channelTemplates.jsp" NAME="output4"
+    PATH="/admin/channels/channelTemplates.jsp"
+    TARGET="rules:#admin#channels#channelTemplates.jsp" TITLE="templates"/>
+   <PROCESS-ITEM-OUTPUT ENTITY="JSFProcessItemOutput"
+    ID="choosable::#admin#channels#choosable.jsp" NAME="output5"
+    PATH="/admin/channels/choosable.jsp"
+    TARGET="rules:#admin#channels#choosable.jsp" TITLE="choosable"/>
+   <PROCESS-ITEM-OUTPUT ENTITY="JSFProcessItemOutput"
+    ID="preview::#admin#channels#channelPreview.jsp" NAME="output6"
+    PATH="/admin/channels/channelPreview.jsp"
+    TARGET="rules:#admin#channels#channelPreview.jsp" TITLE="preview"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="JSFProcessGroup"
+  NAME="rules:#admin#channels#choosable.jsp"
+  PATH="/admin/channels/choosable.jsp" SHAPE="336,545,0,0"/>
+ <PROCESS-ITEM ENTITY="JSFProcessGroup"
+  NAME="rules:#admin#channels#channelTemplates.jsp"
+  PATH="/admin/channels/channelTemplates.jsp" SHAPE="336,785,0,0"/>
+ <PROCESS-ITEM ENTITY="JSFProcessGroup" NAME="rules:*:1" PATH="*" SHAPE="32,17,0,0">
+  <PROCESS-ITEM ENTITY="JSFProcessItem" ID="rules:*:1" NAME="item" PATH="*">
+   <PROCESS-ITEM-OUTPUT ENTITY="JSFProcessItemOutput"
+    ID="success:#{loginBean.logout}:#home.tiles" NAME="output"
+    PATH="/home.tiles" TARGET="rules:#home.tiles" TITLE="#{loginBean.logout}:success"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>

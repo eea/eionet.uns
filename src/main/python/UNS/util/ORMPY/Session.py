@@ -1,0 +1,318 @@
+# The contents of this file are subject to the Mozilla Public
+# License Version 1.1 (the "License"); you may not use this file
+# except in compliance with the License. You may obtain a copy of
+# the License at http://www.mozilla.org/MPL/
+#
+# Software distributed under the License is distributed on an "AS
+# IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+# implied. See the License for the specific language governing
+# rights and limitations under the License.
+#
+# The Original Code is Reportnet Unified Notification Service
+#
+# The Initial Owner of the Original Code is European Environment
+# Agency (EEA).  Portions created by European Dynamics (ED) company are
+# Copyright (C) by European Environment Agency.  All
+# Rights Reserved.
+#
+# Contributor(s):
+#   Original code: Nedeljko Pavlovic (ED)
+
+import MySQLdb
+from QueryBuilder import QueryBuilder
+from exceptions import *
+from UNS.Logging import getLogger
+from UNS.Config import *
+from UNS.UNSConstants import my_sql_cnf
+
+logger=getLogger("UNS.Session")
+
+class Session:
+    
+    def __init__(self):
+        """
+        Constructor of the Session object.
+        Connect to the Database server.
+        """
+        try:
+            self.conn = MySQLdb.connect (
+                                            host = dbserver['host'], 
+                                            user = dbserver['username'], 
+                                            passwd = dbserver['password'], 
+                                            db =  dbserver['database'],
+                                            port=dbserver['port'], 
+                                            connect_timeout=dbserver['connect_timeout'],
+                                            read_default_file=my_sql_cnf
+                                        )
+        except Exception,e:
+            self.raiseDatabaseError(e)
+        
+        self.builder=QueryBuilder()
+        
+    
+    def close(self):
+        """
+        Disconnect from the Database server
+        """
+        self.conn.close ()	
+    
+    def closeCursor(self,cursor):
+        """
+        Closes cursor used for processing queries
+        """
+        if cursor is not None:
+            cursor.close()
+        
+    def commitTransaction(self):
+        """ """
+        self.conn.commit()
+    
+    def rollbackTransaction(self):
+        """ """
+        self.conn.rollback()
+    
+    def create(self,obj):
+        """ """
+        t=self.builder.buildInsertStatment(obj)
+        self.closeCursor(self.__execute(t))
+        self.__getAutoIncrement(obj)
+        
+    def remove(self,obj):
+        """ """
+        t=self.builder.buildDeleteStatment(obj)
+        self.closeCursor(self.__execute(t))
+        
+        
+    def update(self, obj):
+        """ """
+        t=self.builder.buildUpdateStatment(obj)
+        self.closeCursor(self.__execute(t))
+        
+    def customUpdate(self, statement, params=None):
+        """ """
+        cur=self.__execute((statement,params))
+        self.closeCursor(cur)
+        
+    def findByPK(self, eraClass, t, attrs=None):
+        """
+        Query the database to find entity of the eraClass by its unique identificator
+        """
+        instance=self.__getEraObject(eraClass)
+        i=0
+        for key in instance.pk: 
+            instance[key[0]]=t[i]
+            i+=1
+        tu=self.builder.buildFindByPKStatment(instance,attrs)
+        curr=self.__execute(tu,True)
+        record = curr.fetchone()
+        self.closeCursor(curr)
+        if(record): 
+            self.__fetchValues(record,instance,attrs)
+            return instance
+        return None
+        
+    def findAll(self, eraClass, attrs=None,orderBy = None):
+        """
+        Query the database to find all entities of the eraClass type
+        """
+        results=list()
+        c=self.__getEraObject(eraClass)
+        statement = self.builder.buildFindAll(c)
+        if(orderBy):
+            statement+= " order by " + orderBy[0] + " " + orderBy[1]        
+        curr=self.__execute(tuple([statement, None]),True)
+        result = curr.fetchall()
+        for record in result:
+            r=self.__getEraObject(eraClass)
+            self.__fetchValues(record,r, attrs)
+            results.append(r)
+        self.closeCursor(curr)
+        return results
+        
+    def findCustom(self, eraClass, statement, params=None, attrs=None , orderBy = None):
+        """ """
+        results=list()
+        if(statement[:6].upper() != "SELECT"):
+            statement="SELECT * "+statement
+        if(orderBy):
+            statement+= " order by " + orderBy[0] + " " + orderBy[1]
+        cur=self.__execute(tuple([statement,params]),True)
+        result = cur.fetchall()
+        for record in result:
+            r=self.__getEraObject(eraClass)
+            self.__fetchValues(record,r,attrs)
+            results.append(r)
+        self.closeCursor(cur)
+        return results
+        
+    def __getAutoIncrement(self,obj):
+        """ Retreives last autoincrement value generated by the database engine   """
+        for key in obj.pk:
+            if(len(key)>1 and key[1]=='AUTOINCREMENT'): obj[key[0]]=self.conn.insert_id()
+        
+    def __fetchValues(self,record, obj, columns=None):
+        """
+        Fill object representing data entity with values fetched from the single database record.
+        The UNS ORM engine supports user defined set of columns that need to be retreived
+        as weel as all entiy attributes (default behaivour).
+        This capability is benificial for functionalities tat require high performance.
+        """
+        a=0
+        if columns is None:
+            for i in obj.getAttributes():
+                obj[i]=record[i]
+                a+=1
+        else:
+            for i in columns:
+                obj[i]=record[i]
+                a+=1
+    
+        
+    def __execute(self, tuples, named=False, cursor=None):
+        """
+        Executes any sql statement 
+        """
+        #logger.debug("STATMENT: "+tuples[0])
+        #logger.debug("PARAMS: "+str(tuples[1]))
+        #import pdb
+        #pdb.set_trace()
+        
+        try:
+            if(cursor is None): 
+                if named: cursor=self.conn.cursor(MySQLdb.cursors.DictCursor)
+                else: cursor=self.conn.cursor()
+            if(tuples[1] is None):
+                cursor.execute(tuples[0])
+            else:
+                cursor.execute(tuples[0],tuple(tuples[1]))
+        except Exception , error:
+            #logger.error(str(error))
+            self.closeCursor(cursor)
+            self.raiseDatabaseError(error)
+        return cursor
+    
+    def __getEraObject(self,eraClass):
+        """
+        Native python factory method implementation.
+        Returns instance of Object representing data entity
+        """
+        className=eraClass.__name__
+        module_name = "UNS.ERA."+ className
+        try:
+            c=getattr(__import__(module_name,globals() , locals(), className), className)
+        except:
+            c=getattr(__import__(className,globals() , locals(), className), className)
+        return apply(c)
+        
+    
+    def raiseDatabaseError(self, error): 
+
+        if(isinstance(error,MySQLdb.NotSupportedError)): 
+            raise ORMPyNotSupportedError(error)
+
+        if(isinstance(error,MySQLdb.ProgrammingError)):
+                raise ORMPyProgrammingError(error)
+
+        if(isinstance(error,MySQLdb.InternalError)):            
+            raise ORMPyInternalError(error)
+
+        if(isinstance(error,MySQLdb.IntegrityError)):            
+            raise ORMPyIntegrityError(error)
+
+        if(isinstance(error,MySQLdb.OperationalError)):
+            raise ORMPyOperationalError(error)
+            
+        if(isinstance(error,MySQLdb.DataError)):            
+            raise ORMPyDataError(error)
+
+        if(isinstance(error,MySQLdb.DatabaseError)):            
+            raise ORMPyDatabaseError(error)
+
+        if(isinstance(error,MySQLdb.InterfaceError)):            
+            raise ORMPyInterfaceError(error)
+
+        if(isinstance(error,MySQLdb.Warning)): 
+            raise ORMPyWarning(error)
+
+        if(isinstance(error,MySQLdb.MySQLError)):            
+            raise ORMPyException(error)
+
+            
+            
+""" 
+Function in mysql-python driver that maps error-code to python-exceptions classes
+For full list of error codes check MySQLdb.constants.ER.py
+Mysql error code reference is at http://dev.mysql.com/doc/mysql/en/error-handling.html
+
+
+PyObject *
+_mysql_Exception(_mysql_ConnectionObject *c)
+{
+    PyObject *t, *e;
+    int merr;
+
+    if (!(t = PyTuple_New(2))) return NULL;
+    if (!_mysql_server_init_done) {
+        e = _mysql_InternalError;
+        PyTuple_SET_ITEM(t, 0, PyInt_FromLong(-1L));
+        PyTuple_SET_ITEM(t, 1, PyString_FromString("server not initialized"));
+        PyErr_SetObject(e, t);
+        Py_DECREF(t);
+        return NULL;
+    }
+    merr = mysql_errno(&(c->connection));
+    if (!merr)
+        e = _mysql_InterfaceError;
+    else if (merr > CR_MAX_ERROR) {
+        PyTuple_SET_ITEM(t, 0, PyInt_FromLong(-1L));
+        PyTuple_SET_ITEM(t, 1, PyString_FromString("error totally whack"));
+        PyErr_SetObject(_mysql_InterfaceError, t);
+        Py_DECREF(t);
+        return NULL;
+    }
+    else switch (merr) {
+    case CR_COMMANDS_OUT_OF_SYNC:
+    case ER_DB_CREATE_EXISTS:
+    case ER_SYNTAX_ERROR:
+    case ER_PARSE_ERROR:
+    case ER_NO_SUCH_TABLE:
+    case ER_WRONG_DB_NAME:
+    case ER_WRONG_TABLE_NAME:
+    case ER_FIELD_SPECIFIED_TWICE:
+    case ER_INVALID_GROUP_FUNC_USE:
+    case ER_UNSUPPORTED_EXTENSION:
+    case ER_TABLE_MUST_HAVE_COLUMNS:
+#ifdef ER_CANT_DO_THIS_DURING_AN_TRANSACTION
+    case ER_CANT_DO_THIS_DURING_AN_TRANSACTION:
+#endif
+        e = _mysql_ProgrammingError;
+        break;
+    case ER_DUP_ENTRY:
+#ifdef ER_DUP_UNIQUE
+    case ER_DUP_UNIQUE:
+#endif
+#ifdef ER_PRIMARY_CANT_HAVE_NULL
+    case ER_PRIMARY_CANT_HAVE_NULL:
+#endif
+        e = _mysql_IntegrityError;
+        break;
+#ifdef ER_WARNING_NOT_COMPLETE_ROLLBACK
+    case ER_WARNING_NOT_COMPLETE_ROLLBACK:
+        e = _mysql_NotSupportedError;
+        break;
+#endif
+    default:
+        if (merr < 1000)
+            e = _mysql_InternalError;
+        else
+            e = _mysql_OperationalError;
+        break;
+    }
+    PyTuple_SET_ITEM(t, 0, PyInt_FromLong((long)merr));
+    PyTuple_SET_ITEM(t, 1, PyString_FromString(mysql_error(&(c->connection))));
+    PyErr_SetObject(e, t);
+    Py_DECREF(t);
+    return NULL;
+}
+
+"""

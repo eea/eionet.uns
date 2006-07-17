@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 16, 2006 9:40:13 PM by Hibernate Tools 3.1.0.beta4 -->
+<hibernate-mapping>
+	<class name="com.eurodyn.uns.model.Event" table="EVENT" lazy="false">
+		<id name="id" type="int">
+			<column name="ID" />
+			<generator class="native" />
+		</id>
+
+		<property name="extId" type="string">
+			<column name="EXT_ID" not-null="true" />
+		</property>
+
+		<property name="creationDate" type="timestamp">
+			<column name="CREATION_DATE" length="19" not-null="true" />
+		</property>
+
+		<property name="rtype" type="string">
+			<column name="RTYPE" not-null="true" />
+		</property>
+
+		<property name="processed" type="byte">
+			<column name="PROCESSED" not-null="true" />
+		</property>
+
+		<many-to-one name="channel" class="com.eurodyn.uns.model.Channel" fetch="select">
+			<column name="CHANNEL_ID" not-null="true" />
+		</many-to-one>
+
+
+		<map name="eventMetadata" inverse="true" lazy="true">
+			<key>
+				<column name="EVENT_ID" not-null="true" />
+			</key>
+			<index column="property" type="string" />
+			<one-to-many class="com.eurodyn.uns.model.EventMetadata" />
+		</map>
+		
+		<set name="eventMetadataSet" inverse="true" lazy="true" cascade="all-delete-orphan">
+			<key><column name="EVENT_ID" not-null="true" /></key>
+			<one-to-many class="com.eurodyn.uns.model.EventMetadata" />
+		</set>
+
+		
+		<set name="notifications" lazy="true" cascade="all-delete-orphan">
+			<key>
+				<column name="EVENT_ID" not-null="true" />
+			</key>
+			<one-to-many class="com.eurodyn.uns.model.Notification" />
+		</set>
+	</class>
+</hibernate-mapping>

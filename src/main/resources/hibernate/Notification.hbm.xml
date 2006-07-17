@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 16, 2006 9:40:13 PM by Hibernate Tools 3.1.0.beta4 -->
+<hibernate-mapping>
+	<class name="com.eurodyn.uns.model.Notification" table="NOTIFICATION" catalog="UNS2_DEV">
+
+		<id name="id" type="int">
+			<column name="ID" />
+			<generator class="assigned" />
+		</id>
+		
+		<property name="subject" type="string">
+			<column name="SUBJECT" />
+		</property>
+
+		<property name="content" type="string">
+			<column name="CONTENT" length="65535" not-null="true" />
+		</property>
+		
+		<property name="channelId" type="int">
+			<column name="CHANNEL_ID" not-null="true" />
+		</property>
+		
+		<many-to-one name="user" class="com.eurodyn.uns.model.User" fetch="select">
+			<column name="EEA_USER_ID" not-null="true" />
+		</many-to-one>
+		
+<!--		<many-to-one name="event" class="com.eurodyn.uns.model.Event" fetch="select">-->
+<!--			<column name="EVENT_ID" not-null="true" />-->
+<!--		</many-to-one>-->
+		
+		<set name="deliveries" inverse="true" table="DELIVERY">
+			<key><column name="NOTIFICATION_ID" not-null="true" /></key>
+		    <composite-element class="com.eurodyn.uns.model.Delivery">
+		        <property name="deliveryStatus" column="DELIVERY_STATUS" type="integer" not-null="true"/>
+		        <property name="deliveryTime" column="DELIVERY_TIME" type="date" not-null="true"/>
+		        <many-to-one name="deliveryType" class="com.eurodyn.uns.model.DeliveryType" column="DELIVERY_TYPE_ID"  not-null="true" />
+		    </composite-element>
+			
+		</set>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.eurodyn.uns.model.User" table="EEA_USER" lazy="false">
+
+		<id name="id" column="ID" type="java.lang.Integer">
+			<generator class="native" />
+		</id>
+
+		<property name="externalId" type="java.lang.String" update="true" insert="true" column="EXT_USER_ID" length="50" not-null="true" />
+
+		<property name="fullName" type="java.lang.String" update="true" insert="true" column="CN" length="50" not-null="true" />
+
+		<property name="numberOfColumns" type="java.lang.Short" update="true" insert="true" column="NUMCOLUMNS" />
+
+		<property name="pageRefreshDelay" type="java.lang.Integer" update="true" insert="true" column="PAGE_REFRESH_DELAY" />
+
+		<property name="vacationExpiration" type="java.util.Date" update="true" insert="true" column="VACATION_EXPIRATION" />
+
+		<property name="vacationFlag" type="boolean" update="true" insert="true" column="VACATION_FLAG" />
+
+		<property name="preferHtml" type="boolean" update="true" insert="true" column="PREFER_HTML" />
+
+		<property name="preferDashboard" type="boolean" update="true" insert="true" column="PREFER_DASHBOARD" />
+
+
+		<map name="deliveryAddresses" table="DELIVERY_ADDRESS" lazy="true" cascade="none">
+			<key column="EEA_USER_ID" />
+			<map-key formula="DELIVERY_TYPE_ID" type="integer" />
+			<composite-element class="com.eurodyn.uns.model.DeliveryAddress">
+				<property name="address" type="string" not-null="true" />
+				<many-to-one name="deliveryType" column="DELIVERY_TYPE_ID" class="com.eurodyn.uns.model.DeliveryType" not-null="true" />
+			</composite-element>
+		</map>
+
+		<map name="subscriptions" lazy="true" cascade="all-delete-orphan" inverse="true">
+			<key column="EEA_USER_ID" not-null="true"></key>
+			<map-key column="CHANNEL_ID" type="integer" />
+			<one-to-many class="com.eurodyn.uns.model.Subscription" />
+		</map>
+	</class>
+
+</hibernate-mapping>

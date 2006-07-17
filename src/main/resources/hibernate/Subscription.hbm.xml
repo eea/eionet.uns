@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 16, 2006 9:40:13 PM by Hibernate Tools 3.1.0.beta4 -->
+<hibernate-mapping>
+	<class name="com.eurodyn.uns.model.Subscription" table="SUBSCRIPTION" lazy="false">
+		<id name="id" type="int">
+			<column name="ID" />
+			<generator class="native" />
+		</id>
+
+		<property name="leadTime" type="java.lang.Integer">
+			<column name="LEAD_TIME" />
+		</property>
+
+		<property name="creationDate" type="timestamp">
+			<column name="CREATION_DATE" length="19" not-null="true" />
+		</property>
+
+		<property name="secondaryId" type="string">
+			<column name="SECONDARY_ID" not-null="true" />
+		</property>
+
+		<property name="dashCordX" type="java.lang.Short">
+			<column name="DASH_CORD_X" />
+		</property>
+
+		<property name="dashCordY" type="java.lang.Short">
+			<column name="DASH_CORD_Y" />
+		</property>
+
+		<many-to-one name="channel" class="com.eurodyn.uns.model.Channel" fetch="select">
+			<column name="CHANNEL_ID" not-null="true" />
+		</many-to-one>
+
+		<many-to-one name="user" class="com.eurodyn.uns.model.User" fetch="select" cascade="save-update">
+			<column name="EEA_USER_ID" not-null="true" />
+		</many-to-one>
+
+
+		<bag name="deliveryTypes" table="SUBSCRIPTION_DT" lazy="false" cascade="none">
+			<key column="SUBSCRIPTION_ID" />
+			
+			<many-to-many class="com.eurodyn.uns.model.DeliveryType" column="DELIVERY_TYPE_ID" outer-join="auto" />
+		</bag>
+
+		<bag name="filters" inverse="true" lazy="true" cascade="all-delete-orphan">
+			<key>
+				<column name="SUBSCRIPTION_ID" not-null="true" />
+			</key>
+			<one-to-many class="com.eurodyn.uns.model.Filter" />
+		</bag>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,183 @@
+.success { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; color: #C6383F }
+
+.error { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; color: #C63D00 }
+
+
+#table {
+	width: 100%;
+}
+
+.dashcolumn {
+	float:	left;
+}
+
+/* portlet box */
+.box {
+	margin: 0;
+	padding: 0 6px 0 0;
+	background: url(../images/borders.png) #F0F0F0 repeat-y 100% 0;
+}
+.boxleft {
+	padding: 0 0 0 6px;
+	background: url(../images/borders.png) #F0F0F0 0 0 repeat-y;
+}
+.boxtop {
+	margin: 0 -6px;
+	background: url(../images/box.png) 100% 0 no-repeat;
+	height: 30px;
+}
+.boxtop div {
+	width: 15px;
+	background: url(../images/box.png) 0 0 no-repeat;
+	height: 30px;
+}
+.boxcontent {
+	margin: 0px;
+	padding: 4px 0px 4px 10px;
+	background: #F0F0F0;
+	overflow: auto;
+	height:180px;
+}
+.boxcontent ul {
+	margin: 0;
+	padding-left: 16px;
+	list-style-type: square;
+}
+.boxcontent li, .boxcontent li p {
+	margin: 0;
+	padding: 0;
+}
+/*
+.boxcontent img {display:none;}
+*/
+/*Color for visible element title*/
+.boxcontent li span {
+	color: #3D3D3D;
+	font-style: italic;
+	font-weight: bold;
+}
+.boxbottombuttons {
+	margin: 0px;
+	padding: 4px 10px;
+	background: #F0F0F0;
+	text-align: center;
+}
+.boxbottom {
+	margin: 0 -6px;
+	background: url(../images/box.png) 100% 100% no-repeat;
+	height: 13px;
+}
+.boxbottom div {
+	width: 13px;
+	background: url(../images/box.png) 0 100% no-repeat;
+	height: 13px;
+}
+.box h4 {
+	width: auto;
+	margin: -30px 0 0 10px;
+	padding: 1px 3px;
+	float: left;
+	/*white-space: nowrap;*/
+	display: inline;
+	background: #FF9400;
+	color: #FFF;
+	font: bold 1em/1 Verdana, Geneva, Arial, Helvetica, sans-serif;
+	overflow:hidden;
+}
+.box h5 {
+	margin: 4px 0 0;
+	padding: 2px 0;
+	/*background: #136F70;*/
+	color: #136F70;
+	font: bold 1em/1.1 Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+.box h5 a, .box h5 a:visited {
+	color: #EFECE6;
+	text-decoration: none;
+}
+.box h5 a:hover {
+	color: #FF4500;
+}
+.boxbuttons {
+	width: 100px;
+	margin: -18px 5px 0 0;
+	padding: 0;
+	float: right;
+	white-space: nowrap;
+	display: inline;
+}
+.boxbuttons img {
+	border: 0;
+}
+.boxbuttons a{
+	float: right;
+	padding: 0px;
+	margin: 0px;
+}
+.box table {
+	margin: 4px 0 0;
+	font: 1em/1 Verdana, Geneva, Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+}
+
+.button {
+	background: url(../images/button.png);
+	border: 1px solid #FFCE7B;
+	padding: 0 2px;
+}
+
+.event {
+	display:none;
+	overflow:auto; 
+	height:120px;
+	background:white; 
+	border-top: solid #FFB755 1px; 
+	padding-top:10px;	
+}
+
+
+
+
+/*
+	UNS css from here
+*/
+
+.textAlignCenter {
+	text-align: center;
+}
+
+
+
+.verical_top {
+	vertical-align:top !important;
+}
+
+a.subscribe,  a.subscribe:visited, a.subscribe:hover {
+	background: url(../images/subscribe.gif) no-repeat;
+	padding: 2px 7px 2px 16px;
+	font-size: 10px;
+	color: #024176;
+	display: block;
+	width:auto;
+	text-decoration: none;
+}
+/*
+label {padding-right:0.6em;}
+*/
+
+.commandButtons {
+	text-align:left;
+	padding-top:2em;
+
+}
+
+.unsHtmlEditor{
+	height:200px;
+}
+
+.verticalAlignTop {
+	vertical-align:top;
+}  
+.verticalAlignMIddle {
+	vertical-align: middle;
+}  

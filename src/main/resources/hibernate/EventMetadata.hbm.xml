@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 16, 2006 9:40:13 PM by Hibernate Tools 3.1.0.beta4 -->
+<hibernate-mapping>
+	<class name="com.eurodyn.uns.model.EventMetadata" table="EVENT_METADATA" lazy="false">
+		<id name="id" type="int">
+			<column name="ID" />
+			<generator class="native" />
+		</id>
+
+		<property name="property" type="string">
+			<column name="PROPERTY" />
+		</property>
+
+		<property name="value" type="string">
+			<column name="VALUE" length="65535" />
+		</property>
+
+		<many-to-one name="event" class="com.eurodyn.uns.model.Event" lazy="proxy">
+			<column name="EVENT_ID" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

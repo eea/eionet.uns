@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+                              "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<faces-config>
+
+	<!-- login/logout beans begin -->
+	<managed-bean>
+		<managed-bean-name>loginBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.LoginBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>breadCrumbBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.BreadCrumbBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<!-- login/logout beans end -->
+
+
+
+	<managed-bean>
+		<managed-bean-name>dashboardBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.rss.DashboardActions</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>rssReaderBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.rss.RssReaderActions</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+
+
+
+	<!-- Config beans begin -->
+	<managed-bean>
+		<managed-bean-name>configBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.admin.config.ConfigActions</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- Config beans end -->
+
+
+	<!-- Channels beans begin -->
+	<managed-bean>
+		<managed-bean-name>channelBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.admin.channels.ChannelActions</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>metadataBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.admin.channels.MetadataActions</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>channelListBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.admin.channels.ChannelListForm</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- Channels beans end -->
+
+
+
+	<!-- Templates beans begin -->
+	<managed-bean>
+		<managed-bean-name>templatesBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.admin.templates.TemplateListForm</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>dashTemplateBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.admin.templates.DashTemplateActions</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>notificationTemplateBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.admin.templates.NotificationTemplateActions</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<!-- Templates beans end -->
+
+	<!-- Reports beans begin -->
+	<managed-bean>
+		<managed-bean-name>reportBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.admin.reports.ReportActions</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- Reports beans end -->
+
+
+
+	<!-- Subscriptions beans begin -->
+	<managed-bean>
+		<managed-bean-name>subscriptionsBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.subscriptions.SubscriptionListForm</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>subscriptionBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.subscriptions.SubscriptionActions</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- Subscriptions beans end -->
+
+
+	<!-- RPC beans begin -->
+	<managed-bean>
+		<managed-bean-name>rpcUserChannelsBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.rpc.ChannelListForm</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>rpcChannelBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.rpc.RpcChannelForm</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- RPC beans end -->
+
+
+
+
+	<!-- END OF BEANS  -->
+
+
+
+
+	<!-- NAVIGATION BEGIN -->
+
+	<!-- login/logout navigation begin -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-action>#{loginBean.login}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/home.tiles</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{loginBean.login}</from-action>
+			<from-outcome>subscriptions</from-outcome>
+			<to-view-id>/subscriptions/subscriptions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-action>#{loginBean.logout}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/home.tiles</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- login/logout navigation end -->
+
+
+
+
+	<!-- channels navigation begin -->
+	<navigation-rule>
+		<display-name>Channels</display-name>
+		<from-view-id>/admin/channels/*</from-view-id>
+		<navigation-case>
+			<from-outcome>channelUrl</from-outcome>
+			<to-view-id>/admin/channels/channelUrl.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editChannel</from-outcome>
+			<to-view-id>/admin/channels/channel.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/admin/channels/pullChannels.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>successUpdate</from-outcome>
+			<to-view-id>/admin/channels/pullChannels.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>templates</from-outcome>
+			<to-view-id>/admin/channels/channelTemplates.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>choosable</from-outcome>
+			<to-view-id>/admin/channels/choosable.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>preview</from-outcome>
+			<to-view-id>/admin/channels/channelPreview.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>pushChannels</from-outcome>
+			<to-view-id>/admin/channels/pushChannels.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>pullChannels</from-outcome>
+			<to-view-id>/admin/channels/pullChannels.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>metadataElements</from-outcome>
+			<to-view-id>/admin/channels/metadataElements.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/admin/channels/editPullChannel.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>successUpdate</from-outcome>
+			<to-view-id>/admin/channels/pullChannels.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- channels navigation end -->
+
+
+
+	<!-- templates navigation begin -->
+	<navigation-rule>
+		<from-view-id>/admin/templates*</from-view-id>
+		<navigation-case>
+			<from-outcome>editDashTemplate</from-outcome>
+			<to-view-id>/admin/templates/dashTemplate.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>testChannelsList</from-outcome>
+			<to-view-id>/admin/templates/testChannelsList.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>testStylesheet</from-outcome>
+			<to-view-id>/admin/templates/testStylesheet.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dashTemplates</from-outcome>
+			<to-view-id>/admin/templates/dashTemplates.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>notificationTemplate</from-outcome>
+			<to-view-id>/admin/templates/notificationTemplate.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>notificationTemplateTestResult</from-outcome>
+			<to-view-id>/admin/templates/notificationTemplateTestResult.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>testNotifChannelsList</from-outcome>
+			<to-view-id>/admin/templates/testNotifChannelsList.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>notificationTemplates</from-outcome>
+			<to-view-id>/admin/templates/notificationTemplates.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+
+
+	<!--	<navigation-rule>-->
+	<!--		<from-view-id>/admin/templates/editDashTemplate.jsp</from-view-id>-->
+	<!-- 		<navigation-case>-->
+	<!--			<from-outcome>cancel</from-outcome>-->
+	<!--			<to-view-id>/admin/templates/dashTemplates.jsp</to-view-id>-->
+	<!--		</navigation-case>-->
+	<!--		<navigation-case>-->
+	<!--			<from-outcome>save</from-outcome>-->
+	<!--			<to-view-id>/admin/templates/dashTemplates.jsp</to-view-id>-->
+	<!--		</navigation-case>-->
+	<!-- 	</navigation-rule>-->
+	<!-- templates navigation end -->
+
+
+
+
+	<!-- reports navigation begin -->
+	<navigation-rule>
+		<from-view-id>/admin/reports*</from-view-id>
+		<navigation-case>
+			<from-outcome>notificationsThroughput</from-outcome>
+			<to-view-id>/admin/reports/notification_throughput.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failedNotifications</from-outcome>
+			<to-view-id>/admin/reports/failed_notifications.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>reportCriteria</from-outcome>
+			<to-view-id>/admin/reports/report_criteria.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- reports navigation end -->
+
+
+	<!-- subscriptions navigation begin -->
+	<navigation-rule>
+		<from-view-id>/subscriptions/*</from-view-id>
+		<navigation-case>
+			<from-outcome>editSubscription</from-outcome>
+			<to-view-id>/subscriptions/subscription.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>subscriptions</from-outcome>
+			<to-view-id>/subscriptions/subscriptions.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>avChannels</from-outcome>
+			<to-view-id>/subscriptions/availableChannels.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>userPreferences</from-outcome>
+			<to-view-id>/subscriptions/userPreferences.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- subscriptions navigation end -->
+
+
+	<!-- xmlrpc navigation begin -->
+	<navigation-rule>
+		<from-view-id>/xmlrpc/*</from-view-id>
+		<navigation-case>
+			<from-outcome>editRpcChannel</from-outcome>
+			<to-view-id>/xmlrpc/rpcChannel.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>rpcUserChannels</from-outcome>
+			<to-view-id>/xmlrpc/rpcUserChannels.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- xmlrpc navigation end -->
+
+
+	<converter>
+		<converter-id>ed.DateConverter</converter-id>
+		<converter-class>com.eurodyn.uns.web.jsf.EDDateConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>ed.DeliveryTypes</converter-id>
+		<converter-class>com.eurodyn.uns.web.jsf.DeliveryTypes</converter-class>
+	</converter>
+
+
+	<application>
+		<view-handler>com.eurodyn.uns.web.jsf.UnsViewHandler</view-handler>
+		<action-listener>com.eurodyn.uns.web.jsf.UNSActionListener</action-listener>
+		<message-bundle>labels.ApplicationResources</message-bundle>
+		<locale-config>
+			<default-locale>en</default-locale>
+		</locale-config>
+	</application>
+
+	<lifecycle>
+		<phase-listener>com.eurodyn.uns.web.jsf.UnsPhaseListener</phase-listener>
+	</lifecycle>
+
+
+
+
+</faces-config>

@@ -1,0 +1,721 @@
+@media screen { /* To prevent PocketPC from loading the stylesheet */
+
+
+/* fonts, colour-schemes etc. */
+body {
+        margin:0px;
+	padding:0px;
+	font-family: Arial, Helvetica, sans-serif; 
+	font-style: normal; 
+	font-size: 80%; 
+	line-height: normal; 
+	background: #F0F0F0 url('../images/eionet/background_orange.png') repeat-y;
+}
+
+pre {
+	font-family: "courier new", courier, monospace;
+	font-size: 120%;
+}
+
+/* Page head styles */
+#pagehead {
+	height: 138px;
+	background-image:url('../images/eionet/treeeionet.png');
+	background-repeat: no-repeat;
+}
+ 
+#identification {
+	position: absolute;
+	left: 150px;
+	top: 35px;
+	right: 50px
+}
+
+#pagehead form {
+	position: absolute;
+	display: inline;
+	left: 10px;
+	top: 121px;
+}
+
+#pagehead input {
+	font-size: 70%;
+	background-color: #ff9400;
+	width: 100px;
+
+}
+#logo {
+	float:right
+}
+
+/* The box where the content is */
+#workarea {
+	clear:right;
+	margin-left: 150px;
+	padding-left:0px;
+	padding-right: 2px;
+}
+
+#pagefoot {
+	clear:right;
+	border-top: thin solid #ff9400;
+	margin-left: 150px;
+	padding-left:0px;
+	padding-right: 2px;
+	font-style: italic;
+	font-size: 0.8em;
+}
+/* standard figure, used for articles and pages.
+   can be floated left or right with additional 
+   class figure-right or figure-left
+ */
+
+/* Remove the border around images */
+a img {
+	border: none;
+}
+
+.figure, .figure-plus {
+	font-size: x-small;
+	text-indent: 0;
+}
+
+.figure-title, .figure-nr {
+	font-weight: bold;
+}
+
+.figure-image {
+	text-align:center;
+}
+
+.figure-source-copyright {
+	text-align:right;
+}
+
+.figure-plus-container {
+	padding: 0;
+	margin: 0;
+	width:33%;
+}
+
+.figure-plus {
+	display: block;
+	position: relative;
+	background-color: #fff;
+	border: 1px solid #a9a9a9;
+	margin: 0;
+	padding: 0;
+}
+
+/* floating left or right */
+.figure-right {
+	float: right;
+	margin-left:6px; 
+}
+
+.figure-left {
+	float: left;
+	margin-right:6px; 
+}
+
+/* standard elements with shadow background */
+.dropshadow, .figure, .thumbnail-right {
+	padding: 0;
+	margin: 0px;
+}
+
+/* standard elements which are shadowed and therefore moved up*/
+.shadowed, .figure img, .thumbnail-right img {
+  display: block;
+  position: relative;
+  background-color: #fff;
+  margin: 0px;
+  border: 1px solid #a9a9a9;
+  padding: 4px;
+}
+
+/* hover effect for images inside links */
+.dropshadow img a:hover, .figure img a:hover, .thumbnail-right img a:hover {
+  background-color: #e0e7d7;
+  border: 1px solid #b20d00;
+}
+
+img.scaled {
+  width: 100%;
+  height: 100%;
+}
+
+
+/*
+ * The globalnav is for buttons that exist on all pages.
+ * They are shown on the left
+ */
+#globalnav {
+	position: absolute;
+	left: 0;
+	top: 163px;
+	width: 130px;
+	margin: 0px;
+}
+
+#globalnav h2 {
+	color: black;
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	font-style: normal; 
+	line-height: normal; 
+	padding-top: 0;
+	margin-bottom: 0px;
+	font-weight: bold;
+	text-align: center; 
+	text-decoration: none;
+}
+
+#globalnav ul {
+	list-style: none;
+	list-style-image: none;
+	padding-left: 5px;
+	margin:0px 0px 0px 10px;
+}
+
+#globalnav li {
+	font-size:9px;
+	font-family: sans-serif;
+	font-weight: bold;
+	width:100px;
+	height:13px;
+	line-height: 100%;
+	vertical-align: bottom;
+	color:#ffffff;
+	border: none;
+	margin: 0px;
+	white-space: nowrap;
+}
+#globalnav li a {
+	display:block;
+	font-weight: bold;
+	text-decoration: none;
+	color:#ffffff;
+	width:80px;
+	height:13px;
+	padding: 0px 6px 0px 20px;
+	background: url('../images/eionet/greybuttonred.gif') no-repeat left top;
+	border: none;
+	margin: 0px;
+}
+
+#globalnav li a:hover {
+	background: url('../images/eionet/greybuttonred.gif') no-repeat left top;
+	background-position:0% -26px;
+}
+
+#globalnav form {
+   text-align: center;
+}
+
+/* The .operations is for the blue buttons to the right of the page */
+
+#operations {
+	float: right;
+	margin: 20px 0px 0px 15px;
+}
+
+#operations ul {
+	list-style: none;
+	list-style-image: none;
+	margin: 0 0 0 0;
+}
+
+#operations li {
+	font-size:.75em;
+	font-family: AvenirLight, sans-serif;
+	font-weight: bold;
+	color: #ffffff;
+	line-height: 100%;
+	white-space: nowrap;
+}
+
+#operations li a {
+	display:block;
+	font-weight: bold;
+	text-decoration: none;
+	color: #ffffff;
+	background: url('../images/eionet/emptybluebutton.png') no-repeat;
+	padding: 4px 0px 0px 9px;
+	width: 111px;
+	height: 17px;
+}
+
+/* Tabbed menus - as used on the front page */
+#tabbedmenu {
+	float:left;
+	width:100%;
+	border-bottom: thin solid #ff9400;
+	font-size: 1.1em;
+	line-height:normal;
+}
+#tabbedmenu ul {
+	margin:0;
+	padding:10px 10px 0;
+	list-style:none;
+}
+#tabbedmenu li {
+	float:left;
+	background:url("../images/eionet/tableft.gif") no-repeat left top;
+	margin:0;
+	padding:0 0 0 9px;
+	white-space: nowrap;
+}
+#tabbedmenu a {
+	display:block;
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background:url("../images/eionet/tabright.gif") no-repeat right top;
+	padding:5px 15px 4px 6px;
+}
+#tabbedmenu #currenttab {
+	background-image:url("../images/eionet/tableft_on.gif");
+}
+#tabbedmenu #currenttab a {
+	text-decoration: none;
+	font-weight: bold;
+	background-image:url("../images/eionet/tabright_on.gif");
+	padding-bottom:5px;
+}
+#tabbedmenu #currenttab span {
+	display:block;
+	text-decoration: none;
+	font-weight: bold;
+	background:url("../images/eionet/tabright_on.gif") no-repeat right top;
+	padding:5px 15px 4px 6px;
+}
+
+/* Breadcrumb trail */
+.breadcrumbtrail {
+	position: absolute;
+	left: 130px;
+	right:0;
+	top: 113px;
+	font-size: 0.8em;
+	font-family: verdana, arial, helvetica, sans-serif;
+	color: black;
+	height: 25px;
+	background: url('../images/eionet/bar_filled.png') repeat-x;
+}
+
+
+.breadcrumbhead {
+	float: left;
+	width: 20px;
+	font-size: 1px;
+	visibility: hidden;
+}
+.breadcrumbtail {
+	float:right;
+	width:1px;
+}
+
+.breadcrumbitem {
+	float: left;
+	padding-right: 28px;
+	height: 13px;
+	margin-right: 3px;
+	background-image: url("../images/eionet/bar_hole.png");
+	background-repeat: no-repeat;
+	background-position: 100% 0px;
+	padding-top: 12px;
+}
+
+.breadcrumbitemlast {
+	float: left;
+	padding-right: 28px;
+	height: 13px;
+	margin-right: 3px;
+	background-image: url("../images/eionet/bar_dot.png");
+	background-repeat: no-repeat;
+	background-position: 100% 0px;
+	padding-top: 12px;
+}
+
+.breadcrumbtrail a {
+	font-weight: bold;
+	color: black;
+	text-decoration: none;
+}
+
+.breadcrumbtrail a:hover {
+	color: #707070;
+}
+
+/********** Style for the calendar table Begin **********/
+
+#rdfcalendar {
+	background-color :	#FFFFCC;
+	width :			140px;
+	border-width :		0px;
+	border-style : solid;
+	border-color : #000000;
+	font-family :		Verdana, Geneva, Arial, Helvetica, sans-serif;
+	speak-header : always;
+	text-align : center;
+}
+
+#rdfcalendar th {
+	padding: 0;
+	text-align : center;
+}
+#rdfcalendar th.title {
+	color :			white;
+	background :		#666666;
+	font-size :			13px;
+	text-align : center;
+}
+
+#rdfcalendar th.month a {
+	/* "cal_css['month_']" */
+	font-size :			14px;
+}
+
+#rdfcalendar tr.week th {
+	/* "cal_css['week_']" */
+	color :		#A06060;
+	font-size :	12px;
+	padding: 0;
+	font-weight: normal;
+	text-align : right;
+}
+
+/********** Style for the title, month and week End **********/
+
+
+/********** Style for the current day, normal day and event day Begin **********/
+
+#rdfcalendar td {
+	/* "cal_css['day_']" */
+	background-color :	#FFFFCC;
+	border-color : #000000;
+	border-style : solid;
+	border-width : 0px;
+/*	border-width :		0px;*/
+	color :			#000000;
+	font-size :			10px;
+	vertical-align : top;
+	text-align : right;
+}
+
+#rdfcalendar td a {
+	/* "cal_css['event_day_']" */
+	display: block;
+	background-color :	#FFFFCC;
+	border :	0px solid black;
+}
+
+#rdfcalendar td.today {
+    /* "cal_css['today_']" */
+	background-color :	#FFFF66;
+/*	border-width :		1px;*/
+	font-size :			10px;
+}
+
+/********** Style for the current day, normal day and event day End **********/
+
+
+.skiplink {display:none}
+
+.sitetitle {
+	color: #006666;
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+.sitetagline {
+	color: #006666;
+	font-size: 10pt;
+	font-weight: bold;
+}
+/* Site title and site tagline end */
+
+
+/* barfont is obsolete Use <small> instead */
+.barfont {
+	font-family: Arial, MS Sans Serif; 
+	font-size: 8pt; 
+	font-style: normal; 
+	line-height: normal; 
+	text-decoration: none;
+}
+
+/* Anchors */
+a:link {
+	color: #024176
+}
+
+a:visited {
+	color: #A30A21
+}
+
+a:active {
+	color: #A30A21
+} 
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-style: normal; 
+	font-weight: bold; 
+	text-decoration: none
+}
+
+h1 {
+	font-size: 1.4em; 
+	line-height: 120%; 
+}
+
+h2 {
+	font-size: 1.3em; 
+	line-height: normal; 
+}
+
+h3 {
+	font-size: 1.2em; 
+	line-height: normal; 
+	font-style: italic;
+}
+
+h4, h5, h6 {
+	line-height: normal; 
+	padding-left: 0.5em;
+}
+
+kbd {
+	font-weight: bold;
+}
+
+
+/* Lists */
+
+ul {
+	list-style: url("../images/eionet/smalldiamond.png");
+}
+
+ul.menu { /* Simple menu of items */
+	list-style: none;
+	list-style-image: none;
+	padding:0;
+	margin:0;
+}
+
+blockquote {
+	margin:1em 0;
+	padding-left:50px;
+	padding-right: 2em;
+	font-size:0.94em;
+	color:#555;
+	background:url(../images/eionet/quote-block.gif) top left no-repeat;
+}   
+
+/* Portal frontpage */
+#rightcolumn {
+	float:right;
+	width:140px;
+	margin-top: 2px;
+	margin-right: 5px;
+	background: #FFFFCC;
+	margin-bottom: 1em;
+}
+#whatsnew {
+	padding:0;
+	margin:0;
+	border:none;
+	margin-bottom: 1em;
+}
+
+#whatsnew th {
+	padding: 0;
+	text-align: center;
+}
+/* Portal frontpage end */
+
+
+.quickjumps {
+	float:right;
+	margin: 0.5em;
+	padding: 0.5em;
+	border: 1px solid #495b6b;
+	border-radius: 1em;/* CSS3 */
+	-moz-border-radius: 6px;/* Mozilla */
+	background-color : #e5e2dc; 
+	width : 140px;
+}
+.quickjumps ul {
+	list-style-image: url("../images/eionet/smalldiamond.png");
+	margin-left: 0;
+	padding-left: 1.5em;
+}
+.quickjumps li {
+	font-size: 9pt; 
+	font-style: normal; 
+	line-height: normal; 
+	font-weight: bold; 
+	padding-bottom: 0.4em;
+}
+.quickjumps a, .quickjumps a:visited {
+	text-decoration: none;
+	color: #024176
+}
+.quickjumps h2 {
+	margin-bottom: 0;
+	font-size: 110%;
+}
+.quickjumps p {
+	border-top: 1px dotted black;
+	margin-bottom: 0;
+	margin-top: 0.1em;
+}
+
+/* Message board selectors */
+#messageboard
+{
+ margin-top: 1em;
+ background-color : #FFB755;
+ color : #000080;
+ width: 100%;
+}
+
+#messageboard .messagelist
+{
+    background: #FFFFCC;
+}
+
+#messageboard .firstHeader
+{
+}
+
+#messageboard .secondHeader
+{
+    background-color :  #FEEDBB;
+}
+
+#messageboard .selectedMessage
+{
+    background-color : #FBEDBB;
+}
+
+#messageboard .viewMessage
+{
+    background: #FFFFEE;
+}
+
+#messageboard a.menulink
+{
+    font-weight: bold;
+    font-size: 15px;
+    color: #333333;
+    text-decoration: underline;
+}
+#messageboard a.menulink:hover
+{
+    font-weight: bold;
+    font-size: 15px;
+    color: #333333;
+    text-decoration: underline;
+}
+
+/* Tables */
+/* Default are layout tables. They have no borders */
+
+table {
+	empty-cells: show;
+}
+
+caption {
+	font-weight: bold; 
+	background: #DDD;
+	color: black;
+}
+th {
+	background: #DDD;
+	color: #000;
+	font-weight: bold; 
+	padding: 0.1em 0.5em;
+}
+
+/* Data tables have borders */
+.datatable {
+	border-collapse: collapse;
+	margin: 1em 0em;
+}
+
+.datatable td, .datatable th  {
+	border: 1px solid black;
+	padding: 0.3em;
+	vertical-align: top;
+}
+
+.datatable th { /* Defaults to scope="col" style */
+	text-align: center;
+	background: #DDD;
+	color: black;
+	font-weight: bold; 
+}
+
+
+.datatable th.scope-row { /* IE6 doesn't understand [scope="row"] */
+	text-align: left;
+}
+
+.datatable th[scope="row"] {
+	text-align: left;
+}
+
+.datatable .number {
+	text-align: right;
+}
+
+.datatable .center {
+	text-align: center;
+}
+
+.datatable .sum {
+	font-weight: bold;
+}
+
+/* Sortable table columns */
+.sortable {
+	border: 1px solid black;
+	font-size: 0.9em;
+	line-height:normal;
+}
+.sortable th {
+	background: #ccc;
+	border: 2px outset #999;
+	margin:2px;
+	padding: 0;
+	white-space: nowrap;
+	vertical-align: top;
+}
+.sortable th a:link, .sortable th a:visited, .sortable th span {
+	display:block;
+	text-decoration: none;
+	font-weight: normal;
+	color: black;
+	padding:1px 0.5em;
+}
+
+.sortable th a:hover {
+	color:white;
+	background: #aaa;
+}
+tbody tr.zebraeven {
+	background-color: white;
+}
+
+
+.system-msg {
+	border: 2px dashed black;
+	padding: 0.5em;
+	margin: 0.5em 2em;
+	font-weight: bold;
+}
+
+} /* screen media */

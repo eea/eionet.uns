@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.eurodyn.uns.model.Stylesheet" table="STYLESHEET" lazy="false">
+
+		<id name="id" column="ID" type="java.lang.Integer">
+			<generator class="native" />
+		</id>
+
+		<property name="content" type="java.lang.String" update="true" insert="true" column="CONTENT" length="65535" not-null="true" />
+
+		<property name="description" type="java.lang.String" update="true" insert="true" column="DESCRIPTION" length="255" />
+
+		<property name="name" type="java.lang.String" update="true" insert="true" column="NAME" length="50" not-null="true" unique="true" />
+
+		<property name="channelsCount" type="java.lang.Integer" formula="( SELECT (SELECT COUNT(*) FROM CHANNEL c WHERE s.ID = c.STYLESHEET_ID) FROM STYLESHEET s WHERE s.ID = id )" update="false" insert="false" />
+
+	</class>
+
+</hibernate-mapping>
