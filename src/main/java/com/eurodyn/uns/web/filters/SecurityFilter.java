@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -18,11 +17,10 @@ import javax.servlet.http.HttpSession;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.UserFacade;
 import com.eurodyn.uns.util.common.WDSLogger;
-import com.eurodyn.uns.web.jsf.LoginBean;
 
 public class SecurityFilter implements Filter {
 	private static final WDSLogger logger = WDSLogger.getLogger(SecurityFilter.class);
-	
+
 	private UserFacade userFacade = new UserFacade();
 
 	FilterConfig fc = null;
@@ -39,12 +37,12 @@ public class SecurityFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 
 		// check if session is available
-		
+
 		final HttpServletRequest httpReq = (HttpServletRequest) req;
 		final HttpServletResponse httpRes = (HttpServletResponse) res;
 		final HttpSession session = httpReq.getSession(false);
-		
-		String authUsername=httpReq.getRemoteUser();
+
+		String authUsername = httpReq.getRemoteUser();
 
 		// if session is available use SecuredServletRequest
 		final HttpServletRequest newReq;
@@ -55,16 +53,14 @@ public class SecurityFilter implements Filter {
 			newReq = httpReq;
 		}
 
-
 		newReq.setCharacterEncoding("UTF-8");
 		logger.debug(newReq.getRemoteUser());
-		
-		if (authUsername!=null ) {
-			User user = (User )session.getAttribute("user");
-			if(user == null){// login
-				logger.debug("Perform login ");
-				
-				user = userFacade.getUser(authUsername, true);				
+
+		if (authUsername != null) {
+			User user = (User) session.getAttribute("user");
+			logger.debug("Perform login ");
+			if (user == null) {// login
+				user = userFacade.getUser(authUsername, true);
 				user.setLoggedIn(true);
 				session.setAttribute("user", user);
 				String cookieId = newReq.isUserInRole("xmlrpc") ? "-1" : user.getId().toString();
@@ -72,36 +68,25 @@ public class SecurityFilter implements Filter {
 				cookie.setMaxAge(30 * 24 * 60 * 60); // 30 days
 				cookie.setPath(newReq.getContextPath());
 				httpRes.addCookie(cookie);
-				String path = newReq.getRequestURI();
-				if (path.indexOf("/login/") != -1){
-					 String where = "/subscriptions/subscriptions.jsf";
-					 String redirectUrl = fc.getServletContext().getInitParameter("edu.yale.its.tp.cas.client.filter.serverName").startsWith("http")? ((fc.getServletContext().getInitParameter("edu.yale.its.tp.cas.client.filter.serverName") + newReq.getContextPath() + where)): (( "http://" + fc.getServletContext().getInitParameter("edu.yale.its.tp.cas.client.filter.serverName") + newReq.getContextPath() + where));
-					 httpRes.sendRedirect(redirectUrl);
-				}
-				
-				
-			}else{
-				String path = newReq.getRequestURI();
-				user.setLoggedIn(true);
-				if (path.indexOf("/login/") != -1){
-					 String where = "/subscriptions/subscriptions.jsf";
-					 String redirectUrl = fc.getServletContext().getInitParameter("edu.yale.its.tp.cas.client.filter.serverName").startsWith("http")? ((fc.getServletContext().getInitParameter("edu.yale.its.tp.cas.client.filter.serverName") + newReq.getContextPath() + where)): (( "http://" + fc.getServletContext().getInitParameter("edu.yale.its.tp.cas.client.filter.serverName") + newReq.getContextPath() + where));
-					 httpRes.sendRedirect(redirectUrl);
-				}
-
+			} else {
+				user.setLoggedIn(true);				
 			}
-			if (!isAuthorised(newReq)){
+
+			String path = newReq.getRequestURI();
+			
+			if (path.indexOf("/login/") != -1){
+				redirectAfterLogin(newReq,httpRes);
+			}
+				
+			if (!isAuthorised(newReq)) {
 				session.invalidate();
 				httpRes.sendRedirect(fc.getServletContext().getInitParameter("edu.yale.its.tp.cas.client.filter.loginUrl"));
-								
+
 			}
-			
-			
-	
+
 		}
 
-	
-		// call next filter
+		// css will be removed from here after realizaton of stable version of the EIONET CSS
 
 		if (newReq.getParameter("myCss") != null) {
 			HttpSession sess = newReq.getSession();
@@ -119,16 +104,23 @@ public class SecurityFilter implements Filter {
 		chain.doFilter(newReq, res);
 	}
 
+	
+	private void redirectAfterLogin(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String where = "/subscriptions/subscriptions.jsf";
+		if (request.isUserInRole("xmlrpc"))
+			where = "/xmlrpc/rpcUserChannels.jsf";
+		String redirectUrl = fc.getServletContext().getInitParameter("edu.yale.its.tp.cas.client.filter.serverName").startsWith("http") ? ((fc.getServletContext().getInitParameter("edu.yale.its.tp.cas.client.filter.serverName") + request.getContextPath() + where)) : (("http://" + fc.getServletContext().getInitParameter("edu.yale.its.tp.cas.client.filter.serverName") + request.getContextPath() + where));
+		response.sendRedirect(redirectUrl);		
+	}
+	
 	private boolean isAuthorised(HttpServletRequest request) {
 		String path = request.getRequestURI();
 		if (path.indexOf("/admin/") > -1 && !request.isUserInRole("admin"))
 			return false;
-		if (path.indexOf("/xmlrpc/") > -1 && !request.isUserInRole("rpc"))
+		if (path.indexOf("/xmlrpc/") > -1 && !request.isUserInRole("xmlrpc"))
 			return false;
 		return true;
 	}
-	
-	
 
 	protected SecuredServletRequest createSecuredServletRequest(final HttpServletRequest httpReq, final HttpSession session) {
 
@@ -142,7 +134,8 @@ public class SecurityFilter implements Filter {
 	protected class SecuredServletRequest extends HttpServletRequestWrapper {
 
 		HttpServletRequest request = null;
-		String remoteUser=null;
+
+		String remoteUser = null;
 
 		public SecuredServletRequest(HttpServletRequest request, HttpSession session) {
 			super(request);
@@ -159,7 +152,7 @@ public class SecurityFilter implements Filter {
 				}
 			}
 			return null;
-		}		
+		}
 
 		public boolean isUserInRole(String roleName) {
 			String userName = getRemoteUser();

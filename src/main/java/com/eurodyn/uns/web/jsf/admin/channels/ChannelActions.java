@@ -28,9 +28,12 @@ import com.eurodyn.uns.model.Stylesheet;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.delegates.ChannelServerDelegate;
+import com.eurodyn.uns.util.MailAuthenticator;
 import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.util.rdf.RdfContext;
 import com.eurodyn.uns.util.rdf.RssChannelsProcessor;
+import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
+import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
 import com.eurodyn.uns.web.jsf.admin.templates.NotificationTemplateInterpreter;
 import com.eurodyn.uns.web.jsf.util.Period;
 import com.sun.mail.smtp.SMTPTransport;
@@ -64,7 +67,7 @@ public class ChannelActions extends ChannelForm {
 			}
 
 			setUpChannelRoles();
-			if(channel.getMode().equals("PULL"))
+			if (channel.getMode().equals("PULL"))
 				channel.setRefreshDelay(new Integer(refreshDelay.getDays() * 1440 + refreshDelay.getHours() * 60 + refreshDelay.getMinutes()));
 
 			if (channel.getId().intValue() == -1) {
@@ -119,10 +122,9 @@ public class ChannelActions extends ChannelForm {
 
 	}
 
-	
 	public String changeStatus() {
 		try {
-			//channel = channelFacade.getChannel(channel.getId());
+			// channel = channelFacade.getChannel(channel.getId());
 			if (channel.getStatus().intValue() == 1) {
 				channel.setStatus(new Integer(0));
 				addInfoMessage(null, "label.channel.success.disable", new Object[] { channel.getTitle() });
@@ -179,17 +181,22 @@ public class ChannelActions extends ChannelForm {
 		Map result = nti.pyhtonInterpreter(notificationTemplate, event, user, null);
 
 		String mailAddress = ((DeliveryAddress) user.getDeliveryAddresses().get(new Integer(1))).getAddress();
+		Map configMap = ConfigManager.getInstance().getConfigMap();
 		Properties props = System.getProperties();
-		props.put("mail.smtp.host", "192.168.0.1");
+		props.put("mail.smtp.host", ((ConfigElement) configMap.get("smtpserver/smtp_host")).getValue());
 
-		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.auth", ((ConfigElement) configMap.get("smtpserver/smtp_useauth")).getValue().toString());
 
-		// Get a Session object
-		Session session = Session.getInstance(props, null);
-		session.setDebug(true);
+		String username = ((ConfigElement) configMap.get("smtpserver/smtp_username")).getValue().toString();
+		String password = ((ConfigElement) configMap.get("smtpserver/smtp_password")).getValue().toString();
 
 		// construct the message
-		String from = "sasa.milosavljevic@gmail.com";
+		String from = ((ConfigElement) configMap.get("pop3server/adminmail")).getValue().toString();
+
+		MailAuthenticator auth = new MailAuthenticator(username, password);
+		Session session = Session.getInstance(props, auth);
+		session.setDebug(false);
+
 		Message msg = new MimeMessage(session);
 		if (from != null)
 			msg.setFrom(new InternetAddress(from));
@@ -202,33 +209,21 @@ public class ChannelActions extends ChannelForm {
 
 		if (user.getPreferHtml().booleanValue()) {
 			msg.setText(result.get("resultHtml").toString());
-			System.out.println("Result Html");
 		} else {
 			msg.setText(result.get("resultText").toString());
-			System.out.println("Result Text");
 		}
-
-		System.out.println("user.getPreferHtml().booleanValue() " + user.getPreferHtml().booleanValue());
 
 		msg.setSentDate(new Date());
 
-		// send the thing off
-		/*
-		 * The simple way to send a message is this:
-		 * 
-		 * Transport.send(msg);
-		 * 
-		 * But we're going to use some SMTP-specific features for demonstration purposes so we need to manage the Transport object explicitly.
-		 */
+		// Get a Session object
+
+		// mailSession.setDebug(true);
 		SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
 
-		t.connect("192.168.0.1", "sasam", "sasacc");
+		t.connect();
 		t.sendMessage(msg, msg.getAllRecipients());
 
-		System.out.println("Response: " + t.getLastServerResponse());
 		t.close();
-
-		System.out.println("\nMail was sent successfully.");
 
 	}
 

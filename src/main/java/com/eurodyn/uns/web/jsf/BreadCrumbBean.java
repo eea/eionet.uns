@@ -124,5 +124,9 @@ public class BreadCrumbBean extends BaseBean {
 		breadcrumbsMap.put("availableChannels.jsp", new String[] { "subscriptions", "Available channels", null });
 		breadcrumbsMap.put("userPreferences.jsp", new String[] { "subscriptions", "Your preferences", null });
 
+		//xmlrpc user
+		breadcrumbsMap.put("rpcUserChannels.jsp", new String[] { null, "Your RPC channels", "/xmlrpc/rpcUserChannels.jsf" });
+		breadcrumbsMap.put("rpcChannel.jsp", new String[] { null, "Edit channel", null });
+		
 	}
 }

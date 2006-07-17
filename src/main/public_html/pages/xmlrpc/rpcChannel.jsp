@@ -2,7 +2,7 @@
 
 <h:form>
 
-	<h:panelGrid columns="2" border="0" columnClasses="vertical_align_top">
+	<h:panelGrid columns="2" border="0" >
 
 		<h:outputLabel rendered="#{ empty rpcChannelBean.channel.title}" for="title" value="#{msg['label.common.title']}:" />
 		<h:inputText rendered="#{ empty rpcChannelBean.channel.title}" id="title" size="30" required="true" value="#{rpcChannelBean.channel.title}" />
@@ -22,7 +22,7 @@
 		<h:commandButton action="#{rpcChannelBean.save}" value="#{msg['label.save']}" />
 		<h:commandButton action="rpcUserChannels" value="#{msg['label.cancel']}" immediate="true"  />
 	</t:div>
-
+	<t:saveState value="#{rpcChannelBean.channel}" />
 </h:form>
 
 

@@ -8,15 +8,13 @@ import com.eurodyn.uns.web.jsf.BaseBean;
 import com.eurodyn.uns.web.jsf.SortableTable;
 
 
-public class ChannelListForm extends BaseBean {
+public class RpcChannelListForm extends BaseBean {
 	private ChannelFacade channelFacade;
-	private SortableTable st = new SortableTable("title");
-	public SortableTable getSt(){
-			return st;
-	}
-	public ChannelListForm()
+
+	public RpcChannelListForm()
 	{		
 		channelFacade = new ChannelFacade();
+		st = new SortableTable("title");
 	}
 	
 	public List getChannels()

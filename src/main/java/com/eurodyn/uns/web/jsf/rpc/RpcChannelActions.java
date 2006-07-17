@@ -3,35 +3,30 @@ package com.eurodyn.uns.web.jsf.rpc;
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.NotificationTemplate;
 import com.eurodyn.uns.service.facades.ChannelFacade;
+import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.web.jsf.BaseBean;
 
-public class RpcChannelForm extends BaseBean {
+public class RpcChannelActions extends BaseBean {
+
+	private static final WDSLogger logger = WDSLogger.getLogger(RpcChannelActions.class);
+
 	private ChannelFacade channelFacade;
 
 	private Channel channel;
 
-	public RpcChannelForm() {
-
+	public RpcChannelActions() {
 		channelFacade = new ChannelFacade();
-
 	}
 
-	public Channel getChannel() {
-		if (channel == null)
-			channel = new Channel();
-		return channel;
-	}
-
-
+	
 	public String save() {
 
 		try {
-
 			if (channel.getId().intValue() == -1) {
 				channel.setMode("PUSH");
 				channel.setCreator(getUser());
 				channel.setStatus(new Integer(0));
-				channel.setNotificationTemplate(new NotificationTemplate(new Integer (1) ));
+				channel.setNotificationTemplate(new NotificationTemplate(new Integer(1)));
 				channelFacade.createChannel(channel);
 				addInfoMessage(null, "label.channel.success.create", new Object[] { channel.getTitle() });
 			} else {
@@ -40,25 +35,26 @@ public class RpcChannelForm extends BaseBean {
 			}
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			addSystemErrorMessage();
 		}
 		return "rpcUserChannels";
 
 	}
+
 	
-	
-	public String edit()
-	{		
-		try {
-			channel = channelFacade.getChannel(channel.getId()); //edit from existing
-		} catch (RuntimeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	public String edit() {
+		if (channel == null)
+			channel = new Channel();
 		return "editRpcChannel";
 	}
 
+	public Channel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(Channel channel) {
+		this.channel = channel;
+	}
 
 }

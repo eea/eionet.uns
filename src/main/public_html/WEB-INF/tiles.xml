@@ -4,7 +4,7 @@
 
 <tiles-definitions>
 
-    <definition name="uns.layout" path="/pages/template/template.jsp" >
+    <definition name="uns.layout" path="/pages/common/template.jsp" >
         <put name="header" value="/pages/common/header.jsp" />
         <put name="menu" value="/pages/common/navigation.jsp" />
         <put name="footer" value="/pages/common/footer.jsp" />
@@ -214,13 +214,14 @@
 
 
 	<!-- rpc start  -->
-    <definition name="layout.rpc" extends="uns.layout">
+    <definition name="layout.xmlrpc" extends="uns.layout">
     	<put name="selectedMenu" value="channels" type="string" />
+    	<put name="submenu" value="/pages/xmlrpc/xmlrpc_submenu.jsp"/>    	
     </definition>    	      
-    <definition name="xmlrpc/rpcUserChannels.tiles" extends="layout.rpc" >
+    <definition name="xmlrpc/rpcUserChannels.tiles" extends="layout.xmlrpc" >
         <put name="body" value="/pages/xmlrpc/rpcUserChannels.jsp" />
     </definition>
-    <definition name="xmlrpc/rpcChannel.tiles" extends="layout.rpc" >
+    <definition name="xmlrpc/rpcChannel.tiles" extends="layout.xmlrpc" >
         <put name="body" value="/pages/xmlrpc/rpcChannel.jsp" />
     </definition>
     <!-- rpc end  -->       

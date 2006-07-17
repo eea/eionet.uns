@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.naming.Context;
@@ -21,6 +19,7 @@ import org.jivesoftware.smack.SSLXMPPConnection;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 
+import com.eurodyn.uns.util.MailAuthenticator;
 import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.web.jsf.BaseBean;
 import com.sun.mail.smtp.SMTPTransport;
@@ -143,7 +142,7 @@ public class ConfigActions extends BaseBean {
 			props.put("mail.smtp.port", port);
 			props.put("mail.smtp.auth", useauth.toString());
 
-			SimpleAuthenticator auth = new SimpleAuthenticator(username, password);
+			MailAuthenticator auth = new MailAuthenticator(username, password);
 			Session mailSession = Session.getInstance(props, auth);
 			// mailSession.setDebug(true);
 			SMTPTransport t = (SMTPTransport) mailSession.getTransport("smtp");
@@ -176,7 +175,7 @@ public class ConfigActions extends BaseBean {
 			props.put("mail.pop3.host", host);
 			props.put("mail.pop3.port", port);
 
-			SimpleAuthenticator auth = new SimpleAuthenticator(username, password);
+			MailAuthenticator auth = new MailAuthenticator(username, password);
 			Session mailSession = Session.getInstance(props, auth);
 			// mailSession.setDebug(true);
 			Store store = mailSession.getStore("pop3");
@@ -250,16 +249,4 @@ public class ConfigActions extends BaseBean {
 		}
 	}
 
-}
-
-class SimpleAuthenticator extends Authenticator {
-	private PasswordAuthentication password_auth;
-
-	public SimpleAuthenticator(String smtp_user, String smtp_password) {
-		password_auth = new PasswordAuthentication(smtp_user, smtp_password);
-	}
-
-	public PasswordAuthentication getPasswordAuthentication() {
-		return password_auth;
-	}
 }

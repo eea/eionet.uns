@@ -27,7 +27,6 @@ import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Dto;
-import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.ResultDto;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.common.WDSLogger;

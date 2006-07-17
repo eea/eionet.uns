@@ -3,18 +3,13 @@
                               "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
 <faces-config>
 
-	<!-- login/logout beans begin -->
-	<managed-bean>
-		<managed-bean-name>loginBean</managed-bean-name>
-		<managed-bean-class>com.eurodyn.uns.web.jsf.LoginBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
+	<!-- general beans begin -->
 	<managed-bean>
 		<managed-bean-name>breadCrumbBean</managed-bean-name>
 		<managed-bean-class>com.eurodyn.uns.web.jsf.BreadCrumbBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	<!-- login/logout beans end -->
+	<!-- general beans end -->
 
 
 
@@ -106,12 +101,12 @@
 	<!-- RPC beans begin -->
 	<managed-bean>
 		<managed-bean-name>rpcUserChannelsBean</managed-bean-name>
-		<managed-bean-class>com.eurodyn.uns.web.jsf.rpc.ChannelListForm</managed-bean-class>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.rpc.RpcChannelListForm</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>rpcChannelBean</managed-bean-name>
-		<managed-bean-class>com.eurodyn.uns.web.jsf.rpc.RpcChannelForm</managed-bean-class>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.rpc.RpcChannelActions</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<!-- RPC beans end -->

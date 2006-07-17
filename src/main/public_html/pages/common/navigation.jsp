@@ -3,63 +3,21 @@
 
 <%@ page isELIgnored="false" contentType="text/html;charset=UTF-8" language="java"%>
 <% 
-
-
-Object user = session.getAttribute("user");
-
-if (user == null){
-	Cookie[] c = request.getCookies();
-	Integer userId = null;
-	if (c != null) {
-		for (int i = 0; i < c.length; i++) {
-			System.out.println("cookies " + c[i].getName());
-			if (c[i].getName().compareTo("unsDashboard") == 0) {
-				userId = new Integer(c[i].getValue());
-				System.out.println("cookies " + userId);
-				break;
-			}
-		}
-
-		if (userId != null && userId.intValue() != -1) {
-
-			user =  (new com.eurodyn.uns.service.facades.UserFacade() ).findUser(userId);
-			session.setAttribute("user", user);
-		}
+	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
+	String userRole = "";
+	if(request.isUserInRole("admin")){
+		userRole = "admin";
 	}
-
-}
-
-
-		String userRole = "";
-			if(request.isUserInRole("admin")){
-				userRole = "admin";
-			}
-			else if(request.isUserInRole("xmlrpc")){
-				userRole = "rpc";
-			}
-			else if(request.getRemoteUser() != null){
-				userRole = "eea";
-			}else{			
-				try {
-					if (request.getRemoteUser() == null) {					
-						Cookie[] c = request.getCookies();
-						Integer userId = null;
-						if (c != null) {
-							for (int i = 0; i < c.length; i++) {
-								if (c[i].getName().compareTo("unsDashboard") == 0) {
-									userId = new Integer(c[i].getValue());
-									break;
-								}
-							}
-							if (userId != null) { userRole = "eeaNotLogged";}
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			
-			request.setAttribute("userRole",userRole);
+	else if(request.isUserInRole("xmlrpc")){
+		userRole = "rpc";
+	}
+	else if(request.getRemoteUser() != null){
+		userRole = "eea";
+	}else if(user != null) {			
+		 userRole = "eeaNotLogged";
+	}
+	
+	request.setAttribute("userRole",userRole);
 
 %>
 
