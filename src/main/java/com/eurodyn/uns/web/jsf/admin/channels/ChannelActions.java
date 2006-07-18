@@ -230,10 +230,7 @@ public class ChannelActions extends ChannelForm {
 	public String edit() {
 		String outcome = "editChannel";
 		try {
-			if (channel.getId().intValue() == -1) {
-				channel.setMode("PULL");
-				channel.setNotificationTemplate(notificationTemplateFacade.getNotificationTemplate(new Integer(1)));
-			} else
+			if (channel.getId().intValue() > 0) 
 				channel = channelFacade.getChannel(channel.getId());
 
 			if (reset)
@@ -280,8 +277,11 @@ public class ChannelActions extends ChannelForm {
 			reset();
 			channel.setDeliveryTypes(new ArrayList(allDeliveryTypes));
 			channel.setMode("PULL");
+			channel.setNotificationTemplate(notificationTemplateFacade.getNotificationTemplate(new Integer(1)));
+			channel.setTransformation(new Stylesheet(1));
+			stylesheetSelected = true;								
 			prepareRefreshDelay();
-			stylesheetSelected = false;
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			addSystemErrorMessage();
@@ -315,7 +315,7 @@ public class ChannelActions extends ChannelForm {
 				allStylesheets = (List) xslFacade.getStylesheets().get("list");
 			}
 			if (allNotificationTemplates == null) {
-				allNotificationTemplates = (List) notificationTemplateFacade.getNotificationTemplates().get("list");
+				allNotificationTemplates = (List) notificationTemplateFacade.findNotificationTemplatesForAssigment();
 			}
 
 			if (!stylesheetSelected) {
@@ -351,6 +351,7 @@ public class ChannelActions extends ChannelForm {
 					result = "<div style=\"overflow:auto; width: 100%; height:180px\">";
 					result += "<img src=\"../svg.unsvg\" alt=\"Generated SVG\" />";
 					result += "</div>";
+					getSession().setAttribute("testChannel",channel);
 				}
 			} else {
 				result = "<p class=\"nocontent\">CONTENT IS NOT AVAILABLE !</p>";

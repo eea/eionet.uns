@@ -3,10 +3,8 @@ package com.eurodyn.uns.web.jsf.rss;
 import java.util.List;
 
 import javax.faces.event.PhaseId;
-import javax.servlet.http.Cookie;
 
 import com.eurodyn.uns.model.Subscription;
-import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.UserFacade;
 import com.eurodyn.uns.util.common.WDSLogger;
 

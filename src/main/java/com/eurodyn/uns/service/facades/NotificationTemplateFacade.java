@@ -110,5 +110,10 @@ public class NotificationTemplateFacade {
 
     }
 
+    public List findNotificationTemplatesForAssigment() throws Exception {
+	    return daoFactory.getNotificationTemplateDao().findNotificationTemplatesForAssigment();
+	    
+    }
+    
 
 }

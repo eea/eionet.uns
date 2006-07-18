@@ -26,6 +26,7 @@ import java.util.Map;
 
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
+import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.util.common.WDSLogger;
 
@@ -43,6 +44,18 @@ public class FeedFacade {
 		Map result = new HashMap();
 		try {
 			result = daoFactory.getFeedDao().findUserEvents(subscription);
+		} catch (DAOException e) {
+			logger.error(e);
+		} catch (Exception e) {
+			logger.fatalError(e);
+		}
+		return result;
+	}
+
+	public Map findChannelEvents(Channel channel) {
+		Map result = new HashMap();
+		try {
+			result = daoFactory.getFeedDao().findChannelsEvents(channel);
 		} catch (DAOException e) {
 			logger.error(e);
 		} catch (Exception e) {

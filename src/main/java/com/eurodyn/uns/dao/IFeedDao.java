@@ -23,10 +23,12 @@ package com.eurodyn.uns.dao;
 
 import java.util.Map;
 
+import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Subscription;
 
 public interface IFeedDao {
 
 	public Map findUserEvents(Subscription subscription) throws DAOException;
+	public Map findChannelsEvents(Channel channel) throws DAOException ;
 	
 }

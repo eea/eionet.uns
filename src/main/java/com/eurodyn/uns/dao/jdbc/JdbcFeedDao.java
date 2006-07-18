@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.IFeedDao;
+import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.RDFThing;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
@@ -36,6 +37,10 @@ public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
 
 	private final static String userEventsQuery = "select E.ID,  E.EXT_ID, E.RTYPE, EM.PROPERTY, EM.VALUE , E.CREATION_DATE" + " from NOTIFICATION N, DELIVERY D, EVENT E, EVENT_METADATA EM " + " where N.EEA_USER_ID=? and D.DELIVERY_TYPE_ID=4 " + " and N.ID=D.NOTIFICATION_ID " + " and DATE_SUB(UTC_TIMESTAMP(),INTERVAL ? DAY) <= E.CREATION_DATE " + " and E.ID=N.EVENT_ID  and E.ID=EM.EVENT_ID " + " ORDER BY E.CREATION_DATE DESC";
 
+	private final static String channelEvents = "select E.ID,  E.EXT_ID, E.RTYPE, EM.PROPERTY, EM.VALUE , E.CREATION_DATE" + " from EVENT E, EVENT_METADATA EM " + " where E.CHANNEL_ID = ? and E.ID=EM.EVENT_ID " + " and DATE_SUB(UTC_TIMESTAMP(),INTERVAL ? DAY) <= E.CREATION_DATE "  + " ORDER BY E.CREATION_DATE DESC";
+	
+	
+	
 	public Map findUserEvents(Subscription subscription) throws DAOException {
 
 		Map things = new HashMap();
@@ -87,6 +92,34 @@ public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
 
 	}
 
+	
+	public Map findChannelsEvents(Channel channel) throws DAOException {
+
+		Map things = new HashMap();
+		Connection conn = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		try {
+			conn = getDatasource().getConnection();
+			ps = conn.prepareStatement(channelEvents);
+			ps.setInt(1, channel.getId().intValue());
+			ps.setInt(2, feedInterval);
+			rs = ps.executeQuery();
+			while (rs.next())
+				populateThing(things, rs);
+
+		} catch (Exception e) {
+			throw new DAOException(e);
+		} finally {
+			closeAllResources(rs, ps, conn);
+		}
+		return things;
+
+	}
+
+	
+	
+	
 	private void populateThing(Map things, ResultSet rs) throws Exception {
 		boolean hasTitle = false;
 		String ext_id = rs.getString("EXT_ID");

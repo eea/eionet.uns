@@ -14,8 +14,11 @@ import org.dom4j.io.XMLWriter;
 
 import com.eurodyn.uns.util.common.AppConfigurator;
 import com.eurodyn.uns.util.common.UnsProperties;
+import com.eurodyn.uns.util.common.WDSLogger;
 
 public class ConfigManager {
+
+	private static final WDSLogger logger = WDSLogger.getLogger(ConfigManager.class);
 
 	private Document doc;
 
@@ -48,8 +51,7 @@ public class ConfigManager {
 		try {
 			configFilePath = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar + "uns-config.xml";
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 

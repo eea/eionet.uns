@@ -10,8 +10,8 @@ public class Serializabler {
 		try {
 
 			String s = null;
-			String classpath = "	c:/work/eclipse-workspaces/UNS2/src/main/public_html/WEB-INF/classes;" + "c:/classpath/servlet-api.jar;";
-			String libPath = "c:/work/eclipse-workspaces/UNS2/src/main/public_html/WEB-INF/lib";
+			String classpath = "	c:/work/eclipse-workspaces/UNS/src/main/public_html/WEB-INF/classes;" + "c:/classpath/servlet-api.jar;";
+			String libPath = "c:/work/eclipse-workspaces/UNS/src/main/public_html/WEB-INF/lib";
 
 			File dir = new File(libPath);
 
@@ -20,7 +20,7 @@ public class Serializabler {
 				classpath = classpath + libPath + "/" + children[i] + ";";
 			}
 
-			String className = "com.eurodyn.uns.web.jsf.admin.config.ConfigElement";
+			String className = "com.eurodyn.uns.web.servlets.SVGServlet";
 
 			Process p = Runtime.getRuntime().exec("serialver -classpath " + classpath + " " + className);
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));

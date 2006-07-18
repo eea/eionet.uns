@@ -51,14 +51,31 @@ public class DatabaseHandler extends BaseFeedHandler {
     
     protected void feed(Dto request)throws Exception {
 	    FeedFacade feedFacade = new FeedFacade();
+	    Map things = null;
+	    Channel channel = null;
 	    Subscription subs = (Subscription) request.get("subscription");
-	    Map things = feedFacade.findUserEvents(subs);
+	    if (subs != null){
+		    channel = subs.getChannel();
+		    things = feedFacade.findUserEvents(subs);		    
+	    }else{
+		    channel = (Channel) request.get("channel");
+		    things = feedFacade.findChannelEvents(channel);
+	    }
+		
+	    if (things == null || things.size() == 0){
+		    request.put("CONTENT", "");
+		    return;
+	    }
 	    
 	    RenderingEngine re=RenderingEngine.getInstance();
-	    Channel channel = subs.getChannel();
+
 	    String result=channel.getTransformation()==null?re.renderContent(channel,things, new GenericRenderer())
 	                                                       :re.renderContent(channel,things, new XslRenderer());
 	    request.put("CONTENT", result);	    
 	    
     }
+    
+    
+
+    
 }

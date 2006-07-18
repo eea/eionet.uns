@@ -1,10 +1,7 @@
 package com.eurodyn.uns.web.servlets;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -15,79 +12,74 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.JPEGTranscoder;
-import org.xml.sax.InputSource;
 
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Dto;
-import com.eurodyn.uns.model.Stylesheet;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.service.channelserver.BaseChannelServer;
 import com.eurodyn.uns.service.channelserver.EEAChannelServer;
+import com.eurodyn.uns.service.channelserver.feed.DatabaseHandler;
 import com.eurodyn.uns.service.channelserver.feed.PullHandler;
 import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.service.facades.SubscriptionFacade;
-import com.eurodyn.uns.service.facades.XslFacade;
 import com.eurodyn.uns.util.common.WDSLogger;
-import com.eurodyn.uns.util.xml.XSLTransformer;
 
 public class SVGServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 3017627366103614298L;
 
 	private static final WDSLogger logger = WDSLogger.getLogger(SVGServlet.class);
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		ByteArrayInputStream aaa = null;
+		String cc = null;
 		try {
-			System.out.println("Test");
+			System.out.println("Test SVG");
 			BaseChannelServer cs = new EEAChannelServer();
 			String idStr = request.getParameter("subs_id");
-			String cc = null;
 			if (idStr != null) {
 				// Existing channel
 				SubscriptionFacade subscriptionFacade = new SubscriptionFacade();
 				Integer subscriptionId = Integer.valueOf(idStr);
-				if (subscriptionId.intValue() == 0){
+				if (subscriptionId.intValue() == 0) {
 					ChannelFacade cf = new ChannelFacade();
 					Channel ch = cf.getChannel(new Integer(1));
 					PullHandler pullHandler = new PullHandler(null);
 					Dto dto = new Dto();
-					pullHandler.pull(ch,dto);
+					pullHandler.pull(ch, dto);
 					cc = dto.get("CONTENT").toString();
 
-				}else{
+				} else {
 					Subscription subsc = subscriptionFacade.getSubscription(subscriptionId);
 					if (subsc == null) {
 						logger.error("SVG2JPG: Invalid Subscription ID");
 						return;
 					}
-					cc = cs.getChannelContent(subsc,true);
+					cc = cs.getChannelContent(subsc, true);
 
 				}
-				
-//				System.out.println("==================");
-//				System.out.println(cc);
-//				System.out.println("==================");
+
 				aaa = new ByteArrayInputStream(cc.getBytes());
 			} else {
 				// Non existing channel TEST function
-				Channel channel = (Channel) request.getSession().getAttribute("admin.channels.testchannel");
-				XSLTransformer transform = new XSLTransformer();
-				String url = "http://rod.eionet.eu.int/events.rss";
-				InputSource source = new InputSource(url);
-				source.setSystemId(url);
-				source.setEncoding("UTF-8");
+				Channel channel = (Channel) request.getSession().getAttribute("testchannel");
+				DatabaseHandler databaseHandler = new DatabaseHandler(null);
+				Dto dto = new Dto();
+				dto.put("channel", channel);
+				databaseHandler.handleRequest(dto, BaseChannelServer.DATABASE);
+				cc = dto.get("CONTENT").toString();
 
-				Map parameters = new HashMap();
-				parameters.put("openinpopup", "true");
-				parameters.put("showdescription", "true");
-				parameters.put("showtitle", "true");
+				if ((cc == null || cc.length() == 0) && channel.getFeedUrl() != null) {
+					PullHandler pullHandler = new PullHandler(null);
+					dto = new Dto();
+					pullHandler.pull(channel, dto);
+					cc = dto.get("CONTENT").toString();
+				}
+				aaa = new ByteArrayInputStream(cc.getBytes());
 
-				Stylesheet xsl = XslFacade.getInstance().getStylesheet(channel.getTransformation().getId());
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				transform.transform(xsl.getName(), xsl.getContent(), source, baos, parameters);
-				aaa = new ByteArrayInputStream(baos.toByteArray());
 			}
 
-			response.setContentType("image/jpeg");			
+			response.setContentType("image/jpeg");
 			JPEGTranscoder t = new JPEGTranscoder();
 			t.addTranscodingHint(JPEGTranscoder.KEY_QUALITY, new Float(.8));
 			TranscoderInput input = new TranscoderInput(aaa);
