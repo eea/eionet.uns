@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>RPC User FEATURES</title>
+<link rel="stylesheet" type="text/css" href="../../main.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<h1><a name="_Toc117662302"></a>6. RPC User FEATURES</h1>
+<p>The group of RPC users represent external systems which interact with the UNS application. </p>
+<p>These client applications may perform the following operations on UNS:</p>
+<ul>
+	<li>create PUSH channels by using XML-RPC or Web UI, </li>
+	<li>to push events to those channels by using XML-RPC and</li>
+	<li>See list of their channels on the UNS web Site.</li>
+</ul>
+<h2><a name="_Toc117662303"></a>6.1 UNS XML-RPC</h2>
+<p>In the context of the UNS, XML-RPC can be used to send RDF formed events data to the UNS, in order to create PUSH channels that will be used for the insertion of events as well as to subscribe users.  Those operations are allowed only to the registered UNS RPC users. UNS RPC users are allowed to operate only on channels created by them.</p>
+<p>The UNS XML RPC Router is: http://&lt;&lt;web_root&gt;&gt;/receiver</p>
+<p>There are currently five procedures available to the UNS RPC users:</p>
+<ol>
+	<li><b>sendNotification(channel_id, triples)</b>
+		<p>Send events data to the specified UNS's PUSH channel.</p>
+		<p><i>PARAMETERS</i>:</p>
+		<p><i>channel_id</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string - represents channel identifier inside the UNS. </p>
+		<p><i>triples</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array -  events data as straightforward <i>triples</i> in a list-of-lists structure</p>
+	</li>
+	<li><b>sendNotificationRDF(channel_id, rdf)</b>
+		<p>Same as method <i>sendNotification</i>. Difference is the <i>rdf </i><b> </b>parameter. In this case that parameter is a string representing RDF.</p>
+	</li>
+	<li><b>createChannel(channel_name, description)</b>
+		<p>Creates new PUSH channel. It takes as parameters the name of the new<br>
+			channel (required) and its description (the phrase describing the purpose of  the channel)</p>
+		<p><i>PARAMETERS</i>:</p>
+		<p><i>channel_name</i>&nbsp;&nbsp;&nbsp;&nbsp;string – channel name</p>
+		<p><i>description</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string – terse phrase describing the channel</p>
+		<p><i>RETURNS:</i></p>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>string</i> String representing new channel's identifier</p>
+	</li>
+	<li><b>canSubscribe(channel_id, username)</b>
+		<p>Checks if specified user is allowed to make subscription to the specified channel</p>
+		<p>PARAMETERS:</p>
+		<p><i>channel_id</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string - represents channel identifier inside the UNS.</p>
+		<p><i>username</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string - EEA's LDAP (Synchronized with CIRCA)  username </p>
+		<p><i>RETURNS</i>:</p>
+		<p><i>boolean</i> indicating if user is allowed to make subscription to the specified channel. </p>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True -  if user is allowed</p>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False – otherwise</p>
+	</li>
+	<li><b>makeSubscription(channel_id, username, filters)</b>
+		<p>Creates new or updates existing subscription to the specified channel for the specified user. If subscription for provided channel exists already it will be updated, otherwise it will be created.</p>
+		<p><i>PARAMETERS</i>:</p>
+		<p><i>channel_id</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string - represents channel identifier inside the UNS. </p>
+		<p><i>username</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string - EEA's LDAP (Synchronized with CIRCA)  username </p>
+		<p><i>filters</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array -  An array of the dictionaries in form predicate-object representing user’s filters </p>
+		<p><i>Filter</i> <i>Example</i>:</p>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filter = [{</p>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'http://rod.eionet.eu.int/schema.rdf#locality': 'DK',</p>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'http://rod.eionet.eu.int/schema.rdf#issue': 'Water'</p>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'http://rod.eionet.eu.int/schema.rdf#obligation': 'Some obligation'</p>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}]</p>
+	</li>
+</ol>
+<p>In case of errors UNS will return common HTTP status codes:</p>
+<ul>
+	<li>“ServiceUnavailable&quot; 503 (Will be returned in case that remote service is trying to push data to the existing but disabled channel)</li>
+	<li>&quot;NotFound&quot; 404 (Will be returned in case that remote service is trying to push data to the non existing channel or if tries to subscribe a non existing user)</li>
+	<li>&quot;BadRequest&quot; 400 (Will be returned in case that remote service is trying to provide bad input  to the UNS)</li>
+	<li>&quot;InternalError&quot; 500 (Will be returned in case of internal UNS errors)</li>
+	<li>&quot;Unauthorized&quot; - 401 (Will be returned if remote service is unauthorized to perform desired operation)     </li>
+	<li>“Method Not Allowed” (Will be returned if the remote service tries to operate on a channel that does not belong to it)</li>
+</ul>
+<p>To make use of the UNS XML RPC, users need to call it from an application. The following is an example for such an RPC call using the Python programming language:</p>
+<pre>import xmlrpclib</pre>
+<pre>  server = xmlrpclib.Server(‘http://&lt;&lt;web_root&gt;&gt;/receiver’,BasicAuthTransport(user,password))</pre>
+<pre>  try:</pre>
+<pre>         server.sendNotificationRDF(‘cdr’,rdfMessage)</pre>
+<pre>         if server.canSubscribe(‘cdr’,’someuser’):</pre>
+<pre>                 server.makeSubscription(‘cdr’,’someuser’,[])</pre>
+<pre>  except xmlrpclib.ProtocolError, p:</pre>
+<pre>         err_code=p.errcode</pre>
+<pre>         #handle error according to error code</pre>
+<h2><a name="_Toc117662304"></a>6.2  UNS RPC Users UI</h2>
+<p>As mentioned in the introduction of this section, the RPC users may view only the list of the channels they have created, or create a new PUSH channel. </p>
+<p align="center"><img border=0 width=642 height=376 src="../../images/image047.gif"></p>
+<p align=center>Figure 43: RPC User welcome screen</p>
+<h3><a name="_Toc117662305"></a>6.2.1 RPC User PUSH Channel Creation</h3>
+<p>In order to create a PUSH channel, you must be logged in UNS as RPC User. </p>
+<p>If you have the required user credentials, then the following steps must be followed:</p>
+<p>STEP 1 – Login</p>
+<blockquote>
+	<p>If you are not already logged in, see <a href="../auth.html">Authenticate User Account</a>.</p>
+</blockquote>
+<p>STEP 2 – Click on “Channels” button on the navigation bar.</p>
+<blockquote>
+	<p>This will take you to the list of the existing PUSH channels for the corresponding user. The identifier of the channel which is required for insertion of events as well as the Channel status are the two additional columns displayed in this list.</p>
+</blockquote>
+<p align="center"><img border=0 width=642 height=376 src="../../images/image048.gif"></p>
+<p align=center>Figure 44: PUSH Channels List</p>
+<p>STEP 3 – Click “Create”</p>
+<blockquote>
+	<p>By clicking on the Create button, the user arrives at the PUSH channel creation dialogue. A channel name and description will be required to introduced  by the RPC user in order for the channel to be created.</p>
+</blockquote>
+<p align="center"><img border=0 width=642 height=376 src="../../images/image049.gif"></p>
+<p align=center>Figure 45: PUSH Channel Creation form</p>
+<p>STEP 4 – Finalize PUSH Channel creation</p>
+<blockquote>
+	<p>After all the required data have been inserted, the user must press the “Save” button in order for the channel to be created.</p>
+</blockquote>
+<p>So, in summary:</p>
+<table border=1 cellspacing=0 cellpadding=0>
+	<tr>
+		<td width="12%" valign=top style='width:12.72%;border:solid black 1.0pt;
+  background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Step</p></td>
+		<td width="87%" valign=top style='width:87.28%;border:solid black 1.0pt;
+  border-left:none;background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>RPC User PUSH Channel creation</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.72%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>1</p></td>
+		<td width="87%" valign=top style='width:87.28%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Login</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.72%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>2</p></td>
+		<td width="87%" valign=top style='width:87.28%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Click on “Channels” button</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.72%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>3</p></td>
+		<td width="87%" valign=top style='width:87.28%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Click “Create” button</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.72%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>4</p></td>
+		<td width="87%" valign=top style='width:87.28%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Finalize PUSH Channel creation</p></td>
+	</tr>
+</table>
+</body>
+</html>

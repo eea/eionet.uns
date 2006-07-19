@@ -2,7 +2,7 @@
 <f:verbatim>
 	<div id="identification">
 		<a href="/">
-		        <img src="/UNS/images/eionet/logo.png" alt="Logo" id="logo" border="0" /></a>
+		        <img src="<c:url value="/images/eionet/logo.png" />  " alt="Logo" id="logo" border="0" /></a>
 		<div class="sitetitle">
 			Unified Notification System
 		</div>

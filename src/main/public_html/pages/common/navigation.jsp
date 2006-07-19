@@ -44,7 +44,7 @@
 									<li class="${selectedMenu == 'templates'?'selected':''}"><a href="<c:url value="/admin/templates/notificationTemplates.jsf"/>" title="Templates"><fmt:message key="label.menu.templates"/></a></li>
 									<li class="${selectedMenu == 'reports'?'selected':''}"><a href="<c:url value="/admin/reports/report_criteria.jsf"/>" title="Reports"><fmt:message key="label.menu.reports"/></a></li>
 									<li class="${selectedMenu == 'subscriptions'?'selected':''}"><a href="<c:url value="/subscriptions/subscriptions.jsf"/>" title="Subscriptions"><fmt:message key="label.menu.subscriptions"/></a></li>
-									<li><a href="#" onclick="javascript:openWindow(applicationRoot+'/help/index.jsp','olinehelp');" title="Help"><fmt:message key="label.menu.help"/></a></li>
+									<li><a href="#" onclick="javascript:openWindow('<c:url value="/help/help.jsp"/>','onlinehelp');" title="Help"><fmt:message key="label.menu.help"/></a></li>
 							  </c:when> 
 							  <c:when test="${userRole== 'eea'}" > 
 							  		<c:choose>
@@ -56,7 +56,7 @@
 										</c:otherwise>
 									</c:choose>		
 									<li class="${selectedMenu == 'subscriptions'?'selected':''}"><a href="<c:url value="/subscriptions/subscriptions.jsf"/>" title="Subscriptions"><fmt:message key="label.menu.subscriptions"/></a></li>
-									<li><a href="#" onclick="javascript:openWindow(applicationRoot+'/help/index.jsp','olinehelp');" title="Help"><fmt:message key="label.menu.help"/></a></li>
+									<li><a href="#" onclick="javascript:openWindow('<c:url value="/help/help.jsp"/>','onlinehelp');" title="Help"><fmt:message key="label.menu.help"/></a></li>
 							  </c:when> 
 							  <c:when test="${userRole == 'eeaNotLogged'}" > 
 							  		<c:choose>
@@ -67,15 +67,12 @@
 											<li class="${selectedMenu == 'dashboard'?'selected':''}"><a href="<c:url value="/rss/${sessionScope.user.externalId}/rssReader.jsf"/>" title="Dashboard"><fmt:message key="label.menu.myDashboard"/></a></li>
 										</c:otherwise>
 									</c:choose>		
-									<li><a href="#" onclick="javascript:openWindow(applicationRoot+'/help/index.jsp','olinehelp');" title="Help"><fmt:message key="label.menu.help"/></a></li>
+									<li><a href="#" onclick="javascript:openWindow(applicationRoot+'/help/index.jsp','onlinehelp');" title="Help"><fmt:message key="label.menu.help"/></a></li>
 							  </c:when> 
 							  <c:when test="${userRole == 'rpc'}" > 
 									<li class="${selectedMenu == 'channels'?'selected':''}"><a href="<c:url value="/xmlrpc/rpcUserChannels.jsf"/>" title="Your rpc channels"><fmt:message key="label.menu.channels"/></a></li>
-									<li><a href="#" onclick="javascript:openWindow(applicationRoot+'/help/index.jsp','olinehelp');" title="Help"><fmt:message key="label.menu.help"/></a></li>
+									<li><a href="#" onclick="javascript:openWindow('<c:url value="/help/help.jsp"/>','onlinehelp');" title="Help"><fmt:message key="label.menu.help"/></a></li>
 							  </c:when> 
-							  <c:otherwise> 
-									<li><a href="#" onclick="javascript:openWindow(applicationRoot+'/help/index.jsp','olinehelp');" title="Help"><fmt:message key="label.menu.help"/></a></li>
-							  </c:otherwise> 
 							</c:choose>  						
 						</ul>
 					</div>

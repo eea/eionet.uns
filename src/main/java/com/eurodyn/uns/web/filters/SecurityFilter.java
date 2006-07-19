@@ -58,26 +58,16 @@ public class SecurityFilter implements Filter {
 
 		if (authUsername != null) {
 			User user = (User) session.getAttribute("user");
-			logger.debug("Perform login ");
-			if (user == null) {// login
-				user = userFacade.getUser(authUsername, true);
-				user.setLoggedIn(true);
-				session.setAttribute("user", user);
-				String cookieId = newReq.isUserInRole("xmlrpc") ? "-1" : user.getId().toString();
-				Cookie cookie = new Cookie("unsDashboard", cookieId);
-				cookie.setMaxAge(30 * 24 * 60 * 60); // 30 days
-				cookie.setPath(newReq.getContextPath());
-				httpRes.addCookie(cookie);
-			} else {
-				user.setLoggedIn(true);				
-			}
-
-			String path = newReq.getRequestURI();
 			
-			if (path.indexOf("/login/") != -1){
-				redirectAfterLogin(newReq,httpRes);
-			}
-				
+			if (user == null || !user.isLoggedIn()) {// login
+				logIn(newReq,httpRes,user);
+				logger.debug("Perform login  for user " + newReq.getRemoteUser());
+				String path = newReq.getRequestURI();				
+				if (path.indexOf("/login/") != -1){
+					redirectAfterLogin(newReq,httpRes);
+				}
+
+			}				
 			if (!isAuthorised(newReq)) {
 				session.invalidate();
 				httpRes.sendRedirect(fc.getServletContext().getInitParameter("edu.yale.its.tp.cas.client.filter.loginUrl"));
@@ -104,6 +94,22 @@ public class SecurityFilter implements Filter {
 		chain.doFilter(newReq, res);
 	}
 
+
+	private void  logIn(HttpServletRequest request, HttpServletResponse response, User user){
+		if (user == null || !user.getExternalId().equals(request.getRemoteUser()))
+			user = userFacade.getUser(request.getRemoteUser(), true);
+		
+		String cookieId = request.isUserInRole("xmlrpc") ? "-1" : user.getId().toString();
+		Cookie cookie = new Cookie("unsDashboard", cookieId);
+		cookie.setMaxAge(30 * 24 * 60 * 60); // 30 days
+		cookie.setPath(request.getContextPath());
+		response.addCookie(cookie);
+		user.setLoggedIn(true);
+		request.getSession().setAttribute("user", user);
+		
+		
+	}
+	
 	
 	private void redirectAfterLogin(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String where = "/subscriptions/subscriptions.jsf";
@@ -143,15 +149,17 @@ public class SecurityFilter implements Filter {
 		}
 
 		public String getRemoteUser() {
-
-			HttpSession session = request.getSession();
-			if (session != null) {
-				User user = (User) session.getAttribute("user");
-				if (user != null && user.isLoggedIn()) {
-					return user.getExternalId();
-				}
+			String exernalId = request.getRemoteUser();
+			if (exernalId == null){
+				HttpSession session = request.getSession();
+				if (session != null) {
+					User user = (User) session.getAttribute("user");
+					if (user != null && user.isLoggedIn()) {
+						exernalId = user.getExternalId();
+					}
+				}				
 			}
-			return null;
+			return exernalId;
 		}
 
 		public boolean isUserInRole(String roleName) {

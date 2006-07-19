@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>UNS Administration</title>
+<link rel="stylesheet" type="text/css" href="../../main.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<h1><a name="_Toc117662262"></a>4. UNS Administration</h1>
+<h2><a name="_Toc117662263"></a>4.1 PUSH and PULL Channel Modes</h2>
+<p>The channels in UNS can operate in two modes; the PUSH mode and the PULL mode.</p>
+<ul>
+	<li><u>Pull Mode:</u> Channels operating under the PULL mode are feeds provided by services external to UNS. The application can access them and pull data from them (hence the name: PULL).</li>
+	<li><u>Push Mode:</u> Channels operating under the PUSH mode are created with the purpose of enabling users to insert events in them. UNS is designed to draw information about new events and send notifications to the Reportnet users.</li>
+</ul>
+<h2><a name="_Toc117662264"></a>4.2 Manage PULL Channels</h2>
+<h3><a name="_Toc117662265"></a>4.2.1 Create PULL content Channel</h3>
+<p>A Channel created in the “PULL” mode will be used to harvest information from external data feeds.</p>
+<p>In order to create a Channel you must be logged in as UNS Administrator. </p>
+<p>If you have administrator privileges, then the following steps must be followed:</p>
+<p>STEP 1 – Login</p>
+<blockquote>
+	<p>If you are not already logged in, see: <a href="../auth.html">Authenticate User Account</a>.</p>
+</blockquote>
+<p>STEP 2 – Click on “Channels” button on the navigation bar.</p>
+<blockquote>
+	<p>Arriving at the Channels section, the user may view the list of existing channels. The “Create” button is found on the bottom of this list.</p>
+</blockquote>
+<p align="center"><a name="fig4"></a><img border=0 width=642 height=588 src="../../images/image004.gif"></p>
+<p align=center>Figure 4: PULL Channels list</p>
+<p>STEP 3 – Click on “Create” button</p>
+<p>STEP 4 – Insert the required information.</p>
+<blockquote>
+	<p>The user has to fill in:</p>
+	<ul>
+		<li>Channel name: The title of the channel as the end-users will see it</li>
+		<li>Channel Description: A short text describing the channel’s context</li>
+		<li>URL: Since the channel represents an RSS/RDF feed, this is the address of this feed in the Web.</li>
+		<li>Refresh delay: The rate at which the channel’s contents should be refreshed.</li>
+		<li>Select notification template</li>
+		<li>Select allowed delivery types</li>
+		<li>Select roles</li>
+	</ul>
+	<p>In order for the channel to be successfully created, the required information must be filled-in correctly. If all fields are not properly filled-in or the content feed does not exist, then the application will return an appropriate error message. </p>
+	<p><b>Important Note</b>: UNS does not allow the duplication of a channel. If the URL or the name of a new channel already exists, the application will return the appropriate error message.</p>
+</blockquote>
+<p align="center"><img border=0 width=642 height=652 src="../../images/image005.gif"></p>
+<p align=center>Figure 5: Channel creation menu</p>
+<p>STEP 5 – Select Metadata</p>
+<blockquote>
+	<p>After the verification of the information, the user may select the metadata of the channel that Reportnet users may use for filtering the events. An Administrator shall understand the semantics of metadata elements that would like to make available to the user. These elements may not be standard and depend on the event channel feed (see: <a href="../feeds.html">Content Feeds section</a>). </p>
+	<p>In the case that no metadata elements are selected, the user will not be able to filter events arriving for a channel. As a result,  the user will receive all events arriving for this channel.</p>
+</blockquote>
+<p align="center"><img border=0 width=642 height=376 src="../../images/image006.gif"></p>
+<p align=center>Figure 6: Channel metadata selection</p>
+<p>STEP 6 – Create the channel</p>
+<blockquote>
+	<p>The channel creation is confirmed and the new channel is visible on the list.</p>
+</blockquote>
+<p>So, in summary:</p>
+<table border=1 cellspacing=0 cellpadding=0>
+	<tr>
+		<td width="12%" valign=top style='width:12.98%;border:solid black 1.0pt;
+  background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Step</p></td>
+		<td width="87%" valign=top style='width:87.02%;border:solid black 1.0pt;
+  border-left:none;background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Create a new Channel</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.98%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>1</p></td>
+		<td width="87%" valign=top style='width:87.02%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Login</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.98%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>2</p></td>
+		<td width="87%" valign=top style='width:87.02%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Click on “Channels” icon</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.98%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>3</p></td>
+		<td width="87%" valign=top style='width:87.02%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Click on “Create” button</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.98%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>4</p></td>
+		<td width="87%" valign=top style='width:87.02%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Insert required information</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.98%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>5</p></td>
+		<td width="87%" valign=top style='width:87.02%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Select Metadata</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.98%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>6</p></td>
+		<td width="87%" valign=top style='width:87.02%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Create the channel</p></td>
+	</tr>
+</table>
+<h3><a name="_Toc117662266"></a>4.2.2 Delete Channel</h3>
+<p>In order to delete a Channel you must be logged in as UNS Administrator. </p>
+<p>If you have administrator privileges, then the following steps must be followed:</p>
+<p>STEP 1 – Login</p>
+<blockquote>
+	<p>If you are not already logged in, see: <a href="../auth.html">Authenticate User Account</a>.</p>
+</blockquote>
+<p>STEP 2 – Click on “Channels” button on the navigation bar.</p>
+<blockquote>
+	<p>Arriving at the Channels section, the user may view the list of existing channels (<a href="#fig4">Figure 4</a>: PULL Channels list).</p>
+</blockquote>
+<p>STEP 3 – Click the <img border=0 width=13 height=13 src="../../images/image007.gif"> (Delete Channel) icon.</p>
+<blockquote>
+	<p>This icon is located at the rightmost column of the channel list</p>
+</blockquote>
+<p>STEP 4 – Confirm Channel Deletion</p>
+<p align=center><img border=0 width=381 height=118 src="../../images/image008.gif"></p>
+<p align=center>Figure 7: Delete Channel confirmation prompt</p>
+<blockquote>
+	<p>For safety reasons, the user receives a confirmation prompt for the delete channel action. If the user confirms, then the channel is deleted from the UNS database.</p>
+	<p>After a channel’s deletion, the channel’s subscribers will receive an automated notification message. </p>
+</blockquote>
+<p>So, in summary:</p>
+<table border=1 cellspacing=0 cellpadding=0>
+	<tr>
+		<td width="12%" valign=top style='width:12.9%;border:solid black 1.0pt;
+  background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Step</p></td>
+		<td width="87%" valign=top style='width:87.1%;border:solid black 1.0pt;
+  border-left:none;background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Delete a Channel</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.9%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>1</p></td>
+		<td width="87%" valign=top style='width:87.1%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Login</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.9%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>2</p></td>
+		<td width="87%" valign=top style='width:87.1%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Click on “Channels” icon</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.9%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>3</p></td>
+		<td width="87%" valign=top style='width:87.1%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Click on “Delete Channel” button</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.9%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>4</p></td>
+		<td width="87%" valign=top style='width:87.1%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Confirm Channel deletion</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.9%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>5</p></td>
+		<td width="87%" valign=top style='width:87.1%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Delete a Channel</p></td>
+	</tr>
+</table>
+<h3><a name="_Toc117662267"></a>4.2.3 Edit Channel</h3>
+<p>In order to edit a Channel you must be logged in as a UNS Administrator. </p>
+<p>If you have administrator privileges, then the following steps must be followed:</p>
+<p>STEP 1 – Login</p>
+<blockquote>
+	<p>If you are not already logged in, see: <a href="../auth.html">Authenticate User Account</a>.</p>
+</blockquote>
+<p>STEP 2 – Click on “Channels” button on the navigation bar.</p>
+<blockquote>
+	<p>Arriving at the Channels section, the user may view the list of existing channels (<a href="#fig4">Figure 4</a>: PULL Channels list).</p>
+</blockquote>
+<p>STEP 3 – Click on any Event Channel on the list</p>
+<blockquote>
+	<p>By clicking on the channel you will arrive at the “Edit Channel” page.</p>
+</blockquote>
+<p align="center"><a name="fig8"></a><img border=0 width=642 height=652 src="../../images/image009.gif"></p>
+<p align=center>Figure 8: Edit Channel page</p>
+<p>STEP 4 – Edit Channel fields </p>
+<blockquote>
+	<p>In the “Edit Channel” pages you may edit all the channel fields as well as the channel metadata options. </p>
+	<p>If during this step the channel’s allowed roles are modified, any previously subscribed users that will not have anymore access to this channel will receive an automated notification message for this change.</p>
+</blockquote>
+<p>STEP 5 – Push “Update” button</p>
+<blockquote>
+	<p>By pressing the “Update” button the Channel’s information is updated.</p>
+</blockquote>
+<p>So, in summary: </p>
+<table border=1 cellspacing=0 cellpadding=0>
+	<tr>
+		<td width="12%" valign=top style='width:12.9%;border:solid black 1.0pt;
+  background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Step</p></td>
+		<td width="87%" valign=top style='width:87.1%;border:solid black 1.0pt;
+  border-left:none;background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Edit a Channel</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.9%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>1</p></td>
+		<td width="87%" valign=top style='width:87.1%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Login</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.9%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>2</p></td>
+		<td width="87%" valign=top style='width:87.1%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Click on “Channels” button</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.9%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>3</p></td>
+		<td width="87%" valign=top style='width:87.1%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Click on any Event Channel on the list</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.9%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>4</p></td>
+		<td width="87%" valign=top style='width:87.1%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Edit Channel fields</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.9%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>5</p></td>
+		<td width="87%" valign=top style='width:87.1%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Push “Update” button</p></td>
+	</tr>
+</table>
+<h2><a name="_Toc117662268"></a>4.3 Manage PUSH Channels</h2>
+<h3><a name="_Toc117662269"></a>4.3.1 General Principles</h3>
+<p>Push channels are content services that are managed in UNS. Contrary to the PULL channels, the channels that operate under PUSH mode enable users to insert events in them. </p>
+<h3><a name="_Toc117662270"></a>4.3.2 Manage PUSH Channels</h3>
+<p>PUSH Channels cannot be created through the UNS interface by Administrators. They are created by external applications via the XML-RPC API. (See <a href="../rpc/features.html">RPC User Features</a>). So an external system supplied by appropriate UNS credentials actually creates the push channels.</p>
+<p align="center"><img border=0 width=642 height=560 src="../../images/image010.gif"></p>
+<p align=center>Figure 9: Push Channel Edit</p>
+<p>Nevertheless, the UNS administrator is responsible for the management of these channels and can enable or disable them at any time.</p>
+<p>More specifically, when the administrator visits the PUSH Channels tab under the “Channels” section, a list of the existing PUSH channels is displayed.</p>
+<p>Upon the creation of the channel, the name and description are assigned automatically by the system. However, the administrator can edit them and give more meaningful titles. Additionally, the</p>
+<p>Administrator can set the channel’s notification template, delivery type and allowed roles parameters. In order to do so, the user has to click on the name of the PUSH channel and arrive at the Channel Edit page.</p>
+<p>Similarly to the PULL channels, the PUSH channels also have metadata elements. However, those metadata elements are not defined during the creation of the channel nor can the UNS administrator manage them directly. The PUSH channel metadata are defined at the moment that an initial PUSH of events occurs and subsequently, the UNS administrator may view them and manage them in the same way as in the case of PULL channels. </p>
+<p align="center"><img border=0 width=642 height=376 src="../../images/image011.gif"></p>
+<p align=center>Figure 10: PUSH Channel Metadata</p>
+<p>As mentioned earlier, the administrator can enable/disable any PUSH Channel. This is performed by clicking the corresponding action button on the channel list. </p>
+<p>If the channel is under status “enabled”, the user with administration privileges should click the “disable channel” icon <img border=0 width=16 height=16
+src="../../images/image012.gif"> in order to disable it, or if the channel is under status “disabled”, the user should click the “enable channel” icon <img border=0 width=14 height=16 src="../../images/image013.gif"
+alt=Enable> to enable the service.</p>
+<p>When a channel is under status disabled, then it is not possible for external systems to push events data, neither users to subscribe themselves to that channel.</p>
+<p>Furthermore, the user is able to delete an existing PUSH channel by clicking the “delete channel” icon <img border=0 width=13 height=13 src="../../images/image007.gif"
+alt=delete> on the action column.</p>
+<p align="center"><img border=0 width=642 height=376 src="../../images/image014.gif"></p>
+<p align=center>Figure 11: PUSH Channels List</p>
+</body>
+</html>

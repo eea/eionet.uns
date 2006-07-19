@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Content Feeds</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<h1><a name="_Toc117662260"></a>2. Content Feeds</h1>
+<p>The UNS application can read and extract event data from documents where the data is stored in a structured manner. Such structured data is found in XML dialects such as RSS and Resource Description Framework (RDF).</p>
+<p>The characteristic of both of these markup languages is that they are designed to store not only content but also additional information describing the content.</p>
+<p>For example, in RSS, the content is stored in channels and the channel’s sub-elements: items.</p>
+<p>A channel may contain any number of items which represent an event or a summary of the event and a link leading to the page with the full description of the event.</p>
+<p>Each item contains some metadata elements that describe its content, such as<a href="#_ftn1" name="_ftnref1" title="">[*]</a>:</p>
+<ul>
+	<li>title: the title of the item</li>
+	<li>description: a summary/introduction of the item</li>
+	<li>link: the URL where the full text is available</li>
+	<li>author: the name/e-mail of the author of the item</li>
+	<li>pubDate: the date when the item was published</li>
+	<li>guid: a unique identifier for each item</li>
+</ul>
+<p>A typical example of an RSS document is shown in Figure 1:</p>
+<p align="center"><img border=0 width=600 height=443 src="../images/image001.gif"></p>
+<p align=center>Figure 1: Example of RSS document</p>
+<p>These metadata elements are optional but at least a title or a description must be present in order for the content to be meaningful.</p>
+<p>The same principles stand also for RDF type of documents. The only difference in the case of RDF is the syntax of the document itself<a href="#_ftn2" name="_ftnref2" title="">[†]</a>. Therefore RDF may provide other type of resources than simple RSS items. </p>
+<p>UNS in turn, through its Harvester functionality, is able to browse through such structured documents and identify distinct resources. The system will store every recognized item and send a notification with all available metadata to UNS users (see: Create PULL content Channel). </p>
+<p>Additionally, it is possible to insert such structured documents into the UNS. This function is available only to event channels that operate under PUSH mode (see: Manage PUSH Channels)</p>
+<p>UNS has a capability to handle all current versions of RSS and RDF in a way that is transparent to the user.</p>
+<p>UNS allows the Reportnet users to retrieve their events through a RSS feed. Reportnet users can access this feed using any RSS/RDF reader software. This feed serves events collected during the last 5 days. Any RSS reader software could be configured to archive articles so the user will not loose old retrieved events.</p>
+<div><br clear=all>
+    <hr align=left size=1 width="33%">	
+    <div id=ftn1>
+		<p><a href="#_ftnref1" name="_ftn1" title="">[*]</a> This list is not exhaustive. The full RSS specification can be found at <a href="http://blogs.law.harvard.edu/tech/rss">http://blogs.law.harvard.edu/tech/rss</a> </p>
+	</div>
+	<div id=ftn2>
+		<p><a href="#_ftnref2" name="_ftn2" title="">[†]</a> Complete specifications for RDF are found at: <a href="http://www.w3.org/RDF/">http://www.w3.org/RDF/</a> </p>
+	</div>
+</div>
+</body>
+</html>

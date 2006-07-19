@@ -1,0 +1,341 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>UNS User FEATURES</title>
+<link rel="stylesheet" type="text/css" href="../../main.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<h1><a name="_Toc117662292"></a>5. UNS User FEATURES</h1>
+<h2><a name="_Toc117662293"></a>5.1 General Principles</h2>
+<p>The user module section describes the set of UNS operations and functions which are available to simple non-administrator users. This set of functions allows REPORTNET users to manage their notification profile information.  More precisely, it allows registered users to specify what type of notifications they would like to receive and how they like to receive it.</p>
+<p>This set of functions is comprised of the following:</p>
+<ul>
+	<li>Subscribe to an event channel</li>
+	<li>Unsubscribe from an event channel</li>
+	<li>Edit Subscription</li>
+</ul>
+<h2><a name="_Toc117662294"></a>5.2 Notification Profile Management</h2>
+<h3><a name="_Toc117662295"></a>5.2.1 Setting Notification Preferences and Vacation Flag</h3>
+<p>The notification preferences of any Reportnet user can be set by logging-in the UNS and accessing the “My preferences” tab. </p>
+<p>From this page, the user may define the delivery addresses of the messages destined for the Web Dashboards and Jabber services. In addition, the user may enable or disable the vacation flag.</p>
+<h4><a name="_Toc117662296"></a>5.2.1.1 Setting delivery addresses</h4>
+<p>In order for each user to set the delivery addresses for the Jabber and WDB services, the following steps must be followed:</p>
+<p>STEP 1 – Login</p>
+<blockquote>
+	<p>If you are not already logged in, see section 3 (<a href="../auth.html">Authenticate User Account</a>).</p>
+</blockquote>
+<p>STEP 2 – Click on the “Subscriptions” button on the navigation bar.</p>
+<blockquote>
+	<p>By selecting the “Subscriptions” the user should select the “My Preferences” tab</p>
+</blockquote>
+<p>STEP 3 – Enter/Edit a Jabber or WDB address for the delivery of the UNS notification messages.</p>
+<blockquote>
+	<p><b>Important Note</b>: The user must also enter a valid Jabber account as well as a Web Dashboards address in order for the corresponding notifications to be delivered. Web Dashboards user address is the one that appears on the Internet browsers address bar when the user access to his/her dashboard at the Web Dashboards Web site. The e-mail address of the user cannot be changed and corresponds to the one defined in the EEA LDAP server. In case an invalid Jabber account or WDB address is inserted, the UNS will return the appropriate error message.</p>
+</blockquote>
+<p>STEP 4 – Press “Save”</p>
+<p align="center"><img border=0 width=642 height=428 src="../../images/image037.gif"></p>
+<p align=center>Figure 34: UNS - My Preferences page</p>
+<p>So, in summary:</p>
+<table border=1 cellspacing=0 cellpadding=0>
+	<thead>
+		<tr>
+			<td width="12%" valign=top style='width:12.72%;border:solid black 1.0pt;
+   background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Step</p></td>
+			<td width="87%" valign=top style='width:87.28%;border:solid black 1.0pt;
+   border-left:none;background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Setting Delivery Addresses</p></td>
+		</tr>
+	</thead>
+	<tr>
+		<td width="12%" valign=top style='width:12.72%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>1</p></td>
+		<td width="87%" valign=top style='width:87.28%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Login</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.72%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>2</p></td>
+		<td width="87%" valign=top style='width:87.28%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Click on “Subscriptions” button</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.72%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>3</p></td>
+		<td width="87%" valign=top style='width:87.28%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Enter Jabber/WDB addresses</p></td>
+	</tr>
+	<tr>
+		<td width="12%" valign=top style='width:12.72%;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>4</p></td>
+		<td width="87%" valign=top style='width:87.28%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Save</p></td>
+	</tr>
+</table>
+<h4><a name="_Toc117662297"></a>5.2.1.2 Vacation Flag</h4>
+<p>In cases that a user is away for a long period of time, he/she has the ability to enable a vacation flag notifying the UNS to stop sending notifications for a defined amount of time. In order to manage the vacation flag, the user needs to perform the following steps:</p>
+<p>STEP 1 – Login</p>
+<blockquote>
+	<p>If you are not already logged in, see section 3 (<a href="../auth.html">Authenticate User Account</a>).</p>
+</blockquote>
+<p>STEP 2 – Click on “Subscriptions” button on the navigation bar.</p>
+<blockquote>
+	<p>By selecting the “Subscriptions” the user should select the “My Preferences” tab</p>
+</blockquote>
+<p>STEP 3 – Set an automatic disable date (Optional)</p>
+<blockquote>
+	<p>Set a -future- date when the vacation flag will be automatically disabled. If the inserted date is not a future one, then the vacation flag won’t be enabled and the UNS will return the appropriate error message.</p>
+	<p><b>Important Note</b>: If an automatic disable date is not provided, the Vacation flag will stay enabled until it is disabled manually.</p>
+</blockquote>
+<p>STEP 4 – Select the “Enable vacation flag” button.</p>
+<blockquote>
+	<p>Pressing this button will enable the vacation flag. The system will stop sending any notifications for harvested events to this user until the disable date of this setting. Subsequently, an image will be displayed for the UNS interface notifying the user that the vacation flag is enabled.</p>
+</blockquote>
+<p>STEP 4 – Disable vacation flag</p>
+<blockquote>
+	<p>Press the “Disable vacation flag” button in order to start receiving notifications once again. <br>
+		The system will start delivering notifications generated from the moment of the disabling Vacation flag. </p>
+	<p><b>Important Note</b>: Any notifications generated during vacation period will not be sent to the user after disabling Vacation flag.</p>
+</blockquote>
+<p align="center"><img border=0 width=642 height=385 src="../../images/image038.gif"></p>
+<p align=center>Figure 35: Vacation flag enabled</p>
+<h3><a name="_Toc117662298"></a>5.2.2 Subscribe to an Event Channel</h3>
+<p>In order to subscribe to an event channel, you must be logged in UNS. </p>
+<p>If you have the required user credentials, then the following steps must be followed:</p>
+<p>STEP 1 – Login</p>
+<blockquote>
+	<p>If you are not already logged in, see section 3 (<a href="../auth.html">Authenticate User Account</a>).</p>
+</blockquote>
+<p>STEP 2 – Click on “Subscriptions” button on the navigation bar.</p>
+<blockquote>
+	<p>By selecting the “Subscriptions” the user should select the “Subscribe” tab</p>
+</blockquote>
+<p align="center"><img border=0 width=642 height=609 src="../../images/image039.gif"></p>
+<p align=center>Figure 36: Event Channels list</p>
+<p>STEP 3 – Select channel to subscribe to</p>
+<blockquote>
+	<p>The “Subscribe” page displays all the channels that the user can subscribe to, according to his/her role. The available list of channels to the specific user will be related to the allowed roles as defined for each channel. The format of the specific notification event linked to the subscribed channel will be affected by the associated template which is also defined separately for each channel.</p>
+	<p>In order to perform a new subscription, the user must select the desired channel and then select the ‘Subscribe’ button.</p>
+</blockquote>
+<p>STEP 4 – Enter Subscription Details</p>
+<blockquote>
+	<p>In order to complete the subscription, the user MAY specify how he/she wants to receive the notifications. The possibilities are directly related to the channel’s parameters. In other words the list of delivery types will be dynamically adjusted based on the channel’s settings. </p>
+	<p>E-mail, Jabber, and Web Dashboards (more than one selection is possible). The User must select some of the different delivery types in order to complete the subscription. </p>
+</blockquote>
+<p align="center"><img border=0 width=642 height=481 src="../../images/image040.gif"></p>
+<p align=center>Figure 37: Subscription Details</p>
+<p>STEP 5 – Define filters</p>
+<blockquote>
+	<p>In the Subscription page, the user also has the ability to filter the events for which he/she will receive a notification.</p>
+</blockquote>
+<p align=center><img border=0 width=642 height=135 src="../../images/image041.gif"></p>
+<p align=center>Figure 38: Filters menu</p>
+<blockquote>
+	<p>These filters enable the user to filter-out undesired data and receive notifications only for the event that matches the filter criteria.</p>
+	<p>In order to create a filter, the user must select the channel property according to which the filter will be based. The channel properties are identical to the channel Metadata (for more info on channel metadata see: <a href="../feeds.html">Content Feeds</a>).</p>
+	<p>Then the user must select a target value for the filter. The list of values includes all the different values harvested for this specific property since the creation of the channel. </p>
+	<p>As soon as the property-value combination has been selected, the user may select “Add condition” and then define additional conditions for this filter. For subsequent conditions, a different property must be selected. The logical relation among different conditions of the same filter is “AND”. This means that for an event to pass from the filter, it should satisfy all the filter conditions.</p>
+	<p>When the filter conditions have been finalised, then the user must press the “Save filter” button in order for this filter to be created. </p>
+	<p>In the same manner the user may create multiple filters. In a case of multiple filters, an event that satisfies the criteria of any of the filters will be allowed to pass (“OR” logical relation).</p>
+	<p>The filters conditions can be changed / removed by pressing the “edit filter” button <img border=0 width=13 height=13 src="../../images/image042.gif"
+alt=Edit> on the desired filter. Likewise, for removing a filter, the user may select “delete filter” button <img border=0
+width=13 height=13 src="../../images/image007.gif" alt=Delete> and remove it from the system.</p>
+</blockquote>
+<p align="center"><img border=0 width=642 height=89 src="../../images/image043.gif"></p>
+<p align=center>Figure 39: Filter with multiple criteria</p>
+<blockquote>
+	<p><b>Important Note</b>: The UNS does not allow two identical filters to be created. The UNS allows the creation of two overlapping filters but the user will be informed with appropriate warning message about overlapped filters.</p>
+</blockquote>
+<p>STEP 6 – Complete Subscription</p>
+<blockquote>
+	<p>After all the required information has been inserted, the user must push the “Subscribe” button in order for the new subscription to be finalized.</p>
+	<p><b>Important Note</b>: The user will receive notifications only for the events that  will be harvested after the finalization of the subscription.</p>
+</blockquote>
+<p>In summary,</p>
+<table border=1 cellspacing=0 cellpadding=0>
+	<thead>
+		<tr>
+			<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+   background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Step</p></td>
+			<td width=405 valign=top style='width:303.75pt;border:solid black 1.0pt;
+   border-left:none;background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Edit Notificator Configuration</p></td>
+		</tr>
+	</thead>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>1</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Login</p></td>
+	</tr>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>2</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Click on “Subscriptions” button</p></td>
+	</tr>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>3</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Select a Channel to Subscribe to</p></td>
+	</tr>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>4</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Enter Subscription Details</p></td>
+	</tr>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>5</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Define Filters</p></td>
+	</tr>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>6</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Complete Subscription</p></td>
+	</tr>
+</table>
+<h3><a name="_Toc117662299"></a>5.2.3 Edit a Subscription</h3>
+<p>In order to edit a subscription to an event channel, you must be logged in UNS. </p>
+<p>If you have the required user credentials, then the following steps must be followed:</p>
+<p>STEP 1 – Login</p>
+<blockquote>
+	<p>If you are not already logged in, see <a href="../auth.html">Authenticate User Account</a>.</p>
+</blockquote>
+<p>STEP 2 – Click on “Subscriptions” button on the navigation bar.</p>
+<blockquote>
+	<p>In order to perform an edit on a subscription, the user should select the “Existing Subscriptions” tab</p>
+</blockquote>
+<p align=center><img border=0 width=642 height=376 src="../../images/image044.gif"></p>
+<p align=center>Figure 40: Existing Subscriptions page</p>
+<p>STEP 3 – Select a subscription to edit</p>
+<blockquote>
+	<p>The “My Subscriptions” page displays all the channels the user has subscribed to. </p>
+	<p>In order to edit an existing subscription, the user must select the desired channel by clicking on its name.</p>
+</blockquote>
+<p>STEP 4 – Edit Subscription – Define filters</p>
+<blockquote>
+	<p>The user may edit the Jabber or WDB address as well as the desired notification delivery type(s).</p>
+</blockquote>
+<p align="center"><img border=0 width=642 height=496 src="../../images/image045.gif"></p>
+<p align=center>Figure 41: Edit Subscription</p>
+<blockquote>
+	<p>In addition, the user may define additional filters or edit existing ones (see:</p>
+</blockquote>
+<p>STEP 5 – Complete Subscription editing</p>
+<blockquote>
+	<p>After all the required information has been inserted, the user must push the “Update” button in order for the new settings to take effect.</p>
+</blockquote>
+<p>In summary,</p>
+<table border=1 cellspacing=0 cellpadding=0>
+	<thead>
+		<tr>
+			<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+   background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Step</p></td>
+			<td width=405 valign=top style='width:303.75pt;border:solid black 1.0pt;
+   border-left:none;background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Edit Notificator Configuration</p></td>
+		</tr>
+	</thead>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>1</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Login</p></td>
+	</tr>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>2</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Click on “Subscriptions” button</p></td>
+	</tr>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>3</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Select a Subscription to edit</p></td>
+	</tr>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>4</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Edit Subscription – Define Exclude filters</p></td>
+	</tr>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>5</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Complete Subscription Editing</p></td>
+	</tr>
+</table>
+<h3><a name="_Toc117662300"></a>5.2.4 Unsubscribe from an Event Channel</h3>
+<p>In order to remove a subscription to an event channel, you must be logged in UNS. </p>
+<p>If you have the required user credentials, then the following steps must be followed:</p>
+<p>STEP 1 – Login</p>
+<blockquote>
+	<p>If you are not already logged in, see section 3 (<a href="../auth.html">Authenticate User Account</a>).</p>
+</blockquote>
+<p>STEP 2 – Click on “Subscriptions” button on the navigation bar.</p>
+<blockquote>
+	<p>In order to unsubscribe from a channel, the user should select the “Existing Subscriptions” tab</p>
+</blockquote>
+<p>STEP 3 – Unsubscribe from Channel</p>
+<blockquote>
+	<p>The “My Subscription” page displays all the user’s existing subscriptions. </p>
+	<p>In order to unsubscribe from a channel, the user must select the desired channel and then select the ‘Unsubscribe’ button.</p>
+	<p>If the operation is successful, an information message will be displayed to the user</p>
+</blockquote>
+<p align=center><img border=0 width=642 height=376 src="../../images/image046.gif"></p>
+<p align=center>Figure 42: Information message after a successful delete of a subscription</p>
+<p>In summary,</p>
+<table border=1 cellspacing=0 cellpadding=0>
+	<thead>
+		<tr>
+			<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+   background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Step</p></td>
+			<td width=405 valign=top style='width:303.75pt;border:solid black 1.0pt;
+   border-left:none;background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt'><p>Edit Notificator Configuration</p></td>
+		</tr>
+	</thead>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>1</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Login</p></td>
+	</tr>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>2</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Click on “Subscriptions” button</p></td>
+	</tr>
+	<tr>
+		<td width=59 valign=top style='width:44.25pt;border:solid black 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'><p align=center>3</p></td>
+		<td width=405 valign=top style='width:303.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'><p>Unsubscribe from Channel</p></td>
+	</tr>
+</table>
+<h3><a name="_Toc117662301"></a>5.2.5 Event Feeds</h3>
+<p>UNS allows the Reportnet users to view their events through an RSS feed. This content feed is available at: and Reportnet users can access this feed using any RSS/RDF reader software. The RSS feed contains only events from user selected subscriptions that use RSS feed as one of the delivery types.</p>
+</body>
+</html>

@@ -138,6 +138,10 @@
     	<filter-name>CAS Filter</filter-name>
     	<url-pattern>/login/*</url-pattern>
   	</filter-mapping>
+  	<filter-mapping>
+    	<filter-name>CAS Filter</filter-name>
+    	<url-pattern>/help/*</url-pattern>
+  	</filter-mapping>
   	
 	<filter-mapping>
 		<filter-name>Security filter</filter-name>
