@@ -1,6 +1,8 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 
 <h:form>
+	<htm:h1 rendered="#{empty rpcChannelBean.channel.title}"> <h:outputText  value="Edit channel "  /></htm:h1>
+	<htm:h1 rendered="#{not empty rpcChannelBean.channel.title}"> <h:outputText  value="Edit the '#{rpcChannelBean.channel.title}' channel"  /></htm:h1>
 
 	<h:panelGrid columns="2" border="0" >
 

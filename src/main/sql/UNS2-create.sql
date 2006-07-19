@@ -398,7 +398,7 @@ INSERT INTO `DELIVERY_TYPE` (`ID`,`NAME`) VALUES
 --
 /*!40000 ALTER TABLE `NOTIFICATION_TEMPLATE` DISABLE KEYS */;
 INSERT INTO `NOTIFICATION_TEMPLATE` (`ID`,`NAME`,`SUBJECT`,`TEXT_PLAIN`,`TEXT_HTML`,`EDIT_ONLY`) VALUES
- (1,'Default template','\"$EVENT.CHANNEL\" channel: $EVENT.TITLE','$EVENT\r\nYou may unsubscribe yourself from the \"$EVENT.CHANNEL\" channel by using the following link: $UNSUSCRIBE_LINK\r\ntest 001\r\nBest Regards,\r\nEuropean Environment Agency','<p>$EVENT<br />You may unsubscribe yourself from the \"$EVENT.CHANNEL\" channel by using the following link: $UNSUSCRIBE_LINK</p><p><span style=\"font-weight: bold;\">test 002</span><br /></p><p>Best Regards,<br />European Environment Agency</p><p></p>',1),
+ (1,'Default template','\"$EVENT.CHANNEL\" channel: $EVENT.TITLE','$EVENT\r\nYou may unsubscribe yourself from the \"$EVENT.CHANNEL\" channel by using the following link: $UNSUSCRIBE_LINK\r\ntest 001\r\nBest Regards,\r\nEuropean Environment Agency','<p>$EVENT<br />You may unsubscribe yourself from the \"$EVENT.CHANNEL\" channel by using the following link: $UNSUSCRIBE_LINK</p><p><br /></p><p>Best Regards,<br />European Environment Agency</p><p></p>',1),
  (2,'Unsusbcribed - channel access rights changed notification','Unsubscribed from \"$EVENT.CHANNEL\" channel','You have been unsubscribed form the channel \"$EVENT.CHANNEL\" due to access rigths changes.\r\n \r\nSorry for the inconvenience,\r\nEuropean Environment Agency','You have been unsubscribed form the channel &quot;$EVENT.CHANNEL&quot; due to access rigths changes.<br /> &nbsp;<br /> Sorry for the inconvenience,<br /> European Environment Agency<br />',1),
  (3,'Unsubscribed - channel removed notification','Unsubscribed from \"$EVENT.CHANNEL\" channel','Channel \"$EVENT.CHANNEL\" does not exist anymore.\r\nYou will not be receving notification for this channel anymore.\r\n \r\nSorry for the inconvenience,\r\nEuropean Environment Agency','Channel \"$EVENT.CHANNEL\" does not exist anymore.<br /> You will not be receving notification for this channel anymore.<br />  <br /> Sorry for the inconvenience,<br /> European Environment Agency',1);
 /*!40000 ALTER TABLE `NOTIFICATION_TEMPLATE` ENABLE KEYS */;
@@ -431,6 +431,17 @@ INSERT INTO `STYLESHEET` (`ID`,`NAME`,`DESCRIPTION`,`CONTENT`) VALUES
 INSERT INTO `CHANNEL` (`ID`,`STYLESHEET_ID`,`NOTIFICATION_TEMPLATE_ID`,`CREATOR`,`TITLE`,`DESCRIPTION`,`LAST_HARVEST`,`MODE`,`FEED_URL`,`REFRESH_DELAY`,`CREATION_DATE`,`CSTATUS`,`SECONDARY_ID`,`LANGUAGE_ID`) VALUES 
  (1,2,1,1,'Obligations statistics','Obligations per year diagram for interval 2001-2009','1990-02-01 00:00:00','PULL','http://rod.eionet.eu.int/events.rss',120,UTC_TIMESTAMP(),1,'3b0f5f8db66da74d3acbca0e0acdd6d84539b010','en');
 /*!40000 ALTER TABLE `CHANNEL` ENABLE KEYS */;
+
+
+
+--
+-- Insert default delivery type for basic channel
+--
+
+/*!40000 ALTER TABLE `CHANNEL_DELIVERY_TYPE` DISABLE KEYS */;
+INSERT INTO `CHANNEL_DELIVERY_TYPE` (`CHANNEL_ID`,`DELIVERY_TYPE_ID`) VALUES 
+ (1,4);
+/*!40000 ALTER TABLE `CHANNEL_DELIVERY_TYPE` ENABLE KEYS */;
 
 
 

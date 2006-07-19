@@ -5,7 +5,7 @@
 		<ul>
 			<li id="currenttab"><span  title="RPC Channels">RPC Channels</span></li>		
 		</ul>
-</div>&nbsp;
+</div>
 </f:verbatim>
 
 

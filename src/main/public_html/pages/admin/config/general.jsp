@@ -1,9 +1,9 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <h:form>
+	<htm:h1>
+		<h:outputText value="General configuration" />
+	</htm:h1>
 	<h:panelGrid columns="1" style="width:99%">
-		<htm:h1>
-			<h:outputText value="General configuration" />
-		</htm:h1>
 		<h:panelGrid columns="2">
 			<h:outputLabel value="Harvester interval (minutes)" for="harvester_interval" />
 			<h:inputText id="harvester_interval" value="#{configBean.configMap['daemons/harvester/interval'].tempValue}" size="4" >

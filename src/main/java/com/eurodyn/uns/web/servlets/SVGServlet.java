@@ -34,7 +34,6 @@ public class SVGServlet extends HttpServlet {
 		ByteArrayInputStream aaa = null;
 		String cc = null;
 		try {
-			System.out.println("Test SVG");
 			BaseChannelServer cs = new EEAChannelServer();
 			String idStr = request.getParameter("subs_id");
 			if (idStr != null) {
@@ -62,7 +61,7 @@ public class SVGServlet extends HttpServlet {
 				aaa = new ByteArrayInputStream(cc.getBytes());
 			} else {
 				// Non existing channel TEST function
-				Channel channel = (Channel) request.getSession().getAttribute("testchannel");
+				Channel channel = (Channel) request.getSession().getAttribute("testChannel");
 				DatabaseHandler databaseHandler = new DatabaseHandler(null);
 				Dto dto = new Dto();
 				dto.put("channel", channel);

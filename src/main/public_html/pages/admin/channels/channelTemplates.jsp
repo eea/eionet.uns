@@ -1,9 +1,8 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <h:form id="channelTemplates22" onsubmit="submitChannelTemplates(this)">
-	<h:panelGrid columns="1">
 	<htm:h1 rendered="#{channelBean.channel.mode != 'PUSH'}" > <h:outputText  value="Step 3 of 4"  /></htm:h1>
 	<htm:h1 rendered="#{channelBean.channel.mode == 'PUSH'}" > <h:outputText  value="Step 2 of 3"  /></htm:h1>
-	
+	<h:panelGrid columns="1">
 	<htm:fieldset>
 		<htm:legend>
 			<h:outputText value="Notifications template" />

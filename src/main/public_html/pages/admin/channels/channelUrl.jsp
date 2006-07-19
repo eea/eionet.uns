@@ -1,7 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <h:form>
+	<htm:h1> <h:outputText value="Step 1 of 4"  /></htm:h1>
 	<h:panelGrid columns="1">
-		<htm:h1> <h:outputText value="Step 1 of 4"  /></htm:h1>
 		<h:panelGroup>
 			<h:outputLabel for="feedUrl" value="#{msg['label.channel.url']}" />
 			<h:inputText id="feedUrl" size="50" required="true" value="#{channelBean.channel.feedUrl}" valueChangeListener="#{channelBean.channelUrlChange}" />

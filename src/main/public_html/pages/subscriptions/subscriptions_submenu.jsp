@@ -28,6 +28,6 @@
 			<li id="currenttab"><span  title="Your preferences">My preferences</span></li>
 		</ul>
 	</c:if>	
-</div>&nbsp;
+</div>
 </f:verbatim>
 

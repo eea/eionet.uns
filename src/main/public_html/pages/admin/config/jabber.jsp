@@ -1,10 +1,10 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 
 <h:form>
+	<htm:h1>
+		<h:outputText value="Jabber configuration" />
+	</htm:h1>
 	<h:panelGrid columns="1" style="width:99%">
-		<htm:h1>
-			<h:outputText value="Jabber configuration" />
-		</htm:h1>
 		<h:panelGrid columns="2">
 			<h:outputLabel value="Host" for="jabber_host" />
 			<h:inputText id="jabber_host" value="#{configBean.configMap['jabberserver/host'].tempValue}" size="30" />

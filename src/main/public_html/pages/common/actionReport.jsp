@@ -1,4 +1,5 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
+	<h:outputText value="&nbsp;" escape="false" rendered="#{facesContext.maximumSeverity.ordinal > 0}" /> 
 	<t:div style="border-width: 1px; border-color: #cc6600; border-style: solid; width: 60%; background: #ffffff;" rendered="#{facesContext.maximumSeverity.ordinal == 1}" >
 		<h:panelGrid  columns="2" border="0"   >
 			<h:graphicImage url="/images/exclamation_info.gif" alt="" title=""/>
@@ -15,6 +16,7 @@
 			<t:messages showSummary="false"  showDetail="true"  layout="table" />
 		</h:panelGrid>
 	</t:div>
+
 	<t:div style="border-width: 1px; border-color: #cc6600; border-style: solid; width: 60%; background: #ffffff;" rendered="#{facesContext.maximumSeverity.ordinal > 2}" >
 		<h:panelGrid columns="2" border="0"   >
 			<h:graphicImage url="/images/exclamation_error.gif" alt="" title=""/>

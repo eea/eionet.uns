@@ -1,6 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 
 <h:form>
+	<htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
 	<htm:fieldset>
 		<htm:legend>
 			<h:outputText value="Test channel " />

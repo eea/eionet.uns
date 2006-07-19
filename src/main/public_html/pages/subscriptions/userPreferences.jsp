@@ -1,6 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <t:saveState value="#{subscriptionBean.subscriber}" />
 <h:form >
+	<htm:h1><h:outputText value="My preferences" /></htm:h1>
 	<htm:fieldset>
 		<htm:legend>
 			<h:outputText value="Notifications" />

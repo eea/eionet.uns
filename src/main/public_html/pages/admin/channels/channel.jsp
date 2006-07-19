@@ -2,9 +2,9 @@
 
 <h:form id="channelForm5d77" onsubmit="submitChannel(this)">
 	<t:inputHidden value="#{channelBean.channel.id}" />
-	<h:panelGrid columns="1">
 	<htm:h1 rendered="#{channelBean.channel.mode != 'PUSH'}" > <h:outputText  value="Step 2 of 4"  /></htm:h1>
-	<htm:h1 rendered="#{channelBean.channel.mode == 'PUSH'}" > <h:outputText  value="Step 1 of 3"  /></htm:h1>
+	<htm:h1 rendered="#{channelBean.channel.mode == 'PUSH'}" > <h:outputText  value="Step 1 of 3"  /></htm:h1>	
+	<h:panelGrid columns="1">
 	<htm:fieldset>
 		<htm:legend><h:outputText value="Channel details"/></htm:legend>
 		<h:panelGrid columns="2" border="0" columnClasses="">

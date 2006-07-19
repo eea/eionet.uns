@@ -24,5 +24,5 @@
 			<li id="currenttab"><span  title="Push channels">Push channels</span></li>
 		</ul>
 	</c:if>
-</div>&nbsp;
+</div>
 </f:verbatim>

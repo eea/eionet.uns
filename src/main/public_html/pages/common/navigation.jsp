@@ -24,7 +24,7 @@
 <h:form id="navigationForm">
 	<f:verbatim>
 		<div class="portlet" style="text-align: center;">
-			<h5>Navigation</h5>	
+			<h2>Navigation</h2>	
 			<div class="portletBody">
 				<div class="portletContent odd">
 					<div>
@@ -104,26 +104,18 @@
 			
 	<h:panelGroup rendered="#{(not empty sessionScope.user) and sessionScope.user.loggedIn}" >
 		<f:verbatim>
-			<div class="portlet" style="text-align: center;">
+			<div  style="text-align: center;">
 				<div>
-					<h5>
-					<span><fmt:message key="label.menu.logged"/></span>
-					<br/>
-					<span>
+					<h2>
+						<span><fmt:message key="label.menu.logged"/></span>
+						<br/>
 						</f:verbatim>
 							<h:outputText value="#{sessionScope.user.externalId}"/>
 						<f:verbatim>
-					</span>
-					</h5>
-					<div class="portletBody">
-						<div class="portletContent odd">									
-							<ul class="portal-subnav">
-								<li>
-									<li><a href="<c:url value="/pages/logout.jsp" />" title="login">Logout</a></li>								
-								<li>
-							</ul>
-						</div>
-					</div>
+					</h2>
+					<ul>
+						<li><a href="<c:url value="/pages/logout.jsp" />" title="login">Logout</a></li>
+					</ul>
 				</div>
 			</div>
 		</f:verbatim>	
@@ -135,7 +127,7 @@
 		<div class="visualClear"> </div>
 		<div>
 			<div class="portlet" style="text-align: center;">
-				<h5>Reportnet </h5>
+				<h2>Reportnet </h2>
 				<div class="portletBody">
 					<div class="portletContent odd">
 						<ul class="portal-subnav">

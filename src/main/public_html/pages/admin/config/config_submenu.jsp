@@ -48,5 +48,5 @@
 			<li id="currenttab"><span style="color: black; text-decoration: none;" title="Jabber configuration">Jabber</span></li>
 		</ul>
 	</c:if>
-</div>&nbsp;
+</div>
 </f:verbatim>

@@ -115,11 +115,6 @@ public class ConfigManager {
 		configMap.put(createKey(jabberPath, "password"), createValue(jabberPath, "password", stringType));
 		configMap.put(createKey(jabberPath, "usessl"), createValue(jabberPath, "usessl", booleanType));
 
-		// Iterator it = configMap.entrySet().iterator();
-		// while (it.hasNext()) {
-		// Map.Entry pairs = (Map.Entry) it.next();
-		// System.out.println(pairs.getKey() + " = " + ((ConfigElement) pairs.getValue()).getTempValue());
-		// }
 
 	}
 

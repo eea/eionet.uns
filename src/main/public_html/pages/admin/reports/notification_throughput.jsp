@@ -1,6 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 
 <h:form>
+	<htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
 	<t:div rendered="#{reportBean.total == 0}">
 		<h:outputText value="There is no such notifications in the system" />
 	</t:div>

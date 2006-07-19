@@ -47,19 +47,21 @@ public class RssFeedServlet extends HttpServlet {
 
 			User user = LoginBean.getUser(request);
 
-			Map things = jdbcFeedDao.findAllUserEvents(user);
-			Collection thingsList = things.values();
-			for (Iterator iterator = thingsList.iterator(); iterator.hasNext();) {
-				RDFThing rdfThing = (RDFThing) iterator.next();
-				Resource item = rdf.createResource(rdfThing.getExt_id(), ResourceFactory.createResource(rdfThing.getType()));
-				Iterator iter = rdfThing.getMetadata().entrySet().iterator();
-				while (iter.hasNext()) {
-					Map.Entry pairs2 = (Map.Entry) iter.next();
-					item.addProperty(ResourceFactory.createProperty((String) pairs2.getKey()), (String) pairs2.getValue());
-				}
+			if(user != null){
+				Map things = jdbcFeedDao.findAllUserEvents(user);
+				Collection thingsList = things.values();
+				for (Iterator iterator = thingsList.iterator(); iterator.hasNext();) {
+					RDFThing rdfThing = (RDFThing) iterator.next();
+					Resource item = rdf.createResource(rdfThing.getExt_id(), ResourceFactory.createResource(rdfThing.getType()));
+					Iterator iter = rdfThing.getMetadata().entrySet().iterator();
+					while (iter.hasNext()) {
+						Map.Entry pairs2 = (Map.Entry) iter.next();
+						item.addProperty(ResourceFactory.createProperty((String) pairs2.getKey()), (String) pairs2.getValue());
+					}
 
+				}				
 			}
-
+			
 			StringWriter out = new StringWriter();
 			RDFWriter writer = rdf.getWriter("RDF/XML-ABBREV");
 			writer.write(rdf, new BufferedWriter(out), null);

@@ -7,10 +7,11 @@
 <t:saveState value="#{subscriptionBean.allChoosableStatements}" />
 
 <h:form>
-	<h:panelGrid columns="1" style="width:60%;">
 	<htm:h1 rendered="#{empty subscriptionBean.subscription.id}"> <h:outputText  value="Subscribe to the '#{subscriptionBean.subscription.channel.title}' channel "  /></htm:h1>
 	<htm:h1 rendered="#{not empty subscriptionBean.subscription.id}"> <h:outputText  value="Edit the '#{subscriptionBean.subscription.channel.title}' channel subscription "  /></htm:h1>
 
+
+	<h:panelGrid columns="1" style="width:60%;">
 	<htm:fieldset>
 		<htm:legend>
 			<h:outputText value="Your preferences" />
@@ -35,12 +36,12 @@
 			<h:outputText id="title" value="#{subscriptionBean.subscription.channel.title}" />
 			<h:outputLabel for="description" value="#{msg['label.common.description']}" />
 			<h:outputText id="description" value="#{subscriptionBean.subscription.channel.description}" />
-		</h:panelGrid>
-		<h:outputLabel for="subs_Delivery_types" value="Delivery types"  />
-		<h:selectManyCheckbox id="subs_Delivery_types" value="#{subscriptionBean.subscription.deliveryTypes}" required="true" >
-			<f:converter converterId="ed.DeliveryTypes"/>
-			<f:selectItems value="#{subscriptionBean.deliveryTypesItems}" />
-		</h:selectManyCheckbox>		
+			<h:outputLabel for="subs_Delivery_types" value="Delivery types"  />
+			<h:selectManyCheckbox id="subs_Delivery_types" value="#{subscriptionBean.subscription.deliveryTypes}" required="true" >
+				<f:converter converterId="ed.DeliveryTypes"/>
+				<f:selectItems value="#{subscriptionBean.deliveryTypesItems}" />
+			</h:selectManyCheckbox>	
+		</h:panelGrid>	
 	</htm:fieldset>
 
 

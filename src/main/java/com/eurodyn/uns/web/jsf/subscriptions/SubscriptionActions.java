@@ -77,14 +77,16 @@ public class SubscriptionActions extends SubscriptionForm {
 		
 		DeliveryAddress jabberAddress = (DeliveryAddress) subscriber.getDeliveryAddresses().get(JABBER); 
 		
-		Collection subscriptions = user.getSubscriptions().values();
-		for (Iterator iter = subscriptions.iterator(); iter.hasNext();) {
-			Subscription subscription = (Subscription) iter.next();
-			if (subscription.getDeliveryTypes().contains(new DeliveryType(JABBER)) && jabberAddress.getAddress().equals("")){
-				return false;
-			} 			
+		if (user.getSubscriptions() != null){
+			Collection subscriptions = user.getSubscriptions().values();
+			for (Iterator iter = subscriptions.iterator(); iter.hasNext();) {
+				Subscription subscription = (Subscription) iter.next();
+				if (subscription.getDeliveryTypes().contains(new DeliveryType(JABBER)) && jabberAddress.getAddress().equals("")){
+					return false;
+				} 			
+			}
+									
 		}
-					
 		if (!jabberAddress.getAddress().equals(""))
 			user.setDeliveryAddresses(subscriber.getDeliveryAddresses());
 

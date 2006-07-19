@@ -1,6 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <t:div id="formInitialization" rendered="#{ not reportBean.preparedForm}" />
 <h:form>
+	<htm:h1><h:outputText value="Notifications throughput" /></htm:h1>
 	<h:panelGrid columns="2" cellpadding="5" cellspacing="5">
 		<h:outputLabel value="Period" for="period" />
 		<h:panelGroup id="period">

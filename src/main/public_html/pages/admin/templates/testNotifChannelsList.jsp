@@ -1,6 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 
 <h:form >
+	<htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
 	<h:panelGrid  columns="2" border="0" columnClasses="vertical_align_top">
 	
 		<htm:fieldset>

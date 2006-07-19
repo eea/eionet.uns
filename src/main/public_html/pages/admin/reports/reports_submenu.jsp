@@ -14,7 +14,7 @@
 			<li id="currenttab"><span  title="Failed notifications">Failed notifications</span></li>
 		</ul>
 	</c:if>
-</div>&nbsp;
+</div>
 </f:verbatim>
 
 

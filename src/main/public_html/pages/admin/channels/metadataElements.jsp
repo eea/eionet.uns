@@ -1,6 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 
 <h:form>
+<htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
 	<t:div style="width:97%;" rendered="#{ not empty metadataBean.channel.metadataElements}">
 		<t:dataTable style="width:99%" styleClass="sortable" rowClasses="zebraeven," var="cme" value="#{metadataBean.channelMetadataElements}" preserveDataModel="true" sortColumn="#{metadataBean.st.sort}" sortAscending="#{metadataBean.st.ascending}" preserveSort="true">
 			<h:column>

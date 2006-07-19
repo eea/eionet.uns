@@ -1,5 +1,5 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
-
+<htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
 <t:div styleClass="success" style="text-align:center;"><h:outputText value="Preview" /></t:div>
 <t:div styleClass="visualClear"><h:outputText value=" "/></t:div>
 

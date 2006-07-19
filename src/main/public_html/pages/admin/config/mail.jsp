@@ -1,10 +1,10 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 
 <h:form>
+	<htm:h1>
+		<h:outputText value="Mail configuration" />
+	</htm:h1>
 	<h:panelGrid columns="1" style="width:99%">
-		<htm:h1>
-			<h:outputText value="Mail configuration" />
-		</htm:h1>
 		<htm:fieldset>
 			<htm:legend>
 				<h:outputText value="SMTP settings" />

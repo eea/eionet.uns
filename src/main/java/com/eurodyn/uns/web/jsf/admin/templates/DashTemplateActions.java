@@ -137,14 +137,16 @@ public class DashTemplateActions extends DashTemplateForm {
 			else
 				testChannel.setMode("PULL");
 			
+			
 			testChannel.setTransformation(stylesheet);
 			testChannel.setContent(null);
 			String result = ChannelServerDelegate.instance.testNewChannel(testChannel);
 			if (result != null && result.length() > 12) {
 				if (result.indexOf("</svg>") > 0) {
 					result = "<div style=\"overflow:auto; width: 100%; height:180px\">";
-					result += "<img src=\"../svg\" alt=\"Generated SVG\" />";
+					result += "<img src=\"../svg.unsvg\" alt=\"Generated SVG\" />";
 					result += "</div>";
+					getSession().setAttribute("testChannel",testChannel);
 				}
 			} else {
 				result = "<p class=\"nocontent\">CONTENT IS NOT AVAILABLE !</p>";

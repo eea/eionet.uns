@@ -165,32 +165,4 @@ public class DateUtil {
    }
    
    
-   public static void main(String[] args) {
-	System.out.println("Current time is " + getCurrentUTC());
-	System.out.println("Current time is " + getCurrentUTCDate());
-	System.out.println("Current time is " + new Date().getTime());
-	System.out.println("Current time is " +DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG).format(new Date()));
-	
-	
-	SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z");
-	java.util.Date date = new java.util.Date();
-	dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-	System.out.println("Current Date Time : " + dateFormat.format(date));
-	
-
-	
-	
-	Calendar c = Calendar.getInstance();
-	c.setTimeZone(TimeZone.getTimeZone("UTC"));
-	c.setTime(new Date());
-	System.out.println("Current Date Time : " + c.getTime().getHours());  ;
-
-
-	Calendar cal = Calendar.getInstance();
-	cal.setTime(new Date());
-	cal.add( Calendar.MILLISECOND, -cal.get(Calendar.DST_OFFSET) - cal.get(Calendar.ZONE_OFFSET));
-	System.out.println("Current Date Time : " + cal.getTime());  ;
-	
-}
-   
 }

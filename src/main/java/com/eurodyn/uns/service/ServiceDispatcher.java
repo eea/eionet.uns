@@ -35,7 +35,9 @@ import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.Filter;
 import com.eurodyn.uns.model.MetadataElement;
+import com.eurodyn.uns.model.NotificationTemplate;
 import com.eurodyn.uns.model.Statement;
+import com.eurodyn.uns.model.Stylesheet;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.ChannelFacade;
@@ -91,6 +93,8 @@ public class ServiceDispatcher {
 				dt.add(d1);
 			}
 			channel.setDeliveryTypes(dt);
+			channel.setNotificationTemplate(new NotificationTemplate(new Integer(1)));
+			channel.setTransformation(new Stylesheet(1));			
 			channelFacade.createChannel(channel);
 		} catch (Exception e) {
 			logger.error(e);

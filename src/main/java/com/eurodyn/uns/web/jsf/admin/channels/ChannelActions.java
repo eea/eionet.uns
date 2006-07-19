@@ -277,8 +277,8 @@ public class ChannelActions extends ChannelForm {
 			reset();
 			channel.setDeliveryTypes(new ArrayList(allDeliveryTypes));
 			channel.setMode("PULL");
-			channel.setNotificationTemplate(notificationTemplateFacade.getNotificationTemplate(new Integer(1)));
-			channel.setTransformation(new Stylesheet(1));
+			channel.setNotificationTemplate(new NotificationTemplate(new Integer(1)));
+			channel.setTransformation(new Stylesheet(1));			
 			stylesheetSelected = true;								
 			prepareRefreshDelay();
 

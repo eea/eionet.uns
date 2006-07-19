@@ -1,17 +1,18 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 
 <h:form>
+	<htm:h1 rendered="#{channelBean.channel.mode != 'PUSH'}">
+		<h:outputText value="Step 4 of 4" />
+	</htm:h1>
+	<htm:h1 rendered="#{channelBean.channel.mode == 'PUSH'}">
+		<h:outputText value="Step 3 of 3" />
+	</htm:h1>
+
 	<h:panelGrid columns="1" style="width:99%">
-		<htm:h1 rendered="#{channelBean.channel.mode != 'PUSH'}">
-			<h:outputText value="Step 4 of 4" />
-		</htm:h1>
-		<htm:h1 rendered="#{channelBean.channel.mode == 'PUSH'}">
-			<h:outputText value="Step 3 of 3" />
-		</htm:h1>
 
 
 		<t:div style="width:97%;">
-			<t:dataTable  style="width:100%" styleClass="sortable" rowClasses="zebraeven," var="cme" value="#{channelBean.channelMetadataElements}" preserveDataModel="false" rows="10" rowId="#{cme.metadataElement.id}" sortColumn="#{channelBean.st.sort}" sortAscending="#{channelBean.st.ascending}">
+			<t:dataTable style="width:100%" styleClass="sortable" rowClasses="zebraeven," var="cme" value="#{channelBean.channelMetadataElements}" preserveDataModel="false" rows="10" rowId="#{cme.metadataElement.id}" sortColumn="#{channelBean.st.sort}" sortAscending="#{channelBean.st.ascending}">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{msg['label.channel.choosable']}" title="#{msg['label.table.sort.notSortable']}" />

@@ -1,8 +1,9 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <t:div id="formInitialization" rendered="#{ not channelListBean.preparedPullChannels}" />
 <h:form>
+	<htm:h1><h:outputText value="Pull channels list" /></htm:h1>
 	<t:div style="width:97%;" rendered="#{ not empty channelListBean.pullChannels}">
-		<t:dataTable columnClasses=",,textAlignCenter,textAlignCenter,textAlignCenter,textAlignCenter,textAlignCenter" style="width:100%" styleClass="sortable" rowClasses="zebraeven," var="channel" value="#{channelListBean.pullChannels}" preserveDataModel="true"  rowId="#{channel.title}" sortColumn="#{channelListBean.st.sort}" sortAscending="#{channelListBean.st.ascending}" preserveSort="true">
+		<t:dataTable columnClasses=",,textAlignCenter,textAlignCenter,textAlignCenter,textAlignCenter,textAlignCenter" style="width:100%" styleClass="sortable" rowClasses="zebraeven," var="channel" value="#{channelListBean.pullChannels}" preserveDataModel="true" rowId="#{channel.title}" sortColumn="#{channelListBean.st.sort}" sortAscending="#{channelListBean.st.ascending}" preserveSort="true">
 			<h:column>
 				<f:facet name="header">
 					<t:commandSortHeader columnName="title" value="#{msg['label.common.title']}" title="#{'title'!= channelListBean.st.sort ? msg['table.sortable']:( channelListBean.st.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" arrow="false" immediate="true">
@@ -84,11 +85,11 @@
 				<f:facet name="header">
 					<h:outputText value="#{msg['label.common.action']}" title="#{msg['label.table.sort.notSortable']}" />
 				</f:facet>
-				<t:commandLink action="#{channelBean.remove}" immediate="true"  actionListener="#{channelListBean.reset}"  onclick="if (!approve('Are you sure you want to remove channel {}',['#{channel.title}'])) return false;">
-					<h:graphicImage url="/images/delete.gif" alt="#{msg['label.channel.delete']}" title="#{msg['label.channel.delete']}"  />
+				<t:commandLink action="#{channelBean.remove}" immediate="true" actionListener="#{channelListBean.reset}" onclick="if (!approve('Are you sure you want to remove channel {}',['#{channel.title}'])) return false;">
+					<h:graphicImage url="/images/delete.gif" alt="#{msg['label.channel.delete']}" title="#{msg['label.channel.delete']}" />
 					<t:updateActionListener property="#{channelBean.channel}" value="#{channel}" />
 				</t:commandLink>
-				<h:outputText value=" " />				
+				<h:outputText value=" " />
 				<t:commandLink action="#{metadataBean.prepareMetadataElements}" immediate="true">
 					<h:graphicImage url="/images/properties.gif" alt="Manage channel metadata elements" title="Manage channel metadata elements" />
 					<t:updateActionListener property="#{metadataBean.channel}" value="#{channel}" />

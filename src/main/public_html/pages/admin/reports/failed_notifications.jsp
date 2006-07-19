@@ -1,6 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <t:div id="formInitialization" rendered="#{ not reportBean.preparedFailedNotifications}" />
 <h:form >
+	<htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
 	<t:div rendered="#{not empty reportBean.failedNotificationsRecords }">
 		<t:dataTable  style="width:99%" styleClass="sortable" rowClasses="zebraeven," var="record" value="#{reportBean.failedNotificationsRecords}" preserveDataModel="true" sortColumn="#{reportBean.st1.sort}" sortAscending="#{reportBean.st1.ascending}" preserveSort="true">
 			<h:column>

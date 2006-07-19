@@ -1,11 +1,12 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <t:div id="formInitialization" rendered="#{ not subscriptionsBean.preparedSubscriptions}" />
 <h:form>
-	<h:panelGrid columns="1" style="width:99%">
-		<htm:h1>
-			<h:outputText value="Existing subscriptions list" />
-		</htm:h1>
+	<htm:h1>
+		<h:outputText value="Existing subscriptions list" />
+	</htm:h1>
 
+
+	<h:panelGrid columns="1" style="width:99%">
 		<t:div style="width:97%;" rendered="#{ not empty subscriptionsBean.subscriptions}">
 			<t:dataTable columnClasses="width30,,textAlignCenter,textAlignCenter,textAlignCenter" style="width:100%" styleClass="sortable" rowClasses="zebraeven," var="subscription" value="#{subscriptionsBean.subscriptions}" preserveDataModel="true" sortColumn="#{subscriptionsBean.st.sort}" sortAscending="#{subscriptionsBean.st.ascending}" preserveSort="true">
 				<h:column>
@@ -65,9 +66,9 @@
 					<f:facet name="header">
 						<h:outputText value="#{msg['label.common.action']}" title="#{msg['label.table.sort.notSortable']}" />
 					</f:facet>
-					<t:commandLink action="#{subscriptionBean.remove}" actionListener="#{subscriptionsBean.reset}" immediate="true"    onclick="if (!approve('Are you sure you want to unsubscribe from the {} channel',['#{subscription.channel.title}'])) return false;">
+					<t:commandLink action="#{subscriptionBean.remove}" actionListener="#{subscriptionsBean.reset}" immediate="true" onclick="if (!approve('Are you sure you want to unsubscribe from the {} channel',['#{subscription.channel.title}'])) return false;">
 						<h:graphicImage url="/images/delete.gif" alt="Unsubscribe " title="Unsubscribe" />
-						<t:updateActionListener property="#{subscriptionBean.subscription}" value="#{subscription}"  />
+						<t:updateActionListener property="#{subscriptionBean.subscription}" value="#{subscription}" />
 					</t:commandLink>
 				</h:column>
 			</t:dataTable>

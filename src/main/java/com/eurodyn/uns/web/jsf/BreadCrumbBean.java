@@ -6,9 +6,13 @@ import java.util.Stack;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.eurodyn.uns.util.common.WDSLogger;
+
 public class BreadCrumbBean extends BaseBean {
 
 	private static Map breadcrumbsMap = new HashMap();
+
+	private static final WDSLogger logger = WDSLogger.getLogger(BreadCrumbBean.class);
 
 	Stack breadCrumbStack = new Stack();
 
@@ -23,8 +27,6 @@ public class BreadCrumbBean extends BaseBean {
 			String key = url.substring(url.lastIndexOf("/") + 1);
 			String[] breadcrumb = (String[]) breadcrumbsMap.get(key);
 
-			// System.out.println("key " + key);
-
 			if (req.getMethod().equals("GET")) {
 				breadCrumbStack.removeAllElements();
 				breadCrumbStack.push(breadcrumbsMap.get("home.jsp"));
@@ -33,13 +35,11 @@ public class BreadCrumbBean extends BaseBean {
 				}
 			} else {
 				String[] stackBc = (String[]) breadCrumbStack.peek();
-				// System.out.println("stackBc" + stackBc[1]);
-				// System.out.println("" + getFacesContext().getViewRoot().getViewId());
 				if (stackBc[2] == null) {
 					breadCrumbStack.pop();
 				}
 			}
-			
+
 			if (!breadCrumbStack.contains(breadcrumb)) {
 				breadCrumbStack.push(breadcrumb);
 			}
@@ -57,10 +57,8 @@ public class BreadCrumbBean extends BaseBean {
 
 			}
 
-			// System.out.println("breadcrumbs.toString()" + breadcrumbs.toString()) ;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
 
 		return breadcrumbs.toString();
@@ -123,9 +121,9 @@ public class BreadCrumbBean extends BaseBean {
 		breadcrumbsMap.put("availableChannels.jsp", new String[] { "subscriptions", "Available channels", null });
 		breadcrumbsMap.put("userPreferences.jsp", new String[] { "subscriptions", "Your preferences", null });
 
-		//xmlrpc user
+		// xmlrpc user
 		breadcrumbsMap.put("rpcUserChannels.jsp", new String[] { null, "Your RPC channels", "/xmlrpc/rpcUserChannels.jsf" });
 		breadcrumbsMap.put("rpcChannel.jsp", new String[] { null, "Edit channel", null });
-		
+
 	}
 }

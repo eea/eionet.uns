@@ -1,6 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <t:div id="formInitialization" rendered="#{ not channelListBean.preparedPushChannels}" />
 <h:form>
+	<htm:h1><h:outputText value="Push channels list" /></htm:h1>
 	<t:div style="width:97%;" rendered="#{ not empty channelListBean.pushChannels}">
 		<t:dataTable style="width:100%" columnClasses=",,,,textAlignCenter,textAlignCenter,textAlignCenter,textAlignCenter" styleClass="sortable" rowClasses="zebraeven," var="channel" value="#{channelListBean.pushChannels}" preserveDataModel="true"  rowId="#{channel.title}" sortColumn="#{channelListBean.st.sort}" sortAscending="#{channelListBean.st.ascending}" preserveSort="true">
 			<h:column>

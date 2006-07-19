@@ -14,6 +14,6 @@
 			<li id="currenttab"><span  title="Existing stylesheets templates list">Stylesheets</span></li>
 		</ul>
 	</c:if>
-</div>&nbsp;
+</div>
 </f:verbatim>
 

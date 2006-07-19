@@ -1,6 +1,6 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 
-
+<htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
 <t:div styleClass="visualClear"><h:outputText value=" "/></t:div>
 
 	<t:div styleClass="box">
@@ -18,7 +18,7 @@
 	</t:div>
 			
 <h:form >
-	<t:div styleClass="commandButtons">
+	<t:div styleClass="commandButtons" style="text-align:center" >
 		<h:commandButton action="#{dashTemplateBean.afterTest}" value="OK" />
 	</t:div>
 </h:form>

@@ -1,6 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 
 <h:form id="notificationTemplate">
+	<htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
 	<h:panelGrid columns="2">
 		<h:outputLabel for="name" value="#{msg['label.template.notification.name']}" />
 		<h:inputText id="name" size="60" required="true" value="#{notificationTemplateBean.notificationTemplate.name}" />

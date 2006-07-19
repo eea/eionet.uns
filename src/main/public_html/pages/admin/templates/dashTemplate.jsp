@@ -1,6 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 
 <h:form enctype="multipart/form-data">
+	<htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
 	<h:panelGrid columns="2" border="0" columnClasses="vertical_align_top">
 		<h:outputLabel for="name" value="#{msg['label.common.name']}" />
 		<h:inputText id="name" size="20" maxlength="30" required="true" value="#{dashTemplateBean.stylesheet.name}" />
