@@ -6,6 +6,42 @@
 					<Parameters/>
 					<Value Type="STRING"/>
 			</Method>
+			<Method Name="createChannel" Auth="true">
+					<Parameters>
+						<Parameter Name="channel_name" Type="STRING"/>
+						<Parameter Name="description" Type="STRING"/>
+					</Parameters>
+					<Value Type="STRING"/>
+			</Method>
+			<Method Name="sendNotification" Auth="true">
+					<Parameters>
+						<Parameter Name="channel_id" Type="STRING"/>
+						<Parameter Name="triples" Type="ARRAY"/>
+					</Parameters>
+					<Value Type="STRING"/>
+			</Method>
+			<Method Name="sendNotificationRDF" Auth="true">
+					<Parameters>
+						<Parameter Name="channel_id" Type="STRING"/>
+						<Parameter Name="rdf" Type="STRING"/>
+					</Parameters>
+					<Value Type="STRING"/>
+			</Method>
+			<Method Name="canSubscribe" Auth="true">
+					<Parameters>
+						<Parameter Name="channel_id" Type="STRING"/>
+						<Parameter Name="username" Type="STRING"/>
+					</Parameters>
+					<Value Type="BOOLEAN"/>
+			</Method>
+			<Method Name="makeSubscription" Auth="true">
+					<Parameters>
+						<Parameter Name="channel_id" Type="STRING"/>
+						<Parameter Name="username" Type="STRING"/>
+						<Parameter Name="filters" Type="ARRAY"/>
+					</Parameters>
+					<Value Type="STRING"/>
+			</Method>
 		</Methods> 
 	</Service>
 </Services> 
