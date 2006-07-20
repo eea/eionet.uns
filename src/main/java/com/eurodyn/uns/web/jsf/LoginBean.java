@@ -52,7 +52,10 @@ public class LoginBean  {
 						}
 						if (userId != null && userId.intValue() != -1) {
 							user = (new UserFacade()).findUser(userId);
-							session.setAttribute("user", user);
+							if(user != null){
+								session.setAttribute("user", user);
+							}
+							
 						}
 					}
 

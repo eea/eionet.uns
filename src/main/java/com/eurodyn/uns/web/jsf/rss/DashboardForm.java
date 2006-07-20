@@ -12,7 +12,6 @@ import java.util.Map;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.delegates.ChannelServerDelegate;
-import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.service.facades.UserFacade;
 import com.eurodyn.uns.web.jsf.BaseBean;
 

@@ -1,5 +1,5 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
-<h:form id="channelTemplates22" onsubmit="submitChannelTemplates(this)">
+<h:form  onsubmit="submitChannelTemplates(this)">
 	<htm:h1 rendered="#{channelBean.channel.mode != 'PUSH'}">
 		<h:outputText value="Step 3 of 4" />
 	</htm:h1>
@@ -64,7 +64,7 @@
 	</htm:fieldset>
 
 	<t:div styleClass="commandButtons">
-		<h:commandButton action="#{channelBean.edit}" value="#{msg['label.back']}" />
+		<h:commandButton action="editChannel" actionListener="#{channelBean.backToEdit}" value="#{msg['label.back']}" />
 		<h:commandButton action="#{channelBean.prepareChoosableElements}" value="#{msg['label.next']}" />
 		<h:commandButton action="#{channelBean.save}" value="#{msg['label.save']}" />
 		<h:commandButton action="pushChannels" value="#{msg['label.cancel']}" immediate="true" rendered="#{channelBean.channel.mode == 'PUSH'}" />

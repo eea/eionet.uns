@@ -234,18 +234,18 @@ function haveStylesheetChanged(element){
 		case "true":
 		    document.getElementById(prefix+"VisibleElementsDiv").style.display = "none";
 		    document.getElementById(prefix+"StylesheetDiv").style.display = "block";
-			document.forms[0].elements[prefix+"stylesheetId"].disabled = false;
-			document.forms[0].elements[prefix+"availableElements"].disabled = true;
-			document.forms[0].elements[prefix+"channelVisibleElements"].disabled = true;
-			document.forms[0].elements[prefix+"visibleElements"].disabled = true;
+			//document.forms[0].elements[prefix+"stylesheetId"].disabled = false;
+			//document.forms[0].elements[prefix+"availableElements"].disabled = true;
+			//document.forms[0].elements[prefix+"channelVisibleElements"].disabled = true;
+			//document.forms[0].elements[prefix+"visibleElements"].disabled = true;
 			break;
 		case "false":
 		    document.getElementById(prefix+"VisibleElementsDiv").style.display = "block";
 		    document.getElementById(prefix+"StylesheetDiv").style.display = "none";
 			//document.forms[0].elements[prefix+"stylesheetId"].disabled = true;
-			document.forms[0].elements[prefix+"availableElements"].disabled = false;
-			document.forms[0].elements[prefix+"channelVisibleElements"].disabled = false;
-			document.forms[0].elements[prefix+"visibleElements"].disabled = false;
+			//document.forms[0].elements[prefix+"availableElements"].disabled = false;
+			//document.forms[0].elements[prefix+"channelVisibleElements"].disabled = false;
+			//document.forms[0].elements[prefix+"visibleElements"].disabled = false;
 			break;
 	}
 }

@@ -23,6 +23,7 @@
 
 <h:form id="navigationForm">
 	<f:verbatim>
+	<c:if test="${userRole != ''}" > 
 		<div class="portlet" style="text-align: center;">
 			<h2>Navigation</h2>	
 			<div class="portletBody">
@@ -36,7 +37,7 @@
 											<li class="${selectedMenu == 'dashboard'?'selected':''}"><a href="<c:url value="/dash/${sessionScope.user.externalId}/dashboard.jsf"/>" title="Dashboard"><fmt:message key="label.menu.myDashboard"/></a></li>
 										</c:when>
 										<c:otherwise> 	
-											<li class="${selectedMenu == 'dashboard'?'selected':''}"><a href="<c:url value="/rss/${sessionScope.user.externalId}/rssReader.jsf"/>" title="Dashboard"><fmt:message key="label.menu.myDashboard"/></a></li>
+											<li class="${selectedMenu == 'dashboard'?'selected':''}"><a href="<c:url value="/rss/${sessionScope.user.externalId}/rssReader.jsf?reset=true"/>" title="Dashboard"><fmt:message key="label.menu.myDashboard"/></a></li>
 										</c:otherwise>
 									</c:choose>		
 									<li class="${selectedMenu == 'config'?'selected':''}"><a href="<c:url value="/admin/config/general.jsf"/>" title="Configuration"><fmt:message key="label.menu.config"/></a></li>
@@ -79,6 +80,7 @@
 				</div>
 			</div>
 		</div>
+	</c:if> 	
 	</f:verbatim>		
 	<f:verbatim><div class="visualClear"> </div></f:verbatim>
 
@@ -86,9 +88,9 @@
 		<f:verbatim>
 			<div class="portlet" style="text-align: center;">
 				<div>
-					<h5>
+					<h2>
 					<span><fmt:message key="label.menu.notlogged"/></span>
-					</h5>								
+					</h2>								
 					<div class="portletBody">
 						<div class="portletContent odd">									
 							<ul class="portal-subnav">

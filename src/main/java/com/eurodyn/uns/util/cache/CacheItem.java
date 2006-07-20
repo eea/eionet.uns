@@ -24,92 +24,66 @@ package com.eurodyn.uns.util.cache;
 import java.util.Date;
 
 public class CacheItem {
-    protected Object key;
+	protected Object key;
 
-    protected Object content;
+	protected Object content;
 
-    protected long lastAccessed;
+	protected Date lastHarvestDate;
 
-    protected long timeToLive = 10 * 60 * 1000; // in ms, 10 minutes
+	private CacheItem() {
+	}
 
-    private CacheItem() {
-    }
+	/**
+	 * Constructs a CacheItem object
+	 * 
+	 * @param key
+	 * @param timeToLive
+	 *              ms to keep this in the cache
+	 * @param content
+	 *              The content being cached
+	 */
+	public CacheItem(Object key, Object content, Date lastHarvestDate) {
+		this.key = key;
+		this.content = content;
+		this.lastHarvestDate = lastHarvestDate;
+	}
 
-    /**
-     * Constructs a CacheItem object
-     *
-     * @param key 
-     * @param timeToLive ms to keep this in the cache
-     * @param content The content being cached
-     */
-    public CacheItem(Object key, Object content, long timeToLive) {
-        this.key = key;
-        this.content = content;
-        this.timeToLive = timeToLive;
-        this.lastAccessed = new Date().getTime();
-    }
+	/**
+	 * Set the content in the cache
+	 * 
+	 * @param content
+	 *              the content being cached
+	 */
+	public void setContent(Object content) {
+		this.content = content;
+	}
 
-    /**
-     * Set the cache's last accessed stamp
-     *
-     * @param lastAccessed the cache's last access stamp
-     */
-    public void setLastAccessed(long lastAccessed) {
-        this.lastAccessed = lastAccessed;
-    }
+	/**
+	 * Get the content
+	 * 
+	 * @return the content being cached
+	 */
+	public Object getContent() {
+		return this.content;
+	}
 
-    /**
-     * Get the cache's lastAccessed stamp
-     *
-     * @return the cache's last accessed stamp
-     */
-    public long getLastAccessed() {
-        return this.lastAccessed;
-    }
+	/**
+	 * @return Returns the key.
+	 */
+	public Object getKey() {
+		return key;
+	}
 
-    /**
-     * Set the content in the cache
-     *
-     * @param content the content being cached
-     */
-    public void setContent(Object content) {
-        this.content = content;
-    }
+	/**
+	 * @param key
+	 *              The key to set.
+	 */
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    /**
-     * Get the content
-     *
-     * @return the content being cached
-     */
-    public Object getContent() {
-        return this.content;
-    }
+	public Date getLastHarvestDate() {
+		return lastHarvestDate;
+	}
 
-    /**
-     * @return Returns the key.
-     */
-    public Object getKey() {
-        return key;
-    }
-
-    /**
-     * @param key The key to set.
-     */
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    /**
-     * @return Returns the timeToLive.
-     */
-    public long getTimeToLive() {
-        return timeToLive;
-    }
-
-    /**
-     * @param timeToLive The timeToLive in seconds
-     */
-    public void setTimeToLive(long timeToLive) {
-        this.timeToLive = timeToLive;
-    }
 }

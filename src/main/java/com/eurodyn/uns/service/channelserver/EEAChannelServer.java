@@ -21,8 +21,6 @@
  */
 package com.eurodyn.uns.service.channelserver;
 
-import java.util.ArrayList;
-
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.Channel;
@@ -44,106 +42,11 @@ public class EEAChannelServer extends BaseChannelServer {
 
 	private BaseFeedHandler handler;
 
-	private DAOFactory daoFactory;
 
 	public EEAChannelServer() {
 		handler = new DatabaseHandler(new PullHandler(new PushHandler(new TestHandler(new QueryHandler()))));
-		daoFactory = DAOFactory.getDAOFactory(DAOFactory.HIBERNATE);
 	}
 
-	public void invalidateChannelCache(IChannel channel, int type) {
-		String id = channel.getId().toString();
-		ArrayList keys = new ArrayList(MemCache.getKeys());
-		for (int i = 0; i < keys.size(); i++) {
-			String key = (String) keys.get(i);
-			if (key.equals(id) || key.startsWith(id + "_"))
-				MemCache.remove(key);
-		}
-	}
-
-	public String getChannelContentOld(IChannel channel) {
-		String content = null;
-		try {
-			CacheItem entry = null;
-			String id;
-			if (channel.getUser() != null) {
-				id = channel.getId().toString() + "_" + channel.getUser().getExternalId();
-				entry = MemCache.get(id);
-			}
-			if (entry == null) {
-				id = channel.getId().toString();
-				entry = MemCache.get(id);
-				if (entry != null)
-					channel.setUser(null);
-			}
-			if (entry != null) {
-				content = (String) entry.getContent();
-			} else {
-				Channel newChannel = daoFactory.getChannelDao().findChannel(channel.getId());
-				newChannel.setUser(channel.getUser());
-
-				Dto request = new Dto();
-				request.put("channel", newChannel);
-				handler.handleRequest(request, BaseChannelServer.PULL);
-				content = (String) request.get("CONTENT");
-				if (content != null && content.length() > 0)
-					channel.setUser(newChannel.getUser());
-				if (newChannel.getUser() != null)
-					id = newChannel.getId().toString() + "_" + newChannel.getUser().getExternalId();
-				else
-					id = newChannel.getId().toString();
-				if (content != null && content.length() > 0)
-					MemCache.put(id, content, newChannel.getRefreshDelay().intValue() * 60);
-			}
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception ex) {
-			logger.fatalError(ex);
-		}
-		return content;
-	}
-
-	public String getChannelContent(IChannel channel) {
-		String content = null;
-		try {
-			CacheItem entry = null;
-			String id;
-			if (channel.getUser() != null) {
-				id = channel.getId().toString() + "_" + channel.getUser().getExternalId();
-				entry = MemCache.get(id);
-			}
-			if (entry == null) {
-				id = channel.getId().toString();
-				entry = MemCache.get(id);
-				if (entry != null)
-					channel.setUser(null);
-			}
-			if (entry != null) {
-				content = (String) entry.getContent();
-			} else {
-				Channel newChannel = daoFactory.getChannelDao().findChannel(channel.getId());
-				newChannel.setUser(channel.getUser());
-
-				Dto request = new Dto();
-				request.put("channel", newChannel);
-				handler.handleRequest(request, BaseChannelServer.DATABASE);
-				content = (String) request.get("CONTENT");
-				if (content != null && content.length() > 0)
-					channel.setUser(newChannel.getUser());
-				if (newChannel.getUser() != null)
-					id = newChannel.getId().toString() + "_" + newChannel.getUser().getExternalId();
-				else
-					id = newChannel.getId().toString();
-				if (content != null && content.length() > 0)
-					MemCache.put(id, content, newChannel.getRefreshDelay().intValue() * 60);
-			}
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception ex) {
-			logger.fatalError(ex);
-		}
-		return content;
-	}
 
 	public String getChannelContent(Subscription subs, boolean ignoreCache) {
 		String content = null;
@@ -156,8 +59,9 @@ public class EEAChannelServer extends BaseChannelServer {
 				content = (String) request.get("CONTENT");				
 			}else{
 				Channel channel = subs.getChannel();
-				CacheItem entry = MemCache.get(subs.getId());
+				CacheItem entry = MemCache.get(subs.getId(),subs.getChannel().getLastHarvestDate());
 				if (entry != null) {
+					logger.debug("Found entry in cache for subscription on channel" + subs.getChannel().getTitle());
 					content = (String) entry.getContent();
 				} else {
 					Dto request = new Dto();
@@ -173,7 +77,7 @@ public class EEAChannelServer extends BaseChannelServer {
 					} else {
 						content = "<p class=\"nocontent\">CONTENT IS NOT AVAILABLE !</p>";
 					}
-					MemCache.put(subs.getId(), content, channel.getRefreshDelay().intValue() * 60);
+					MemCache.put(subs.getId(), content, channel.getLastHarvestDate());
 				}
 				
 			}

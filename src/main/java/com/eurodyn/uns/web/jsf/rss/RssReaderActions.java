@@ -36,7 +36,8 @@ public class RssReaderActions extends RssReaderForm {
 				logger.debug("RssReader initialisation ");
 				if (channels == null) {
 					channels = new ArrayList();
-					Map subscriptions = getUser().getSubscriptions();
+
+					Map subscriptions = getUser(true).getSubscriptions();
 					Iterator it = subscriptions.values().iterator();
 					while (it.hasNext()) {
 						Subscription subs = (Subscription) it.next();
@@ -45,11 +46,21 @@ public class RssReaderActions extends RssReaderForm {
 							populateThings(subs);
 						}
 					}
+					if(channels.size() == 0){ // user does't have rss channel
+						return true;
+					}
 				}
 
-				if (channel == null)
-					channel = (Channel) channels.get(0);
-
+				if (channel == null){
+					if (getRequest().getParameter("reset") == null){
+						channel = (Channel)getSession().getAttribute("currentReaderChannel");						
+					}	
+					if (channel == null)
+						channel = (Channel) channels.get(0);
+					
+				}else{
+					getSession().setAttribute("currentReaderChannel",channel);
+				}		
 				events = new ArrayList(channel.getTransformedEvents().values());
 				Collections.sort(events, new Comparator() {
 					public int compare(Object a, Object b) {

@@ -98,6 +98,6 @@
 			<br />
 			<br />
 		</f:verbatim>
-		<t:commandButton action="#{rpcChannelBean.edit}" value="#{msg['label.add.channel']}" immediate="true" />
 	</t:div>
+	<t:commandButton action="#{rpcChannelBean.edit}" value="#{msg['label.add.channel']}" immediate="true" />
 </h:form>

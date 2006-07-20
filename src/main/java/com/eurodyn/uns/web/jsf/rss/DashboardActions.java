@@ -31,8 +31,11 @@ public class DashboardActions extends DashboardForm {
 				for (int i = 0; i < columns.length; i++) {
 					columns[i] = new Integer(i);
 				}
-				if (channels == null)
+				if (channels == null){
+					logger.debug(" ************* Reload dash channels ******************");
 					reloadDashChannels();
+				}
+					
 			}
 			}
 		} catch (Exception e) {

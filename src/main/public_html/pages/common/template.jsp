@@ -19,7 +19,7 @@ response.setDateHeader("Expires", 0);
 
 		<%
 			String url = request.getRequestURL().toString();
-			if ((url.indexOf("dash") != -1) || (url.indexOf("dash") != -1)  ){
+			if ((url.indexOf("/dash") != -1) || (url.indexOf("/rss") != -1)  ){
 				com.eurodyn.uns.model.User user = (com.eurodyn.uns.model.User) session.getAttribute("user");
 				if (user != null) {
 				%>

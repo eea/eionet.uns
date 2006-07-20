@@ -1,7 +1,11 @@
 package com.eurodyn.uns.web.jsf.rpc;
 
+import java.util.ArrayList;
+
 import com.eurodyn.uns.model.Channel;
+import com.eurodyn.uns.model.DeliveryType;
 import com.eurodyn.uns.model.NotificationTemplate;
+import com.eurodyn.uns.model.Stylesheet;
 import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.web.jsf.BaseBean;
@@ -27,6 +31,14 @@ public class RpcChannelActions extends BaseBean {
 				channel.setCreator(getUser());
 				channel.setStatus(new Integer(0));
 				channel.setNotificationTemplate(new NotificationTemplate(new Integer(1)));
+				channel.setTransformation(new Stylesheet(1));
+				ArrayList dt=new ArrayList();
+				for (int i = 1; i < 5; i++) {
+					DeliveryType d1=new DeliveryType();
+					d1.setId(new Integer(i));
+					dt.add(d1);
+				}
+				channel.setDeliveryTypes(dt);				
 				channelFacade.createChannel(channel);
 				addInfoMessage(null, "label.channel.success.create", new Object[] { channel.getTitle() });
 			} else {

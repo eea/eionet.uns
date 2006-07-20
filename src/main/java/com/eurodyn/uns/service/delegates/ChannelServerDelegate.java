@@ -35,47 +35,38 @@ import com.eurodyn.uns.util.rdf.IChannel;
 
 public class ChannelServerDelegate {
 	private static final WDSLogger logger = WDSLogger.getLogger(ChannelServerDelegate.class);
-    private BaseChannelServer cs;
-    public static final ChannelServerDelegate instance = new ChannelServerDelegate();
-    
-    public ChannelServerDelegate() {
-        cs= new EEAChannelServer();
-    }
-    
-    public String getChannelContent(IChannel channel) {
-        return cs.getChannelContent(channel);
-    }
-    
-    public String getChannelContent(Subscription subs) {
-	    return cs.getChannelContent(subs,false);
-    }
-    
-    public void invalidateChannelCache(IChannel channel) {
-        cs.invalidateChannelCache(channel,1);
-    }
-    
-    public String testNewChannel(IChannel channel) {
-        return cs.testNewChannel(channel);
-    }
-    
-    public String createPushChannel(Vector parameters) throws DisabledException, NotFoundException, Exception {
-   	 logger.debug("Invoking Create method...");
-   	 IChannel c=new Channel();
-   	 c.setTitle((String) parameters.get(0));
-   	 c.setDescription((String) parameters.get(1));
-   	 c.setMode("PUSH");
-   	 return cs.createChannel(c, (User) parameters.get(2));   	 
-    }
-    
-    public void push(Vector parameters) throws DisabledException, NotFoundException, Exception {
-   	 logger.debug("Invoking PUSH method...");
-   	 User u = null;
-   	 if(parameters.size()>2)
-   		 u = (User) parameters.get(2);
-   	 cs.push((String) parameters.get(0), u, (String) parameters.get(1));   	 
-    }
-    
-    
-    
+
+	private BaseChannelServer cs;
+
+	public static final ChannelServerDelegate instance = new ChannelServerDelegate();
+
+	public ChannelServerDelegate() {
+		cs = new EEAChannelServer();
+	}
+
+	public String getChannelContent(Subscription subs) {
+		return cs.getChannelContent(subs, false);
+	}
+
+	public String testNewChannel(IChannel channel) {
+		return cs.testNewChannel(channel);
+	}
+
+	public String createPushChannel(Vector parameters) throws DisabledException, NotFoundException, Exception {
+		logger.debug("Invoking Create method...");
+		IChannel c = new Channel();
+		c.setTitle((String) parameters.get(0));
+		c.setDescription((String) parameters.get(1));
+		c.setMode("PUSH");
+		return cs.createChannel(c, (User) parameters.get(2));
+	}
+
+	public void push(Vector parameters) throws DisabledException, NotFoundException, Exception {
+		logger.debug("Invoking PUSH method...");
+		User u = null;
+		if (parameters.size() > 2)
+			u = (User) parameters.get(2);
+		cs.push((String) parameters.get(0), u, (String) parameters.get(1));
+	}
 
 }

@@ -33,7 +33,7 @@
 								<f:facet name="header">
 									<h:outputText value="Channels" />
 								</f:facet>
-								<t:commandLink action="#{rssReaderBean.changeChannel}" immediate="true">
+								<t:commandLink action="#{rssReaderBean.changeChannel}"  immediate="true" style="text-decoration:none">
 									<h:outputText value="#{channel.title}" />
 									<t:updateActionListener property="#{rssReaderBean.channel}" value="#{channel}" />
 								</t:commandLink>
@@ -50,7 +50,7 @@
 							<t:div style="height:150px;overflow: scroll">
 								<t:dataTable border="0" style="width:97%;" cellspacing="0" cellpadding="2" var="rdfThing" value="#{rssReaderBean.events}" onkeydown=" setNextEvent(event) "  columnClasses="eventsColumn1,eventsColumn2"    rowIndexVar="index" rowId="eventRow#{index}" >
 									<h:column>
-										<t:commandLink action="#" immediate="true" onclick="colorRow(this); setCurrentEvent('#{rdfThing.eventId}') ; return false;">
+										<t:commandLink action="#" immediate="true" 	style="text-decoration:none"	onclick="colorRow(this); setCurrentEvent('#{rdfThing.eventId}') ; return false;">
 											<h:outputText value="#{rdfThing.title}" />
 											<t:updateActionListener property="#{rssReaderBean.eventId}" value="#{rdfThing.eventId}" />
 										</t:commandLink>
@@ -79,8 +79,10 @@
 			channelId = <%= "'" + session.getAttribute("rrChanelId") + "'" %> ;
 			document.getElementById('channelRow' + channelId).style.backgroundColor = "#BEE0FC";
 			selectedRow = document.getElementById('eventRow0');
-			selectedRow.style.backgroundColor = "#BEE0FC";
-			selectedRow.childNodes[0].childNodes[0].focus()									
+			if(selectedRow){
+				selectedRow.style.backgroundColor = "#BEE0FC";
+				selectedRow.childNodes[0].childNodes[0].focus();			
+			}
 		//-->
 		</script>
 		<br/>

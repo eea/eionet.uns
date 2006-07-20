@@ -17,45 +17,55 @@
  * 
  * Contributors(s):
  *    Original code: Nedeljko Pavlovic (ED) 
-*/
+ */
 
 package com.eurodyn.uns.util.rdf;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.eurodyn.uns.model.User;
 
 public interface IChannel extends Serializable {
-    
-    public Integer getId();
-    public void setId(Integer id);
 
+	public Integer getId();
 
-    public String getContent();
-    public void setContent(String content);
+	public void setId(Integer id);
 
-    public String getDescription();
+	public String getContent();
 
-    public void setDescription(String description);
+	public void setContent(String content);
 
-    public String getFeedUrl();
+	public String getDescription();
 
-    public void setFeedUrl(String feedUrl);
+	public void setDescription(String description);
 
-    public String getTitle();
+	public String getFeedUrl();
 
-    public void setTitle(String title);
-    
-    public Integer getRefreshDelay();
+	public void setFeedUrl(String feedUrl);
 
-    public void setRefreshDelay(Integer refreshDelay);
-    
+	public String getTitle();
+
+	public void setTitle(String title);
+
+	public Integer getRefreshDelay();
+
+	public void setRefreshDelay(Integer refreshDelay);
+
 	public String getMode();
+
 	public void setMode(String mode);
-	
+
 	public String getSecondaryId();
+
 	public void setSecondaryId(String secondaryId);
-	
+
 	public User getUser();
+
 	public void setUser(User user);
+	
+	public Date getLastHarvestDate();
+
+	public void setLastHarvestDate(Date lastHarvestDate);
+
 }

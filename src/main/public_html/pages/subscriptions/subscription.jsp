@@ -58,7 +58,7 @@
 					<h:outputText escape="false" value="&nbsp;" />
 				</f:facet>
 				<t:commandLink action="#{subscriptionBean.removeFilter}" >
-					<h:graphicImage url="/images/delete.gif" alt="#{msg['label.channel.delete']}" title="#{msg['label.channel.delete']}" />
+					<h:graphicImage url="/images/delete.gif" alt="Delete filter" title="Delete filter" />
 					<t:updateActionListener property="#{subscriptionBean.filter}" value="#{filter}" />
 				</t:commandLink>
 			</h:column>

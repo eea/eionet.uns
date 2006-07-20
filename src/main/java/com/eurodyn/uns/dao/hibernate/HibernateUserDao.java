@@ -47,9 +47,14 @@ public class HibernateUserDao extends BaseHibernateDao implements IUserDao {
 		User user = null;
 		Session session = null;
 		try {
-			session = getSession();			
-			user = (User) session.load(getReferenceClass(), id);
-			Hibernate.initialize(user.getDeliveryAddresses());			
+			session = getSession();
+			Query query = session.createQuery("select u from User as u where u.id=:userId");
+			query.setInteger("userId",id.intValue());
+			List list = query.list();
+			if (list.size() > 0) {
+				user = (User) list.get(0);
+				Hibernate.initialize(user.getDeliveryAddresses());
+			}
 		} catch (HibernateException e) {
 			throw new DAOException(e);
 		}

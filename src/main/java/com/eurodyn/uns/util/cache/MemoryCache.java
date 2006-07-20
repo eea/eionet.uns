@@ -70,8 +70,8 @@ public class MemoryCache implements Comparator {
     }
 
 
-    public void put(Object key, Object document, long timeToLive) {
-        CacheItem entry = new CacheItem(key, document, timeToLive);
+    public void put(Object key, Object document, Date lastHarvestDate) {
+        CacheItem entry = new CacheItem(key, document, lastHarvestDate);
         if (cache.size() > getMaxSize()) {
             evict();
         }
@@ -133,25 +133,24 @@ public class MemoryCache implements Comparator {
     }
 
 
-    public CacheItem get(Object key) {
+    public CacheItem get(Object key , Date lastHarvestDate) {
         CacheItem entry = (CacheItem) cache.get(key);
         if (entry == null) {
             return null;
         }
-        long now = new Date().getTime();
-        long lifeTime = entry.getTimeToLive() * 1000;
-        if ((entry.getLastAccessed() + lifeTime) < now) {
-            logger.debug("Transformed content expired for key: "+key);
-            return null; // expire it
+
+        if ( !entry.getLastHarvestDate().equals(lastHarvestDate)){
+      	  return null;
         }
+      	  
         logger.debug("Transformed content found in cache! Transform: " + key);
         return entry;
     }
 
     
 
-    public Object getContent(String key) {
-        CacheItem entry = (CacheItem) get(key);
+    public Object getContent(String key, Date lastHarvestDate) {
+        CacheItem entry = (CacheItem) get(key,lastHarvestDate);
         if (entry != null) {
             return entry.getContent();
         }
@@ -162,12 +161,7 @@ public class MemoryCache implements Comparator {
     public int compare(Object o1, Object o2) {
         CacheItem e1 = (CacheItem) o1;
         CacheItem e2 = (CacheItem) o2;
-        if (e1.getLastAccessed() < e2.getLastAccessed()) {
-            return -1;
-        } else if (e1.getLastAccessed() == e2.getLastAccessed()) {
-            return 0;
-        }
-        return 1;
+        return e1.getLastHarvestDate().compareTo(e2.getLastHarvestDate());
     }
 
 

@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.mail.Message;
 import javax.mail.Session;
@@ -227,10 +228,21 @@ public class ChannelActions extends ChannelForm {
 
 	}
 
+	public void backToEdit(ActionEvent event) {
+		setUpChannelRoles();
+		availableRoles = new ArrayList(allRoles);
+		if (channel.getRoles() != null)
+			availableRoles.removeAll(channel.getRoles());
+		if (channel.getMode().equals("PULL"))
+			prepareRefreshDelay();
+		getRequest().setAttribute("selectedSubMenu", channel.getMode().equals("PULL") ? "pullChannels" : "pushChannels");
+
+	}
+
 	public String edit() {
 		String outcome = "editChannel";
 		try {
-			if (channel.getId().intValue() > 0) 
+			if (channel.getId().intValue() > 0)
 				channel = channelFacade.getChannel(channel.getId());
 
 			if (reset)
@@ -278,8 +290,8 @@ public class ChannelActions extends ChannelForm {
 			channel.setDeliveryTypes(new ArrayList(allDeliveryTypes));
 			channel.setMode("PULL");
 			channel.setNotificationTemplate(new NotificationTemplate(new Integer(1)));
-			channel.setTransformation(new Stylesheet(1));			
-			stylesheetSelected = true;								
+			channel.setTransformation(new Stylesheet(1));
+			stylesheetSelected = true;
 			prepareRefreshDelay();
 
 		} catch (Exception e) {
@@ -351,7 +363,7 @@ public class ChannelActions extends ChannelForm {
 					result = "<div style=\"overflow:auto; width: 100%; height:180px\">";
 					result += "<img src=\"../svg.unsvg\" alt=\"Generated SVG\" />";
 					result += "</div>";
-					getSession().setAttribute("testChannel",channel);
+					getSession().setAttribute("testChannel", channel);
 				}
 			} else {
 				result = "<p class=\"nocontent\">CONTENT IS NOT AVAILABLE !</p>";
