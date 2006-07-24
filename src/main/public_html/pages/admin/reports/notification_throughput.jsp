@@ -3,7 +3,7 @@
 <h:form>
 	<htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
 	<t:div rendered="#{reportBean.total == 0}">
-		<h:outputText value="There is no such notifications in the system" />
+		<h:outputText value="There are no notifications in the system that matched your search criteria" />
 	</t:div>
 	<t:div rendered="#{reportBean.total != 0}">
 

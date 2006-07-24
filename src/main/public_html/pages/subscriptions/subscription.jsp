@@ -36,7 +36,7 @@
 			<h:outputText id="title" value="#{subscriptionBean.subscription.channel.title}" />
 			<h:outputLabel for="description" value="#{msg['label.common.description']}" />
 			<h:outputText id="description" value="#{subscriptionBean.subscription.channel.description}" />
-			<h:outputLabel for="subs_Delivery_types" value="Delivery types"  />
+			<h:outputLabel for="subs_Delivery_types" value="Notify me through:"  />
 			<h:selectManyCheckbox id="subs_Delivery_types" value="#{subscriptionBean.subscription.deliveryTypes}" required="true" >
 				<f:converter converterId="ed.DeliveryTypes"/>
 				<f:selectItems value="#{subscriptionBean.deliveryTypesItems}" />

@@ -75,7 +75,7 @@
 		<t:saveState value="#{reportBean.failedNotificationsRecords}" />
 	</t:div>
 	<t:div rendered="#{empty reportBean.failedNotificationsRecords}">
-		<h:outputText value="There is no such notifications in the system" />
+		<h:outputText value="There is no failed notifications in the system" />
 	</t:div>
 
 </h:form>

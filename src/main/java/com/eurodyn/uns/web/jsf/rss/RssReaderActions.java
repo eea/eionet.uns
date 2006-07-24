@@ -49,6 +49,14 @@ public class RssReaderActions extends RssReaderForm {
 					if(channels.size() == 0){ // user does't have rss channel
 						return true;
 					}
+					Collections.sort(channels, new Comparator() {
+						public int compare(Object a, Object b) {
+							String t1 = ((Channel) a).getTitle();
+							String t2 = ((Channel) b).getTitle();
+							return t1.compareTo(t2);
+						}
+					});
+					
 				}
 
 				if (channel == null){
