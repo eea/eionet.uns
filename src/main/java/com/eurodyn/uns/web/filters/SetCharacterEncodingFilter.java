@@ -8,6 +8,8 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 public class SetCharacterEncodingFilter implements Filter {
@@ -60,6 +62,23 @@ public class SetCharacterEncodingFilter implements Filter {
                 request.setCharacterEncoding(encoding);
         }
 
+		// css setup will be removed from here after realizaton of stable version of the EIONET CSS
+        HttpServletRequest httpRequest  = (HttpServletRequest) request;
+		if (httpRequest.getParameter("myCss") != null) {
+			HttpSession session = httpRequest.getSession();
+			if (session != null){
+				String css = httpRequest.getParameter("myCss");
+				session.setAttribute("myCss", css + ".css");
+				if (css.indexOf("main1") != -1 || css.indexOf("main2") != -1) {
+					session.setAttribute("portletCss", "portlet-green.css");
+				} else {
+					session.setAttribute("portletCss", "portlet.css");
+				}				
+			}
+
+		}
+        
+        
 	// Pass control on to the next filter
         chain.doFilter(request, response);
 

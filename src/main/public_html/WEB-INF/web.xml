@@ -37,41 +37,33 @@
 		<param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
 		<param-value>true</param-value>
 	</context-param>
-	<context-param>
-	      <param-name>edu.yale.its.tp.cas.client.filter.loginUrl</param-name>
-	      <param-value>http://highlander:8180/cas/login</param-value>
-	</context-param>
-	<context-param>
-	      <param-name>edu.yale.its.tp.cas.client.filter.serverName</param-name>
-	      <param-value>localhost:8080</param-value>
-	</context-param>
 
 
 	<filter>
 	    <filter-name>CAS Filter</filter-name>
-	    <filter-class>edu.yale.its.tp.cas.client.filter.CASFilter</filter-class>
+	    <filter-class>com.eurodyn.uns.web.filters.EionetCASFilter</filter-class>
 	    <init-param>
 	      <param-name>edu.yale.its.tp.cas.client.filter.loginUrl</param-name>
-	      <param-value>http://highlander:8180/cas/login</param-value>
+	      <param-value>https://localhost:8443/cas/login</param-value>
 	    </init-param>
 	    <init-param>
 	      <param-name>edu.yale.its.tp.cas.client.filter.validateUrl</param-name>
-	      <param-value>https://highlander:8443/cas/proxyValidate</param-value>
+	      <param-value>https://localhost:8443/cas/proxyValidate</param-value>
 	    </init-param>
 	    <init-param>
 	      <param-name>edu.yale.its.tp.cas.client.filter.serverName</param-name>
-	      <param-value>localhost:8080</param-value>
+	      <param-value>localhost:8084</param-value>
 	    </init-param>
 	   <init-param>
 	      <param-name>edu.yale.its.tp.cas.client.filter.wrapRequest</param-name>
 	      <param-value>true</param-value>
 	    </init-param>
+	    <init-param>
+	      <param-name>eionetLoginCookieDomen</param-name>
+	      <param-value>localhost</param-value>
+	    </init-param>	    
 	</filter>
 
-	<filter>
-		<filter-name>Security filter</filter-name>
-		<filter-class>com.eurodyn.uns.web.filters.SecurityFilter</filter-class>
-	</filter>
 	<filter>
 		<filter-name>Set Character Encoding</filter-name>
 		<filter-class>com.eurodyn.uns.web.filters.SetCharacterEncodingFilter</filter-class>
@@ -79,6 +71,10 @@
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
 		</init-param>
+	</filter>
+	<filter>
+		<filter-name>UNS Request Wrapper</filter-name>
+		<filter-class>com.eurodyn.uns.web.filters.UNSRequestWrapperFilter</filter-class>
 	</filter>
 	<filter>
 		<filter-name>Logging filter</filter-name>
@@ -122,6 +118,15 @@
 	
 
 	<!-- Filter Mappings -->
+	
+	<filter-mapping>
+		<filter-name>Set Character Encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>	
+	<filter-mapping>
+		<filter-name>multipartFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>	
 	<filter-mapping>
     	<filter-name>CAS Filter</filter-name>
     	<url-pattern>/admin/*</url-pattern>
@@ -142,18 +147,21 @@
     	<filter-name>CAS Filter</filter-name>
     	<url-pattern>/help/*</url-pattern>
   	</filter-mapping>
-  	
-	<filter-mapping>
-		<filter-name>Security filter</filter-name>
-		<url-pattern>*.jsf</url-pattern>
-	</filter-mapping>	
-	<filter-mapping>
-		<filter-name>Security filter</filter-name>
-		<url-pattern>*.jsp</url-pattern>
-	</filter-mapping>	
+  	<filter-mapping>
+    	<filter-name>CAS Filter</filter-name>
+		<url-pattern>/eionetCookieLogin/*</url-pattern>		
+  	</filter-mapping>
 	<filter-mapping>
 		<filter-name>multipartFilter</filter-name>
 		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>UNS Request Wrapper</filter-name>
+		<url-pattern>*.jsf</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>UNS Request Wrapper</filter-name>
+		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
 	
 	

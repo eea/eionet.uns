@@ -1,2 +1,4 @@
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
 <% session.invalidate(); %>
-<% response.sendRedirect(application.getInitParameter("edu.yale.its.tp.cas.client.filter.loginUrl").substring(0,application.getInitParameter("edu.yale.its.tp.cas.client.filter.loginUrl").length() -5) + "logout?url="  + (application.getInitParameter("edu.yale.its.tp.cas.client.filter.serverName").startsWith("http")? ((application.getInitParameter("edu.yale.its.tp.cas.client.filter.serverName") + request.getContextPath() + "/")): (( "http://" + application.getInitParameter("edu.yale.its.tp.cas.client.filter.serverName") + request.getContextPath() + "/" )) )); %>
+<% EionetCASFilter.attachEionetLoginCookie(response,false); %>
+<% response.sendRedirect(EionetCASFilter.getCASLogoutURL(request)); %>

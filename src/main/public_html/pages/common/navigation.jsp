@@ -1,22 +1,25 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
-
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
 
 <%@ page isELIgnored="false" contentType="text/html;charset=UTF-8" language="java"%>
 <% 
 	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
 	String userRole = "";
+	String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
+	
+	
 	if(request.isUserInRole("admin")){
 		userRole = "admin";
 	}
 	else if(request.isUserInRole("xmlrpc")){
 		userRole = "rpc";
 	}
-	else if(request.getRemoteUser() != null){
+	else if(userName != null){
 		userRole = "eea";
 	}else if(user != null) {			
 		 userRole = "eeaNotLogged";
 	}
-	
+
 	request.setAttribute("userRole",userRole);
 
 %>
@@ -95,7 +98,7 @@
 						<div class="portletContent odd">									
 							<ul class="portal-subnav">
 																		
-								<li><a href=" <%= application.getInitParameter("edu.yale.its.tp.cas.client.filter.loginUrl")+ "?service="  + (application.getInitParameter("edu.yale.its.tp.cas.client.filter.serverName").startsWith("http")? ((application.getInitParameter("edu.yale.its.tp.cas.client.filter.serverName") + request.getContextPath() + "/login/home.jsf")): (( "http://" + application.getInitParameter("edu.yale.its.tp.cas.client.filter.serverName") + request.getContextPath() + "/login/home.jsf")) )%>" title="login">Login</a></li>
+								<li><a href="<%=EionetCASFilter.getCASLoginURL(request)%>" title="login">Login</a></li>
 							</ul>
 						</div>
 					</div>
