@@ -1,6 +1,10 @@
 package com.eurodyn.uns.web.filters;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -94,23 +98,34 @@ public class EionetCASFilter extends CASFilter {
 	public static String getEionetCookieCASLoginURL(HttpServletRequest request) {
 
 		String contextPath = request.getContextPath();
-		String serviceURL = request.getRequestURL().toString();
+		String serviceURL =  request.getRequestURL().toString(); 
+		if (request.getQueryString() != null && request.getQueryString().length() > 0){
+			serviceURL = serviceURL + "?" + request.getQueryString();
+		}
+
 		String serviceURI = serviceURL.substring(serviceURL.indexOf("/", serviceURL.indexOf("://") + 3));
 
 		if (contextPath.equals("")) {
 			if (serviceURI.equals("/"))
 				serviceURL = serviceURL + EIONET_COOKIE_LOGIN_PATH + "/";
 			else
-				serviceURL = serviceURL.replaceFirst(serviceURI, "/" + EIONET_COOKIE_LOGIN_PATH + serviceURI);
+				serviceURL = serviceURL.replaceFirst(forRegex(serviceURI), "/" + EIONET_COOKIE_LOGIN_PATH + serviceURI);
 		} else {
 			String servletPath = serviceURI.substring(contextPath.length(), serviceURI.length());
 			if (serviceURI.equals("/"))
 				serviceURL = serviceURL + EIONET_COOKIE_LOGIN_PATH + "/";
 			else
-				serviceURL = serviceURL.replaceFirst(serviceURI, contextPath + "/" + EIONET_COOKIE_LOGIN_PATH + servletPath);
+				serviceURL = serviceURL.replaceFirst(forRegex(serviceURI), contextPath + "/" + EIONET_COOKIE_LOGIN_PATH + servletPath);
 		}
 
-		return CAS_LOGIN_URL + "?service=" + serviceURL;
+		try {
+			serviceURL = URLEncoder.encode(serviceURL,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			logger.error(e);
+		}
+		
+		return CAS_LOGIN_URL + "?service=" +   serviceURL ;
+
 
 	}
 
@@ -149,7 +164,70 @@ public class EionetCASFilter extends CASFilter {
 		response.sendRedirect(redirectUrl);		
 	}
 	
-	
+	  public static String forRegex(String aRegexFragment){
+		    final StringBuffer result = new StringBuffer();
+
+		    final StringCharacterIterator iterator = new StringCharacterIterator(aRegexFragment);
+		    char character =  iterator.current();
+		    while (character != CharacterIterator.DONE ){
+		      /*
+		      * All literals need to have backslashes doubled.
+		      */
+		      if (character == '.') {
+		        result.append("\\.");
+		      }
+		      else if (character == '\\') {
+		        result.append("\\\\");
+		      }
+		      else if (character == '?') {
+		        result.append("\\?");
+		      }
+		      else if (character == '*') {
+		        result.append("\\*");
+		      }
+		      else if (character == '+') {
+		        result.append("\\+");
+		      }
+		      else if (character == '&') {
+		        result.append("\\&");
+		      }
+		      else if (character == ':') {
+		        result.append("\\:");
+		      }
+		      else if (character == '{') {
+		        result.append("\\{");
+		      }
+		      else if (character == '}') {
+		        result.append("\\}");
+		      }
+		      else if (character == '[') {
+		        result.append("\\[");
+		      }
+		      else if (character == ']') {
+		        result.append("\\]");
+		      }
+		      else if (character == '(') {
+		        result.append("\\(");
+		      }
+		      else if (character == ')') {
+		        result.append("\\)");
+		      }
+		      else if (character == '^') {
+		        result.append("\\^");
+		      }
+		      else if (character == '$') {
+		        result.append("\\$");
+		      }
+		      else {
+		        //the char is not a special one
+		        //add it to the result as is
+		        result.append(character);
+		      }
+		      character = iterator.next();
+		    }
+		    return result.toString();
+		  }
+
 }
 
 class CASFilterChain implements FilterChain {
