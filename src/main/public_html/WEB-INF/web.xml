@@ -48,7 +48,7 @@
 	    </init-param>
 	    <init-param>
 	      <param-name>edu.yale.its.tp.cas.client.filter.validateUrl</param-name>
-	      <param-value>https://localhost:8443/cas/proxyValidate</param-value>
+	      <param-value>https://localhost:8443/cas/serviceValidate</param-value>
 	    </init-param>
 	    <init-param>
 	      <param-name>edu.yale.its.tp.cas.client.filter.serverName</param-name>
