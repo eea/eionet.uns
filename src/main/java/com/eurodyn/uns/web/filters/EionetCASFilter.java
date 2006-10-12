@@ -34,14 +34,14 @@ public class EionetCASFilter extends CASFilter {
 
 	private static String SERVER_NAME = null;
 
-	private static String EIONET_LOGIN_COOKIE_DOMEN = null;
+	private static String EIONET_LOGIN_COOKIE_DOMAIN = null;
 	
 	private UserFacade userFacade = new UserFacade();
 
 	public void init(FilterConfig config) throws ServletException {
 		CAS_LOGIN_URL = config.getInitParameter(LOGIN_INIT_PARAM);
 		SERVER_NAME = config.getInitParameter(SERVERNAME_INIT_PARAM);
-		EIONET_LOGIN_COOKIE_DOMEN = config.getInitParameter("eionetLoginCookieDomen");
+		EIONET_LOGIN_COOKIE_DOMAIN = config.getInitParameter("eionetLoginCookieDomain");
 		super.init(config);
 
 	}
@@ -79,8 +79,8 @@ public class EionetCASFilter extends CASFilter {
 	public static void attachEionetLoginCookie(HttpServletResponse response, boolean isLoggedIn){
 		Cookie tgc = new Cookie(EIONET_LOGIN_COOKIE_NAME, isLoggedIn?"loggedIn":"loggedOut");
 		tgc.setMaxAge(-1);
-		if (!EIONET_LOGIN_COOKIE_DOMEN.equalsIgnoreCase("localhost"))
-			tgc.setDomain(EIONET_LOGIN_COOKIE_DOMEN);
+		if (!EIONET_LOGIN_COOKIE_DOMAIN.equalsIgnoreCase("localhost"))
+			tgc.setDomain(EIONET_LOGIN_COOKIE_DOMAIN);
 		tgc.setPath("/");			
 		response.addCookie(tgc);		
 	}
@@ -130,7 +130,7 @@ public class EionetCASFilter extends CASFilter {
 	}
 
 	private void redirectAfterEionetCookieLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String requestUri = request.getRequestURI();
+		String requestUri = request.getRequestURI() + (request.getQueryString() != null ? ("?" +request.getQueryString()):"" );
 		String realURI = null;
 		if (requestUri.endsWith(EIONET_COOKIE_LOGIN_PATH + "/"))
 			realURI = requestUri.replaceFirst(EIONET_COOKIE_LOGIN_PATH + "/", "");

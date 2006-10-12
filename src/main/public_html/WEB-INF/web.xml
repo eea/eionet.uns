@@ -59,7 +59,7 @@
 	      <param-value>true</param-value>
 	    </init-param>
 	    <init-param>
-	      <param-name>eionetLoginCookieDomen</param-name>
+	      <param-name>eionetLoginCookieDomain</param-name>
 	      <param-value>localhost</param-value>
 	    </init-param>	    
 	</filter>
