@@ -4,18 +4,20 @@
 
 
 # Location of the Python executable
-PYTHON="/usr/bin/python"
+PYTHON="@PYTHON_HOME@"
 
 # Location of Your Zope instance
-INSTANCE_HOME="/opt/nedjo/zope/zope-2.8.2/uns_instance"
+INSTANCE_HOME="@UNS_PYTHON_SOURCE_HOME@"
 
 #WEB context root of the Your UNS installation
-UNS_ROOT_CONTEXT="http://uns.eionet.eu.int"
+UNS_ROOT_CONTEXT=@UNS_URL@
 
 
+#UNS home folder 
+UNS_HOME=@UNS_HOME@
 
-UNSD_HOME=$INSTANCE_HOME/Products/UNS
-export INSTANCE_HOME UNSD_HOME PYTHON UNS_ROOT_CONTEXT
+UNSD_HOME=$INSTANCE_HOME/UNS
+export INSTANCE_HOME UNSD_HOME PYTHON UNS_ROOT_CONTEXT UNS_HOME
 
 RETVAL=0
 

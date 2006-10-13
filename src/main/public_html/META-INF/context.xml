@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<Context path="/uns2" reloadable="true" docBase="ROOT.war">
-  <Environment name="APPLICATION_HOME" type="java.lang.String" value="c:/work/projects/EIONET/scm/UNS2/src/main/resources\"/>
-  <Resource name="jdbc/UNS2_DEV_DS" auth="Container" type="javax.sql.DataSource"/>
+<Context path="@CONTEXT_PATH@" reloadable="true" docBase="@app.name@.war">
+  <Environment name="APPLICATION_HOME" type="java.lang.String" value="@UNS_HOME@"/>
+  <Resource name="jdbc/UNS_DS" auth="Container" type="javax.sql.DataSource"/>
 
-  <ResourceParams name="jdbc/UNS2_DEV_DS">
+  <ResourceParams name="jdbc/UNS_DS">
     <parameter>
       <name>factory</name>
       <value>org.apache.commons.dbcp.BasicDataSourceFactory</value>
@@ -38,17 +38,17 @@
     <!-- MySQL dB username and password for dB connections  -->
     <parameter>
      <name>username</name>
-     <value>uns_developer</value>
+     <value>@db.user@</value>
     </parameter>
     <parameter>
      <name>password</name>
-     <value>reportnet</value>
+     <value>@db.password@</value>
     </parameter>
 
     <!-- Class name for mm.mysql JDBC driver -->
     <parameter>
        <name>driverClassName</name>
-       <value>com.mysql.jdbc.Driver</value>
+       <value>@db.driver@</value>
     </parameter>
 
     <!-- The JDBC connection url for connecting to your MySQL dB.
@@ -58,7 +58,7 @@
          -->
     <parameter>
       <name>url</name>
-      <value>jdbc:mysql://reportnet:3306/UNS2_DEV?useUnicode=true&amp;characterEncoding=UTF-8</value>
+      <value>@db.url@?useUnicode=true&amp;characterEncoding=UTF-8</value>
     </parameter>
   </ResourceParams>
 </Context>
