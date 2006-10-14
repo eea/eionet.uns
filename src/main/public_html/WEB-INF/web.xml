@@ -128,6 +128,14 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>	
 	<filter-mapping>
+		<filter-name>UNS Request Wrapper</filter-name>
+		<url-pattern>*.jsf</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>UNS Request Wrapper</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
     	<filter-name>CAS Filter</filter-name>
     	<url-pattern>/admin/*</url-pattern>
   	</filter-mapping>
@@ -151,18 +159,6 @@
     	<filter-name>CAS Filter</filter-name>
 		<url-pattern>/eionetCookieLogin/*</url-pattern>		
   	</filter-mapping>
-	<filter-mapping>
-		<filter-name>multipartFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>UNS Request Wrapper</filter-name>
-		<url-pattern>*.jsf</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>UNS Request Wrapper</filter-name>
-		<url-pattern>*.jsp</url-pattern>
-	</filter-mapping>
 	
 	
 	<listener>

@@ -10,47 +10,6 @@
   These properties generally define file and directory names (or paths) that
   affect where the build process stores its outputs.
 
-  app.name             Name of this application, used to
-                       construct war archive.
-
-
-  context.path         Context path to which this application should be
-                       deployed (defaults to "/" plus the value of the
-                       "app.name" property).
-
-  catalina.home        The directory in which you have installed
-                       a binary distribution of Tomcat 5.  This will
-                       be used by the "compile" target.
-
-  ldap.url             The URL of the EIONET ldap service used in the 
-                       EIONET directory service API. 
-
-
-  db.driver            Class name for mm.mysql JDBC driver
-
-
-  db.user              MySQL dB username for dB connections
-
-
-  db.password          MySQL dB password for dB connections
-
-
-
-  db.url              The JDBC connection url for connecting to your MySQL dB.
-			  Please do no specifiy additinal parameters here
-			  The default arguments added tu url are 
-                      useUnicode=true and characterEncoding=UTF-8
-                      If you want to change these parameters please edit
-                      /src/main/public_html/META-INF/context.xml before building process.
- 
-
-
-
-  uns_python_source.home Home directory of the UNS python source code			
-
-
-  jython.home          The home directory of the your jython installation.
-
 
   build.home           The directory into which the "prepare" and
                        "compile" targets will generate their output.
@@ -60,33 +19,12 @@
                        distribution files are created.
                        Defaults to "dist".
 
-  manager.password     The login password of a user that is assigned the
-                       "manager" role (so that he or she can execute
-                       commands via the "/manager" web application)
-
-  manager.username     The login username of a user that is assigned the
-                       "manager" role (so that he or she can execute
-                       commands via the "/manager" web application)
 
 -->
 
   
 
-  <property name="uns.home"   value="/home/uns/UNS_HOME"/>
-  <property name="app.name"      value="uns"/>
-  <property name="context.path" value="/${app.name}"/>
-  <property name="catalina.home" value="/home/tomcat/server/jakarta-tomcat-5.0.28"/>
-  <property name="db.driver" value="com.mysql.jdbc.Driver"/>
-  <property name="db.url" value="jdbc:mysql://reportnet:3306/UNS23"/>
-  <property name="db.user" value="uns"/>
-  <property name="db.password" value="reportnet"/>
-  <property name="ldap.url" value="ldap://ldap.eionet.eu.int:389/"/>
-  <property name="uns_python_source.home" value="${basedir}/uns-python-source"/>
-  <property name="jython.home" value="/home//uns/jython-instance"/>
-  <property name="python.home" value="/usr/bin/python"/>
-  <property name="uns.url" value="http://reportnet.eurodyn.com:9099" />
-
-
+  <property file="default.properties"/>
 
   <property name="build.home"    value="${basedir}/build"/> 
   <property name="dist.home"     value="${basedir}/dist"/>

@@ -66,8 +66,8 @@ public class ServiceDispatcher {
 		
 	}
 	
-	public ServiceDispatcher(AppUser ttt) {
-		this.rpcUser=userFacade.findUser(ttt.getUserName());
+	public ServiceDispatcher(AppUser user) {
+		this.rpcUser=userFacade.getUser(user.getUserName(),true);
 	}
 	
 	public String test() {
