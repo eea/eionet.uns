@@ -5,7 +5,7 @@
 <t:saveState value="#{subscriptionBean.propertyValues}" />
 <t:saveState value="#{subscriptionBean.availableProperties}" />
 <t:saveState value="#{subscriptionBean.allChoosableStatements}" />
-
+<t:div id="formInitialization" rendered="#{ not subscriptionBean.externalSubscription}"  />
 <h:form>
 	<htm:h1 rendered="#{empty subscriptionBean.subscription.id}"> <h:outputText  value="Subscribe to the '#{subscriptionBean.subscription.channel.title}' channel "  /></htm:h1>
 	<htm:h1 rendered="#{not empty subscriptionBean.subscription.id}"> <h:outputText  value="Edit the '#{subscriptionBean.subscription.channel.title}' channel subscription "  /></htm:h1>

@@ -35,6 +35,15 @@ public class SubscriptionActions extends SubscriptionForm {
 		}
 	}
 
+	public boolean isExternalSubscription(){
+		String secondaryID = getRequest().getParameter("sid");
+		if (secondaryID != null){
+			subscription.setChannel(channelFacade.getChannelBySecId(secondaryID));
+			allChoosableStatements = eventMetadataFacade.findChoosableStatements(subscription.getChannel());
+		}
+		return false;
+	}
+	
 	public String save() {
 
 		try {

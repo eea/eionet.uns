@@ -221,6 +221,10 @@
 		<url-pattern>/rss</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>Home page servlet</servlet-name>
+		<url-pattern>/subsc/edit</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>Rss feed servlet</servlet-name>
 		<url-pattern>/events</url-pattern>
 	</servlet-mapping>

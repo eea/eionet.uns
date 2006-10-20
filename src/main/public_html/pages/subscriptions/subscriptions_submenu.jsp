@@ -3,8 +3,11 @@
 <f:verbatim>
 <div id="tabbedmenu">
 
-	<c:if  test="${selectedSubMenu == ''}" >
+	<c:if  test="${(not empty subscriptionBean ) && selectedSubMenu == ''}" >
 		<c:set  var="selectedSubMenu" value="${subscriptionBean.subMenu}" />
+	</c:if>
+	<c:if  test="${ selectedSubMenu == ''}" >
+		<c:set  var="selectedSubMenu" value="subscriptions" />
 	</c:if>
 
 	<c:if  test="${selectedSubMenu == 'subscriptions'}" >

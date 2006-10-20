@@ -137,21 +137,25 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
 
 	public Channel findChannel(String secondaryId) throws DAOException {
 		Session session = null;
-		Channel result = null;
+		Channel channel = null;
 		try {
 			session = getSession();
 			Query query = session.createQuery("select c from Channel as c where c.secondaryId=:secondaryId");
 			query.setString("secondaryId", secondaryId);
 			List list = query.list();
 			if (list.size() > 0) {
-				result = (Channel) list.get(0);
+				channel = (Channel) list.get(0);
 			}
+			Hibernate.initialize(channel.getDeliveryTypes());
+			Hibernate.initialize(channel.getRoles());
+			Hibernate.initialize(channel.getMetadataElements());
+
 		} catch (HibernateException e) {
 			throw new DAOException(e);
 		} finally {
 			closeSession(session);
 		}
-		return result;
+		return channel;
 	}
 
 	public void deleteChannel(Channel channel) throws DAOException {

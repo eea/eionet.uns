@@ -19,14 +19,20 @@ public class HomeServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String redirectToPage = "home.jsf";
-
-			User user = LoginBean.getUser(request);
-			if (user != null && !request.isUserInRole("xmlrpc")) {
-				if (user.getPreferDashboard().booleanValue())
-					redirectToPage = "dash/" + user.getExternalId() + "/dashboard.jsf";
-				else
-					redirectToPage = "rss/" + user.getExternalId() + "/rssReader.jsf";
+			
+			if (request.getRequestURI().indexOf("subsc/edit") > -1){
+				redirectToPage = request.getContextPath() + "/subscriptions/subscription.jsf?sid="+ request.getParameter("sid");
+			}else{
+				User user = LoginBean.getUser(request);
+				if (user != null && !request.isUserInRole("xmlrpc")) {
+					if (user.getPreferDashboard().booleanValue())
+						redirectToPage = "dash/" + user.getExternalId() + "/dashboard.jsf";
+					else
+						redirectToPage = "rss/" + user.getExternalId() + "/rssReader.jsf";
+				}
+				
 			}
+
 			response.sendRedirect(redirectToPage);
 
 		} catch (Exception e) {
