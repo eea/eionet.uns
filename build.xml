@@ -97,7 +97,6 @@
    description="Delete old build and dist directories">
     <delete dir="${build.home}"/>
     <delete dir="${dist.home}"/>
-    <delete dir="${uns.home}"/>
     <delete dir="${uns_python_source.home}"/>
   </target>
 
