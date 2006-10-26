@@ -127,7 +127,6 @@
     <replace file="${build.home}/META-INF/context.xml" token="@CONTEXT_PATH@" value="${context.path}"/>
     <replace file="${build.home}/META-INF/context.xml" token="@app.name@" value="${app.name}"/>
     <replace file="${build.home}/META-INF/context.xml" token="@UNS_HOME@" value="${uns.home}"/>
-    <replace file="${build.home}/META-INF/context.xml" token="@db.driver@" value="${db.driver}"/>
     <replace file="${build.home}/META-INF/context.xml" token="@db.url@" value="${db.url}"/>
     <replace file="${build.home}/META-INF/context.xml" token="@db.user@" value="${db.user}"/>
     <replace file="${build.home}/META-INF/context.xml" token="@db.password@" value="${db.password}"/>
@@ -201,7 +200,6 @@
       <filterset>
        <filter token="UNS_HOME" value="${uns.home}"/>
        <filter token="LDAP_URL" value="${ldap.url}"/>
-       <filter token="db.driver" value="${db.driver}"/>
        <filter token="db.url" value="${db.url}"/>
        <filter token="db.user" value="${db.user}"/>
        <filter token="db.password" value="${db.password}"/>
