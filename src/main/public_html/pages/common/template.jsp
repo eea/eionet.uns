@@ -29,30 +29,14 @@ response.setDateHeader("Expires", 0);
 				}
 			}
 		%>
-  		<c:choose>
-	  		<c:when test="${ not empty sessionScope.myCss}" > 
-				<style type="text/css" media="screen">
-					<!-- @import url(<c:url value="/css/${sessionScope.myCss}"/>); -->
-				</style>
-				<style type="text/css" media="screen">
-					<!-- @import url(<c:url value="/css/${sessionScope.portletCss}"/>); -->
-				</style>								
-			</c:when>
-			<c:otherwise> 	
-				<style type="text/css" media="screen">
-					<!-- @import url(<c:url value="/css/uns_main.css"/>); -->
-				</style>				
-				<style type="text/css" media="screen">
-					<!-- @import url(<c:url value="/css/portlet.css"/>); -->
-				</style>				
-			</c:otherwise>
-		</c:choose>		
-
-
-
 		<style type="text/css" media="screen">
-
+			<!-- @import url(<c:url value="http://www.eionet.europa.eu/styles/eea2006/layout-screen.css"/>); -->
 		</style>
+		<style type="text/css" media="screen">
+			<!-- @import url(<c:url value="/css/portlet.css"/>); -->
+		</style>								 
+
+
 		<link type="text/css" media="print" href="<c:url value="/css/print.css"/>" rel="stylesheet"></link>
 		<!--[if IE]>
 		<style type="text/css" media="screen">
@@ -113,13 +97,12 @@ response.setDateHeader("Expires", 0);
 					<tiles:insert attribute="header" flush="false" />
 				</f:subview>			
 			</div><!-- page head -->
-			<div id="globalnav">
-				<f:subview id="menu" >
-					<tiles:insert attribute="menu" flush="false" />
-				</f:subview>
-			</div><!-- globalnav -->
+
+			<f:subview id="menu" >
+				<tiles:insert attribute="menu" flush="false" />
+			</f:subview>
+			</div>
 			<div id="workarea">
-				<a name="maincontent"></a>
 				<f:subview id="submenu">
 					<tiles:insert attribute="submenu" flush="false" />
 				</f:subview>																			

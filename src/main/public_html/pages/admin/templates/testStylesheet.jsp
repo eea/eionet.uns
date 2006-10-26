@@ -18,7 +18,8 @@
 	</t:div>
 			
 <h:form >
-	<t:div styleClass="commandButtons" style="text-align:center" >
+	<htm:br/>
+	<t:div style="text-align:center" >
 		<h:commandButton action="#{dashTemplateBean.afterTest}" value="OK" />
 	</t:div>
 </h:form>

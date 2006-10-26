@@ -42,11 +42,9 @@
 				</t:commandLink>
 			</h:column>
 		</t:dataTable>
-
-		<t:div styleClass="commandButtons">
-			<t:commandButton value="#{msg['label.common.create']}" action="#{notificationTemplateBean.edit}" actionListener="#{notificationTemplateBean.reset}" />
-		</t:div>
 		<t:saveState value="#{templatesBean.notificationTemplates}" />
 	</t:div>
+	<htm:br/>
+	<t:commandButton value="#{msg['label.common.create']}" action="#{notificationTemplateBean.edit}" actionListener="#{notificationTemplateBean.reset}" />
 
 </h:form>

@@ -2,6 +2,7 @@
 <t:saveState value="#{subscriptionBean.subscriber}" />
 <h:form >
 	<htm:h1><h:outputText value="My preferences" /></htm:h1>
+	<h:panelGrid columns="1" style="width:80%;">
 	<htm:fieldset>
 		<htm:legend>
 			<h:outputText value="Notifications" />
@@ -28,36 +29,40 @@
 				<f:selectItem itemValue="true" itemLabel="Portlets based" />
 				<f:selectItem itemValue="false" itemLabel="Rss Reader based" />
 			</h:selectOneRadio>
-			<h:panelGroup>				
+			<h:panelGrid columns="2" >				
 				<h:outputLabel value="#{msg['label.profile.numcols']}" for="number_of_columns_2" />
 				<h:selectOneMenu id="number_of_columns_2" value="#{subscriptionBean.subscriber.numberOfColumns}" disabled="#{ not subscriptionBean.subscriber.preferDashboard}">
 					<f:selectItem itemValue="1" itemLabel="One" />
 					<f:selectItem itemValue="2" itemLabel="Two" />
 					<f:selectItem itemValue="3" itemLabel="Three" />
 				</h:selectOneMenu>
-			</h:panelGroup>
+			</h:panelGrid>
 		</h:panelGrid>
-		<h:outputLabel value="Dashboard refresh delay"  for="refreshDelay" />
-		<h:inputText id="refreshDelay" value="#{subscriptionBean.subscriber.pageRefreshDelay}"  size="4" >
-			<f:validateLongRange minimum="10" />
-		</h:inputText>
-		<h:outputText  value=" in seconds "/>
+		<h:panelGrid columns="3">
+			<h:outputLabel value="Dashboard refresh delay"  for="refreshDelay" />
+			<h:inputText id="refreshDelay" value="#{subscriptionBean.subscriber.pageRefreshDelay}"  size="4" >
+				<f:validateLongRange minimum="10" />
+			</h:inputText>
+			<h:outputText  value=" in seconds "/>
+		</h:panelGrid>
+		<htm:br/>
+		<h:commandButton action="#{subscriptionBean.saveUserPreferences}" value="#{msg['label.save']}" />
 
-		<t:div styleClass="commandButtons">
-			<h:commandButton action="#{subscriptionBean.saveUserPreferences}" value="#{msg['label.save']}" />
-		</t:div>
 	</htm:fieldset>
+	</h:panelGrid>
 </h:form>
 
 
 
 <h:form >
+	<h:panelGrid columns="1" style="width:80%;">
 	<htm:fieldset>
 		<htm:legend>
 			<h:outputText value="Vacation flag" />
 		</htm:legend>
 
 		<h:outputText rendered="#{ sessionScope['user'].vacationFlag}" value="Status:ENABLED " />
+		<htm:br rendered="#{ sessionScope['user'].vacationFlag}" />
 		<h:outputText rendered="#{ not sessionScope['user'].vacationFlag}" value="Status:DISABLED" />
 		<h:panelGrid columns="1" rendered="#{ not sessionScope['user'].vacationFlag}">
 			<h:panelGroup>
@@ -77,13 +82,14 @@
 				</h:outputText>
 			</h:panelGroup>
 		</h:panelGrid>
-		<t:div styleClass="commandButtons">
-			<h:commandButton action="#{subscriptionBean.saveVacationFlag}" value="Enable vacation flag" rendered="#{ not sessionScope['user'].vacationFlag}">
-				<t:updateActionListener property="#{sessionScope['user'].vacationFlag}" value="true" />
-			</h:commandButton>
-			<h:commandButton action="#{subscriptionBean.saveVacationFlag}" value="Disable vacation flag" rendered="#{ sessionScope['user'].vacationFlag}">
-				<t:updateActionListener property="#{sessionScope['user'].vacationFlag}" value="false" />
-			</h:commandButton>
-		</t:div>
+		<htm:br/>
+		<h:commandButton action="#{subscriptionBean.saveVacationFlag}" value="Enable vacation flag" rendered="#{ not sessionScope['user'].vacationFlag}">
+			<t:updateActionListener property="#{sessionScope['user'].vacationFlag}" value="true" />
+		</h:commandButton>
+		<h:commandButton action="#{subscriptionBean.saveVacationFlag}" value="Disable vacation flag" rendered="#{ sessionScope['user'].vacationFlag}">
+			<t:updateActionListener property="#{sessionScope['user'].vacationFlag}" value="false" />
+		</h:commandButton>
+
 	</htm:fieldset>
+	</h:panelGrid>
 </h:form>

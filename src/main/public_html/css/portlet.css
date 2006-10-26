@@ -15,28 +15,27 @@
 .box {
 	margin: 0;
 	padding: 0 6px 0 0;
-	background: url(../images/borders.png) #F0F0F0 repeat-y 100% 0;
+	background: url(../images/borders-green.png) #FFF repeat-y 100% 0;
 }
 .boxleft {
 	padding: 0 0 0 6px;
-	background: url(../images/borders.png) #F0F0F0 0 0 repeat-y;
+	background: url(../images/borders-green.png) #FFF 0 0 repeat-y;
 }
 .boxtop {
 	margin: 0 -6px;
-	background: url(../images/box.png) 100% 0 no-repeat;
+	background: url(../images/box-green.png) 100% 0 no-repeat;
 	height: 30px;
 }
 .boxtop div {
 	width: 15px;
-	background: url(../images/box.png) 0 0 no-repeat;
+	background: url(../images/box-green.png) 0 0 no-repeat;
 	height: 30px;
 }
 .boxcontent {
 	margin: 0px;
-	padding: 4px 0px 4px 10px;
+	padding: 4px 10px;
 	background: #F0F0F0;
 	overflow: auto;
-	height:180px;
 }
 .boxcontent ul {
 	margin: 0;
@@ -47,29 +46,20 @@
 	margin: 0;
 	padding: 0;
 }
-/*
-.boxcontent img {display:none;}
-*/
-/*Color for visible element title*/
-.boxcontent li span {
-	color: #3D3D3D;
-	font-style: italic;
-	font-weight: bold;
-}
 .boxbottombuttons {
 	margin: 0px;
 	padding: 4px 10px;
-	background: #F0F0F0;
+	background: #FFF;
 	text-align: center;
 }
 .boxbottom {
 	margin: 0 -6px;
-	background: url(../images/box.png) 100% 100% no-repeat;
+	background: url(../images/box-green.png) 100% 100% no-repeat;
 	height: 13px;
 }
 .boxbottom div {
 	width: 13px;
-	background: url(../images/box.png) 0 100% no-repeat;
+	background: url(../images/box-green.png) 0 100% no-repeat;
 	height: 13px;
 }
 .box h4 {
@@ -79,9 +69,9 @@
 	float: left;
 	/*white-space: nowrap;*/
 	display: inline;
-	background: #FF9400;
+	background: #9BAE77; 
 	color: #FFF;
-	font: bold 1em/1 Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font: bold 1em/1em Verdana, Geneva, Arial, Helvetica, sans-serif;
 	overflow:hidden;
 }
 .box h5 {
@@ -100,7 +90,7 @@
 }
 .boxbuttons {
 	width: 100px;
-	margin: -18px 5px 0 0;
+	margin: -17px 5px 0 0;
 	padding: 0;
 	float: right;
 	white-space: nowrap;
@@ -114,17 +104,20 @@
 	padding: 0px;
 	margin: 0px;
 }
+/*
 .box table {
 	margin: 4px 0 0;
 	font: 1em/1 Verdana, Geneva, Arial, Helvetica, sans-serif;
 	border-collapse: collapse;
 }
-
+*/
 .button {
-	background: url(../images/button.png);
-	border: 1px solid #FFCE7B;
+	background: url(../images/button-green.png);
+	border: 1px solid #136F70;
 	padding: 0 2px;
 }
+
+
 
 .event {
 	display:none;
@@ -167,7 +160,7 @@ label {padding-right:0.6em;}
 
 .commandButtons {
 	text-align:left;
-	padding-top:2em;
+	padding-top:1em;
 
 }
 
@@ -181,3 +174,5 @@ label {padding-right:0.6em;}
 .verticalAlignMIddle {
 	vertical-align: middle;
 }  
+
+

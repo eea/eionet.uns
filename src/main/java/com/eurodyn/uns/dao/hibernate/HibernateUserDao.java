@@ -22,6 +22,8 @@
 
 package com.eurodyn.uns.dao.hibernate;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -31,6 +33,7 @@ import org.hibernate.Session;
 
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.IUserDao;
+import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
 
 public class HibernateUserDao extends BaseHibernateDao implements IUserDao {
@@ -74,6 +77,11 @@ public class HibernateUserDao extends BaseHibernateDao implements IUserDao {
 				user = (User) list.get(0);
 				Hibernate.initialize(user.getSubscriptions());
 				Hibernate.initialize(user.getDeliveryAddresses());
+				Collection subscriptions = user.getSubscriptions().values();
+				for (Iterator iter = subscriptions.iterator(); iter.hasNext();) {
+					Subscription subcription = (Subscription) iter.next();
+					Hibernate.initialize(subcription.getFilters());
+				}
 			}
 		} catch (HibernateException e) {
 			throw new DAOException(e);

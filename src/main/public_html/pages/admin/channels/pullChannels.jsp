@@ -3,7 +3,7 @@
 <h:form>
 	<htm:h1><h:outputText value="Pull channels list" /></htm:h1>
 	<t:div style="width:97%;" rendered="#{ not empty channelListBean.pullChannels}">
-		<t:dataTable columnClasses="width30,,textAlignCenter,textAlignCenter,textAlignCenter,textAlignCenter,textAlignCenter" style="width:100%" styleClass="sortable" rowClasses="zebraeven," var="channel" value="#{channelListBean.pullChannels}" preserveDataModel="true" rowId="#{channel.title}" sortColumn="#{channelListBean.st.sort}" sortAscending="#{channelListBean.st.ascending}" preserveSort="true">
+		<t:dataTable columnClasses="width30,,textAlignCenter,textAlignCenter,textAlignCenter,textAlignCenter,textAlignCenter" style="width:97%" styleClass="sortable" rowClasses="zebraeven," var="channel" value="#{channelListBean.pullChannels}" preserveDataModel="true" rowId="#{channel.title}" sortColumn="#{channelListBean.st.sort}" sortAscending="#{channelListBean.st.ascending}" preserveSort="true">
 			<h:column>
 				<f:facet name="header">
 					<t:commandSortHeader columnName="title" value="#{msg['label.common.title']}" title="#{'title'!= channelListBean.st.sort ? msg['table.sortable']:( channelListBean.st.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" arrow="false" immediate="true">
@@ -101,9 +101,9 @@
 	<t:div rendered="#{empty channelListBean.pullChannels}">
 		<h:outputText value="There is no pull channels in the system" />
 	</t:div>
-	<t:div styleClass="commandButtons">
-		<t:commandButton action="#{channelBean.create}" actionListener="#{channelBean.reset}" value="Create" immediate="true" />
-	</t:div>
+	<htm:br/>
+	<t:commandButton action="#{channelBean.create}" actionListener="#{channelBean.reset}" value="Create" immediate="true" />
+
 
 
 </h:form>

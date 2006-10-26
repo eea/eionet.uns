@@ -16,8 +16,9 @@
 			</h:selectOneListbox>
 		</h:panelGrid>
 	</htm:fieldset>
-	<t:div styleClass="commandButtons">
+	<htm:br/>
+	<h:panelGrid columns="2">
 		<h:commandButton action="#{dashTemplateBean.testChannel}" value="#{msg['label.xsl.test.run']}" />
 		<h:commandButton action="#{dashTemplateBean.afterTest}"  value="#{msg['label.cancel']}" immediate="true" />
-	</t:div>
+	</h:panelGrid>
 </h:form>

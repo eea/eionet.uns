@@ -62,14 +62,15 @@
 			<h:commandButton action="#{channelBean.preview}" value="Channel preview" styleClass="button" />
 		</t:div>
 	</htm:fieldset>
-
-	<t:div styleClass="commandButtons">
+	<htm:br />
+		
+	<h:panelGrid columns="4">
 		<h:commandButton action="editChannel" actionListener="#{channelBean.backToEdit}" value="#{msg['label.back']}" />
 		<h:commandButton action="#{channelBean.prepareChoosableElements}" value="#{msg['label.next']}" />
 		<h:commandButton action="#{channelBean.save}" value="#{msg['label.save']}" />
 		<h:commandButton action="pushChannels" value="#{msg['label.cancel']}" immediate="true" rendered="#{channelBean.channel.mode == 'PUSH'}" />
 		<h:commandButton action="pullChannels" value="#{msg['label.cancel']}" immediate="true" rendered="#{channelBean.channel.mode != 'PUSH'}" />
-	</t:div>
+	</h:panelGrid>
 
 	<t:inputHidden id="visibleElements" value="#{channelBean.visibleElements}" />
 </h:form>

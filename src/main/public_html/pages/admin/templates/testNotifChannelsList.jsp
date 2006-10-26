@@ -12,8 +12,9 @@
 			</h:selectOneListbox>
 		</htm:fieldset>
 	</h:panelGrid>
-	<t:div styleClass="commandButtons">	
+	<htm:br/>
+	<h:panelGrid columns="2">
 		<h:commandButton action="#{notificationTemplateBean.test}" value="Run Test"/>
 		<h:commandButton action="#{notificationTemplateBean.afterTest}"  value="#{msg['label.cancel']}" immediate="true" />
-	</t:div>
+	</h:panelGrid>
 </h:form>

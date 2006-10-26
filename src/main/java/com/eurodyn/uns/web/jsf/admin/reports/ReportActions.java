@@ -35,8 +35,8 @@ public class ReportActions extends ReportForm {
 		try {
 			if (isRenderPhase()) {
 				logger.debug("Reports initialisation ");
-				channels = (List) channelFacade.getChannels().get("list");
-				users = userFacade.findAllUsers();
+				channels = (new SortableTable("title")).sort((List) channelFacade.getChannels().get("list"));
+				users = (new SortableTable("externalId")).sort(userFacade.findAllUsers());
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

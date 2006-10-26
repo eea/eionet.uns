@@ -17,5 +17,6 @@
 	</h:panelGrid>
 
 	<t:saveState value="#{configBean.configMap}" />
+	<htm:br/>
 	<h:commandButton action="#{configBean.updateLdap}" value="#{msg['label.save']}" />
 </h:form>

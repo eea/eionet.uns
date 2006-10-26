@@ -20,9 +20,9 @@
 			<f:selectItems value="#{reportBean.usersItems}" />
 		</h:selectOneMenu>
 	</h:panelGrid>
-	<t:div styleClass="commandButtons">
-		<h:commandButton action="#{reportBean.generateTrouthputReport}" value="Generate Report" />
-	</t:div>
+	<htm:br />
+	<h:commandButton action="#{reportBean.generateTrouthputReport}" value="Generate Report" />
+
 	<t:saveState value="#{reportBean.channels}" />
 	<t:saveState value="#{reportBean.users}" />
 </h:form>

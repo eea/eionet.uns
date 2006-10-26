@@ -17,7 +17,7 @@
 	</h:panelGrid>
 
 
-	<t:div styleClass="commandButtons" style="text-align:center">
+	<t:div style="text-align:center">
 		<h:commandButton action="#{notificationTemplateBean.save}" value="#{msg['label.save']}" />
 		<h:commandButton action="#{notificationTemplateBean.prepareTest}" value="Test" actionListener="#{notificationTemplateBean.changeAfterTest} " />
 		<h:commandButton action="notificationTemplates" value="#{msg['label.cancel']}" immediate="true" />

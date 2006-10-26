@@ -147,22 +147,23 @@
 					</h:selectOneMenu>					
 				</h:panelGrid>
 			</t:div>
-			<t:div styleClass="commandButtons" >
+			<h:panelGrid columns="2">
 				<h:commandButton rendered="#{not empty subscriptionBean.filter.statements }" action="#{subscriptionBean.addFilter}" value="Save Filter" />
 				<h:commandButton  rendered="#{ not empty subscriptionBean.availableProperties}" action="#{subscriptionBean.addStatement}" value="Add condition"  />				
-			</t:div>
+				<h:outputText  value="" rendered="#{empty subscriptionBean.availableProperties}" />
+			</h:panelGrid>
 		</t:div>
 		<%--	statements and properties end --%>
 
 
 	</htm:fieldset>
 
-	<t:div styleClass="commandButtons">
+	<htm:br />
+	<h:panelGrid columns="3">
 		<h:commandButton action="#{subscriptionBean.save}" value="#{msg['label.save']}" />
 		<h:commandButton action="avChannels" value="#{msg['label.cancel']}" immediate="true" rendered="#{empty subscriptionBean.subscription.id}" />
 		<h:commandButton action="subscriptions" value="#{msg['label.cancel']}" immediate="true" rendered="#{not empty subscriptionBean.subscription.id}" />
-	</t:div>
-
+	</h:panelGrid>
 
 	</h:panelGrid>
 </h:form>

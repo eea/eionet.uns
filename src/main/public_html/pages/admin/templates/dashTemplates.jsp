@@ -66,8 +66,8 @@
 	<t:div rendered="#{empty templatesBean.stylesheets}">
 		<h:outputText value="There is no stylesheetes in the system" />
 	</t:div>
-	<t:div styleClass="commandButtons">
-		<t:commandButton value="#{msg['label.common.create']}" action="#{dashTemplateBean.edit}" actionListener="#{dashTemplateBean.reset}" />
-	</t:div>
+	<htm:br/>
+	<t:commandButton value="#{msg['label.common.create']}" action="#{dashTemplateBean.edit}" actionListener="#{dashTemplateBean.reset}" />
+
 
 </h:form>

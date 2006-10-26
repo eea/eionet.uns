@@ -39,13 +39,13 @@
 		<t:div rendered="#{ empty channelBean.channelMetadataElements}">
 			<h:outputText value="There is no metadata elements for this channel" />
 		</t:div>
-
-		<t:div styleClass="commandButtons">
+		<htm:br />
+		<h:panelGrid columns="3">
 			<h:commandButton action="#{channelBean.prepareTemplates}" value="#{msg['label.back']}" />
 			<h:commandButton action="#{channelBean.save}" value="#{msg['label.save']}" />
 			<h:commandButton action="pushChannels" value="#{msg['label.cancel']}" immediate="true" rendered="#{channelBean.channel.mode == 'PUSH'}" />
 			<h:commandButton action="pullChannels" value="#{msg['label.cancel']}" immediate="true" rendered="#{channelBean.channel.mode != 'PUSH'}" />
-		</t:div>
+		</h:panelGrid>
 
 	</t:div>
 

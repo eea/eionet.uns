@@ -29,16 +29,10 @@
 	   </tr>
 	   <tr>
 	      <td style=""/>
-	      <td style="font-size:small;text-align:center;">      
-	         <a  href="<%= request.getRequestURL() + "?myCss=uns_main" %>">Default</a>
-	      </td>
-	      <td style="font-size:small;text-align:center;">      
-	         <a  href="<%= request.getRequestURL() + "?myCss=uns_main1" %>">EEA 2006 v1</a>
-	      </td>
-	      <td style="font-size:small;text-align:center;">      
-	         <a  href="<%= request.getRequestURL() + "?myCss=uns_main2" %>">EEA 2006 v2</a>
-	      </td>
-	     <td style=""/>
+	      <td style=""/>
+	      <td style=""/>
+	      <td style=""/>
+	      <td style=""/>
 	   </tr>
 	</table>
 </f:verbatim>

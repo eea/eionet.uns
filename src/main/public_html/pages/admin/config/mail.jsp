@@ -22,9 +22,12 @@
 			<h:outputLabel value="Password" for="smtp_password" />
 			<h:inputText id="smtp_password" value="#{configBean.configMap['smtpserver/smtp_password'].tempValue}" size="15" />
 			<h:outputLabel value="Authorization" for="smtp_useauth" />
-			<h:selectBooleanCheckbox id="smtp_useauth" value="#{configBean.configMap['smtpserver/smtp_useauth'].tempValue}" />
+			<h:selectBooleanCheckbox id="smtp_useauth" value="#{configBean.configMap['smtpserver/smtp_useauth'].tempValue}" />			
 		</h:panelGrid>
-		<h:commandButton action="#{configBean.updateSmtp}" value="#{msg['label.save']}" />
+		<htm:br/>
+		<t:div style="float:left">
+			<h:commandButton action="#{configBean.updateSmtp}" value="#{msg['label.save']}"  />
+		</t:div>
 	</htm:fieldset>
 	<htm:fieldset>
 		<htm:legend>
@@ -45,7 +48,10 @@
 			<h:outputLabel value="Administrator mail" for="adminmail" />
 			<h:inputText id="adminmail" value="#{configBean.configMap['pop3server/adminmail'].tempValue}" size="15" />
 		</h:panelGrid>
-		<h:commandButton action="#{configBean.updatePop3}" value="#{msg['label.save']}" />
+		<htm:br/>
+		<t:div style="float:left">
+			<h:commandButton action="#{configBean.updatePop3}" value="#{msg['label.save']}" style="float:left" />
+		</t:div>
 	</htm:fieldset>
 
 
