@@ -175,4 +175,26 @@ label {padding-right:0.6em;}
 	vertical-align: middle;
 }  
 
+.width30 {
+	width:30%;
+}
 
+.width20 {
+	width:20%;
+}
+.width15 {
+	width:15%;
+}
+.width10 {
+	width:10%;
+}
+
+.width10Center {
+	width:10%;
+	text-align:center;
+}
+
+
+.width80 {
+	width:80%;
+}

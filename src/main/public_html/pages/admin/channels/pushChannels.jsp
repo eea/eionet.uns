@@ -3,7 +3,7 @@
 <h:form>
 	<htm:h1><h:outputText value="Push channels list" /></htm:h1>
 	<t:div style="width:97%;" rendered="#{ not empty channelListBean.pushChannels}">
-		<t:dataTable style="width:100%" columnClasses=",,,,textAlignCenter,textAlignCenter,textAlignCenter,textAlignCenter" styleClass="sortable" rowClasses="zebraeven," var="channel" value="#{channelListBean.pushChannels}" preserveDataModel="true"  rowId="#{channel.title}" sortColumn="#{channelListBean.st.sort}" sortAscending="#{channelListBean.st.ascending}" preserveSort="true">
+		<t:dataTable style="width:100%" columnClasses=",width20,,,textAlignCenter,textAlignCenter,textAlignCenter,width10Center" styleClass="sortable" rowClasses="zebraeven," var="channel" value="#{channelListBean.pushChannels}" preserveDataModel="true"  rowId="#{channel.title}" sortColumn="#{channelListBean.st.sort}" sortAscending="#{channelListBean.st.ascending}" preserveSort="true">
 			<h:column>
 				<f:facet name="header">
 					<t:commandSortHeader columnName="secondaryId" value="#{msg['label.channels.identifier']}" title="#{'title'!= channelListBean.st.sort ? msg['table.sortable']:( channelListBean.st.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" arrow="false" immediate="true">
@@ -54,7 +54,7 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">
-					<t:commandSortHeader columnName="numberOfSubscriptions" value="#{msg['label.channels.numberOfSubscriptions']}" title="#{'numberOfSubscriptions'!= channelListBean.st.sort ? msg['table.sortable']:( channelListBean.st.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" arrow="false" immediate="true">
+					<t:commandSortHeader columnName="numberOfSubscriptions" value="Subs"   title="Number of sumbscriptions" rel="noflow" arrow="false" immediate="true">
 						<f:facet name="descending">
 							<h:graphicImage url="/images/sort_desc.gif" />
 						</f:facet>

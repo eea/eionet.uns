@@ -3,7 +3,7 @@
 <h:form>
 <htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
 	<t:div style="width:97%;" rendered="#{ not empty metadataBean.channel.metadataElements}">
-		<t:dataTable style="width:99%" styleClass="sortable" rowClasses="zebraeven," var="cme" value="#{metadataBean.channelMetadataElements}" preserveDataModel="true" sortColumn="#{metadataBean.st.sort}" sortAscending="#{metadataBean.st.ascending}" preserveSort="true">
+		<t:dataTable style="width:99%" columnClasses=",,textAlignCenter" styleClass="sortable" rowClasses="zebraeven," var="cme" value="#{metadataBean.channelMetadataElements}" preserveDataModel="true" sortColumn="#{metadataBean.st.sort}" sortAscending="#{metadataBean.st.ascending}" preserveSort="true">
 			<h:column>
 				<f:facet name="header">
 					<t:commandSortHeader columnName="metadataElement.localName" value="#{msg['label.channel.metadata.element.local_name']}" title="#{'metadataElement.localName'!= metadataBean.st.sort ? msg['table.sortable']:( metadataBean.st.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" arrow="false" immediate="true">
@@ -25,10 +25,10 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">
-					<h:outputText value="Actiion" title="Action" />
+					<h:outputText value="Action" title="Action" />
 				</f:facet>
 				<t:commandLink action="#{metadataBean.removeChannelMetadataElement}" immediate="false" onclick="if (!approve('Are you sure you want to delete metadata element {} ',['#{cme.metadataElement.name}'])) return false;"  >
-					<h:graphicImage url="/images/delete.gif" alt="#{msg['label.channel.delete']}" title="#{msg['label.channel.delete']}" />
+					<h:graphicImage url="/images/delete.gif" alt="#{msg['label.channel.delete']}" title="Delete metadata element" />
 					<t:updateActionListener property="#{metadataBean.channelMetadataElement}" value="#{cme}" />
 				</t:commandLink>
 
@@ -40,15 +40,17 @@
 			<br />
 		</f:verbatim>
 		<t:div>
+			<h:panelGrid columns="4">
 			<h:outputLabel value="Metadata value" for="searchValue" />
 			<h:inputText id="searchValue" value="#{metadataBean.searchValue}" size="30" />
 			<h:selectOneMenu value="#{metadataBean.searchMetadataElement}">
 				<f:selectItems value="#{metadataBean.channelMetadataElementsItems}" />
 			</h:selectOneMenu>
 			<h:commandButton action="#{metadataBean.searchMetadataElementValues}" value="Search " />
+			</h:panelGrid>
 		</t:div>
 		<t:div rendered="#{not empty  metadataBean.metadataElementValues}">
-			<t:dataTable id="propertyValues" style="width:99%" styleClass="sortable" rows="10" rowClasses="zebraeven," var="em" value="#{metadataBean.metadataElementValues}" preserveDataModel="true" sortColumn="#{metadataBean.st1.sort}" sortAscending="#{metadataBean.st1.ascending}" rowCountVar="valuesRowCount">
+			<t:dataTable id="propertyValues" style="width:80%" columnClasses="width80,textAlignCenter" styleClass="sortable" rows="10" rowClasses="zebraeven," var="em" value="#{metadataBean.metadataElementValues}" preserveDataModel="true" sortColumn="#{metadataBean.st1.sort}" sortAscending="#{metadataBean.st1.ascending}" rowCountVar="valuesRowCount">
 				<h:column>
 					<f:facet name="header">
 						<t:commandSortHeader action="#{metadataBean.searchMetadataElementValues}" columnName="value" value="Values" title="#{'value'!= metadataBean.st1.sort ? msg['table.sortable']:( metadataBean.st1.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" arrow="false" immediate="false" actionListener="#{metadataBean.reset}">
@@ -67,7 +69,7 @@
 						<h:outputText value="Action" title="Action" />
 					</f:facet>
 					<t:commandLink action="#{metadataBean.removeEventMetadataValue}" immediate="false"  onclick="if (!approve('Are you sure you want to delete value {} ',['#{em.value}'])) return false;" >
-						<h:graphicImage url="/images/delete.gif" alt="#{msg['label.channel.delete']}" title="#{msg['label.channel.delete']}" />
+						<h:graphicImage url="/images/delete.gif" alt="#{msg['label.channel.delete']}" title="Delete metadata element" />
 						<t:updateActionListener property="#{metadataBean.eventMetadataValue}" value="#{em}" />
 					</t:commandLink>
 				</h:column>

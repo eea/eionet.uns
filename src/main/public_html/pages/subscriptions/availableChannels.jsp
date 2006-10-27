@@ -6,7 +6,7 @@
 	</htm:h1>
 
 	<t:div style="width:97%;" rendered="#{ not empty subscriptionsBean.channels}">
-		<t:dataTable columnClasses="width30,,textAlignCenter,textAlignCenter" style="width:90%" styleClass="sortable" rowClasses="zebraeven," var="channel" value="#{subscriptionsBean.channels}" preserveDataModel="true" rowId="#{channel.title}" sortColumn="#{subscriptionsBean.st.sort}" sortAscending="#{subscriptionsBean.st.ascending}" preserveSort="true">
+		<t:dataTable columnClasses="width30,,textAlignCenter,textAlignCenter" style="width:99%" styleClass="sortable" rowClasses="zebraeven," var="channel" value="#{subscriptionsBean.channels}" preserveDataModel="true" rowId="#{channel.title}" sortColumn="#{subscriptionsBean.st.sort}" sortAscending="#{subscriptionsBean.st.ascending}" preserveSort="true">
 			<h:column>
 				<f:facet name="header">
 					<t:commandSortHeader columnName="title" value="#{msg['label.common.title']}" title="#{'title'!= subscriptionsBean.st.sort ? msg['table.sortable']:( subscriptionsBean.st.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" arrow="false" immediate="true">

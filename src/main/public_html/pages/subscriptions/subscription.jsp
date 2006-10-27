@@ -11,7 +11,7 @@
 	<htm:h1 rendered="#{not empty subscriptionBean.subscription.id}"> <h:outputText  value="Edit the '#{subscriptionBean.subscription.channel.title}' channel subscription "  /></htm:h1>
 
 
-	<h:panelGrid columns="1" style="width:60%;">
+	<h:panelGrid columns="1" style="width:80%;">
 	<htm:fieldset>
 		<htm:legend>
 			<h:outputText value="Your preferences" />

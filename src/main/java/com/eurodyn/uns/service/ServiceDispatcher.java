@@ -193,8 +193,7 @@ public class ServiceDispatcher {
 					userSubscription.setUser(userForSubs);
 					userSubscription.setDeliveryTypes(new ArrayList());
 					DeliveryType d1=new DeliveryType(); d1.setId(new Integer(1));
-					DeliveryType d2=new DeliveryType(); d2.setId(new Integer(4));
-					userSubscription.getDeliveryTypes().add(d1); userSubscription.getDeliveryTypes().add(d2);
+					userSubscription.getDeliveryTypes().add(d1); 
 					userForSubs.getSubscriptions().put(channel, userSubscription);
 				} else {
 					

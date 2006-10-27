@@ -57,7 +57,7 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">
-					<t:commandSortHeader columnName="numberOfSubscriptions" value="#{msg['label.channels.numberOfSubscriptions']}" title="#{'numberOfSubscriptions'!= channelListBean.st.sort ? msg['table.sortable']:( channelListBean.st.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" arrow="false" immediate="true">
+					<t:commandSortHeader columnName="numberOfSubscriptions" value="Subs" title="Number of sumbscriptions" rel="noflow" arrow="false" immediate="true">
 						<f:facet name="descending">
 							<h:graphicImage url="/images/sort_desc.gif" />
 						</f:facet>
