@@ -36,6 +36,7 @@
 	padding: 4px 10px;
 	background: #F0F0F0;
 	overflow: auto;
+	height:180px;
 }
 .boxcontent ul {
 	margin: 0;
