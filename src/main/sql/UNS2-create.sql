@@ -99,7 +99,7 @@ CREATE TABLE `CHANNEL_METADATA_ELEMENTS` (
   `CHANNEL_ID` int(10) unsigned NOT NULL default '0',
   `METADATA_ELEMENT_ID` int(10) unsigned NOT NULL default '0',
   `VISIBLE` int(10) unsigned NOT NULL default '0',
-  `APPEARANCE_ORDER` tinyint(3) unsigned default '0',
+  `APPEARANCE_ORDER` int(10) unsigned default '0',
   `FILTERED` tinyint(1) NOT NULL default '0',
   `OBSOLETE` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`CHANNEL_ID`,`METADATA_ELEMENT_ID`),
