@@ -33,6 +33,7 @@ import com.eurodyn.uns.service.channelserver.feed.PullHandler;
 import com.eurodyn.uns.service.channelserver.feed.PushHandler;
 import com.eurodyn.uns.service.channelserver.feed.QueryHandler;
 import com.eurodyn.uns.service.channelserver.feed.TestHandler;
+import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.util.cache.CacheItem;
 import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.util.rdf.IChannel;
@@ -41,6 +42,7 @@ public class EEAChannelServer extends BaseChannelServer {
 	private static final WDSLogger logger = WDSLogger.getLogger(EEAChannelServer.class);
 
 	private BaseFeedHandler handler;
+	private ChannelFacade channelFacade = new ChannelFacade();
 
 
 	public EEAChannelServer() {
@@ -52,14 +54,14 @@ public class EEAChannelServer extends BaseChannelServer {
 		String content = null;
 		try {
 
-			if (ignoreCache){
+			if (ignoreCache || subs.getChannel().getMode().equals("PUSH")){
 				Dto request = new Dto();
 				request.put("subscription", subs);
 				handler.handleRequest(request, BaseChannelServer.DATABASE);
 				content = (String) request.get("CONTENT");				
 			}else{
 				Channel channel = subs.getChannel();
-				CacheItem entry = MemCache.get(subs.getId(),subs.getChannel().getLastHarvestDate());
+				CacheItem entry = MemCache.get(subs.getId(),channelFacade.getChannel(channel.getId()).getLastHarvestDate());
 				if (entry != null) {
 					logger.debug("Found entry in cache for subscription on channel" + subs.getChannel().getTitle());
 					content = (String) entry.getContent();

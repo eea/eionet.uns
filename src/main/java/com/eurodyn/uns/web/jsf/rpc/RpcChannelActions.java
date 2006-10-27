@@ -1,6 +1,7 @@
 package com.eurodyn.uns.web.jsf.rpc;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.DeliveryType;
@@ -38,7 +39,8 @@ public class RpcChannelActions extends BaseBean {
 					d1.setId(new Integer(i));
 					dt.add(d1);
 				}
-				channel.setDeliveryTypes(dt);				
+				channel.setDeliveryTypes(dt);
+				channel.setLastHarvestDate((new GregorianCalendar(1990, 1, 1, 0, 0, 0)).getTime());
 				channelFacade.createChannel(channel);
 				addInfoMessage(null, "label.channel.success.create", new Object[] { channel.getTitle() });
 			} else {
