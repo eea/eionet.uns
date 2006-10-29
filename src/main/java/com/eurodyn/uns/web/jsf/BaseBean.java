@@ -45,10 +45,11 @@ public abstract class BaseBean {
 	protected static final Integer EMAIL = new Integer(1);
 
 	protected static final Integer JABBER = new Integer(2);
+	
+	protected static final Integer WDB = new Integer(3);
 
-	protected static final Integer RSSFEED = new Integer(3);
+	protected static final Integer RSSFEED = new Integer(4);
 
-	protected static final Integer WDB = new Integer(4);
 
 	protected static Map deliveryTypesMap;
 

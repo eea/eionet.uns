@@ -33,7 +33,7 @@ public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
 		}
 	}
 
-	private final static String subscriptionEventsQuery = "select E.ID,  E.EXT_ID, E.RTYPE, EM.PROPERTY, EM.VALUE , E.CREATION_DATE" + " from NOTIFICATION N, DELIVERY D, EVENT E, EVENT_METADATA EM " + " where N.EEA_USER_ID=? and D.DELIVERY_TYPE_ID=4 " + " and N.ID=D.NOTIFICATION_ID " + "  and DATE_SUB(UTC_TIMESTAMP(),INTERVAL ? DAY) <= E.CREATION_DATE " + " and E.ID=N.EVENT_ID  and E.ID=EM.EVENT_ID " + " and E.CHANNEL_ID = ? ORDER BY E.CREATION_DATE DESC";
+	private final static String subscriptionEventsQuery = "select E.ID,  E.EXT_ID, E.RTYPE, EM.PROPERTY, EM.VALUE , E.CREATION_DATE" + " from NOTIFICATION N, DELIVERY D, EVENT E, EVENT_METADATA EM " + " where N.EEA_USER_ID=? and D.DELIVERY_TYPE_ID=3 " + " and N.ID=D.NOTIFICATION_ID " + "  and DATE_SUB(UTC_TIMESTAMP(),INTERVAL ? DAY) <= E.CREATION_DATE " + " and E.ID=N.EVENT_ID  and E.ID=EM.EVENT_ID " + " and E.CHANNEL_ID = ? ORDER BY E.CREATION_DATE DESC";
 
 	private final static String userEventsQuery = "select E.ID,  E.EXT_ID, E.RTYPE, EM.PROPERTY, EM.VALUE , E.CREATION_DATE" + " from NOTIFICATION N, DELIVERY D, EVENT E, EVENT_METADATA EM " + " where N.EEA_USER_ID=? and D.DELIVERY_TYPE_ID=4 " + " and N.ID=D.NOTIFICATION_ID " + " and DATE_SUB(UTC_TIMESTAMP(),INTERVAL ? DAY) <= E.CREATION_DATE " + " and E.ID=N.EVENT_ID  and E.ID=EM.EVENT_ID " + " ORDER BY E.CREATION_DATE DESC";
 

@@ -31,8 +31,9 @@ public class DeliveryType implements Serializable {
 
 	public static final int EMAIL = 1;
 	public static final int JABBER = 2;
-	public static final int RSS = 3;
-	public static final int WDB = 4;
+	public static final int WDB = 3;
+	public static final int RSS = 4;
+	
 	
 	// Fields
 
