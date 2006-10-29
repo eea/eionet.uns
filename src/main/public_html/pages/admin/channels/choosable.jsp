@@ -9,7 +9,7 @@
 	</htm:h1>
 
 	<t:div style="width:97%;">
-		<t:dataTable rendered="#{ not empty channelBean.channelMetadataElements}" style="width:100%" styleClass="sortable" rowClasses="zebraeven," var="cme" value="#{channelBean.channelMetadataElements}" preserveDataModel="false" rows="10" rowId="#{cme.metadataElement.id}" sortColumn="#{channelBean.st.sort}" sortAscending="#{channelBean.st.ascending}">
+		<t:dataTable rendered="#{ not empty channelBean.channelMetadataElements}" style="width:100%" styleClass="sortable" rowClasses="zebraeven," var="cme" value="#{channelBean.channelMetadataElements}" preserveDataModel="false"  rowId="#{cme.metadataElement.id}" sortColumn="#{channelBean.st.sort}" sortAscending="#{channelBean.st.ascending}">
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{msg['label.channel.choosable']}" title="#{msg['label.table.sort.notSortable']}" />
