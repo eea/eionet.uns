@@ -21,6 +21,7 @@
 
 package com.eurodyn.uns.dao.hibernate;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,8 +41,10 @@ import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.RDFThing;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.DateUtil;
+import com.eurodyn.uns.util.common.WDSLogger;
 
 public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao {
+	private static final WDSLogger logger = WDSLogger.getLogger(HibernateChannelDao.class);
 
 	protected Class getReferenceClass() {
 		return com.eurodyn.uns.model.Channel.class;
@@ -238,12 +241,22 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
 					thing.setReceivedDate(event.getCreationDate());
 					things.put(ext_id, thing);
 				}
-				Collection event_metadata = event.getEventMetadata().values();
+				Collection event_metadata = event.getEventMetadataSet();
 				for (Iterator iterator = event_metadata.iterator(); iterator.hasNext();) {
 					EventMetadata em = (EventMetadata) iterator.next();
 					String property = em.getProperty();
 					String value = em.getValue();
-					thing.getMetadata().put(property, value);
+					
+					ArrayList vals=(ArrayList) thing.getMetadata().get(property);
+					if (vals != null) {
+						vals.add(value);
+					} else {
+						ArrayList nar=new ArrayList();
+						nar.add(value);
+						thing.getMetadata().put(property, nar);
+					}
+					
+					//thing.getMetadata().put(property, value);
 					if (!hasTitle && property.endsWith("/title")) {
 						if (value != null) {
 							thing.setTitle(value);

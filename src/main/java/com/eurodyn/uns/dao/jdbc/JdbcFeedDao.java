@@ -3,6 +3,7 @@ package com.eurodyn.uns.dao.jdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -133,7 +134,17 @@ public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
 		}
 		String property = rs.getString("PROPERTY");
 		String value = rs.getString("VALUE");
-		thing.getMetadata().put(property, value);
+		
+		ArrayList vals=(ArrayList) thing.getMetadata().get(property);
+		
+		if (vals != null) {
+			vals.add(value);
+		} else {
+			ArrayList nar=new ArrayList();
+			nar.add(value);
+			thing.getMetadata().put(property, nar);
+		}
+		
 		if (!hasTitle && property.endsWith("/title")) {
 			if (value != null) {
 				thing.setTitle(value);
