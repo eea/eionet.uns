@@ -76,6 +76,8 @@ response.setDateHeader("Expires", 0);
 		</script>
 		<%}%>
 		
+		<link rel="alternate" type="application/rss+xml" title="Unified Notification Service RSS" href="http://uns.eionet.europa.eu/events" />
+		
 	</head>
 	<f:loadBundle basename="labels.ApplicationResources" var="msg"/>
 	<f:view>
