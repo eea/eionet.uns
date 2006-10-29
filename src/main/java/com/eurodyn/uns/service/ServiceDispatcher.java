@@ -272,7 +272,7 @@ public class ServiceDispatcher {
 			ChannelMetadataElement cme = new ChannelMetadataElement();
 			cme.setMetadataElement(me);
 			cme.setVisible(Boolean.TRUE);
-			cme.setAppearanceOrder(new Short((short) 100));
+			cme.setAppearanceOrder(new Integer(100));
 			cme.setObsolete(Boolean.FALSE);
 			cme.setFiltered(Boolean.TRUE);
 			channelMetadataElements.add(cme);

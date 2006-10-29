@@ -31,7 +31,7 @@ public class ChannelMetadataElement implements Comparable,Serializable{
 	private static final long serialVersionUID = 1862510090982883644L;	
 	private Boolean visible;
 	private Boolean filtered;
-	private Short appearanceOrder;
+	private Integer appearanceOrder;
 	private Boolean obsolete;
 	private MetadataElement metadataElement;
 	
@@ -41,10 +41,10 @@ public class ChannelMetadataElement implements Comparable,Serializable{
 	public void setMetadataElement(MetadataElement metadataElement) {
 		this.metadataElement = metadataElement;
 	}
-	public Short getAppearanceOrder() {
+	public Integer getAppearanceOrder() {
 		return appearanceOrder;
 	}
-	public void setAppearanceOrder(Short appearanceOrder) {
+	public void setAppearanceOrder(Integer appearanceOrder) {
 		this.appearanceOrder = appearanceOrder;
 	}
 	public Boolean isFiltered() {

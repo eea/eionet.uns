@@ -76,7 +76,7 @@ public abstract class BaseChannelBean extends BaseBean {
 				ChannelMetadataElement cme = new ChannelMetadataElement();
 				cme.setMetadataElement(me);
 				cme.setVisible(Boolean.TRUE);
-				cme.setAppearanceOrder(new Short((short) 100));
+				cme.setAppearanceOrder(new Integer(100));
 				cme.setObsolete(Boolean.FALSE);
 				cme.setFiltered(Boolean.FALSE);
 				channelMetadataElements.add(cme);

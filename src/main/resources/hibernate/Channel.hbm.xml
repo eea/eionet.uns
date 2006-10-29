@@ -50,7 +50,7 @@
 		<bag name="metadataElements" table="CHANNEL_METADATA_ELEMENTS" lazy="false" cascade="none">
 			<key column="CHANNEL_ID" />
 			<composite-element class="com.eurodyn.uns.model.ChannelMetadataElement">
-				<property name="appearanceOrder" type="short" column="APPEARANCE_ORDER" not-null="true" />
+				<property name="appearanceOrder" type="java.lang.Integer" column="APPEARANCE_ORDER" not-null="true" />
 				<property name="filtered" type="boolean" not-null="true" />
 				<property name="visible" type="boolean" not-null="true" />
 				<property name="obsolete" type="boolean" not-null="true" />

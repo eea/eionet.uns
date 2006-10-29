@@ -98,7 +98,7 @@ public abstract class ChannelForm extends BaseChannelBean {
 				ChannelMetadataElement cme = (ChannelMetadataElement) iter.next();
 				int index = visibleElementsList.indexOf(cme.getMetadataElement().getName());
 				cme.setVisible(index > -1 ? Boolean.TRUE : Boolean.FALSE);
-				cme.setAppearanceOrder(new Short((short) index));
+				cme.setAppearanceOrder(new Integer(index));
 			}
 		}
 	}
