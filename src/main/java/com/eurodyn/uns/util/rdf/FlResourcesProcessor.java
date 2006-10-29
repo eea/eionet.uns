@@ -87,7 +87,7 @@ public class FlResourcesProcessor implements IRdfProcessStrategy {
                     for (Iterator iterator = properties.iterator(); iterator.hasNext();) {
                         String element = (String) iterator.next();
                         elements.put(element,getValue(subject,element));
-                        //logger.debug(getValue(subject,element));
+                        logger.debug(getValue(subject,element));
                     }
                 }
             }

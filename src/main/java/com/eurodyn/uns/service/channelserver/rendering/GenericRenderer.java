@@ -73,21 +73,24 @@ public class GenericRenderer implements IRenderStrategy {
 				result.append("\t<li>\n");
 				for (int i = 0; i < properties.size(); i++) {
 					String property = (String) properties.get(i);
-					String value = (String) el.get(property);
-					if (value == null || value.trim().equals("")) continue;
-					if (i == 0) {
-						result.append("<span>");
-						result.append(getLablel(property).toUpperCase()).append(": ");
-						result.append("</span>");
-						result.append("<a href=\"").append(subject).append("\" target=\"_blank\">").append(value).append("</a>\n");
-						result.append("\n");
-					} else if (value != null) {
-						result.append("<p>");
-						result.append("<span>");
-						result.append(getLablel(property).toUpperCase()).append(": ");
-						result.append("</span>");
-						result.append(value);
-						result.append("</p>\n");
+					ArrayList values = (ArrayList) el.get(property);
+					if (values == null) continue;
+					for (int j = 0; j < values.size(); j++) {
+						String value = (String) values.get(j);
+						if (i == 0 && j == 0) {
+							result.append("<span>");
+							result.append(getLablel(property).toUpperCase()).append(": ");
+							result.append("</span>");
+							result.append("<a href=\"").append(subject).append("\" target=\"_blank\">").append(value).append("</a>\n");
+							result.append("\n");
+						} else if (value != null) {
+							result.append("<p>");
+							result.append("<span>");
+							result.append(getLablel(property).toUpperCase()).append(": ");
+							result.append("</span>");
+							result.append(value);
+							result.append("</p>\n");
+						}
 					}
 				}
 				result.append("\t</li>\n");

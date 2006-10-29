@@ -124,23 +124,24 @@ public class RssReaderForm extends BaseBean {
 		Map metadata = thing.getMetadata();
 		for (int i = 0; i < properties.size(); i++) {
 			String property = (String) properties.get(i);
-
-			String value = (String) metadata.get(property);
-			if (value == null || value.trim().equals(""))
-				continue;
-			if (i == 0) {
-				result.append("<span>");
-				result.append(getLabel(property).toUpperCase()).append(": ");
-				result.append("</span>");
-				result.append("<a href=\"").append(subject).append("\" target=\"_blank\">").append(value).append("</a>\n");
-				result.append("\n");
-			} else if (value != null) {
-				result.append("<p>");
-				result.append("<span>");
-				result.append(getLabel(property).toUpperCase()).append(": ");
-				result.append("</span>");
-				result.append(value);
-				result.append("</p>\n");
+			ArrayList values = (ArrayList) metadata.get(property);
+			if (values == null) continue;
+			for (int j = 0; j < values.size(); j++) {
+				String value = (String) values.get(j);
+				if (i == 0) {
+					result.append("<span>");
+					result.append(getLabel(property).toUpperCase()).append(": ");
+					result.append("</span>");
+					result.append("<a href=\"").append(subject).append("\" target=\"_blank\">").append(value).append("</a>\n");
+					result.append("\n");
+				} else if (value != null) {
+					result.append("<p>");
+					result.append("<span>");
+					result.append(getLabel(property).toUpperCase()).append(": ");
+					result.append("</span>");
+					result.append(value);
+					result.append("</p>\n");
+				}
 			}
 		}
 		result.append("\t</li>\n");
@@ -178,7 +179,12 @@ public class RssReaderForm extends BaseBean {
 		Iterator iter = rdfThing.getMetadata().entrySet().iterator();
 		while (iter.hasNext()) {
 			Map.Entry pairs2 = (Map.Entry) iter.next();
-			item.addProperty(ResourceFactory.createProperty((String) pairs2.getKey()), (String) pairs2.getValue());
+			String pred = (String) pairs2.getKey();
+			ArrayList values = (ArrayList) pairs2.getValue();
+			for (int i = 0; i < values.size(); i++) {
+				item.addProperty(ResourceFactory.createProperty(pred), (String) values.get(i));
+			}
+			//item.addProperty(ResourceFactory.createProperty((String) pairs2.getKey()), (String) pairs2.getValue());
 		}
 		StringWriter out = new StringWriter();
 		RDFWriter writer = rdf.getWriter("RDF/XML-ABBREV");

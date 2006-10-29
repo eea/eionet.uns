@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -56,9 +57,12 @@ public class RssFeedServlet extends HttpServlet {
 					Iterator iter = rdfThing.getMetadata().entrySet().iterator();
 					while (iter.hasNext()) {
 						Map.Entry pairs2 = (Map.Entry) iter.next();
-						item.addProperty(ResourceFactory.createProperty((String) pairs2.getKey()), (String) pairs2.getValue());
+						String pred = (String) pairs2.getKey();
+						ArrayList values = (ArrayList) pairs2.getValue();
+						for (int i = 0; i < values.size(); i++) {
+							item.addProperty(ResourceFactory.createProperty(pred), (String) values.get(i));
+						}
 					}
-
 				}				
 			}
 			
