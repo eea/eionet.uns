@@ -21,9 +21,12 @@ import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.web.jsf.LoginBean;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.RDFWriter;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.rdf.model.Seq;
+import com.hp.hpl.jena.rdf.model.impl.SeqImpl;
 import com.hp.hpl.jena.vocabulary.RSS;
 
 public class RssFeedServlet extends HttpServlet {
@@ -45,15 +48,21 @@ public class RssFeedServlet extends HttpServlet {
 			rdf.setNsPrefix("slash", "http://purl.org/rss/1.0/modules/slash/");
 			Resource rssChannel = rdf.createResource(RSS.channel);
 			rssChannel.addProperty(RSS.title, "Unified Notification System ");
-
+			
 			User user = LoginBean.getUser(request);
 
 			if(user != null){
 				Map things = jdbcFeedDao.findAllUserEvents(user);
 				Collection thingsList = things.values();
+				Seq rssSeq = rdf.createSeq();
 				for (Iterator iterator = thingsList.iterator(); iterator.hasNext();) {
 					RDFThing rdfThing = (RDFThing) iterator.next();
-					Resource item = rdf.createResource(rdfThing.getExt_id(), ResourceFactory.createResource(rdfThing.getType()));
+					rssSeq.add(ResourceFactory.createProperty("resource",rdfThing.getExt_id()));
+				}
+				rssChannel.addProperty(RSS.items, rssSeq);
+				for (Iterator iterator = thingsList.iterator(); iterator.hasNext();) {
+					RDFThing rdfThing = (RDFThing) iterator.next();
+					Resource item = rdf.createResource(rdfThing.getExt_id(), RSS.item);
 					Iterator iter = rdfThing.getMetadata().entrySet().iterator();
 					while (iter.hasNext()) {
 						Map.Entry pairs2 = (Map.Entry) iter.next();
