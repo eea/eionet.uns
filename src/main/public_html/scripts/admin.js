@@ -148,8 +148,11 @@ function submitChannel(form) {
 
 function submitChannelTemplates(form) {
 	var visibleList = form.elements[form.id+JSF_SEPARATOR_CHAR + "channelVisibleElements"];
+	var fromList = document.forms[JSF_FORM].elements[JSF_FORM+JSF_SEPARATOR_CHAR+"availableElements"];
 	form.elements[form.id+JSF_SEPARATOR_CHAR +"visibleElements"].value = getAllInList(visibleList, ";");
 	//alert(form.elements[form.id + JSF_SEPARATOR_CHAR + "visibleElements"].value);	
+	for (var i = 0; i < visibleList.length; i++){visibleList.options[i].selected = 0;}
+	for (var i = 0; i < fromList.length; i++){fromList.options[i].selected = 0;}
 }
 
 
