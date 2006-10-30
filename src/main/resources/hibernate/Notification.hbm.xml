@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Apr 16, 2006 9:40:13 PM by Hibernate Tools 3.1.0.beta4 -->
 <hibernate-mapping>
-	<class name="com.eurodyn.uns.model.Notification" table="NOTIFICATION" catalog="UNS2_DEV">
+	<class name="com.eurodyn.uns.model.Notification" table="NOTIFICATION" >
 
 		<id name="id" type="int">
 			<column name="ID" />
