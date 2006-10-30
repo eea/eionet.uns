@@ -56,7 +56,7 @@ public class HibernateNotificationDao extends BaseHibernateDao implements INotif
 
 			Query query = session.createQuery(sb.toString());
 			query.setTimestamp("fromDate", fromDate);
-			query.setTimestamp("toDate", new Date());
+			query.setTimestamp("toDate", toDate);
 			if (channel != null)
 				query.setEntity("channel", channel);
 			if (user != null)
