@@ -38,7 +38,10 @@
 						<c:otherwise> 	
 							<li class="${selectedMenu == 'dashboard'?'selected':''}"><a href="<c:url value="/rss/${sessionScope.user.externalId}/rssReader.jsf?reset=true"/>" title="Dashboard"><fmt:message key="label.menu.myDashboard"/></a></li>
 						</c:otherwise>
-					</c:choose>		
+					</c:choose>
+					<%  if (request.isUserInRole("xmlrpc")) { %> 
+							<li class="${selectedMenu == 'channels'?'selected':''}"><a href="<c:url value="/xmlrpc/rpcUserChannels.jsf"/>" title="Your rpc channels">RPC Channels</a></li>
+					<%}%>												
 					<li class="${selectedMenu == 'config'?'selected':''}"><a href="<c:url value="/admin/config/general.jsf"/>" title="Configuration"><fmt:message key="label.menu.config"/></a></li>
 					<li class="${selectedMenu == 'channels'?'selected':''}"><a href="<c:url value="/admin/channels/pullChannels.jsf"/>" title="Channels"><fmt:message key="label.menu.channels"/></a></li>
 					<li class="${selectedMenu == 'templates'?'selected':''}"><a href="<c:url value="/admin/templates/notificationTemplates.jsf"/>" title="Templates"><fmt:message key="label.menu.templates"/></a></li>

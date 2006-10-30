@@ -144,7 +144,7 @@ public class EionetCASFilter extends CASFilter {
 		if (user == null || !user.getExternalId().equals(session.getAttribute(CAS_FILTER_USER)))
 			user = userFacade.getUser( (String)session.getAttribute(CAS_FILTER_USER), true);
 		
-		String cookieId = request.isUserInRole("xmlrpc") ? "-1" : user.getId().toString();
+		String cookieId = UserFacade.hasPerm(user.getExternalId(), "/" + "xmlrpc", "x") ? "-1" : user.getId().toString();
 		Cookie cookie = new Cookie("unsDashboard", cookieId);
 		cookie.setMaxAge(30 * 24 * 60 * 60); // 30 days
 		cookie.setPath(request.getContextPath());
