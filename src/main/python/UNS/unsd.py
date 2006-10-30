@@ -114,12 +114,10 @@ if __name__ == "__main__":
         retCode = createDaemon()
         createPidFile()
     
-    harvester.automaticUpdate(harvester_conf['interval'])
-    time.sleep(10)
     notificator.automaticScan(notificator_conf['interval'])
     #wait 1 min until start harvester thread
-   
-    
+    time.sleep(60)
+    harvester.automaticUpdate(harvester_conf['interval'])
     
     while 1: time.sleep(1000)
 
