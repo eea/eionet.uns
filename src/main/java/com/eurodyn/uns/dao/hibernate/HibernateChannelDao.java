@@ -195,7 +195,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
 		Session session = null;
 		try {
 			session = getSession();
-			Query query = session.createQuery("select c from Channel as c where c.creator=:user order by c." + orderProperty + " " + order);
+			Query query = session.createQuery("select c from Channel as c where c.creator=:user and c.mode='PUSH' order by c." + orderProperty + " " + order);
 			query.setEntity("user", user);
 			return query.list();
 		} catch (HibernateException e) {
