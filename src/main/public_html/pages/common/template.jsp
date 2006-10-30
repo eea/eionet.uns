@@ -52,6 +52,11 @@ response.setDateHeader("Expires", 0);
 		<![endif]-->
 	    <link rel="shortcut icon" href="<c:url value="/favicon.ico"/>" type="image/x-icon" />
 	
+	
+		<script src="<c:url value="/tiny_mce/tiny_mce.js"/>" type="text/javascript"></script>
+
+	
+	
 		<script type="text/javascript" src="<c:url value="/scripts/mm.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/admin.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/user.js"/>"></script>
@@ -82,18 +87,6 @@ response.setDateHeader("Expires", 0);
 	<f:loadBundle basename="labels.ApplicationResources" var="msg"/>
 	<f:view>
 		<body>
-			<script type="text/javascript">
-				function myFacesKupuReactivateDesignMode(iframe) {
-				    var isIE = document.all && window.ActiveXObject && navigator.userAgent.toLowerCase().indexOf("msie") > -1 && navigator.userAgent.toLowerCase().indexOf("opera") == -1;
-				    if (isIE) {
-				        var body = iframe.contentWindow.document.getElementsByTagName('body')[0];
-				        body.setAttribute('contentEditable', 'true');
-				    }
-				    else {
-				        iframe.contentWindow.document.designMode='on';
-				    }
-				}
-			</script>		
 			<div id="pagehead">
 				<f:subview id="header">
 					<tiles:insert attribute="header" flush="false" />

@@ -119,6 +119,8 @@ public class NotificationTemplateInterpreter {
 	}
 
 	protected String getLocalName(String name) {
-		return name.substring(name.lastIndexOf("/") + 1);
+		String localName = (name.indexOf("#") > -1) ? name.substring(name.lastIndexOf("#") + 1) : name.substring(name.lastIndexOf("/") + 1); 
+		return localName.toUpperCase();
+		
 	}
 }
