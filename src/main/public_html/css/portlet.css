@@ -8,7 +8,7 @@
 }
 
 .dashcolumn {
-	float:	left;
+	/*float:	left;*/
 }
 
 /* portlet box */
@@ -47,6 +47,11 @@
 	margin: 0;
 	padding: 0;
 }
+
+.boxcontent li {
+	word-wrap: break-word;
+}
+
 .boxbottombuttons {
 	margin: 0px;
 	padding: 4px 10px;

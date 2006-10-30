@@ -40,7 +40,7 @@ response.setDateHeader("Expires", 0);
 		<link type="text/css" media="print" href="<c:url value="/css/print.css"/>" rel="stylesheet"></link>
 		<!--[if IE]>
 		<style type="text/css" media="screen">
-			@import url(/css/portlet-ie.css);
+			@import url(<c:url value="/css/portlet-ie.css" />);
 		</style>
 		<link type="text/css" media="print" href="/css/print-ie.css" rel="stylesheet"></link>
 		<script type="text/javascript" src="/scripts/ie_minwidth.js"></script>

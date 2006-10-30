@@ -3,10 +3,10 @@
 	<t:div id="formInitialization" rendered="#{ not dashboardBean.preparedForm}"  />
 	<h:form   rendered="#{not empty dashboardBean.channels}"  >
 		<t:div>	
-			<t:dataTable  value="#{dashboardBean.rows}" var="xxx" style="width:98%"  cellpadding="0" cellspacing="0" >
-				<t:columns  value="#{dashboardBean.channels}" var="dashColumn" style="vertical-align:top;width:33%"  >
+			<t:dataTable  value="#{dashboardBean.rows}" var="xxx" style="width:98%;table-layout:fixed"  cellpadding="0" cellspacing="0"  >
+				<t:columns  width="33%"  value="#{dashboardBean.channels}" var="dashColumn" style="vertical-align:top"  >
 					<t:div  styleClass="dashcolumn" >						
-						<t:dataTable  value="#{dashColumn}" var="subs"  rendered="#{not empty dashColumn}" style="width:100%;margin-right:0;border-rigth:0;padding-right:0" cellpadding="0"  cellspacing="0" >
+						<t:dataTable   value="#{dashColumn}" var="subs"  rendered="#{not empty dashColumn}" style="width:98%;table-layout:fixed;margin-right:0;border-rigth:0;padding-right:0"  cellpadding="0"  cellspacing="0" >
 							<t:column  >
 						    	<t:div styleClass="box"  >
 						    		<t:div styleClass="boxleft" >
