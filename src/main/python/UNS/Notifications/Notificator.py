@@ -158,7 +158,7 @@ class Notificator:
         Finds new and failed notifications and delivers them.
         Executes delivery process in four parallel threads, one for each delivery type.
         """
-        email_messages,jabber_messages,wdb_messages,feed_messages=[], [], [], []
+        email_messages,jabber_messages=[], []
         try:
             for_fetch=['ID', 'SUBJECT', 'CONTENT', 'HTML_CONTENT', 'CHANNEL_ID', 'EVENT_ID', 'EEA_USER_ID', 'DELIVERY_TYPE_ID', 'DELIVERY_ADDRESS', 'FAILED']
             new_items=session.findCustom(BasePopo, qNewNotifications, None, for_fetch)
@@ -169,12 +169,10 @@ class Notificator:
                 dtid=delivery['DELIVERY_TYPE_ID']
                 if dtid==1: email_messages.append(delivery)
                 elif dtid==2: jabber_messages.append(delivery)
-                elif dtid==3: wdb_messages.append(delivery)
-                elif dtid==4: feed_messages.append(delivery)
 
-            nrd=len(email_messages)+len(jabber_messages)+len(wdb_messages)
+            nrd=len(email_messages)+len(jabber_messages)
             logger.info("Sending %d deliveries. Failed nr: %d" % (nrd,fl))
-            deilveryBoys=[EMAIL(email_messages), JABBER(jabber_messages), FEED(feed_messages)]
+            deilveryBoys=[EMAIL(email_messages), JABBER(jabber_messages)]
             for sender in deilveryBoys: 
                 try: sender.start()
                 except:logger.exception(sys.exc_info()[0])
