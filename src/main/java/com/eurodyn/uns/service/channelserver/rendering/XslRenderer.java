@@ -27,6 +27,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -101,19 +102,16 @@ public class XslRenderer implements IRenderStrategy {
 			Iterator it = things.entrySet().iterator();
 			while (it.hasNext()) {
 				Map.Entry pairs = (Map.Entry) it.next();
-
-
 				RDFThing rdfThing = (RDFThing) pairs.getValue();
-
-				// Resource item = rdf.createResource( ;
 				Resource item = rdf.createResource(rdfThing.getExt_id(), ResourceFactory.createResource(rdfThing.getType()));
-
-
 				Iterator iter = rdfThing.getMetadata().entrySet().iterator();
 				while (iter.hasNext()) {
 					Map.Entry pairs2 = (Map.Entry) iter.next();
-					item.addProperty(ResourceFactory.createProperty( pairs2.getKey().toString()) , pairs2.getValue().toString());
-
+					String pred = (String) pairs2.getKey();
+					ArrayList values = (ArrayList) pairs2.getValue();
+					for (int i = 0; i < values.size(); i++) {
+						item.addProperty(ResourceFactory.createProperty(pred) , (String) values.get(i));
+					}
 				}
 			}
 		} catch (Exception e) {
