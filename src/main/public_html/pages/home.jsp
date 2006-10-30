@@ -37,7 +37,7 @@
 	
 	<div id="table" >
 
-		<div class="dashcolumn" style="width:49%;">
+		<div class="dashcolumn" style="width:49%; float:left;">
 			<div id="channelid_1" class="box"> 
 				<div class="boxleft"> 
 					<div class="boxtop"><div></div></div> 
@@ -62,7 +62,7 @@
 			</div>
 		</div>
 	
-		<div class="dashcolumn" style="width:50%;">
+		<div class="dashcolumn" style="width:49%; float:left;">
 			<div id="channelid_2" class="box"> 
 				<div class="boxleft"> 
 					<div class="boxtop"><div></div></div> 
@@ -84,6 +84,7 @@
 				</div> 
 			</div>
 		</div>	
+		
 	</div>
 </f:verbatim>
 
