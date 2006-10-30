@@ -1,4 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
+<%@page import="com.eurodyn.uns.service.facades.ChannelFacade"%>
+<%@page import="java.util.*"%>
+<%@page import="com.eurodyn.uns.model.Channel"%>
 <f:verbatim >
 	<br />
 	
@@ -34,22 +37,32 @@
 	
 	<div id="table" >
 
-		<div class="dashcolumn" style="width:59%;">
+		<div class="dashcolumn" style="width:49%;">
 			<div id="channelid_1" class="box"> 
 				<div class="boxleft"> 
 					<div class="boxtop"><div></div></div> 
-					<h4 style="font-size: 120%">ROD Obligations statistic</h4> 
+					<h4 style="font-size: 120%">The most popular UNS channels</h4> 
 					<div class="boxcontent" style="height:200px;">
-					<div style="overflow:auto; width: 100%;height:200px">
-						<img src="<%= request.getContextPath() %>/svg.unsvg?subs_id=0" alt="Obligations number per year graph"/>
-					</div>
-					</div> 
+					<%
+					int i=1;
+					ChannelFacade cf=new ChannelFacade();
+					List l= (List) cf.getSortedChannels("numberOfSubscriptions","desc").get("list");
+					for (Iterator iter = l.iterator(); iter.hasNext();) {
+						Channel element = (Channel) iter.next();
+						out.println("<p style=\"font-weight:bold;\">" + i + ". "+element.getTitle()+"</p>");
+						out.println("Number of subscriptions " + element.getNumberOfSubscriptions());
+						out.println("<br/>");
+						++i;
+						if (i>3) break;
+					}
+					%>
+				</div> 
 					<div class="boxbottom"><div></div></div> 
 				</div> 
 			</div>
 		</div>
 	
-		<div class="dashcolumn" style="width:40%;">
+		<div class="dashcolumn" style="width:50%;">
 			<div id="channelid_2" class="box"> 
 				<div class="boxleft"> 
 					<div class="boxtop"><div></div></div> 
