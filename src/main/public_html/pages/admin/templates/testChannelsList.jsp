@@ -8,10 +8,10 @@
 		</htm:legend>
 		<h:panelGrid columns="2" border="0" columnClasses="vertical_align_top">
 			<h:outputLabel for="feed_url" value="#{msg['label.xsl.test.inputurl']}" />
-			<h:inputText id="feed_url" size="30"  required="false" value="#{dashTemplateBean.testChannel.feedUrl}" />
+			<h:inputText id="feed_url" size="50"  required="false" value="#{dashTemplateBean.testChannel.feedUrl}" />
 
 			<h:outputLabel for="feed_url" value="#{msg['label.xsl.test.channels']}" />
-			<h:selectOneListbox id="testChannels" size="10" style="width:220px;" value="#{dashTemplateBean.id}">
+			<h:selectOneListbox id="testChannels" size="15" style="width:320px;" value="#{dashTemplateBean.id}">
 				<f:selectItems value="#{dashTemplateBean.testChannelsItems}" />
 			</h:selectOneListbox>
 		</h:panelGrid>
