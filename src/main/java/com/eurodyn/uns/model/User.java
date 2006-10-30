@@ -47,7 +47,7 @@ public class User implements Serializable {
 
 	private String fullName;
 
-	private Map subscriptions;
+	private Map subscriptions = new HashMap();;
 
 	private Map deliveryAddresses;
 
@@ -65,7 +65,6 @@ public class User implements Serializable {
 
 
 	public User() {
-		subscriptions = new HashMap();
 	}
 
 	public User(String externalId) {

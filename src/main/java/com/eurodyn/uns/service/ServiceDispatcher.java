@@ -154,7 +154,7 @@ public class ServiceDispatcher {
 		boolean result = false;
 		try {
 			Channel channel=getPushChannel(channel_id);
-			User userForSubs=userFacade.findUser(username);
+			User userForSubs=userFacade.getUser(username,true);
 			result = canUserSubscribe(channel, userForSubs);
 		} catch (Exception e) {
 			logger.error(e);
@@ -179,7 +179,7 @@ public class ServiceDispatcher {
 	
 	public String makeSubscription(String channel_id, String username, Vector filters) throws Exception {
 		try {
-			User userForSubs=userFacade.findUser(username);
+			User userForSubs=userFacade.getUser(username,true);
 			Channel channel=getPushChannel(channel_id);
 			Subscription userSubscription = (Subscription) userForSubs.getSubscriptions().get(channel.getId());
 
