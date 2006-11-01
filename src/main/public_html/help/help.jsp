@@ -19,7 +19,7 @@
 			<frame  src="<c:url value="/help/menu-rpc.html"/>" marginwidth="5" marginheight="5" src="" name="menu" noresize frameborder="0">		
 		<%
 		}
-		else if(request.getRemoteUser() != null) { %>
+		else  { %>
 		<frame  src="<c:url value="/help/menu-user.html"/>" marginwidth="5" marginheight="5" src="" name="menu" noresize frameborder="0">
 		<%} %>
 				

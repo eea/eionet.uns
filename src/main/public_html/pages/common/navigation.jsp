@@ -70,7 +70,7 @@
 							<li class="${selectedMenu == 'dashboard'?'selected':''}"><a href="<c:url value="/rss/${sessionScope.user.externalId}/rssReader.jsf"/>" title="Dashboard"><fmt:message key="label.menu.myDashboard"/></a></li>
 						</c:otherwise>
 					</c:choose>		
-					<li><a href="#" onclick="javascript:openWindow(applicationRoot+'/help/index.jsp','onlinehelp');" title="Help"><fmt:message key="label.menu.help"/></a></li>
+					<li><a href="#" onclick="javascript:openWindow('<c:url value="/help/help.jsp"/>','onlinehelp');" title="Help"><fmt:message key="label.menu.help"/></a></li>
 			  </c:when> 
 			  <c:when test="${userRole == 'rpc'}" > 
 					<li class="${selectedMenu == 'channels'?'selected':''}"><a href="<c:url value="/xmlrpc/rpcUserChannels.jsf"/>" title="Your rpc channels"><fmt:message key="label.menu.channels"/></a></li>
