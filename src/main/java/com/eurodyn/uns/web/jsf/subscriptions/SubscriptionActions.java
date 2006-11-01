@@ -13,6 +13,7 @@ import java.util.Set;
 
 import javax.faces.event.ValueChangeEvent;
 
+import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.DeliveryAddress;
 import com.eurodyn.uns.model.DeliveryType;
 import com.eurodyn.uns.model.Filter;
@@ -28,7 +29,7 @@ public class SubscriptionActions extends SubscriptionForm {
 	private static final WDSLogger logger = WDSLogger.getLogger(SubscriptionForm.class);
 
 	public SubscriptionActions() {
-		try {
+		try {			
 			initForm();
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -38,8 +39,15 @@ public class SubscriptionActions extends SubscriptionForm {
 	public boolean isExternalSubscription(){
 		String secondaryID = getRequest().getParameter("sid");
 		if (secondaryID != null){
-			subscription.setChannel(channelFacade.getChannelBySecId(secondaryID));
+			Channel channel = channelFacade.getChannelBySecId(secondaryID);
+			User user = getUser(true);
+			subscription = (Subscription)  user.getSubscriptions().get(channel.getId());
+			if(subscription == null){
+				subscription = new Subscription();
+			}			
+			subscription.setChannel(channel);			
 			allChoosableStatements = eventMetadataFacade.findChoosableStatements(subscription.getChannel());
+			checkOverlappedFilters();
 		}
 		return false;
 	}
