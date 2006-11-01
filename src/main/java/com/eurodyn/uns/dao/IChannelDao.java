@@ -21,6 +21,7 @@
 
 package com.eurodyn.uns.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -54,4 +55,6 @@ public interface IChannelDao {
 	public List findOneEventForChannel() throws DAOException;
 
 	public Map findTestEventsForChannel(Channel channel) throws DAOException;
+	
+	public Date getLastHarvestedDate(Channel channel) throws DAOException ;
 }

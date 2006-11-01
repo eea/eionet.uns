@@ -16,7 +16,7 @@ import com.eurodyn.uns.dao.IUserDao;
 public class JdbcDaoFactory extends DAOFactory {
 
 	public IChannelDao getChannelDao() {
-		return null;
+		return new JdbcChannelDao();
 	}
 
 	public IUserDao getUserDao() {

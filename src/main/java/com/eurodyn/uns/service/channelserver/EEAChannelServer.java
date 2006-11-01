@@ -61,7 +61,7 @@ public class EEAChannelServer extends BaseChannelServer {
 				content = (String) request.get("CONTENT");				
 			}else{
 				Channel channel = subs.getChannel();
-				CacheItem entry = MemCache.get(subs.getId(),channelFacade.getChannel(channel.getId()).getLastHarvestDate());
+				CacheItem entry = MemCache.get(subs.getId(),channelFacade.getLastHarvestedDate(channel));
 				if (entry != null) {
 					logger.debug("Found entry in cache for subscription on channel" + subs.getChannel().getTitle());
 					content = (String) entry.getContent();
@@ -76,13 +76,15 @@ public class EEAChannelServer extends BaseChannelServer {
 							content += "<img src=\"../svg.unsvg?subs_id="+ subs.getId() +"\" alt=\"Generated SVG\" />";
 							content += "</div>";
 						}
-					} else {
-						content = "<p class=\"nocontent\">CONTENT IS NOT AVAILABLE !</p>";
-					}
+					}		
 					MemCache.put(subs.getId(), content, channel.getLastHarvestDate());
 				}
 				
 			}
+			if(content == null  || content.length() < 13){
+				content = "<p class=\"nocontent\">CONTENT IS NOT AVAILABLE !</p>";
+			}
+			
 		} catch (DAOException e) {
 			logger.error(e);
 		} catch (Exception ex) {

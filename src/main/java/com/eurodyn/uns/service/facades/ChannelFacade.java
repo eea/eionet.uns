@@ -20,6 +20,7 @@
  */
 package com.eurodyn.uns.service.facades;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -35,9 +36,11 @@ public class ChannelFacade {
 	private static final WDSLogger logger = WDSLogger.getLogger(ChannelFacade.class);
 
 	private DAOFactory daoFactory;
+	private DAOFactory jdbcDaoFactory;
 
 	public ChannelFacade() {
 		daoFactory = DAOFactory.getDAOFactory(DAOFactory.HIBERNATE);
+		jdbcDaoFactory= DAOFactory.getDAOFactory(DAOFactory.JDBC);
 	}
 
 	public ResultDto getChannels() {
@@ -216,5 +219,7 @@ public class ChannelFacade {
 	}
 	
 
-
+	public Date getLastHarvestedDate(Channel channel) throws Exception {
+		return jdbcDaoFactory.getChannelDao().getLastHarvestedDate(channel);
+	}
 }

@@ -11,11 +11,11 @@ import com.eurodyn.uns.util.common.WDSLogger;
 public class DashboardActions extends DashboardForm {
 
 	private static final WDSLogger logger = WDSLogger.getLogger(DashboardActions.class);
-
+	private boolean moved = false;
+	
 	public DashboardActions() {
 		try {
 			userFacade = new UserFacade();
-			getResponse().setHeader("Refresh", "5");
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			addSystemErrorMessage();
@@ -31,7 +31,7 @@ public class DashboardActions extends DashboardForm {
 				for (int i = 0; i < columns.length; i++) {
 					columns[i] = new Integer(i);
 				}
-				if (channels == null){
+				if (channels == null || !moved){
 					logger.debug(" ************* Reload dash channels ******************");
 					reloadDashChannels();
 				}
@@ -73,6 +73,7 @@ public class DashboardActions extends DashboardForm {
 			}
 			updateUserChannels();
 			setUpVisibleButtons();
+			moved = true;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			addSystemErrorMessage();
