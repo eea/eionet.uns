@@ -1,7 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <f:verbatim >
 	<STYLE TYPE="text/css">
-	   .rssColumn1 {width:30%; vertical-align:top; border-right: solid #FFB755 1px; }
+	   .rssColumn1 {width:30%; vertical-align:top; border-right: solid #97AF79  1px; }
 	   .rssColumn2 {width:70%; vertical-align:top; padding-left: 10px; }  
 	   .eventsHeader1 {width:70%; text-align:left; }
 	   .eventsHeader2 {width:30%; text-align:left;}
@@ -27,7 +27,7 @@
 			</f:verbatim>
 			<t:div styleClass="boxcontent" style="height:auto;">
 				<h:form>
-					<h:panelGrid columns="2" border="0" cellspacing="0" cellpadding="0" style="width:99%;" columnClasses="rssColumn1,rssColumn2">
+					<h:panelGrid columns="2" border="0" cellspacing="0" cellpadding="0" style="width:99%; table-layout:fixed;" columnClasses="rssColumn1,rssColumn2">
 						<t:dataTable style="width:99%" var="channel" value="#{rssReaderBean.channels}" rowId="channelRow#{channel.id}" >
 							<h:column>
 								<f:facet name="header">
@@ -48,7 +48,7 @@
 								</h:panelGrid>
 							</f:facet>
 							<t:div style="height:150px;overflow: scroll">
-								<t:dataTable border="0" style="width:97%;" cellspacing="0" cellpadding="2" var="rdfThing" value="#{rssReaderBean.events}" onkeydown=" setNextEvent(event) "  columnClasses="eventsColumn1,eventsColumn2"    rowIndexVar="index" rowId="eventRow#{index}" >
+								<t:dataTable border="0" style="width:97%;table-layout:fixed;" cellspacing="0" cellpadding="2" var="rdfThing" value="#{rssReaderBean.events}" onkeydown=" setNextEvent(event) "  columnClasses="eventsColumn1,eventsColumn2"    rowIndexVar="index" rowId="eventRow#{index}" >
 									<h:column>
 										<t:commandLink action="#" immediate="true" 	style="text-decoration:none"	onclick="colorRow(this); setCurrentEvent('#{rdfThing.eventId}') ; return false;">
 											<h:outputText value="#{rdfThing.title}" />
