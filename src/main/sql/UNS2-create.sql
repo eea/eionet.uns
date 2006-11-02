@@ -270,7 +270,7 @@ CREATE TABLE `NOTIFICATION` (
   `CONTENT` text character set utf8 NOT NULL,
   `CHANNEL_ID` int(10) unsigned NOT NULL default '0',
   `SUBJECT` varchar(255) character set utf8 default NULL,
-  `HTML_CONTENT` text,
+  `HTML_CONTENT` text character set utf8,
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `IX_USEREV_UNIQ` USING BTREE (`EEA_USER_ID`,`EVENT_ID`),
   KEY `IX_EVENT_FK` (`EVENT_ID`),
