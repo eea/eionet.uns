@@ -62,24 +62,25 @@ public class RssFeedServlet extends HttpServlet {
 			}
 			
 			if (secured) {
-				String result = "";
+				StringBuilder sb = new StringBuilder("<rss:channel><rss:title>Unified Notification System</rss:title><rss:items><rdf:Seq>");
 				Model rdf = ModelFactory.createDefaultModel();
-	
+
 				JdbcFeedDao jdbcFeedDao = new JdbcFeedDao();
 				rdf.setNsPrefix("rss", "http://purl.org/rss/1.0/");
 				rdf.setNsPrefix("content", "http://purl.org/rss/1.0/modules/content/");
 				rdf.setNsPrefix("slash", "http://purl.org/rss/1.0/modules/slash/");
-				Resource rssChannel = rdf.createResource(RSS.channel);
-				rssChannel.addProperty(RSS.title, "Unified Notification System ");
 				
 				Map things = jdbcFeedDao.findAllUserEvents(user);
 				Collection thingsList = things.values();
-				Seq rssSeq = rdf.createSeq();
+				
 				for (Iterator iterator = thingsList.iterator(); iterator.hasNext();) {
 					RDFThing rdfThing = (RDFThing) iterator.next();
-					rssSeq.add(ResourceFactory.createProperty("resource",rdfThing.getExt_id()));
+					sb.append("<rdf:li rdf:resource=\"");
+					sb.append(rdfThing.getExt_id());
+					sb.append("\"/>");
 				}
-				rssChannel.addProperty(RSS.items, rssSeq);
+				sb.append("</rdf:Seq></rss:items></rss:channel>");
+				
 				for (Iterator iterator = thingsList.iterator(); iterator.hasNext();) {
 					RDFThing rdfThing = (RDFThing) iterator.next();
 					Resource item = rdf.createResource(rdfThing.getExt_id(), RSS.item);
@@ -99,17 +100,20 @@ public class RssFeedServlet extends HttpServlet {
 							item.addProperty(pr, (String) values.get(i));
 						}
 					}
-				}				
+				}		
 			
+				StringBuilder resultOut = new StringBuilder();
 				StringWriter out = new StringWriter();
 				RDFWriter writer = rdf.getWriter("RDF/XML-ABBREV");
 				writer.write(rdf, new BufferedWriter(out), null);
-				result = out.toString();
-	
+				resultOut.append(out.toString());
+			
+				int ind = resultOut.indexOf(">");
+				resultOut.insert(ind+1, sb.toString());
+			
 				response.setContentType("application/xml");
-	
 				PrintWriter outWriter = response.getWriter();
-				outWriter.print(result);
+				outWriter.print(resultOut.toString());
 				outWriter.flush();
 				outWriter.close();
 			} else {
