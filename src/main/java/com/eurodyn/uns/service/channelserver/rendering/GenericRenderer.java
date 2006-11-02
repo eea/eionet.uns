@@ -60,7 +60,7 @@ public class GenericRenderer implements IRenderStrategy {
 			things = rdfctx.getData(new FlResourcesProcessor(properties));			
 		}
 				
-		
+		ArrayList values = null;
 		if (things != null) {
 			result.append("<ul>\n");
 			for (Iterator iter = things.keySet().iterator(); iter.hasNext();) {
@@ -73,7 +73,12 @@ public class GenericRenderer implements IRenderStrategy {
 				result.append("\t<li>\n");
 				for (int i = 0; i < properties.size(); i++) {
 					String property = (String) properties.get(i);
-					ArrayList values = (ArrayList) el.get(property);
+					if (!loadedThings){
+						values = new ArrayList();
+						values.add(el.get(property));
+					}else{
+						values = (ArrayList) el.get(property);
+					}						
 					if (values == null) continue;
 					for (int j = 0; j < values.size(); j++) {
 						String value = (String) values.get(j);
