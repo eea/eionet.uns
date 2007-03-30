@@ -6,7 +6,7 @@
                <cell cols="2" type="blank"/>
                <cell cols="3" type="Link">
                     <content>European Environment Agency</content>
-                    <link>http://eea.eu.int/</link>
+                    <link>http://eea.europa.eu/</link>
                     <style>
                          <font-size>small</font-size>
                          <text-align>center</text-align>

@@ -60,7 +60,7 @@ public class PushHandler extends BaseFeedHandler {
 	private IChannelDao channelDao;
 	private static String pathPrefix;
 
-	private static final String dcNS = "http://wdb.eionet.eu.int/elements#";
+	private static final String dcNS = "http://wdb.eionet.europa.eu/elements#";
 	public static int DEFAULT_LIFETIME = 60 * 24 * 60;
 	
 	static {

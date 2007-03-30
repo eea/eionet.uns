@@ -60,7 +60,7 @@ public class TestConfigUpdater {
 		try {
 			System.out.println("Enter ");
 			XMPPConnection conn1 = new XMPPConnection("jabber.eurodyn.com", 5222);
-			XMPPConnection connection = new SSLXMPPConnection("jabber.eionet.eu.int", 5223);
+			XMPPConnection connection = new SSLXMPPConnection("jabber.eionet.europa.eu", 5223);
 			System.out.println("It works ");
 		} catch (XMPPException e) {
 			// TODO Auto-generated catch block
@@ -187,7 +187,7 @@ public class TestConfigUpdater {
 
 			System.out.println("ldapUrl is " + ldapUrl);
 			// ldapUrl = "ldap://ldap.reportnet.eurodyn.com:389";
-			//ldapUrl is ldap://ldap.eionet.eu.int:389/
+			//ldapUrl is ldap://ldap.eionet.europa.eu:389/
 
 			Hashtable env = new Hashtable();
 			env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");

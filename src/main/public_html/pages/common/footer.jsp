@@ -15,7 +15,7 @@
 	      <td style=""/>
 	      <td style=""/>
 	      <td style="font-size:small;text-align:center;">
-	         <a target="_blank" href="http://eea.eu.int/">European Environment Agency</a>
+	         <a target="_blank" href="http://eea.europa.eu/">European Environment Agency</a>
 	      </td>
 	      <td style=""/>
 	      <td style=""/>

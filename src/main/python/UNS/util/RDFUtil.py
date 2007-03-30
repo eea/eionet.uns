@@ -174,7 +174,7 @@ class RDFGenerator:
         """ Generates RSS 1.0 document from the things list"""
         
         heads = cStringIO.StringIO()
-        heads.write("<channel rdf:about=\"http://uns.eionet.eu.int/events\"><title>Unified Notification Service</title><items><rdf:Seq>\n")
+        heads.write("<channel rdf:about=\"http://uns.eionet.europa.eu/events\"><title>Unified Notification Service</title><items><rdf:Seq>\n")
         for thing in things: heads.write("<rdf:li rdf:resource=\""+thing.getSubject()+"\"/>\n")
         heads.write("</rdf:Seq></items></channel")
         head=heads.getvalue().replace("&","&amp;")

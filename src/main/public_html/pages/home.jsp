@@ -74,7 +74,7 @@
 						</p>
 						<p style="font-size: 100%">
 						You can also email the helpdesk at any time:
-						<a href="mailto:helpdesk@eionet.eu.int">helpdesk@eionet.eu.int</a>.
+						<a href="mailto:helpdesk@eionet.europa.eu">helpdesk@eionet.europa.eu</a>.
 						</p>
 						<p style="font-size: 100%">
 						Do not hesitate, we are here to help!

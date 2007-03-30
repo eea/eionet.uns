@@ -7,22 +7,22 @@
       <currentVersion>1.0</currentVersion>
       <organization>
             <name>European Environment Agency</name>
-            <url>http://www.eea.eu.int/</url>
-            <logo>http://www.eionet.eu.int/styles/logo.png</logo>
+            <url>http://www.eea.europa.eu/</url>
+            <logo>http://www.eionet.europa.eu/styles/logo.png</logo>
       </organization>
       <inceptionYear>2005</inceptionYear>
       <package>com.eurodyn.uns</package>
       <logo>http://dixie.eurodyn.com:9096/jars/ed_logo.gif</logo>
       <description>REPORTNET Unified Notification System  Notifications from Eionet in your mailbox</description>
       <shortDescription>REPORTNET Unified Notification System</shortDescription>
-      <url>http://www.eionet.eu.int/reportnet.html</url>
+      <url>http://www.eionet.europa.eu/reportnet.html</url>
       <issueTrackingUrl>http://hercules.eurodyn.be</issueTrackingUrl>
       <siteAddress>http://dixie.eurodyn.com:9090</siteAddress>
       <distributionDirectory>/www/maven.apache.org/builds/</distributionDirectory>
 	<!--
       <repository>
-            <connection>scm:svn:http://svn.eionet.eu.int/repositories/Reportnet/WebDashboards/trunk</connection>
-            <url>http://svn.eionet.eu.int/repositories/Reportnet/WebDashboards</url>
+            <connection>scm:svn:http://svn.eionet.europa.eu/repositories/Reportnet/WebDashboards/trunk</connection>
+            <url>http://svn.eionet.europa.eu/repositories/Reportnet/WebDashboards</url>
       </repository> 
     -->
       <mailingLists/>
