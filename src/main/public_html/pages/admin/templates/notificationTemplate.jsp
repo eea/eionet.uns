@@ -1,19 +1,6 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <<f:verbatim>
-<script type="text/javascript">
-			//<!--	
-					tinyMCE.init({
-						theme : "advanced",
-						mode : "exact",
-						elements : "thtml",
-						theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect,forecolor",
-						extended_valid_elements : "font[face|size|color]",
-						plugins : "table",
-						theme_advanced_buttons3_add_before : "tablecontrols,separator",
-						convert_newlines_to_brs : true
-					});
-			//-->			
-		</script>
+<script type="text/javascript"></script>
 </f:verbatim>
 <h:form id="notificationTemplate">
 	<htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
@@ -28,7 +15,7 @@
 		<h:outputLabel for="plain_text" value="#{msg['label.template.notification.plainText']}" />
 		<h:inputTextarea id="plain_text" rows="10" cols="50" value="#{notificationTemplateBean.notificationTemplate.plainText}" required="true" style="width: 48em;" />
 		<h:outputLabel for="html_text" value="#{msg['label.template.notification.html']}" />
-		<t:inputTextarea forceId="true"  id="thtml" value="#{notificationTemplateBean.notificationTemplate.htmlText}" style="width: 48em;" />
+		<h:inputTextarea id="thtml" rows="15" cols="50" value="#{notificationTemplateBean.notificationTemplate.htmlText}" style="width: 48em;" />
 	</h:panelGrid>
 
 	<htm:br/>
