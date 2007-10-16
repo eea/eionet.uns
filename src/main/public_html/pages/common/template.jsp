@@ -13,7 +13,7 @@ response.setDateHeader("Expires", 0);
 %>
 <tiles:importAttribute scope="request"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>Unified Notification System</title>
@@ -30,11 +30,17 @@ response.setDateHeader("Expires", 0);
 			}
 		%>
 		<style type="text/css" media="screen">
-			<!-- @import url(<c:url value="http://www.eionet.europa.eu/styles/eea2006/layout-screen.css"/>); -->
+			<!-- @import url(<c:url value="http://www.eionet.europa.eu/styles/eionet2007/screen.css"/>); -->
 		</style>
 		<style type="text/css" media="screen">
 			<!-- @import url(<c:url value="/css/portlet.css"/>); -->
 		</style>								 
+		<style type="text/css" media="handheld">
+			<!-- @import url(<c:url value="http://www.eionet.europa.eu/styles/eionet2007/handheld.css"/>); -->
+		</style>		
+		<style type="text/css" media="print">
+			<!-- @import url(<c:url value="http://www.eionet.europa.eu/styles/eionet2007/print.css"/>); -->
+		</style>						 
 
 
 		<link type="text/css" media="print" href="<c:url value="/css/print.css"/>" rel="stylesheet"></link>
@@ -59,6 +65,7 @@ response.setDateHeader("Expires", 0);
 		<script type="text/javascript" src="<c:url value="/scripts/mm.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/admin.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/user.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/pageops.js"/>"></script>
 		<script type="text/javascript">
 			parentLocation='<%=request.getRequestURI()%>';
 		   	applicationRoot='<%=request.getContextPath()%>';
@@ -85,16 +92,67 @@ response.setDateHeader("Expires", 0);
 	</head>
 	<f:loadBundle basename="labels.ApplicationResources" var="msg"/>
 	<f:view>
-		<body>
+	<body>
+		<div id="container">
+			<div id="toolribbon">
+				<div id="lefttools">
+			      <a id="eealink" href="http://www.eea.europa.eu/">EEA</a>
+			      <a id="ewlink" href="http://www.ewindows.eu.org/">EnviroWindows</a>
+			    </div>
+			    <div id="righttools">    
+			    	<h:panelGroup rendered="#{(not empty sessionScope.user) and sessionScope.user.loggedIn}" >
+			    		<f:verbatim>
+							<a id="logoutlink" href="<c:url value="/pages/logout.jsp" />" title="Logout">Logout 
+						</f:verbatim>
+							<h:outputText value="#{sessionScope.user.externalId}"/>
+						<f:verbatim>
+							</a>
+						</f:verbatim>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{(empty sessionScope.user) or not sessionScope.user.loggedIn }">
+						<f:verbatim>
+							<a id="loginlink" href="#" title="Login">Login</a>
+						</f:verbatim>
+					</h:panelGroup>
+					<a href="#" id="pagehelplink" onclick="javascript:openWindow('<c:url value="/help/help.jsp"/>','onlinehelp');" title="Help"><span><fmt:message key="label.menu.help"/></span></a>
+					<a id="printlink" title="Print this page" href="javascript:this.print();"><span>Print</span></a>
+			        <a id="fullscreenlink" href="javascript:toggleFullScreenMode()" title="Switch to/from full screen mode"><span>Switch to/from full screen mode</span></a>
+			        <a id="acronymlink" href="http://www.eionet.europa.eu/acronyms" title="Look up acronyms"><span>Acronyms</span></a>
+			        <form action="http://search.eionet.europa.eu/search.jsp" method="get">
+						<div id="freesrchform"><label for="freesrchfld">Search</label>
+							<input type="text" id="freesrchfld" name="query"/>
+							<input id="freesrchbtn" type="image" src="<c:url value="/images/button_go.gif" />" alt="Go"/>
+						</div>
+					</form>
+			    </div>
+			</div>
 			<div id="pagehead">
 				<f:subview id="header">
 					<tiles:insert attribute="header" flush="false" />
 				</f:subview>			
 			</div><!-- page head -->
-
-			<f:subview id="menu" >
-				<tiles:insert attribute="menu" flush="false" />
-			</f:subview>
+			<div id="menuribbon">
+				<%@ include file="dropdownmenus.txt" %>
+			</div>
+			<f:verbatim>
+			<div class="breadcrumbtrail">
+				<div class="breadcrumbhead">
+					You are here:
+				</div>
+				<div class="breadcrumbitem">
+					<a href="http://www.eionet.europa.eu">EIONET</a>
+				</div>
+				</f:verbatim>
+					<h:outputText escape="false" value="#{ breadCrumbBean.breadCumbs}" />
+				<f:verbatim>
+			        <div class="breadcrumbtail">
+			        </div>
+			</div>	
+			</f:verbatim>
+			<div id="leftcolumn" class="localnav">
+				<f:subview id="menu" >
+					<tiles:insert attribute="menu" flush="false" />
+				</f:subview>
 			</div>
 			<div id="workarea">
 				<f:subview id="submenu">
@@ -113,7 +171,8 @@ response.setDateHeader("Expires", 0);
 					<tiles:insert attribute="footer" flush="false" />
 				</f:subview>			
 			</div><!-- pagefoot --> 
-		</body>
+		</div>
+	</body>
 	</f:view>
 </html>
 
