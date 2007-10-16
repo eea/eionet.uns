@@ -10,7 +10,7 @@
 	</f:verbatim> 
 </h:panelGrid>
 <f:verbatim>
-		<a target="_blank" href="http://eea.europa.eu/">European Environment Agency</a><br/>
+		<a href="http://eea.europa.eu/">European Environment Agency</a><br/>
 		Kgs. Nytorv 6, DK-1050 Copenhagen K, Denmark - Phone: +45 3336 7100
 </f:verbatim>
 

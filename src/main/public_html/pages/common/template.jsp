@@ -29,38 +29,23 @@ response.setDateHeader("Expires", 0);
 				}
 			}
 		%>
-		<style type="text/css" media="screen">
-			<!-- @import url(<c:url value="http://www.eionet.europa.eu/styles/eionet2007/screen.css"/>); -->
-		</style>
-		<style type="text/css" media="screen">
-			<!-- @import url(<c:url value="/css/portlet.css"/>); -->
-		</style>								 
-		<style type="text/css" media="handheld">
-			<!-- @import url(<c:url value="http://www.eionet.europa.eu/styles/eionet2007/handheld.css"/>); -->
-		</style>		
-		<style type="text/css" media="print">
-			<!-- @import url(<c:url value="http://www.eionet.europa.eu/styles/eionet2007/print.css"/>); -->
-		</style>						 
-
-
+		<link rel="stylesheet" type="text/css" href="http://www.eionet.europa.eu/styles/eionet2007/print.css" media="print" />
+		<link rel="stylesheet" type="text/css" href="http://www.eionet.europa.eu/styles/eionet2007/handheld.css" media="handheld" />		
+		<link rel="stylesheet" type="text/css" href="http://www.eionet.europa.eu/styles/eionet2007/screen.css" media="screen" title="Eionet 2007 style" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/css/portlet.css"/>" media="screen" title="Eionet 2007 style" />
 		<link type="text/css" media="print" href="<c:url value="/css/print.css"/>" rel="stylesheet"></link>
+		<link rel="shortcut icon" href="<c:url value="/favicon.ico"/>" type="image/x-icon" />
+
 		<!--[if IE]>
-		<style type="text/css" media="screen">
-			@import url(<c:url value="/css/portlet-ie.css" />);
-		</style>
+		<link type="text/css" media="screen" href="<c:url value="/css/portlet-ie.css" />" rel="stylesheet"></link>
 		<link type="text/css" media="print" href="/css/print-ie.css" rel="stylesheet"></link>
 		<![endif]-->
 		<!--[if IE 5.0]>
-		<style type="text/css" media="screen">
-			@import url(/css/portlet-ie5.css);
-		</style>
+		<link type="text/css" media="screen" href="/css/portlet-ie5.css" rel="stylesheet"></link>
 		<![endif]-->
-	    <link rel="shortcut icon" href="<c:url value="/favicon.ico"/>" type="image/x-icon" />
-	
-	
-		<script src="<c:url value="/tiny_mce/tiny_mce.js"/>" type="text/javascript"></script>
 
 	
+		<script src="<c:url value="/tiny_mce/tiny_mce.js"/>" type="text/javascript"></script>
 	
 		<script type="text/javascript" src="<c:url value="/scripts/mm.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/admin.js"/>"></script>
