@@ -8,10 +8,12 @@
 	<div style="width:99%;">
 		<div class="box"> 
 			<div class="boxleft"> 
-				<div class="boxtop"><div></div></div> 
-					<h4 style="font-size: 150%">Welcome</h4> 
-						<div class="boxcontent">
-						<ul>
+				<div class="boxtop">
+					<div></div>
+				</div> 
+				<h4 style="font-size: 120%; background: #00446A; border-top: 0px; color: white">Unified Notification Service</h4> 
+				<div class="boxcontent">
+					<ul>
 						<li>
 							<p style="font-size: 120%">
 							The Unified Notification System is part of the ReportNet architecture.
@@ -26,9 +28,11 @@
 							In order to define desired notification profile and set up personal preferences you need to login.
 							</p>
 						</li>
-						</ul>
-						</div>
-				<div class="boxbottom"><div></div></div> 
+					</ul>
+				</div>
+				<div class="boxbottom">
+					<div></div>
+				</div> 
 			</div>
 		</div>
 	</div>
@@ -41,7 +45,7 @@
 			<div id="channelid_1" class="box"> 
 				<div class="boxleft"> 
 					<div class="boxtop"><div></div></div> 
-					<h4 style="font-size: 120%">The most popular UNS channels</h4> 
+					<h4 style="font-size: 120%; background: #00446A; border-top: 0px; color: white">The most popular UNS channels</h4> 
 					<div class="boxcontent" style="height:200px;">
 					<%
 					int i=1;
@@ -66,7 +70,7 @@
 			<div id="channelid_2" class="box"> 
 				<div class="boxleft"> 
 					<div class="boxtop"><div></div></div> 
-					<h4 style="font-size: 120%">Support</h4> 
+					<h4 style="font-size: 120%; background: #00446A; border-top: 0px; color: white">Support</h4> 
 					<div class="boxcontent" style="height:200px;">
 						<p style="font-size: 100%">
 						If you experience any problem using Unified Notification System, please let the Eionet Helpdesk know immediately. 
