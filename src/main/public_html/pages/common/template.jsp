@@ -57,6 +57,7 @@ response.setDateHeader("Expires", 0);
 		</script>
 		<% if (session.getAttribute(EionetCASFilter.CAS_FILTER_USER) == null )  {%>
 		<script type="text/javascript" >
+			//<![CDATA[
 				function get_cookie( cookie_name )
 				{
 				  var results = document.cookie.match ( cookie_name + '=(.*?)(;|$)' );				
@@ -69,6 +70,7 @@ response.setDateHeader("Expires", 0);
 				if (eionetLoginCookieValue != null && eionetLoginCookieValue == "loggedIn"){	
 					window.location="<%=EionetCASFilter.getEionetCookieCASLoginURL(request) %>";
 				}
+			//]]>
 		</script>
 		<%}%>
 		
@@ -96,7 +98,7 @@ response.setDateHeader("Expires", 0);
 					</h:panelGroup>
 					<h:panelGroup rendered="#{(empty sessionScope.user) or not sessionScope.user.loggedIn }">
 						<f:verbatim>
-							<a id="loginlink" href="#" title="Login">Login</a>
+							<a id="loginlink" href="<%=EionetCASFilter.getCASLoginURL(request)%>" title="Login">Login</a>
 						</f:verbatim>
 					</h:panelGroup>
 					<a href="#" id="pagehelplink" onclick="javascript:openWindow('<c:url value="/help/help.jsp"/>','onlinehelp');" title="Help"><span><fmt:message key="label.menu.help"/></span></a>
