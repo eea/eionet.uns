@@ -205,3 +205,11 @@ label {padding-right:0.6em;}
 .width80 {
 	width:80%;
 }
+
+.rssColumn1 {width:30%; vertical-align:top; border-right: solid #97AF79  1px; }
+.rssColumn2 {width:70%; vertical-align:top; padding-left: 10px; }  
+.eventsHeader1 {width:70%; text-align:left; }
+.eventsHeader2 {width:30%; text-align:left;}
+.eventsColumn1 {width:70%; text-align:left; }
+.eventsColumn2 {width:30%; text-align:center;}
+.eventsFirstRow {background:#BEE0FC};
