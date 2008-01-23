@@ -53,8 +53,14 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<!-- Channels beans end -->
-
-
+	
+	<!-- Cleandb beans begin -->
+	<managed-bean>
+		<managed-bean-name>cleandbBean</managed-bean-name>
+		<managed-bean-class>com.eurodyn.uns.web.jsf.admin.cleandb.CleandbActions</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- Cleandb beans end -->
 
 	<!-- Templates beans begin -->
 	<managed-bean>

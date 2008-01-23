@@ -1,5 +1,6 @@
 package com.eurodyn.uns.dao.hibernate;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -70,6 +71,9 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
 		}
 
 	}
+	
+	public void deleteOldEvents() throws DAOException {
+    }
 
 	public void deleteEventMetadataByValue(Channel channel, String value) throws DAOException {
 		Session session = null;

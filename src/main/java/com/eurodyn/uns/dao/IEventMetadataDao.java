@@ -21,6 +21,7 @@
  */
 package com.eurodyn.uns.dao;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ import com.eurodyn.uns.model.Statement;
 public interface IEventMetadataDao {
 
 	public Event findEvent(Integer event_id) throws DAOException;
-
+	
 	public void createEventMetadata(EventMetadata em) throws DAOException;
 
 	public void deleteEventMetadata(EventMetadata em) throws DAOException;
@@ -45,6 +46,8 @@ public interface IEventMetadataDao {
 	public ResultDto findEventMetadataWithValue(Channel channel, String property, String value) throws DAOException;
 
 	public void deleteEventMetadataByValue(Channel channel, String value) throws DAOException;
+	
+	public void deleteOldEvents() throws DAOException;
 
 	public void deleteEventMetadataByProperty(Channel channel, String value) throws DAOException;
 

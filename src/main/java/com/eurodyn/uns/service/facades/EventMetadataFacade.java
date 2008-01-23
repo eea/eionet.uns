@@ -21,6 +21,7 @@
 
 package com.eurodyn.uns.service.facades;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -137,5 +138,16 @@ public class EventMetadataFacade {
 
 	public Event findEvent(Integer event_id) throws Exception {
 		return daoFactory.getEventMetadataDao().findEvent(event_id);
+	}
+	
+	public void deleteOldEvents(){
+		try {
+			jdbcDaoFactory.getEventMetadataDao().deleteOldEvents();
+		} catch (DAOException e) {
+			logger.error(e);
+		} catch (Exception e) {
+			logger.fatalError(e);
+		}
+		
 	}
 }

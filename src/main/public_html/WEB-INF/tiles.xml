@@ -224,7 +224,15 @@
     <definition name="xmlrpc/rpcChannel.tiles" extends="layout.xmlrpc" >
         <put name="body" value="/pages/xmlrpc/rpcChannel.jsp" />
     </definition>
-    <!-- rpc end  -->       
-
+    <!--    rpc end  -->       
+    
+    <!-- dbclean start  -->
+    <definition name="layout.cleandb" extends="uns.layout">
+    	<put name="selectedMenu" value="cleandb" type="string" />
+    </definition>
+    <definition name="/admin/cleandb.tiles" extends="layout.cleandb" >
+	<put name="body" value="/pages/admin/cleandb.jsp" />
+    </definition>
+    <!-- dbclean end  -->      
 
 </tiles-definitions>
