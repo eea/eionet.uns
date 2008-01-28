@@ -97,7 +97,7 @@
    description="Delete old build and dist directories">
     <delete dir="${build.home}"/>
     <delete dir="${dist.home}"/>
-    <delete dir="${uns_python_source.home}"/>
+<!--    <delete dir="${uns_python_source.home}"/> -->
   </target>
 
 
@@ -133,7 +133,9 @@
 
     <mkdir  dir="${build.home}/WEB-INF/lib"/>
 
+  </target>
 
+  <target name="pythoninstall">
     <mkdir dir="${uns_python_source.home}" />
     <copy  todir="${uns_python_source.home}" >
 	<fileset dir="${basedir}/src/main/python" />
