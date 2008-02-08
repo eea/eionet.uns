@@ -7,9 +7,7 @@
 		<t:htmlTag value="strong">
 			<h:outputText value="Warning ..."></h:outputText>		
 		</t:htmlTag>
-		<t:htmlTag value="p">
-			<h:outputText value='Pressing "Delete old events" button will erase all events older than 60 days. Also deletes related notifications and deliveries.'/>
-		</t:htmlTag>
+		<h:outputText value='Pressing "Delete old events" button will erase all events older than 60 days. Also deletes related notifications and deliveries.'/>
 	</t:div>
 	<t:div style="vertical-align: bottom">
 		<h:form>
