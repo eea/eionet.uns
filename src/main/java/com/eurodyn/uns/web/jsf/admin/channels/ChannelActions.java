@@ -241,7 +241,9 @@ public class ChannelActions extends ChannelForm {
 
 	public String edit() {
 		String outcome = "editChannel";
+		String feedUrl = null;
 		try {
+			feedUrl = channel.getFeedUrl();
 			if (channel.getId().intValue() > 0)
 				channel = channelFacade.getChannel(channel.getId());
 
@@ -249,11 +251,15 @@ public class ChannelActions extends ChannelForm {
 				reset();
 
 			boolean isPullChannel = channel.getMode().equals("PULL");
+			
+			if(isPullChannel && feedUrl != null && !feedUrl.equals("")){
+				channel.setFeedUrl(feedUrl);
+			}
 
 			if (isPullChannel && channel.getContent() == null && !feed()) {
 				outcome = null;
 			}
-
+			
 			if (!isPullChannel) {
 				setUpChannelMetadataElements(eventMetadataFacade.findChannelProperties(channel));
 			}
