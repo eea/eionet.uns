@@ -6,7 +6,7 @@
 	<session-factory>
 
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://reportnet:3306/UNS2_DEV</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/UNS2_DEV</property>
 		<property name="hibernate.connection.username">uns_developer</property>
 		<property name="hibernate.connection.password">reportnet</property>
 		<property name="hibernate.show_sql">true</property>

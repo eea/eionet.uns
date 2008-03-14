@@ -19,14 +19,14 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RSS;
 
-public class TestEventMetadata {
+public class ShowEventMetadata {
 
 	
 	public static void main(String[] args) {
 
 		try {
 			int test = 0;
-			BaseTest.initTestDb();
+			InitTestDB.initTestDb();
 			if (test == 1) {
 				testChoosableElements();
 				testValues();

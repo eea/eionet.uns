@@ -31,11 +31,14 @@
   <property name="docs.home"     value="${basedir}/docs"/>
   <property name="src.home"      value="${basedir}/src/main/java"/>
   <property name="web.home"      value="${basedir}/src/main/public_html"/>
+  <property name="test" value="${basedir}/src/test"/>
+  <property name="classes" value="${build.home}/WEB-INF/classes"/>
 
-
-
-
-
+        <!-- define external classpath, i.e. JARs and classes not found in WEB-INF/classes and WEB-INF/lib -->
+    <path id="classpath.externals">
+            <pathelement location="/usr/share/java/xerces-j2-2.9.0.jar"/>
+            <pathelement location="/usr/share/java/mysql-connector-java.jar"/>
+    </path>
 
   
 
@@ -232,6 +235,59 @@
          basedir="${build.home}"/>
   </target>
 
+        <!-- define classpath for unit tests -->
+        <path id="classpath.compile-tests">
+                <pathelement location="${classes}"/>
+                <fileset dir="${test}/lib">
+                        <include name="*.jar"/>
+                </fileset>
+                <path refid="compile.classpath"/>
+        </path>
+
+        <!-- compile target for compiling unit tests, expects classes-under-test compiled, refers to pre-defined paths -->
+        <target name="compile-tests" depends="compile">
+                <javac srcdir="${test}/java" destdir="${test}/build" source="1.5" target="1.5" debug="on">
+                        <classpath refid="classpath.compile-tests"/>
+                </javac>
+        </target>
+
+        <!-- copies seed for unit tests into the unit tests' build tree -->
+        <target name="seed-tests">
+                <copy todir="${test}/build" overwrite="true">
+                        <fileset dir="${test}/java">
+                                <include name="**/seed-*.*"/>
+                                <include name="**/hibernate-test.cfg.xml"/>
+                        </fileset>
+                </copy>
+        </target>
+
+        <!-- define classpath to be used by JUnit -->
+        <path id="classpath.test">
+                <pathelement path="${test}/build"/>
+                <pathelement path="${classes}"/>
+                <fileset dir="${test}/lib">
+                        <include name="**/*.jar"/>
+                </fileset>
+                <path refid="classpath.externals"/>
+        </path>
+
+        <!-- define src files to be included and/or excluded when JUnit searches for test cases -->
+        <fileset id="fileset.test" dir="${test}/java">
+<!--                <include name="**/*Test.java"/> -->
+                <include name="**/TestEventMetadata.java"/>
+        </fileset>
+
+        <!-- test target, refers to pre-defined paths and filesets -->
+        <target name="test" depends="compile-tests,seed-tests" description="Runs all found unit tests">
+                <junit haltonfailure="yes" failureproperty="unittestFailed" showoutput="yes" printsummary="yes">
+                        <classpath refid="classpath.test" />
+                        <formatter type="brief" usefile="false"/>
+                        <batchtest fork="yes">
+                                <fileset refid="fileset.test"/>
+                        </batchtest>
+                </junit>
+                <fail if="unittestFailed" message="One or more unit tests failed."/>
+        </target>
 
 
 </project>

@@ -9,7 +9,7 @@ import org.xml.sax.InputSource;
 import com.eurodyn.uns.dao.jdbc.BaseJdbcDao;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
-public class BaseTest {
+public class InitTestDB {
 
 	public static void initTestDb() throws Exception{
 			System.setProperty("hibernate-config-file","/hibernate-test.cfg.xml");
