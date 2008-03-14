@@ -35,7 +35,7 @@ import com.hp.hpl.jena.vocabulary.RSS;
 import junit.framework.TestCase;
 
 
-public class TestEventMetadata extends TestCase {
+public class EventMetadataTest extends TestCase {
 
     public void setUp() throws Exception {
         System.setProperty("hibernate-config-file", "/hibernate-test.cfg.xml");
