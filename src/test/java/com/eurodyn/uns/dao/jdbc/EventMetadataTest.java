@@ -16,17 +16,20 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
 
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.hibernate.HibernateEventMetadataDao;
 import com.eurodyn.uns.dao.jdbc.BaseJdbcDao;
 import com.eurodyn.uns.dao.jdbc.JdbcFeedDao;
-import com.eurodyn.uns.model.Channel;
+//import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.EventMetadata;
-import com.eurodyn.uns.model.RDFThing;
-import com.eurodyn.uns.model.Statement;
-import com.eurodyn.uns.model.User;
+//import com.eurodyn.uns.model.RDFThing;
+//import com.eurodyn.uns.model.Statement;
+//import com.eurodyn.uns.model.User;
 
 import junit.framework.TestCase;
 import org.dbunit.DatabaseTestCase;
@@ -116,9 +119,23 @@ public class EventMetadataTest extends TestCase {
         return loadedDataSet;
     }
 
-    public static void test_deleteOldEvents() throws DAOException {
+    private int getLines(String table) throws Exception {
+        Connection connection = BaseJdbcDao.getDatasource().getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM " + table);
+        resultSet.next();
+        return resultSet.getInt(1);
+    }
+
+    public void test_deleteOldEvents() throws Exception {
         JdbcEventMetadataDao em = new JdbcEventMetadataDao();
+        assertEquals(3, getLines("DELIVERY"));
+        assertEquals(1, getLines("NOTIFICATION"));
+        assertEquals(1, getLines("EVENT"));
         em.deleteOldEvents();
+        assertEquals(0, getLines("DELIVERY"));
+        assertEquals(0, getLines("NOTIFICATION"));
+        assertEquals(0, getLines("EVENT"));
     }
 
 }
