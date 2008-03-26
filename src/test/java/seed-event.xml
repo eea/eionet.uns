@@ -154,6 +154,7 @@ European Environment Agency" TEXT_HTML="" EDIT_ONLY="false"/>
 This version is improved by including more countries.&lt;br /&gt;
 
 " ID="4"/>
+  <EVENT_METADATA EVENT_ID="1" PROPERTY="http://rod.eionet.eu.int/schema.rdf#locality" VALUE="United Kingdom" ID="5"/>
 
   <NOTIFICATION ID="1" EEA_USER_ID="3" EVENT_ID="1" CONTENT="
 
@@ -174,7 +175,9 @@ European Environment Agency" CHANNEL_ID="4" SUBJECT="&quot;EEA Hightlights&quot;
   <DELIVERY NOTIFICATION_ID="1" DELIVERY_TYPE_ID="3" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:51.0"/>
   <DELIVERY NOTIFICATION_ID="1" DELIVERY_TYPE_ID="4" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:50.0"/>
 
-  <FILTER/>
+  <FILTER ID="123" SUBSCRIPTION_ID="1"/>
+  <FILTER ID="124" SUBSCRIPTION_ID="1"/>
+  <FILTER ID="125" SUBSCRIPTION_ID="1"/>
 
 
 
@@ -270,11 +273,16 @@ European Environment Agency" CHANNEL_ID="4" SUBJECT="&quot;EEA Hightlights&quot;
   <CHANNEL_METADATA_ELEMENTS CHANNEL_ID="4" METADATA_ELEMENT_ID="7" VISIBLE="0" APPEARANCE_ORDER="0" FILTERED="false" OBSOLETE="false"/>
   <CHANNEL_METADATA_ELEMENTS CHANNEL_ID="4" METADATA_ELEMENT_ID="8" VISIBLE="0" APPEARANCE_ORDER="0" FILTERED="false" OBSOLETE="false"/>
   <CHANNEL_METADATA_ELEMENTS CHANNEL_ID="4" METADATA_ELEMENT_ID="9" VISIBLE="0" APPEARANCE_ORDER="0" FILTERED="false" OBSOLETE="false"/>
+  <CHANNEL_METADATA_ELEMENTS CHANNEL_ID="4" METADATA_ELEMENT_ID="22" VISIBLE="1" APPEARANCE_ORDER="1" FILTERED="true" OBSOLETE="false"/>
 
 
 
-
-  <STATEMENT/>
+  <STATEMENT FILTER_ID="123" PROPERTY="http://rod.eionet.eu.int/schema.rdf#locality" VALUE="United Kingdom" METADATA_ELEMENT_ID="22"
+/>
+  <STATEMENT FILTER_ID="124" PROPERTY="http://rod.eionet.eu.int/schema.rdf#locality" VALUE="United Kingdom" METADATA_ELEMENT_ID="22"
+/>
+  <STATEMENT FILTER_ID="125" PROPERTY="http://rod.eionet.eu.int/schema.rdf#locality" VALUE="United Kingdom" METADATA_ELEMENT_ID="22"
+/>
 
   <STYLESHEET ID="1" NAME="default.xsl" DESCRIPTION="This stylesheet is able to transform any RSS(0.9x, 1.0 and 2.0) feed to simple HTML" CONTENT="&lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot;?&gt;
 &lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;

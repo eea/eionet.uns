@@ -78,7 +78,7 @@ public class EventMetadataTest extends TestCase {
 
     }
 
-    public void x_testChoosableElements() {
+    public void testChoosableElements() {
         // EventMetadataFacade eventMetadataFacade = new EventMetadataFacade();
         Channel channel = new Channel();
 
@@ -92,7 +92,7 @@ public class EventMetadataTest extends TestCase {
 
     }
 
-    public void testValues() throws Exception {
+    public void x_testValues() throws Exception {
         String value = "gas";
         HibernateEventMetadataDao hibernateEventMetadataDao = new HibernateEventMetadataDao();
         Channel channel = new Channel();
@@ -110,7 +110,7 @@ public class EventMetadataTest extends TestCase {
 
     }
 
-    public void testFilterDeletion() throws Exception {
+    public void x_testFilterDeletion() throws Exception {
         Channel channel = new Channel();
 
         channel.setId(new Integer(82));
@@ -123,7 +123,7 @@ public class EventMetadataTest extends TestCase {
 
     }
 
-    public void x_testEventDate() throws Exception {
+    public void testEventDate() throws Exception {
         Channel channel = new Channel();
 
         channel.setId(new Integer(82));
@@ -143,7 +143,7 @@ public class EventMetadataTest extends TestCase {
 
     }
 
-    public void testDeliveryReports() throws Exception {
+    public void x_testDeliveryReports() throws Exception {
         // HibernateEventMetadataDao hibernateEventMetadataDao = new HibernateEventMetadataDao();
         // Channel channel = new Channel();
         // channel.setId(new Integer(82));
@@ -158,7 +158,7 @@ public class EventMetadataTest extends TestCase {
         // hibernateEventMetadataDao.testDeliveryReport(fromDate,toDate,null,null);
     }
 
-    public void testRssFeed() {
+    public void x_testRssFeed() {
         String result = "";
         Model rdf = ModelFactory.createDefaultModel();
 

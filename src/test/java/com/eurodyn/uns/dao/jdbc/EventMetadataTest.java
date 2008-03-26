@@ -25,7 +25,7 @@ import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.hibernate.HibernateEventMetadataDao;
 import com.eurodyn.uns.dao.jdbc.BaseJdbcDao;
 import com.eurodyn.uns.dao.jdbc.JdbcFeedDao;
-//import com.eurodyn.uns.model.Channel;
+import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.EventMetadata;
 //import com.eurodyn.uns.model.RDFThing;
 //import com.eurodyn.uns.model.Statement;
@@ -136,6 +136,13 @@ public class EventMetadataTest extends TestCase {
         assertEquals(0, getLines("DELIVERY"));
         assertEquals(0, getLines("NOTIFICATION"));
         assertEquals(0, getLines("EVENT"));
+    }
+
+    public void test_findChoosableStatements() throws Exception {
+        Channel channel = new Channel(4);
+        JdbcEventMetadataDao em = new JdbcEventMetadataDao();
+        Map res = em.findChoosableStatements(channel);
+        System.out.println(res);
     }
 
 }
