@@ -47,12 +47,16 @@ class EMaily:
         
        
     def sendMessage(self, address, notification, admin=None):
+        if address is None:
+            raise Exception({ "None" : ( 550 ,"The 'None' recipient is NOT sent to the SMTP server" ) })
         try:
             RECIPIENTS = [address]
             SENDER =admin
             msg = self._createMessage(address, notification,admin)
             result=self.smtpSession.sendmail(SENDER, RECIPIENTS, str(msg))
-            if result: raise Exception(result)
+            if result:
+                self.smtpSession.rset()
+                raise Exception(result)
         finally:
             pass
             

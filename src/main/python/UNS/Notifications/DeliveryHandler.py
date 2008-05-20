@@ -36,6 +36,7 @@ from UNS.queries.qnotify import *
 from UNS.util.RDFUtil import RDFGenerator
 from UNS.util.RDFThing import RDFThing
 from UNS.Logging import getLogger
+import socket
 
 logger=getLogger("UNS.daemons.DeliveryBoy")
 
@@ -119,7 +120,12 @@ class EMAIL(DeliveryBoy):
         self.emaily.disconnect()
         
     def send(self, address, notification):
-        self.emaily.sendMessage(address, notification ,pop3server['adminmail'])
+        try:
+            self.emaily.sendMessage(address, notification ,pop3server['adminmail'])
+        except socket.error: # Deal with timeouts
+            self.disconnect()
+            self.connect()
+            logger.error("SMTP connection had socket error - reopened")
         logger.info("E-Mail message sent to: %s" % address)
         
         
