@@ -46,7 +46,7 @@ html_link = '<a href="%s">%s</a>'
 def prepareText(template, event, subscription, homeURL=''): 
     """ 
     Order while filling placeholders is very important.
-    One UNS placholders is not substring of another.
+    One UNS placeholder is not substring of another.
     Example:  - $EVENT.DATE must be replaced before $EVENT. 
     0 - Predicate
     1- Object
@@ -73,6 +73,11 @@ def prepareText(template, event, subscription, homeURL=''):
             text=text.replace("$USER",str(subscription['USER_FULL_NAME']))
             text=text.replace("$EVENT.TITLE",event_title)
             text=text.replace("$EVENT.CHANNEL",subscription['CHANNEL_NAME'])
+            if text.count("$UNSUBSCRIBE_LINK"):
+                unsub_link = homeURL+"/subscriptions/unsubscribe.jsf?subsc="+str(subscription['SECONDARY_ID'])
+                if isHTML: unsub_link = html_link % (unsub_link,unsub_link)
+                text=text.replace("$UNSUBSCRIBE_LINK",unsub_link)
+            # To be phased out
             if text.count("$UNSUSCRIBE_LINK"):
                 unsub_link = homeURL+"/subscriptions/unsubscribe.jsf?subsc="+str(subscription['SECONDARY_ID'])
                 if isHTML: unsub_link = html_link % (unsub_link,unsub_link)
@@ -112,8 +117,12 @@ def prepareText(template, event, subscription, homeURL=''):
     subs['user'] = user
 
     event_metadata = {}
+    metadata_dict = {}
+    metadata_list = []
     for mel in metadata:
         event_metadata[mel[0]] = mel[1]
+        metadata_dict[mel[0]] = metadata_dict.get(mel[0], []) + [mel[1]]
+        metadata_list.append(list(mel[0]))
     
     event = Event()
     event['date'] = ev_creation_date
@@ -124,6 +133,8 @@ def prepareText(template, event, subscription, homeURL=''):
     templ_namespace = {}    
     templ_namespace["subscription"] = subs
     templ_namespace["event"] = event
+    templ_namespace["metadata_dict"] = metadata_dict
+    templ_namespace["metadata_list"] = metadata_list
 
 
     if (content["PLAIN"] != None):

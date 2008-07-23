@@ -1,5 +1,5 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
-<<f:verbatim>
+<f:verbatim>
 <script type="text/javascript"></script>
 </f:verbatim>
 <h:form id="notificationTemplate">
@@ -54,7 +54,7 @@
 
 				</tr>
 				<tr>
-					<td>$UNSUSCRIBE_LINK</td>
+					<td>$UNSUBSCRIBE_LINK</td>
 					<td>Link that user may use to unsubscribe from channel</td>
 				</tr>
 			</tbody>
