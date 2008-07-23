@@ -81,6 +81,7 @@ class DeliveryBoy(threading.Thread):
             except:
                 logger.error("Failed to send notification ID: %d to address %s [%s]" % (item['ID'],item['DELIVERY_ADDRESS'], str(sys.exc_info()[1])))
                 #logger.exception(str(sys.exc_info()[0]))
+            delivery['DELIVERY_STATUS']=1  # Makes it only try sending once
             delivery['DELIVERY_TIME']=MySqlFunction('UTC_TIMESTAMP()')
             session.update(delivery)
             session.commitTransaction()

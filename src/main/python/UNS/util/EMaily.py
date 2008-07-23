@@ -42,7 +42,9 @@ class EMaily:
         
     def disconnect(self):
         """ UNS Aware disconnect from the SMTP server """
-        self.smtpSession.quit()
+        try:
+            self.smtpSession.quit()
+        except smtplib.SMTPServerDisconnected: pass
         self.smtpSession=None
         
        
