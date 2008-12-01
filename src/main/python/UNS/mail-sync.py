@@ -46,22 +46,20 @@ if __name__=="__main__":
         row = cursor.fetchone()
         if row == None:
             break
-        print row[0], row[1], row[2]
         res = lr.search_s(branch, ldap.SCOPE_SUBTREE, "uid=%s" % row[1], attrlist=('mail',))
         if len(res) > 0:
             mails = res[0][1]['mail']
             if row[2] not in mails:
                 tobeupdated.append((int(row[0]),mails[0]))
-                print "------------------>", mails[0]
         else:
-            print "NOT FOUND"
+            print "NOT FOUND: %s" % row[1]
+            if row[2] != '':
+                tobeupdated.append((int(row[0]),''))
 
     for id,mail in tobeupdated:
         affected = cursor.execute("update DELIVERY_ADDRESS set ADDRESS=%s where EEA_USER_ID=%s and DELIVERY_TYPE_ID=1" , (mail, id))
-        print affected, mail, id
         cursor.execute("select EEA_USER_ID, ADDRESS, DELIVERY_TYPE_ID from DELIVERY_ADDRESS where EEA_USER_ID=%s and DELIVERY_TYPE_ID=1" ,(id,))
         row = cursor.fetchone()
-        print row
     cursor.close()
     db.commit()
     db.close()
