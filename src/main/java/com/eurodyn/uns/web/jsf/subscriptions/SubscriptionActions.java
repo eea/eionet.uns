@@ -88,7 +88,7 @@ public class SubscriptionActions extends SubscriptionForm {
 
 		return "subscriptions";
 	}
-
+	
 	
 	private boolean saveJabberAddress(User user){
 		

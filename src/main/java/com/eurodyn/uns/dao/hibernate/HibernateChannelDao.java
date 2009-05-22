@@ -40,6 +40,7 @@ import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.RDFThing;
+import com.eurodyn.uns.model.Role;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.DateUtil;
 import com.eurodyn.uns.util.common.WDSLogger;
@@ -128,6 +129,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
 			Session s = getSession();
 			channel = (Channel) s.load(getReferenceClass(), id);
 			Hibernate.initialize(channel.getDeliveryTypes());
+			Hibernate.initialize(channel.getSubscriptions());
 			Hibernate.initialize(channel.getRoles());
 			Hibernate.initialize(channel.getMetadataElements());
 		} catch (HibernateException e) {
@@ -137,6 +139,24 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
 		}
 
 		return channel;
+	}
+	
+	public List getSubscriptions(String channelId) throws DAOException {
+		List result = null;
+		Session session = null;
+		try {
+			session = getSession();
+			String query = null;
+			query = "select s from Subscription as s where s.channel.id = :channelId"; 
+			Query q = session.createQuery(query);
+			q.setString("channelId", channelId);
+			result = q.list();
+		} catch (HibernateException e) {
+			throw new DAOException(e);
+		} finally {
+			closeSession(session);
+		}
+		return result;
 	}
 
 	public Channel findChannel(String secondaryId) throws DAOException {

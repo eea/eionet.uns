@@ -137,6 +137,18 @@ public class ChannelFacade {
 		return channel;
 	}
 	
+	public List getSubscriptions(String channelId) {
+		List result = null;
+		try {
+			result = daoFactory.getChannelDao().getSubscriptions(channelId);
+		} catch (DAOException e) {
+			logger.error(e);
+		} catch (Exception e) {
+			logger.fatalError(e);
+		}
+		return result;
+	}
+	
 	public Channel getChannelBySecId(String secId) {
 		Channel channel = null;
 		try {

@@ -1,5 +1,6 @@
 package com.eurodyn.uns.web.jsf.admin.channels;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.Set;
 
 import com.eurodyn.uns.model.ChannelMetadataElement;
 import com.eurodyn.uns.model.Role;
+import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.service.facades.DeliveryTypeFacade;
 import com.eurodyn.uns.service.facades.EventMetadataFacade;
@@ -53,6 +55,10 @@ public abstract class ChannelForm extends BaseChannelBean {
 	protected String currentChannelRoles;
 
 	protected List allRoles;
+	
+	protected Subscription subscription;
+	
+	protected String newSubscriber;
 
 	protected String visibleElements;
 
@@ -74,6 +80,7 @@ public abstract class ChannelForm extends BaseChannelBean {
 		eventMetadataFacade = new EventMetadataFacade();
 		subscriptionFacade = new SubscriptionFacade();
 		allDeliveryTypes = (List) deliveryTypeFacade.getDeliveryTypes().get("list");
+		subscription = new Subscription();
 	}
 
 	protected void setUpChannelRoles() {
@@ -163,6 +170,22 @@ public abstract class ChannelForm extends BaseChannelBean {
 
 	public List getNotificationTemplatesItems() {
 		return toSelectItems(allNotificationTemplates, "id", "name");
+	}
+
+	public Subscription getSubscription() {
+		return subscription;
+	}
+
+	public void setSubscription(Subscription subscription) {
+		this.subscription = subscription;
+	}
+
+	public String getNewSubscriber() {
+		return newSubscriber;
+	}
+
+	public void setNewSubscriber(String newSubscriber) {
+		this.newSubscriber = newSubscriber;
 	}
 
 }

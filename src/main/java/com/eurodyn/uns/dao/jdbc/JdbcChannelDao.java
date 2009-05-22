@@ -63,5 +63,7 @@ public class JdbcChannelDao extends BaseJdbcDao implements IChannelDao {
 	public List findOneEventForChannel() throws DAOException { return null;}
 
 	public Map findTestEventsForChannel(Channel channel) throws DAOException { return null;}
+	
+	public List getSubscriptions(String channelId) throws DAOException { return null;}
 
 }

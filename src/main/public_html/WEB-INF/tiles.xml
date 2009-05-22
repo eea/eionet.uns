@@ -82,6 +82,9 @@
     <definition name="/admin/channels/channel.tiles" extends="layout.channels" >
         <put name="body" value="/pages/admin/channels/channel.jsp" />
     </definition>
+    <definition name="/admin/channels/subscribers.tiles" extends="uns.layout" >
+        <put name="body" value="/pages/admin/channels/subscribers.jsp" />
+    </definition>
     <definition name="/admin/channels/channelPreview.tiles" extends="layout.channels" >
         <put name="body" value="/pages/admin/channels/channelPreview.jsp" />
     </definition>

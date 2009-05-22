@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -29,13 +31,17 @@ import com.eurodyn.uns.model.Stylesheet;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.delegates.ChannelServerDelegate;
+import com.eurodyn.uns.service.facades.UserFacade;
+import com.eurodyn.uns.util.DateUtil;
 import com.eurodyn.uns.util.MailAuthenticator;
 import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.util.rdf.RdfContext;
 import com.eurodyn.uns.util.rdf.RssChannelsProcessor;
+import com.eurodyn.uns.util.uid.UidGenerator;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
 import com.eurodyn.uns.web.jsf.admin.templates.NotificationTemplateInterpreter;
+import com.eurodyn.uns.web.jsf.subscriptions.SubscriptionActions;
 import com.eurodyn.uns.web.jsf.util.Period;
 import com.sun.mail.smtp.SMTPTransport;
 
@@ -394,6 +400,125 @@ public class ChannelActions extends ChannelForm {
 		currentChannelRoles = null;
 		visibleElements = null;
 		reset = false;
+	}
+	
+	public String subscribers() {
+		try {
+			if (channel.getId() != null){
+				channel = channelFacade.getChannel(channel.getId());
+				List subscriptions = channelFacade.getSubscriptions(channel.getId().toString());
+				if(subscriptions != null && subscriptions.size()>0)
+					channel.setSubscriptions(subscriptions);
+			}
+			subscription = new Subscription();
+			userFacade = new UserFacade();
+			newSubscriber = "";
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return "subscribers";
+	}
+	
+	public void saveSubscriber() {
+
+		try {
+			User user = userFacade.getUser(newSubscriber, true);
+			
+			if(subscription == null)
+				subscription = new Subscription();
+			subscription.setUser(user);
+			if(channel != null)
+				subscription.setChannel(channel);
+			
+			Integer channelId = subscription.getChannel().getId();
+			if (user.getSubscriptions() == null)
+				user.setSubscriptions(new HashMap());
+
+			user.getSubscriptions().put(channelId, subscription);
+			
+			setUserDashboard(user);
+			if (subscription.getId() == null) {
+				subscription.setCreationDate(DateUtil.getCurrentUTCDate());
+				subscription.setSecondaryId(UidGenerator.generate());
+			}
+			
+			userFacade.updateUser(user);
+			addInfoMessage(null, "messages.subscription.success.create", new Object[] { subscription.getChannel().getTitle() });
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			addSystemErrorMessage();
+		}
+		
+		subscribers();
+	}
+	
+	private void setUserDashboard(User user) {
+
+		ArrayList cols = new ArrayList();
+		int numCols = user.getNumberOfColumns().intValue();
+		for (int i = 0; i < numCols; i++) {
+			cols.add(new LinkedList());
+		}
+
+		// make column list
+		if (user.getSubscriptions() != null) {
+			Iterator iter = user.getSubscriptions().entrySet().iterator();
+
+			while (iter.hasNext()) {
+				Map.Entry element = (Map.Entry) iter.next();
+				Subscription subs = (Subscription) element.getValue();
+
+				if (!subs.getDeliveryTypes().contains(deliveryTypesMap.get("WDB"))) {
+					subs.setDashCordX(new Short((short) -1));
+					subs.setDashCordY(new Short((short) -1));
+					continue;
+				}
+
+				if (subs.getDashCordX().intValue() == -1 || subs.getDashCordY().intValue() == -1) {
+					int X = findMinCol(cols);
+					subs.setDashCordX(new Short((short) X));
+					subs.setDashCordY(new Short((short) 0));
+				}
+
+				if (subs.getDashCordX().intValue() >= numCols)
+					subs.setDashCordX(new Short((short) (numCols - 1)));
+
+				int col = subs.getDashCordX().intValue();
+				List colList = (List) cols.get(col);
+				int row = colList.size();
+				subs.setDashCordY(new Short((short) row));
+				colList.add(subs);
+			}
+
+		}
+	}
+
+	private int findMinCol(List cols) {
+		int colMax = Integer.MAX_VALUE;
+		int X = 0;
+		for (int j = 0; j < cols.size(); j++) {
+			int size = ((List) cols.get(j)).size();
+			if (size < colMax) {
+				colMax = size;
+				X = j;
+			}
+		}
+		return X;
+	}
+	
+	public void removeSubscriber() {
+		try {
+			User user = userFacade.findUser(subscription.getUser().getExternalId());
+			user.getSubscriptions().remove(subscription.getChannel().getId());
+			setUserDashboard(user);
+			userFacade.updateUser(user);
+			addInfoMessage(null, "messages.subscription.success.delete", new Object[] { subscription.getChannel().getTitle() });
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			addSystemErrorMessage();
+		}
+		subscribers();
 	}
 
 	private boolean feed() {

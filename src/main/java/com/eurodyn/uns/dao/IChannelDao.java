@@ -57,4 +57,6 @@ public interface IChannelDao {
 	public Map findTestEventsForChannel(Channel channel) throws DAOException;
 	
 	public Date getLastHarvestedDate(Channel channel) throws DAOException ;
+	
+	public List getSubscriptions(String channelId) throws DAOException;
 }

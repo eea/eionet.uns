@@ -168,6 +168,10 @@
 			<to-view-id>/admin/channels/channel.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>subscribers</from-outcome>
+			<to-view-id>/admin/channels/subscribers.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>cancel</from-outcome>
 			<to-view-id>/admin/channels/pullChannels.jsp</to-view-id>
 		</navigation-case>

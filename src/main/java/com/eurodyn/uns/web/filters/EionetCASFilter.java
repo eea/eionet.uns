@@ -1,5 +1,7 @@
 package com.eurodyn.uns.web.filters;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -152,6 +154,20 @@ public class EionetCASFilter extends CASFilter {
 		user.setLoggedIn(true);
 		request.getSession().setAttribute("user", user);
 		
+		
+	}
+	
+	public static String logIn2(HttpServletRequest request) throws IOException{
+
+		User user = new User();
+		user.setFullName("Risto Alt");
+		user.setLoggedIn(true);
+		user.setExternalId("altnyris");
+		List roles = new ArrayList();
+		roles.add("admin");
+		user.setUserRoles(roles);
+		request.getSession().setAttribute("user", user);
+		return "http://localhost:8080/subscriptions/subscriptions.jsf";		
 		
 	}
 	

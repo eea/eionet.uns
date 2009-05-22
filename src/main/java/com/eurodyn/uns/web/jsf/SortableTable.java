@@ -84,11 +84,11 @@ public class SortableTable {
 					}
 
 					if (aValue instanceof String)
-						return ((String) aValue).compareTo(bValue);
+						return ((String) aValue).compareTo((String)bValue);
 					if (aValue instanceof Integer)
-						return ((Integer) aValue).compareTo(bValue);
+						return ((Integer) aValue).compareTo((Integer)bValue);
 					if (aValue instanceof Date)
-						return ((Date) aValue).compareTo(bValue);
+						return ((Date) aValue).compareTo((Date)bValue);
 					return -1;
 				}
 			});

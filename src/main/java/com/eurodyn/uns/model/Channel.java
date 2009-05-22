@@ -75,6 +75,8 @@ public class Channel implements IChannel, Serializable {
 
 	private List deliveryTypes;
 
+	private List subscriptions;
+
 	private String content;
 
 	private Integer numberOfSubscriptions;
@@ -364,6 +366,14 @@ public class Channel implements IChannel, Serializable {
 
 	public void setDeliveryTypes(List deliveryTypes) {
 		this.deliveryTypes = deliveryTypes;
+	}
+	
+	public List getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setSubscriptions(List subscriptions) {
+		this.subscriptions = subscriptions;
 	}
 
 	public NotificationTemplate getNotificationTemplate() {
