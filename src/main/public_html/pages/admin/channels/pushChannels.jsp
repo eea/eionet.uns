@@ -63,7 +63,10 @@
 						</f:facet>
 					</t:commandSortHeader>
 				</f:facet>
-				<h:outputText value="#{channel.numberOfSubscriptions}" />
+				<t:commandLink action="#{channelBean.subscribers}" immediate="true">
+					<h:outputText value="#{channel.numberOfSubscriptions}" />
+					<t:updateActionListener property="#{channelBean.channel}" value="#{channel}" />
+				</t:commandLink>
 			</h:column>
 			<h:column>
 				<f:facet name="header">
