@@ -8,7 +8,7 @@
 	<class name="com.eurodyn.uns.model.User" table="EEA_USER" lazy="false">
 
 		<id name="id" column="ID" type="java.lang.Integer">
-			<generator class="native" />
+			<generator class="increment" />
 		</id>
 
 		<property name="externalId" type="java.lang.String" update="true" insert="true" column="EXT_USER_ID" length="50" not-null="true" />
