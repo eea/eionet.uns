@@ -32,7 +32,7 @@
 			<key column="EEA_USER_ID" />
 			<map-key formula="DELIVERY_TYPE_ID" type="integer" />
 			<composite-element class="com.eurodyn.uns.model.DeliveryAddress">
-				<property name="address" type="string" not-null="true" />
+				<property name="address" type="string" not-null="false" />
 				<many-to-one name="deliveryType" column="DELIVERY_TYPE_ID" class="com.eurodyn.uns.model.DeliveryType" not-null="true" />
 			</composite-element>
 		</map>
