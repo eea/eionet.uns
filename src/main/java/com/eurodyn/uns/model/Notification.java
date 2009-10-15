@@ -39,14 +39,24 @@ public class Notification implements java.io.Serializable {
 	private long eventId;
 
 	private String content;
+	
+	private String htmlContent;
 
 	private int channelId;
 
 	private String subject;
-
+	
 	private Set deliveries = new HashSet(0);
 
 	private User user;
+	
+	private Event event;
+	
+	private String deliveryAddress;
+	
+	private int failed;
+	
+	private int deliveryTypeId;
 	
 	// Constructors
 
@@ -55,20 +65,22 @@ public class Notification implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Notification(int id, int userId, long eventId, String content, int channelId) {
+	public Notification(int id, int userId, long eventId, String content, String htmlContent, int channelId) {
 		this.id = id;
 		this.userId = userId;
 		this.eventId = eventId;
 		this.content = content;
+		this.htmlContent = htmlContent;
 		this.channelId = channelId;
 	}
 
 	/** full constructor */
-	public Notification(int id, int userId, long eventId, String content, int channelId, String subject, Set deliveries) {
+	public Notification(int id, int userId, long eventId, String content, String htmlContent, int channelId, String subject, Set deliveries) {
 		this.id = id;
 		this.userId = userId;
 		this.eventId = eventId;
 		this.content = content;
+		this.htmlContent = htmlContent;
 		this.channelId = channelId;
 		this.subject = subject;
 		this.deliveries = deliveries;
@@ -108,6 +120,14 @@ public class Notification implements java.io.Serializable {
 		this.content = content;
 	}
 
+	public String getHtmlContent() {
+		return htmlContent;
+	}
+
+	public void setHtmlContent(String htmlContent) {
+		this.htmlContent = htmlContent;
+	}
+
 	public int getChannelId() {
 		return this.channelId;
 	}
@@ -138,5 +158,117 @@ public class Notification implements java.io.Serializable {
 	
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
+
+	public String getDeliveryAddress() {
+		return deliveryAddress;
+	}
+
+	public void setDeliveryAddress(String deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
+	}
+
+	public int getFailed() {
+		return failed;
+	}
+
+	public void setFailed(int failed) {
+		this.failed = failed;
+	}
+
+	public int getDeliveryTypeId() {
+		return deliveryTypeId;
+	}
+
+	public void setDeliveryTypeId(int deliveryTypeId) {
+		this.deliveryTypeId = deliveryTypeId;
+	}
+
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + channelId;
+		result = prime * result + ((content == null) ? 0 : content.hashCode());
+		result = prime * result
+				+ ((deliveries == null) ? 0 : deliveries.hashCode());
+		result = prime * result
+				+ ((deliveryAddress == null) ? 0 : deliveryAddress.hashCode());
+		result = prime * result + deliveryTypeId;
+		result = prime * result + ((event == null) ? 0 : event.hashCode());
+		result = prime * result + (int) (eventId ^ (eventId >>> 32));
+		result = prime * result + failed;
+		result = prime * result
+				+ ((htmlContent == null) ? 0 : htmlContent.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + userId;
+		return result;
+	}
+
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Notification other = (Notification) obj;
+		if (channelId != other.channelId)
+			return false;
+		if (content == null) {
+			if (other.content != null)
+				return false;
+		} else if (!content.equals(other.content))
+			return false;
+		if (deliveries == null) {
+			if (other.deliveries != null)
+				return false;
+		} else if (!deliveries.equals(other.deliveries))
+			return false;
+		if (deliveryAddress == null) {
+			if (other.deliveryAddress != null)
+				return false;
+		} else if (!deliveryAddress.equals(other.deliveryAddress))
+			return false;
+		if (deliveryTypeId != other.deliveryTypeId)
+			return false;
+		if (event == null) {
+			if (other.event != null)
+				return false;
+		} else if (!event.equals(other.event))
+			return false;
+		if (eventId != other.eventId)
+			return false;
+		if (failed != other.failed)
+			return false;
+		if (htmlContent == null) {
+			if (other.htmlContent != null)
+				return false;
+		} else if (!htmlContent.equals(other.htmlContent))
+			return false;
+		if (id != other.id)
+			return false;
+		if (subject == null) {
+			if (other.subject != null)
+				return false;
+		} else if (!subject.equals(other.subject))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		if (userId != other.userId)
+			return false;
+		return true;
 	}
 }

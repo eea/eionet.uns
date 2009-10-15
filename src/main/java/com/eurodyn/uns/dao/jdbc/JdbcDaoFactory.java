@@ -2,6 +2,7 @@ package com.eurodyn.uns.dao.jdbc;
 
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.dao.IChannelDao;
+import com.eurodyn.uns.dao.IDeliveryDao;
 import com.eurodyn.uns.dao.IDeliveryTypeDao;
 import com.eurodyn.uns.dao.IEventMetadataDao;
 import com.eurodyn.uns.dao.IFeedDao;
@@ -38,6 +39,10 @@ public class JdbcDaoFactory extends DAOFactory {
 	public IDeliveryTypeDao getDeliveryTypeDao() {
 		return null;
 	}
+	
+	public IDeliveryDao getDeliveryDao() {
+		return null;
+	}
 
 	public INotificationTemplateDao getNotificationTemplateDao() {
 		return null;
@@ -56,7 +61,7 @@ public class JdbcDaoFactory extends DAOFactory {
 	}
 
 	public INotificationDao getNotificationDao() {
-		return null;
+		return new JdbcNotificationDao();
 	}
 
 }

@@ -110,7 +110,7 @@ public class ConfigManager {
 
 		String jabberPath = "//uns/jabberserver/";
 		configMap.put(createKey(jabberPath, "host"), createValue(jabberPath, "host", stringType));
-		configMap.put(createKey(jabberPath, "port"), createValue(jabberPath, "port", integerType));
+		configMap.put(createKey(jabberPath, "port"), createValue(jabberPath, "port", stringType));
 		configMap.put(createKey(jabberPath, "username"), createValue(jabberPath, "username", stringType));
 		configMap.put(createKey(jabberPath, "password"), createValue(jabberPath, "password", stringType));
 		configMap.put(createKey(jabberPath, "usessl"), createValue(jabberPath, "usessl", booleanType));

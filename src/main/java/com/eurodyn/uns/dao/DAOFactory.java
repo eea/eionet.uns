@@ -52,6 +52,7 @@ public abstract class DAOFactory {
     public abstract IMetadataElementDao getMetadataElementDao();
     public abstract IRoleDao getRoleDao();
     public abstract IDeliveryTypeDao getDeliveryTypeDao();
+    public abstract IDeliveryDao getDeliveryDao();
     public abstract INotificationTemplateDao getNotificationTemplateDao();
     public abstract ISubscriptionDao getSubscriptionDao();
     public abstract IFeedDao getFeedDao();

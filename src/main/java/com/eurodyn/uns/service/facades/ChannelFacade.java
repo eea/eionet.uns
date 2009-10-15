@@ -20,7 +20,10 @@
  */
 package com.eurodyn.uns.service.facades;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +31,8 @@ import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Dto;
+import com.eurodyn.uns.model.Event;
+import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.ResultDto;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.common.WDSLogger;
@@ -61,6 +66,30 @@ public class ChannelFacade {
 		try {
 			channels = daoFactory.getChannelDao().findAllChannels(orderProperty, order);
 			result.put("list", channels);
+		} catch (DAOException e) {
+			logger.error(e);
+		} catch (Exception e) {
+			logger.fatalError(e);
+		}
+		return result;
+	}
+	
+	public HashMap findUnprocessedEvents() {
+		List channels = null;
+		HashMap result = null;
+		try {
+			channels = daoFactory.getChannelDao().findUnprocessedEvents();
+			result = new HashMap();
+			for(Iterator it = channels.iterator();it.hasNext();){
+				Event event = (Event)it.next();
+				String channel_id = event.getChannel().getId().toString();
+				List list = (List)result.get(channel_id);
+				if(list == null){
+					list = new ArrayList();
+				}
+				list.add(event);
+				result.put(channel_id, list);
+			}
 		} catch (DAOException e) {
 			logger.error(e);
 		} catch (Exception e) {
@@ -201,6 +230,19 @@ public class ChannelFacade {
 		}
 		return ret;
 	}
+	
+	public boolean updateEvent(Event event) {
+		boolean ret = false;
+		try {
+			daoFactory.getChannelDao().updateEvent(event);
+			ret = true;
+		} catch (DAOException e) {
+			logger.error(e);
+		} catch (Exception e) {
+			logger.fatalError(e);
+		}
+		return ret;
+	}
 
 	public ResultDto getRpcUserChannels(Dto dto) {
 		String orderProperty = dto.getAsString("orderProperty");
@@ -233,5 +275,13 @@ public class ChannelFacade {
 
 	public Date getLastHarvestedDate(Channel channel) throws Exception {
 		return jdbcDaoFactory.getChannelDao().getLastHarvestedDate(channel);
+	}
+	
+	public void unsetVacations() throws Exception {
+		jdbcDaoFactory.getChannelDao().unsetVacations();
+	}
+	
+	public void setProcessed() throws Exception {
+		jdbcDaoFactory.getChannelDao().setProcessed();
 	}
 }

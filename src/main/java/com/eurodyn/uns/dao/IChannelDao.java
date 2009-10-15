@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.eurodyn.uns.model.Channel;
+import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.User;
 
 public interface IChannelDao {
@@ -49,14 +50,22 @@ public interface IChannelDao {
 	public void createChannel(Channel channel) throws DAOException;
 
 	public void updateChannel(Channel channel) throws DAOException;
+	
+	public void updateEvent(Event event) throws DAOException;
 
 	public List findRpcUserChannels(User user, String orderProperty, String order) throws DAOException;
 
 	public List findOneEventForChannel() throws DAOException;
+	
+	public List findUnprocessedEvents() throws DAOException;
 
 	public Map findTestEventsForChannel(Channel channel) throws DAOException;
 	
 	public Date getLastHarvestedDate(Channel channel) throws DAOException ;
+	
+	public void unsetVacations() throws DAOException;
+	
+	public void setProcessed() throws DAOException;
 	
 	public List getSubscriptions(String channelId) throws DAOException;
 }

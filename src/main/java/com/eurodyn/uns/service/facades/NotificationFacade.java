@@ -23,16 +23,23 @@ package com.eurodyn.uns.service.facades;
 import java.util.Date;
 import java.util.List;
 
+import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.Channel;
+import com.eurodyn.uns.model.Notification;
 import com.eurodyn.uns.model.User;
+import com.eurodyn.uns.util.common.WDSLogger;
 
 public class NotificationFacade {
+	
+	private static final WDSLogger logger = WDSLogger.getLogger(NotificationFacade.class);
 
 	private DAOFactory daoFactory;
+	private DAOFactory jdbcDaoFactory;
 
 	public NotificationFacade() {
 		daoFactory = DAOFactory.getDAOFactory(DAOFactory.HIBERNATE);
+		jdbcDaoFactory= DAOFactory.getDAOFactory(DAOFactory.JDBC);
 	}
 
 	public List getNotificationsThroughput(Date fromDate, Date toDate, Channel channel, User user) throws Exception {
@@ -41,6 +48,27 @@ public class NotificationFacade {
 
 	public List getFailedNotifications() throws Exception {
 		return daoFactory.getNotificationDao().getFailedNotifications();
+	}
+	
+	public boolean createNotification(Notification notification) throws Exception {
+		boolean success = false;
+		try {
+			daoFactory.getNotificationDao().createNotification(notification);
+			success = true;
+		} catch (DAOException e) {
+			logger.error(e);
+		} catch (Exception e) {
+			logger.fatalError(e);
+		}
+		return success;
+	}
+	
+	public List getNewNotifications() throws Exception {
+		return jdbcDaoFactory.getNotificationDao().getNewNotifications();
+	}
+	
+	public List getFailedDeliveries() throws Exception {
+		return jdbcDaoFactory.getNotificationDao().getFailedDeliveries();
 	}
 
 }

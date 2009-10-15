@@ -18,6 +18,10 @@
 			<column name="CONTENT" length="65535" not-null="true" />
 		</property>
 		
+		<property name="htmlContent" type="string">
+			<column name="HTML_CONTENT" length="65535" not-null="false" />
+		</property>
+		
 		<property name="channelId" type="int">
 			<column name="CHANNEL_ID" not-null="true" />
 		</property>
@@ -26,9 +30,9 @@
 			<column name="EEA_USER_ID" not-null="true" />
 		</many-to-one>
 		
-<!--		<many-to-one name="event" class="com.eurodyn.uns.model.Event" fetch="select">-->
-<!--			<column name="EVENT_ID" not-null="true" />-->
-<!--		</many-to-one>-->
+		<many-to-one name="event" class="com.eurodyn.uns.model.Event" fetch="select">
+			<column name="EVENT_ID" not-null="true" />
+		</many-to-one>
 		
 		<set name="deliveries" inverse="true" table="DELIVERY">
 			<key><column name="NOTIFICATION_ID" not-null="true" /></key>

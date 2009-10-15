@@ -117,6 +117,26 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
 			closeSession(session);
 		}
 	}
+	
+	public List findUnprocessedEvents() throws DAOException {
+		Session session = null;
+		try {
+			session = getSession();
+			Query query = session.createQuery("select distinct e from Event as e, Subscription as s where e.processed = 0 and s.channel=e.channel order by e.channel.id");
+			List list = query.list();
+			List retlist = new ArrayList();
+			for(Iterator it = list.iterator(); it.hasNext();){
+				Event event = (Event) it.next();
+				Hibernate.initialize(event.getEventMetadata());
+				retlist.add(event);
+			}
+			return retlist;
+		} catch (HibernateException e) {
+			throw new DAOException(e);
+		} finally {
+			closeSession(session);
+		}
+	}
 
 	public Channel findChannel(Channel channel) throws DAOException {
 		return findChannel(channel.getId());
@@ -211,6 +231,14 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
 			throw new DAOException(e);
 		}
 	}
+	
+	public void updateEvent(Event event) throws DAOException {
+		try {
+			saveOrUpdate(event);
+		} catch (HibernateException e) {
+			throw new DAOException(e);
+		}
+	}
 
 	public List findRpcUserChannels(User user, String orderProperty, String order) throws DAOException {
 		Session session = null;
@@ -297,5 +325,9 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
 	}
 	
 	public Date getLastHarvestedDate(Channel channel) throws DAOException {return null;}
+	
+	public void unsetVacations() throws DAOException {}
+	
+	public void setProcessed() throws DAOException {}
 
 }

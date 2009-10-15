@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.eurodyn.uns.model.Channel;
+import com.eurodyn.uns.model.Notification;
 import com.eurodyn.uns.model.User;
 
 public interface INotificationDao {
@@ -32,4 +33,10 @@ public interface INotificationDao {
 	public List getNotificationsThroughput(Date fromDate, Date toDate, Channel channel, User user) throws DAOException;
 
 	public List getFailedNotifications() throws DAOException;
+	
+	public void createNotification(Notification notification) throws DAOException;
+	
+	public List getNewNotifications() throws DAOException;
+	
+	public List getFailedDeliveries() throws DAOException;
 }

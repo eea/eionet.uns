@@ -165,6 +165,10 @@
 	<listener>
 		<listener-class>com.eurodyn.uns.web.listeners.AppServletContextListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>com.eurodyn.uns.service.daemons.Notificator</listener-class>
+	</listener>
+	
 
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>

@@ -96,6 +96,9 @@ public class BreadCrumbBean extends BaseBean {
 		breadcrumbsMap.put("channelTemplates.jsp", new String[] { null, "Edit channel", null });
 		breadcrumbsMap.put("channelPreview.jsp", new String[] { null, "Edit channel", null });
 		breadcrumbsMap.put("subscribers.jsp", new String[] { null, "Subscribers", null });
+		
+		//cleandb
+		breadcrumbsMap.put("cleandb.jsp", new String[] { null, "Clean database", null });
 
 		// reports
 		breadcrumbsMap.put("report_criteria.jsp", new String[] { null, "Generate report", "/admin/reports/report_criteria.jsf" });

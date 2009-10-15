@@ -23,6 +23,7 @@ package com.eurodyn.uns.dao.hibernate;
 
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.dao.IChannelDao;
+import com.eurodyn.uns.dao.IDeliveryDao;
 import com.eurodyn.uns.dao.IDeliveryTypeDao;
 import com.eurodyn.uns.dao.IEventMetadataDao;
 import com.eurodyn.uns.dao.IFeedDao;
@@ -62,6 +63,10 @@ public class HibernateDAOFactory extends DAOFactory {
 
 	public IDeliveryTypeDao getDeliveryTypeDao() {
 		return new HibernateDeliveryTypeDao();
+	}
+	
+	public IDeliveryDao getDeliveryDao() {
+		return new HibernateDeliveryDao();
 	}
 
 	public INotificationTemplateDao getNotificationTemplateDao() {

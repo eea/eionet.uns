@@ -1,5 +1,6 @@
 package com.eurodyn.uns.dao.hibernate;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import org.hibernate.Session;
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.ISubscriptionDao;
 import com.eurodyn.uns.model.Channel;
+import com.eurodyn.uns.model.Event;
+import com.eurodyn.uns.model.Filter;
 import com.eurodyn.uns.model.Role;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
@@ -151,7 +154,18 @@ public class HibernateSubscriptionDao extends BaseHibernateDao implements ISubsc
 			session = getSession();
 			Query query = session.createQuery("from Subscription s where s.channel = :channel");
 			query.setEntity("channel", channel);
-			result = query.list();
+			List list = query.list();
+			List retlist = new ArrayList();
+			for(Iterator it = list.iterator(); it.hasNext();){
+				Subscription sub = (Subscription) it.next();
+				Hibernate.initialize(sub.getFilters());
+				for(Iterator it2 = sub.getFilters().iterator(); it2.hasNext();){
+					Filter filter = (Filter) it2.next();
+					Hibernate.initialize(filter.getStatements());
+				}
+				retlist.add(sub);
+			}
+			result = retlist;
 		} catch (HibernateException e) {
 			throw new DAOException(e);
 		} finally {
