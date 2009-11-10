@@ -74,6 +74,18 @@ public class ChannelFacade {
 		return result;
 	}
 	
+	public List findHarvestChannels(){
+		List channels = null;
+		try {
+			channels = daoFactory.getChannelDao().findHarvestChannels();
+		} catch (DAOException e) {
+			logger.error(e);
+		} catch (Exception e) {
+			logger.fatalError(e);
+		}
+		return channels;
+	}
+	
 	public HashMap findUnprocessedEvents() {
 		List channels = null;
 		HashMap result = null;

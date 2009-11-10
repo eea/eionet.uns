@@ -1,9 +1,6 @@
-package com.eurodyn.uns.service.daemons;
+package com.eurodyn.uns.service.daemons.harvester;
 
 import java.util.Map;
-
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -15,21 +12,26 @@ import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
 
 
-public class Notificator implements ServletContextListener {
+public class Harvester {
 	
 	private Integer intervalSeconds;
 	
-	private static final WDSLogger logger = WDSLogger.getLogger(Notificator.class);
+	private static final WDSLogger logger = WDSLogger.getLogger(Harvester.class);
 	
-	private void start(long repeatInterval) throws Exception {
+	public Harvester() {
+	}
+	
+	public void start() throws Exception {
 		try{
+			long repeatInterval = (long)getIntervalSeconds().intValue()*(long)1000*(long)60;
+			
 			SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
 			Scheduler sched = schedFact.getScheduler();
 			sched.start();
 		
-			JobDetail jobDetail = new JobDetail("notificatorJob", null, NotificatorJob.class);
+			JobDetail jobDetail = new JobDetail("harvesterJob", null, HarvesterJob.class);
 			
-			NotificatorJobListener listener = new NotificatorJobListener();
+			HarvesterJobListener listener = new HarvesterJobListener();
 			jobDetail.addJobListener(listener.getName());
 			sched.addJobListener(listener);
 			
@@ -42,7 +44,7 @@ public class Notificator implements ServletContextListener {
 		} catch(Exception e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
-			throw new Exception("Error occured when processing notifications: "+e.toString());
+			throw new Exception("Error occured when processing harvester: "+e.toString());
 		}
 	}
 	
@@ -50,7 +52,7 @@ public class Notificator implements ServletContextListener {
 	 * (non-Javadoc)
 	 * @see javax.servlet.ServletContextListener#contextInitialized(javax.servlet.ServletContextEvent)
 	 */
-	public void contextInitialized(ServletContextEvent servletContextEvent) {
+	/*public void contextInitialized(ServletContextEvent servletContextEvent) {
 		
 		try{
 			long interval = (long)getIntervalSeconds().intValue()*(long)1000*(long)60;
@@ -60,7 +62,7 @@ public class Notificator implements ServletContextListener {
 		catch (Exception e){
 			logger.fatalError("Error when scheduling " + getClass().getSimpleName() + " with interval minutes " + getIntervalSeconds(), e);
 		}
-	}
+	}*/
 	
 	/**
 	 * @return the intervalSeconds
@@ -69,7 +71,7 @@ public class Notificator implements ServletContextListener {
 		try{
 			if (intervalSeconds==null){
 				Map configMap = ConfigManager.getInstance().getConfigMap();
-				intervalSeconds = (Integer)((ConfigElement) configMap.get("daemons/notificator/interval")).getValue();
+				intervalSeconds = (Integer)((ConfigElement) configMap.get("daemons/harvester/interval")).getValue();
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -82,6 +84,6 @@ public class Notificator implements ServletContextListener {
 	 * (non-Javadoc)
 	 * @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.ServletContextEvent)
 	 */
-	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-	}
+	/*public void contextDestroyed(ServletContextEvent servletContextEvent) {
+	}*/
 }

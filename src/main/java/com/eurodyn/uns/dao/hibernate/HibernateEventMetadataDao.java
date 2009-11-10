@@ -44,6 +44,21 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
 
 		return event;
 	}
+	
+	public boolean eventExists(String extId) throws DAOException {
+		Session session = null;
+		try {
+			session = getSession();
+			Query query = session.createQuery("select e from Event as e where e.extId=:extId");
+			query.setString("extId", extId);
+			List list = query.list();
+			return list.size()>0;
+		} catch (HibernateException e) {
+			throw new DAOException(e);
+		} finally {
+			closeSession(session);
+		}
+	}
 
 	public void createEventMetadata(EventMetadata em) throws DAOException {
 		try {

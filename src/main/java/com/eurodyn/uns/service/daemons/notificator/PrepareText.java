@@ -1,4 +1,4 @@
-package com.eurodyn.uns.service.daemons;
+package com.eurodyn.uns.service.daemons.notificator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -74,6 +74,9 @@ public class PrepareText {
 						String event_key = (String)event_it.next();
 						EventMetadata em = (EventMetadata)event_md.get(event_key);
 						String val = em.getValue();
+						if(val == null){
+							val = "";
+						}
 						
 						event_body.append(getLocalName(event_key)).append(": ");
 						if(isHtml){
@@ -113,6 +116,9 @@ public class PrepareText {
 				String key = (String)it.next();
 				EventMetadata em = (EventMetadata)event_md.get(key);
 				String val = em.getValue();
+				if(val == null){
+					val = "";
+				}
 				
 				event_metadata.__setitem__(key, new PyString(val));
 				PyObject dict_val = metadata_dict.get(new PyString(key), new PyString());

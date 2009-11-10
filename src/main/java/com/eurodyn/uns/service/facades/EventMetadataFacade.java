@@ -21,7 +21,6 @@
 
 package com.eurodyn.uns.service.facades;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,6 +28,7 @@ import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Event;
+import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.ResultDto;
 import com.eurodyn.uns.model.Statement;
 import com.eurodyn.uns.util.common.WDSLogger;
@@ -50,6 +50,19 @@ public class EventMetadataFacade {
 		boolean ret = false;
 		try {
 			daoFactory.getEventMetadataDao().createEvent(event);
+			ret = true;
+		} catch (DAOException e) {
+			logger.error(e);
+		} catch (Exception e) {
+			logger.fatalError(e);
+		}
+		return ret;
+	}
+	
+	public boolean createEventMetadata(EventMetadata em) {
+		boolean ret = false;
+		try {
+			daoFactory.getEventMetadataDao().createEventMetadata(em);
 			ret = true;
 		} catch (DAOException e) {
 			logger.error(e);
@@ -138,6 +151,10 @@ public class EventMetadataFacade {
 
 	public Event findEvent(Integer event_id) throws Exception {
 		return daoFactory.getEventMetadataDao().findEvent(event_id);
+	}
+	
+	public boolean eventExists(String extId) throws Exception {
+		return daoFactory.getEventMetadataDao().eventExists(extId);
 	}
 	
 	public void deleteOldEvents(){

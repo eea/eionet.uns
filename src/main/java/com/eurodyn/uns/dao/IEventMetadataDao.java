@@ -35,6 +35,8 @@ public interface IEventMetadataDao {
 
 	public Event findEvent(Integer event_id) throws DAOException;
 	
+	public boolean eventExists(String extId) throws DAOException;
+	
 	public void createEventMetadata(EventMetadata em) throws DAOException;
 
 	public void deleteEventMetadata(EventMetadata em) throws DAOException;

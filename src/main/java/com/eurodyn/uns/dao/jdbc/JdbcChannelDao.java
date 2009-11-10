@@ -75,6 +75,8 @@ public class JdbcChannelDao extends BaseJdbcDao implements IChannelDao {
 	public List findAllChannels() throws DAOException {return null;}
 
 	public List findAllChannels(String orderProperty, String order) throws DAOException { return null;}
+	
+	public List findHarvestChannels() throws DAOException {return null;}
 
 	public List findAllChannelsByMode(String mode, String orderProperty, String order) throws DAOException { return null;}
 

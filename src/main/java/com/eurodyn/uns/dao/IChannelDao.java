@@ -34,6 +34,8 @@ public interface IChannelDao {
 	public List findAllChannels() throws DAOException;
 
 	public List findAllChannels(String orderProperty, String order) throws DAOException;
+	
+	public List findHarvestChannels() throws DAOException;
 
 	public List findAllChannelsByMode(String mode, String orderProperty, String order) throws DAOException;
 

@@ -1,4 +1,4 @@
-package com.eurodyn.uns.service.daemons;
+package com.eurodyn.uns.service.daemons.notificator;
 
 import java.io.ByteArrayOutputStream;
 import java.util.StringTokenizer;

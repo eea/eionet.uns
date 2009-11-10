@@ -28,6 +28,10 @@ public class JdbcEventMetadataDao extends BaseJdbcDao implements IEventMetadataD
 		return null;
 	}
 	
+	public boolean eventExists(String extId) throws DAOException{
+		return false;
+	}
+	
 	//Delete events older than 60 days, including records from DELIVERY, NOTIFICATION and EVENT_METADATA
 	public void deleteOldEvents() throws DAOException {
 		Connection conn = null;

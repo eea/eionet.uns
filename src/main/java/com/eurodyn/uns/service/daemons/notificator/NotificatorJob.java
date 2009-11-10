@@ -1,4 +1,4 @@
-package com.eurodyn.uns.service.daemons;
+package com.eurodyn.uns.service.daemons.notificator;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,8 +51,6 @@ public class NotificatorJob implements Job {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 			throw new JobExecutionException("Error occured when executing notification job: "+e.toString());
-		} finally {
-			logger.info("NOTIFICATIOR PROCESS COMPLETED");
 		}
 	}
 	

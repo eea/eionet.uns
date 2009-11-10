@@ -89,6 +89,19 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
 			closeSession(session);
 		}
 	}
+	
+	public List findHarvestChannels() throws DAOException {
+		Session session = null;
+		try {
+			session = getSession();
+			Query query = session.createQuery("select c from Channel as c where c.mode='PULL' AND UTC_TIMESTAMP()-c.lastHarvestDate > c.refreshDelay*60");
+			return query.list();
+		} catch (HibernateException e) {
+			throw new DAOException(e);
+		} finally {
+			closeSession(session);
+		}
+	}
 
 	public List findAllChannelsByModeAndCreator(String mode, User creator, String orderProperty, String order) throws DAOException {
 		Session session = null;

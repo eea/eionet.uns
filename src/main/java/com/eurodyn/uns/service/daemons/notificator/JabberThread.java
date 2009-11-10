@@ -1,4 +1,4 @@
-package com.eurodyn.uns.service.daemons;
+package com.eurodyn.uns.service.daemons.notificator;
 
 import java.util.Date;
 import java.util.Iterator;
