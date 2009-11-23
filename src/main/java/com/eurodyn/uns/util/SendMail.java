@@ -66,7 +66,7 @@ public class SendMail implements java.io.Serializable {
     	msg.setSubject( subject );
 
     	if(html != null && html.length() > 0){
-    		Multipart mp = new MimeMultipart();
+    		Multipart mp = new MimeMultipart("alternative");
 
     		BodyPart textPart = new MimeBodyPart();
     		textPart.setText(body); // sets type to "text/plain"
