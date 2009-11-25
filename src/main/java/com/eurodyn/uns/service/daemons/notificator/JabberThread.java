@@ -40,6 +40,7 @@ public class JabberThread implements Runnable {
 			String jabberUsername = (String)((ConfigElement) configMap.get("jabberserver/username")).getValue();
 			String jabberPassword = (String)((ConfigElement) configMap.get("jabberserver/password")).getValue();
 			Boolean usessl = (Boolean) ((ConfigElement) configMap.get("jabberserver/usessl")).getValue();
+			String msg_type = (String)((ConfigElement) configMap.get("jabberserver/jabber_message_type")).getValue();
 			
 			if (usessl.booleanValue())
 				conn = new SSLXMPPConnection(jabberServer, jabberPort.intValue());
@@ -84,9 +85,9 @@ public class JabberThread implements Runnable {
 				    message.setTo(to);
 				    message.setSubject(subj);
 				    message.setBody(body);
-				    message.setType(Message.Type.HEADLINE);
+				    message.setType(Message.Type.fromString(msg_type));
 				    try {
-				    	conn.createChat(to).sendMessage(message);
+				    	conn.sendPacket(message);
 				    }catch(Exception e){
 				    	logger.error(e.getMessage());
 				    	e.printStackTrace();

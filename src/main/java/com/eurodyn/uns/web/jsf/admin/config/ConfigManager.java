@@ -114,6 +114,7 @@ public class ConfigManager {
 		configMap.put(createKey(jabberPath, "username"), createValue(jabberPath, "username", stringType));
 		configMap.put(createKey(jabberPath, "password"), createValue(jabberPath, "password", stringType));
 		configMap.put(createKey(jabberPath, "usessl"), createValue(jabberPath, "usessl", booleanType));
+		configMap.put(createKey(jabberPath, "jabber_message_type"), createValue(jabberPath, "jabber_message_type", stringType));
 
 
 	}
