@@ -66,18 +66,23 @@ public class SendMail implements java.io.Serializable {
     	msg.setSubject( subject );
 
     	if(html != null && html.length() > 0){
+    		
     		Multipart mp = new MimeMultipart("alternative");
 
     		BodyPart textPart = new MimeBodyPart();
     		textPart.setText(body); // sets type to "text/plain"
+    		textPart.setHeader("Content-Type","text/plain; charset=\"utf-8\"");
+    		textPart.setHeader("Content-Transfer-Encoding", "quoted-printable");
 
     		BodyPart pixPart = new MimeBodyPart();
     		pixPart.setContent(html, "text/html");
+    		pixPart.setHeader("Content-Type","text/plain; charset=\"utf-8\"");
+    		pixPart.setHeader("Content-Transfer-Encoding", "quoted-printable");
 
     		// Collect the Parts into the MultiPart
     		mp.addBodyPart(textPart);
     		mp.addBodyPart(pixPart);
-
+    		
     		// Put the MultiPart into the Message
     		msg.setContent(mp);
     	}else{
