@@ -77,6 +77,8 @@ public class RenderText {
 				    interp.cleanup();
 				} catch(Exception e) {
 					e.printStackTrace();
+					logger.error("parsing notification template: " +e.getMessage());
+					break;
 				}
 			}
 		}
