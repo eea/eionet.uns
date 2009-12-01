@@ -8,7 +8,7 @@
     maxActive="100"
     username="@db.user@"
     password="@db.password@"
-    url="@db.url@?useUnicode=true&amp;characterEncoding=UTF-8"
+    url="@db.url@?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true"
 	/>
 </Context>
 

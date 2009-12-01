@@ -66,7 +66,11 @@ public class EMailThread implements Runnable {
 					String html = notif.getHtmlContent();
 					String id = new Integer(notif.getId()).toString();
 					try{
-						SendMail.sendMail(to, subj, body, html, id, smtpServer, smtpUsername, smtpPassword, smtpSender);
+						if(to != null && to.length() > 0){
+							SendMail.sendMail(to, subj, body, html, id, smtpServer, smtpUsername, smtpPassword, smtpSender);
+						} else {
+							logger.error("Not valid e-mail address: "+to);
+						}
 					} catch(Exception e){
 						logger.error("Failed to send notification ID: "+id+" to address "+to);
 						e.printStackTrace();

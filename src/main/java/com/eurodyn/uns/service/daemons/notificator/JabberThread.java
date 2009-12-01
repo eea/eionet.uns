@@ -81,18 +81,22 @@ public class JabberThread implements Runnable {
 					String subj = notif.getSubject();
 					String body = notif.getContent();
 					
-					Message message = new Message();
-				    message.setTo(to);
-				    message.setSubject(subj);
-				    message.setBody(body);
-				    message.setType(Message.Type.fromString(msg_type));
-				    try {
-				    	conn.sendPacket(message);
-				    }catch(Exception e){
-				    	logger.error(e.getMessage());
-				    	e.printStackTrace();
-				    	continue;
-				    }
+					if(to != null && to.length() > 0){
+						Message message = new Message();
+					    message.setTo(to);
+					    message.setSubject(subj);
+					    message.setBody(body);
+					    message.setType(Message.Type.fromString(msg_type));
+					    try {
+					    	conn.sendPacket(message);
+					    }catch(Exception e){
+					    	logger.error(e.getMessage());
+					    	e.printStackTrace();
+					    	continue;
+					    }
+					} else {
+						logger.error("Not valid jabber address: "+to);
+					}
 					
 					delivery.setDeliveryStatus(1);
 					delivery.setDeliveryTime(new Date());
