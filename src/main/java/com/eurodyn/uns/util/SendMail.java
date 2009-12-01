@@ -76,7 +76,7 @@ public class SendMail implements java.io.Serializable {
 
     		BodyPart pixPart = new MimeBodyPart();
     		pixPart.setContent(html, "text/html");
-    		pixPart.setHeader("Content-Type","text/plain; charset=\"utf-8\"");
+    		pixPart.setHeader("Content-Type","text/html; charset=\"utf-8\"");
     		pixPart.setHeader("Content-Transfer-Encoding", "quoted-printable");
 
     		// Collect the Parts into the MultiPart
