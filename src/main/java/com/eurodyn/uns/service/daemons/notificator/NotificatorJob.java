@@ -86,13 +86,19 @@ public class NotificatorJob implements Job {
 					for(Iterator it3 = subscriptions.iterator(); it3.hasNext();){
 						logger.info("==================== 15");
 						Subscription subscription = (Subscription)it3.next();
+						logger.info("==================== 25");
 						User user = subscription.getUser();
+						logger.info("==================== 26");
 						Date subdate = subscription.getCreationDate();
+						logger.info("==================== 27");
 						if(subdate.before(eventdate) && !user.getVacationFlag().booleanValue() && checkFilters(event, subscription)){ //TODO add checkFilters
+							logger.info("==================== 28");
 							boolean success = generateNotification(event, subscription, template);
-							logger.info("==================== 16");
-							if(success)
+							logger.info("==================== 29");
+							if(success){
+								logger.info("==================== 30");
 								i = i + 1;
+							}
 						}
 					}
 					logger.info("==================== 17");
@@ -116,25 +122,37 @@ public class NotificatorJob implements Job {
 		boolean ret = true;
 		try{
 			Map event_md = event.getEventMetadata();
+			logger.info("==================== 31");
 			Set event_set = new HashSet();
 			for(Iterator it = event_md.keySet().iterator(); it.hasNext();){
+				logger.info("==================== 32");
 				String key = (String)it.next();
 				EventMetadata em = (EventMetadata)event_md.get(key);
+				logger.info("==================== 33");
 				String property = em.getProperty();
 				String val = em.getValue();
 				Statement stat = new Statement();
 				stat.setProperty(property);
 				stat.setValue(val);
+				logger.info("==================== 34");
 				event_set.add(stat);
+				logger.info("==================== 35");
 			}
 			List filters = subscription.getFilters();
+			logger.info("==================== 36");
 			if(event_md != null && filters != null && filters.size()>0 && event_set.size() > 0){
+				logger.info("==================== 37");
 				ret = false;
 				for(Iterator it = filters.iterator(); it.hasNext();){
+					logger.info("==================== 38");
 					Filter filter = (Filter) it.next();
+					logger.info("==================== 39");
 					if(filter != null){
+						logger.info("==================== 40");
 						Set statements = filter.getStatements();
+						logger.info("==================== 41");
 						ret = ret || event_set.containsAll(statements);
+						logger.info("==================== 42");
 					}
 				}
 			}
