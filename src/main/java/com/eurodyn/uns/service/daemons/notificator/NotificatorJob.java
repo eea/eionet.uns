@@ -80,14 +80,17 @@ public class NotificatorJob implements Job {
 				for(Iterator it2 = events.iterator();it2.hasNext();){
 					logger.info("==================== 13");
 					Event event = (Event)it2.next();
+					logger.info("==================== EVENT ID:" +event.getId());
 					Map emhash = event.getEventMetadata();
 					logger.info("==================== 14");
 					Date eventdate = event.getCreationDate();
 					for(Iterator it3 = subscriptions.iterator(); it3.hasNext();){
 						logger.info("==================== 15");
 						Subscription subscription = (Subscription)it3.next();
+						logger.info("==================== SUBSCRIPTION ID:" +subscription.getId());
 						logger.info("==================== 25");
 						User user = subscription.getUser();
+						logger.info("==================== USER:" +user.getExternalId());
 						logger.info("==================== 26");
 						Date subdate = subscription.getCreationDate();
 						logger.info("==================== 27");
@@ -169,7 +172,9 @@ public class NotificatorJob implements Job {
 			Notification notification = new Notification();
 			NotificationFacade notificationFacade = new NotificationFacade();
 			String homeUrl = AppConfigurator.getInstance().getBoundle("uns").getString("home.url");
+			logger.info("==================== 61 homeUrl:" +homeUrl);
 			HashMap map = PrepareText.prepare(template, event, subscription, homeUrl);
+			logger.info("==================== 62");
 			
 			notification.seteventId(event.getId());
 			notification.setEvent(event);
@@ -181,6 +186,7 @@ public class NotificatorJob implements Job {
 			notification.setHtmlContent((String)map.get("html"));
 			
 			ret = notificationFacade.createNotification(notification);
+			logger.info("==================== 63");
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -212,13 +218,20 @@ public class NotificatorJob implements Job {
 				else if(dtid == 2)
 					jabber_messages.add(notif);
 			}
+			logger.info("==================== 71");
 			Thread emailThread = new Thread(new EMailThread(email_messages));
+			logger.info("==================== 72");
 			Thread jabberThread = new Thread(new JabberThread(jabber_messages));
+			logger.info("==================== 73");
 			emailThread.start();
+			logger.info("==================== 74");
 			jabberThread.start();
+			logger.info("==================== 75");
 			try{
 				emailThread.join();
+				logger.info("==================== 76");
 				jabberThread.join();
+				logger.info("==================== 77");
 			} catch(InterruptedException ie){
 				ie.printStackTrace();
 				logger.error(ie.getMessage());
