@@ -44,9 +44,13 @@ public class NotificatorJob implements Job {
 	
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		try {
+			logger.info("==================== 1");
 			channelFacade.unsetVacations();
+			logger.info("==================== 2");
 			scan();
+			logger.info("==================== 3");
 			deliver();
+			logger.info("==================== 4");
 		} catch(Exception e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
@@ -56,32 +60,46 @@ public class NotificatorJob implements Job {
 	
 	private void scan() throws Exception {
 		try {
-			
+			logger.info("==================== 5");
 			HashMap channels = channelFacade.findUnprocessedEvents();
+			logger.info("==================== 6");
 			channelFacade.setProcessed();
+			logger.info("==================== 7");
 			int i = 0;
 			for(Iterator it = channels.keySet().iterator(); it.hasNext();){
+				logger.info("==================== 8");
 				String channel_id = (String)it.next();
 				Channel channel = channelFacade.getChannel(new Integer(channel_id));
+				logger.info("==================== 9");
 				NotificationTemplate template = channel.getNotificationTemplate();
+				logger.info("==================== 10");
 				List subscriptions = subscriptionFacade.findSubscriptionsForChannel(channel);
+				logger.info("==================== 11");
 				List events = (List)channels.get(channel_id);
+				logger.info("==================== 12");
 				for(Iterator it2 = events.iterator();it2.hasNext();){
+					logger.info("==================== 13");
 					Event event = (Event)it2.next();
 					Map emhash = event.getEventMetadata();
+					logger.info("==================== 14");
 					Date eventdate = event.getCreationDate();
 					for(Iterator it3 = subscriptions.iterator(); it3.hasNext();){
+						logger.info("==================== 15");
 						Subscription subscription = (Subscription)it3.next();
 						User user = subscription.getUser();
 						Date subdate = subscription.getCreationDate();
 						if(subdate.before(eventdate) && !user.getVacationFlag().booleanValue() && checkFilters(event, subscription)){ //TODO add checkFilters
 							boolean success = generateNotification(event, subscription, template);
+							logger.info("==================== 16");
 							if(success)
 								i = i + 1;
 						}
 					}
+					logger.info("==================== 17");
 					event.setProcessed((new Integer(1)).byteValue());
+					logger.info("==================== 18");
 					channelFacade.updateEvent(event);
+					logger.info("==================== 19");
 				}
 			}
 			logger.info("Generated " +i+ " notifications");
