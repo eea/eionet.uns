@@ -78,6 +78,7 @@ public class RenderText {
 				} catch(Exception e) {
 					e.printStackTrace();
 					logger.error("parsing notification template: " +e.getMessage());
+					code = "ERROR occured while parsing notification template! \n \n" + code;
 					break;
 				}
 			}
