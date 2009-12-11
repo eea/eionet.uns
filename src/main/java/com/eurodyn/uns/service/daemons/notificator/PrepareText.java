@@ -34,8 +34,9 @@ public class PrepareText {
 			for(Iterator it = event_md.keySet().iterator(); it.hasNext();){
 				String key = (String)it.next();
 				EventMetadata em = (EventMetadata)event_md.get(key);
+				String property = em.getProperty();
 				String val = em.getValue();
-				if(key.equals(title_pred1) || key.equals(title_pred2))
+				if(property != null && (property.equals(title_pred1) || property.equals(title_pred2)))
 					event_title = val;
 			}
 			String subj = template.getSubject();
@@ -73,12 +74,13 @@ public class PrepareText {
 					for(Iterator event_it = event_md.keySet().iterator(); event_it.hasNext();){
 						String event_key = (String)event_it.next();
 						EventMetadata em = (EventMetadata)event_md.get(event_key);
+						String prop = em.getProperty();
 						String val = em.getValue();
 						if(val == null){
 							val = "";
 						}
 						
-						event_body.append(getLocalName(event_key)).append(": ");
+						event_body.append(getLocalName(prop)).append(": ");
 						if(isHtml){
 							val = val.replaceAll("\n", "<br/>");
 							if(val.matches("https?://")){
@@ -112,20 +114,38 @@ public class PrepareText {
 			PyStringMap metadata_dict = new PyStringMap();
 			PyList metadata_list = new PyList();
 			
+			Map multipleMap = new HashMap();
+			
 			for(Iterator it = event_md.keySet().iterator(); it.hasNext();){
 				String key = (String)it.next();
 				EventMetadata em = (EventMetadata)event_md.get(key);
+				String property = em.getProperty();
 				String val = em.getValue();
 				if(val == null){
 					val = "";
 				}
 				
-				event_metadata.__setitem__(key, new PyString(val));
-				PyObject dict_val = metadata_dict.get(new PyString(key), new PyString());
+				event_metadata.__setitem__(property, new PyString(val));
+				PyObject dict_val = metadata_dict.get(new PyString(property), new PyString());
 				String dval = dict_val.toString() + val;
-				metadata_dict.__setitem__(key, new PyString(dval));
-				
-				//metadata_list.add(new PyString());
+				if(property != null && isMultiple(property, event_md)){
+					PyList list = new PyList();
+					if(multipleMap.containsKey(property)){
+						list = (PyList) multipleMap.get(property);
+					}
+					if(list != null){
+						list.add(new PyString(dval));
+						multipleMap.put(property, list);
+					}
+				} else {
+					metadata_dict.__setitem__(property, new PyString(dval));
+				}
+				metadata_list.add(new PyString(dval));
+			}
+			for(Iterator it = multipleMap.keySet().iterator(); it.hasNext();){
+				String key = (String)it.next();
+				PyList list = (PyList)multipleMap.get(key);
+				metadata_dict.__setitem__(key, list);
 			}
 			
 			PyStringMap pyevent = new PyStringMap();
@@ -158,6 +178,22 @@ public class PrepareText {
 			throw new Exception("Error occured when prepearing notification text: "+e.toString());
 		}
 		return ret;
+	}
+	
+	private static boolean isMultiple(String predicate, Map event_md){
+		int i = 0;
+		for(Iterator it = event_md.keySet().iterator(); it.hasNext();){
+			String key = (String)it.next();
+			EventMetadata em = (EventMetadata)event_md.get(key);
+			String property = em.getProperty();
+			if(property != null && property.equals(predicate)){
+				i = i + 1;
+			}
+			if(i > 1){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private static String getLocalName(String predicate){

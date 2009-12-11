@@ -29,12 +29,11 @@
 			<column name="CHANNEL_ID" not-null="true" />
 		</many-to-one>
 
-
 		<map name="eventMetadata" inverse="true" lazy="true">
 			<key>
 				<column name="EVENT_ID" not-null="true" />
 			</key>
-			<index column="property" type="string" />
+			<index column="id" type="string" />
 			<one-to-many class="com.eurodyn.uns.model.EventMetadata" />
 		</map>
 		
