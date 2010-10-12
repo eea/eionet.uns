@@ -6,7 +6,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -15,6 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.codec.binary.Base64;
 
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.dao.jdbc.JdbcFeedDao;
@@ -28,10 +29,8 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFWriter;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.rdf.model.Seq;
 import com.hp.hpl.jena.vocabulary.RSS;
 
-import eionet.directory.DirectoryService;
 import eionet.directory.DirectoryServiceIF;
 import eionet.directory.modules.DirectoryService25Impl;
 
@@ -153,8 +152,7 @@ public class RssFeedServlet extends HttpServlet {
 	    if (!auth.toUpperCase().startsWith("BASIC ")) return null;
 	    String userpassEncoded = auth.substring(6);
 
-	    sun.misc.BASE64Decoder dec = new sun.misc.BASE64Decoder();
-	    String userpassDecoded = new String(dec.decodeBuffer(userpassEncoded));
+	    String userpassDecoded = new String(Base64.decodeBase64(userpassEncoded.getBytes()));
 	    logger.debug(userpassDecoded);
 	    
 	    StringTokenizer userAndPass=new StringTokenizer(userpassDecoded,":");

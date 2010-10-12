@@ -29,9 +29,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 import com.eurodyn.uns.model.DeliveryType;
 import com.eurodyn.uns.model.User;
@@ -244,8 +242,9 @@ public abstract class BaseBean {
 	}
 
 	protected String encodeBase64(String value) {
-		value = new BASE64Encoder().encodeBuffer(value.getBytes());
 		try {
+			byte[] bytes = Base64.encodeBase64(value.getBytes());
+			value = new String(bytes);
 			value = URLEncoder.encode(value, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -255,10 +254,9 @@ public abstract class BaseBean {
 	}
 
 	protected String decodeBase64(String value) {
-		BASE64Decoder dec = new BASE64Decoder();
 		try {
 			value = URLDecoder.decode(value, "UTF-8");
-			value = new String(dec.decodeBuffer(value));
+			value = new String(Base64.decodeBase64(value.getBytes()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
