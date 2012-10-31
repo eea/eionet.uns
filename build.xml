@@ -207,6 +207,8 @@
       <filterset>
        <filter token="UNS_HOME" value="${uns.home}"/>
        <filter token="LDAP_URL" value="${ldap.url}"/>
+       <filter token="LDAP_PRINCIPAL" value="${ldap.principal}"/>
+       <filter token="LDAP_PASSWORD" value="${ldap.password}"/>
        <filter token="db.url" value="${db.url}"/>
        <filter token="db.user" value="${db.user}"/>
        <filter token="db.password" value="${db.password}"/>
