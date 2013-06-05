@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
+
+	<display-name>UNS</display-name>
+    <!-- Define the basename for a resource bundle for I18N -->
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>labels.ApplicationResources</param-value>
+    </context-param>
+    <!-- Fallback locale if no bundles found for browser's preferred locale -->
+    <!-- Force a single locale using param-name 'javax.servlet.jsp.jstl.fmt.locale' -->
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.fallbackLocale</param-name>
+        <param-value>en</param-value>
+    </context-param>	
+	<context-param>
+		<param-name>tiles-definitions</param-name>
+		<param-value>/WEB-INF/tiles.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>client</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.apache.myfaces.ALLOW_JAVASCRIPT</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.apache.myfaces.DETECT_JAVASCRIPT</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.apache.myfaces.PRETTY_HTML</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+
+	<filter>
+	    <filter-name>CAS Filter</filter-name>
+	    <filter-class>com.eurodyn.uns.web.filters.EionetCASFilter</filter-class>
+	    <init-param>
+	      <param-name>edu.yale.its.tp.cas.client.filter.loginUrl</param-name>
+	      <param-value>https://sso.eionet.europa.eu/login</param-value>
+	    </init-param>
+	    <init-param>
+	      <param-name>edu.yale.its.tp.cas.client.filter.validateUrl</param-name>
+	      <param-value>https://sso.eionet.europa.eu/serviceValidate</param-value>
+	    </init-param>
+	    <init-param>
+	      <param-name>edu.yale.its.tp.cas.client.filter.serverName</param-name>
+	      <param-value>${edu.yale.its.tp.cas.client.filter.serverName}</param-value>
+	    </init-param>
+	   <init-param>
+	      <param-name>edu.yale.its.tp.cas.client.filter.wrapRequest</param-name>
+	      <param-value>true</param-value>
+	    </init-param>
+	    <init-param>
+	      <param-name>eionetLoginCookieDomain</param-name>
+	      <param-value>.eionet.europa.eu</param-value>
+	    </init-param>
+	</filter>
+	<filter>
+		<filter-name>Set Character Encoding</filter-name>
+		<filter-class>com.eurodyn.uns.web.filters.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter>
+		<filter-name>UNS Request Wrapper</filter-name>
+		<filter-class>com.eurodyn.uns.web.filters.UNSRequestWrapperFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>Logging filter</filter-name>
+		<filter-class>com.eurodyn.uns.web.filters.LogFilter</filter-class>
+		<init-param>
+			<param-name>state</param-name>
+			<param-value>off</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ignore</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter>
+		<filter-name>multipartFilter</filter-name>
+		<filter-class>org.apache.myfaces.component.html.util.ExtensionsFilter</filter-class>
+	</filter>
+
+
+	<filter>
+		<filter-name>MyFacesExtensionsFilter</filter-name>
+		<filter-class>org.apache.myfaces.webapp.filter.ExtensionsFilter</filter-class>
+	    <init-param>
+	        <param-name>maxFileSize</param-name>
+	        <param-value>20m</param-value>
+	    </init-param>
+	</filter>
+	
+	<!-- extension mapping for adding <script/>, <link/>, and other resource tags to JSF-pages  -->
+	<filter-mapping>
+	    <filter-name>MyFacesExtensionsFilter</filter-name>
+	    <!-- servlet-name must match the name of your javax.faces.webapp.FacesServlet entry -->
+	    <servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+	
+	<!-- extension mapping for serving page-independent resources (javascript, stylesheets, images, etc.)  -->
+	<filter-mapping>
+	    <filter-name>MyFacesExtensionsFilter</filter-name>
+	    <url-pattern>/faces/myFacesExtensionResource/*</url-pattern>
+	</filter-mapping>
+	
+
+	<!-- Filter Mappings -->
+	
+	<filter-mapping>
+		<filter-name>Set Character Encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>	
+	<filter-mapping>
+		<filter-name>multipartFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>	
+	<filter-mapping>
+		<filter-name>UNS Request Wrapper</filter-name>
+		<url-pattern>*.jsf</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>UNS Request Wrapper</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+    	<filter-name>CAS Filter</filter-name>
+    	<url-pattern>/admin/*</url-pattern>
+  	</filter-mapping>
+  	<filter-mapping>
+    	<filter-name>CAS Filter</filter-name>
+    	<url-pattern>/subscriptions/*</url-pattern>
+  	</filter-mapping>
+  	<filter-mapping>
+    	<filter-name>CAS Filter</filter-name>
+    	<url-pattern>/xmlrpc/*</url-pattern>
+  	</filter-mapping>
+  	<filter-mapping>
+    	<filter-name>CAS Filter</filter-name>
+    	<url-pattern>/login/*</url-pattern>
+  	</filter-mapping>
+  	<filter-mapping>
+    	<filter-name>CAS Filter</filter-name>
+		<url-pattern>/eionetCookieLogin/*</url-pattern>		
+  	</filter-mapping>
+	
+	
+	<listener>
+		<listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.eurodyn.uns.web.listeners.AppSessionListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.eurodyn.uns.web.listeners.AppServletContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.eurodyn.uns.service.daemons.notificator.Notificator</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>com.eurodyn.uns.web.servlets.UnsFacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>Home page servlet</servlet-name>
+		<servlet-class>com.eurodyn.uns.web.servlets.HomeServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>Rss feed servlet</servlet-name>
+		<servlet-class>com.eurodyn.uns.web.servlets.RssFeedServlet</servlet-class>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>SVG servlet</servlet-name>
+		<servlet-class>com.eurodyn.uns.web.servlets.SVGServlet</servlet-class>
+		<load-on-startup>4</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>RpcRouter</servlet-name>
+		<servlet-class>com.tee.uit.servlets.XmlRpcRouter</servlet-class>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>RpcRouter</servlet-name>
+		<url-pattern>/rpcrouter</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Home page servlet</servlet-name>
+		<url-pattern>/homePage</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Home page servlet</servlet-name>
+		<url-pattern>/dash</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Home page servlet</servlet-name>
+		<url-pattern>/rss</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Home page servlet</servlet-name>
+		<url-pattern>/subsc/edit</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Rss feed servlet</servlet-name>
+		<url-pattern>/events</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SVG servlet</servlet-name>
+		<url-pattern>*.unsvg</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	<error-page>
+		<error-code>500</error-code>
+		<location>/500.html</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404.html</location>
+	</error-page>
+
+</web-app>
+
+

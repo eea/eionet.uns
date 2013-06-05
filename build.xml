@@ -1,297 +1,56 @@
-<project name="UNS Project" default="compile" basedir=".">
-
-
-
-<!-- ===================== Property Definitions =========================== -->
-
-
-<!--
-
-  These properties generally define file and directory names (or paths) that
-  affect where the build process stores its outputs.
-
-
-  build.home           The directory into which the "prepare" and
-                       "compile" targets will generate their output.
-                       Defaults to "build".
-
-  dist.home            The name of the base directory in which
-                       distribution files are created.
-                       Defaults to "dist".
-
-
--->
-
-  
-
-  <property file="default.properties"/>
-
-  <property name="build.home"    value="${basedir}/build"/> 
-  <property name="dist.home"     value="${basedir}/dist"/>
-  <property name="docs.home"     value="${basedir}/docs"/>
-  <property name="src.home"      value="${basedir}/src/main/java"/>
-  <property name="web.home"      value="${basedir}/src/main/public_html"/>
-  <property name="test" value="${basedir}/src/test"/>
-  <property name="classes" value="${build.home}/WEB-INF/classes"/>
-
-        <!-- define external classpath, i.e. JARs and classes not found in WEB-INF/classes and WEB-INF/lib -->
-    <path id="classpath.externals">
-            <pathelement location="/usr/share/java/xerces-j2-2.9.0.jar"/>
-            <pathelement location="/usr/share/java/log4j-1.2.14.jar"/>
-            <pathelement location="/usr/share/java/mysql-connector-java.jar"/>
-    </path>
-
-  
-
-<!--  ==================== Compilation Control Options ==================== -->
-
-<!--
-
-  These properties control option settings on the Javac compiler when it
-  is invoked using the <javac> task.
-
-  compile.debug        Should compilation include the debug option?
-
-  compile.deprecation  Should compilation include the deprecation option?
-
-  compile.optimize     Should compilation include the optimize option?
-
--->
-
-  <property name="compile.debug"       value="true"/>
-  <property name="compile.deprecation" value="false"/>
-  <property name="compile.optimize"    value="true"/>
-
-
-
-<!-- ==================== Compilation Classpath =========================== -->
-
-  <path id="compile.classpath">
-
-    <!-- Include all elements that Tomcat exposes to applications -->
-    <fileset dir="${web.home}/WEB-INF/lib">
-      <include name="*.jar"/>
-    </fileset>    
-    <pathelement location="${catalina.home}/common/classes"/>
-    <fileset dir="${catalina.home}/common/endorsed">
-      <include name="*.jar"/>
-    </fileset>
-    <fileset dir="${catalina.home}/common/lib">
-      <include name="*.jar"/>
-    </fileset>
-    <pathelement location="${catalina.home}/shared/classes"/>
-    <fileset dir="${catalina.home}/shared/lib">
-      <include name="*.jar"/>
-    </fileset>
-
-  </path>
-
-
-
-<!-- ==================== Clean Target ==================================== -->
-
-<!--
-
-  The "clean" target deletes any previous "build" and "dist" directory,
-  so that you can be ensured the application can be built from scratch.
-
--->
-
-  <target name="clean"
-   description="Delete old build and dist directories">
-    <delete dir="${build.home}"/>
-    <delete dir="${dist.home}"/>
-<!--    <delete dir="${uns_python_source.home}"/> -->
-  </target>
-
-
-<!-- ==================== Prepare Target ================================== -->
-
-<!--
-
-  The "prepare" target is used to create the "build" destination directory,
-  and copy the static contents of web application to it.  
-  Normally, this task is executed indirectly when needed.
-
--->
-
-  <target name="prepare">
-
-    <!-- Create build directories as needed -->
-    <mkdir  dir="${build.home}"/>
-    <mkdir  dir="${build.home}/WEB-INF"/>
-    <mkdir  dir="${build.home}/WEB-INF/classes"/>
-
-
-    <!-- Copy static content of this web application -->
-    <copy todir="${build.home}">
-      <fileset dir="${web.home}"/>
-    </copy>
-
-    <replace file="${build.home}/META-INF/context.xml" token="@CONTEXT_PATH@" value="${context.path}"/>
-    <replace file="${build.home}/META-INF/context.xml" token="@app.name@" value="${app.name}"/>
-    <replace file="${build.home}/META-INF/context.xml" token="@UNS_HOME@" value="${uns.home}"/>
-    <replace file="${build.home}/META-INF/context.xml" token="@db.url@" value="${db.url}"/>
-    <replace file="${build.home}/META-INF/context.xml" token="@db.user@" value="${db.user}"/>
-    <replace file="${build.home}/META-INF/context.xml" token="@db.password@" value="${db.password}"/>
-
-    <mkdir  dir="${build.home}/WEB-INF/lib"/>
-
-  </target>
-
-  <target name="pythoninstall">
-    <mkdir dir="${uns_python_source.home}" />
-    <copy  todir="${uns_python_source.home}" >
-	<fileset dir="${basedir}/src/main/python" />
-      <filterset>
-       <filter token="UNS_PYTHON_SOURCE_HOME" value="${uns_python_source.home}"/>
-       <filter token="UNS_HOME" value="${uns.home}"/>
-       <filter token="PYTHON_HOME" value="${python.home}"/>
-       <filter token="UNS_URL" value="${uns.url}"/>
-	</filterset>
-    </copy>
-
-   <chmod file="${uns_python_source.home}/UNS/unsd.sh" perm="+x"/>	
-
-    <mkdir dir="${uns.home}" />
-    <mkdir dir="${uns.home}/log" />
-    <copy  todir="${uns.home}/acl" >
-      <fileset dir="${basedir}/src/main/resources/acl" />
-    </copy>
-
-    <copy  todir="${uns.home}/xsl" >
-      <fileset dir="${basedir}/src/main/resources/xsl" />
-    </copy>
-
-    <copy file="${basedir}/src/main/resources/uns.properties" todir="${uns.home}" >
-      <filterset>
-       <filter token="UNS_PYTHON_SOURCE_HOME" value="${uns_python_source.home}"/>
-       <filter token="JYTHON_HOME" value="${jython.home}"/>
-      </filterset>
-    </copy>	
-
-    <copy file="${basedir}/src/main/resources/uns-config.xml" todir="${uns.home}" />
-    <copy file="${basedir}/src/main/resources/UNSServices.xml" todir="${uns.home}" />
-
-  </target>
-
-
-
-
-<!-- ==================== Compile Target ================================== -->
-
-<!--
-
-  The "compile" target transforms source files (from  "src" directory)
-  into object files in the appropriate location in the build directory.
--->
-
-  <target name="compile" depends="prepare"
-   description="Compile Java sources">
-
-    <!-- Compile Java classes as necessary -->
-    <mkdir    dir="${build.home}/WEB-INF/classes"/>
-    <javac srcdir="${src.home}"
-          destdir="${build.home}/WEB-INF/classes"
-           source="1.4"    	
-            debug="${compile.debug}"
-      deprecation="${compile.deprecation}"
-         optimize="${compile.optimize}"
-	 encoding="UTF-8">
-        <classpath refid="compile.classpath"/>
-    </javac>
-
-    <!-- Copy application resources -->
-    <copy  todir="${build.home}/WEB-INF/classes">
-      <fileset dir="${basedir}/src/main/resources" />
-      <filterset>
-       <filter token="UNS_HOME" value="${uns.home}"/>
-       <filter token="LDAP_URL" value="${ldap.url}"/>
-       <filter token="LDAP_PRINCIPAL" value="${ldap.principal}"/>
-       <filter token="LDAP_PASSWORD" value="${ldap.password}"/>
-       <filter token="db.url" value="${db.url}"/>
-       <filter token="db.user" value="${db.user}"/>
-       <filter token="db.password" value="${db.password}"/>
-      </filterset>
-    </copy>
-
-  </target>
-
-
-
-<!-- ==================== Dist Target ===================================== -->
-
-
-<!--
-
-  The "dist" target creates a binary distribution of the UNS application
-  in a directory structure ready to be archived in a tar.gz or zip file.
-  Note that this target depends on compile target:
-  * "compile" so that the entire web application (including external
-    dependencies) will have been assembled
--->
-
-  <target name="dist" depends="compile"
-   description="Create binary distribution">
-    <!-- Create application JAR file -->
-    <mkdir   dir="${dist.home}"/>
-    <jar jarfile="${dist.home}/${app.name}.war"
-         basedir="${build.home}"/>
-  </target>
-
-        <!-- define classpath for unit tests -->
-        <path id="classpath.compile-tests">
-                <pathelement location="${classes}"/>
-                <fileset dir="${test}/lib">
-                        <include name="*.jar"/>
-                </fileset>
-                <path refid="compile.classpath"/>
-        </path>
-
-        <!-- compile target for compiling unit tests, expects classes-under-test compiled, refers to pre-defined paths -->
-        <target name="compile-tests" depends="compile">
-                <javac srcdir="${test}/java" destdir="${test}/build" source="1.5" target="1.5" debug="on">
-                        <classpath refid="classpath.compile-tests"/>
-                </javac>
-        </target>
-
-        <!-- copies seed for unit tests into the unit tests' build tree -->
-        <target name="seed-tests">
-                <copy todir="${test}/build" overwrite="true">
-                        <fileset dir="${test}/java">
-                                <include name="**/seed-*.*"/>
-                                <include name="**/hibernate-test.cfg.xml"/>
-                        </fileset>
-                </copy>
-        </target>
-
-        <!-- define classpath to be used by JUnit -->
-        <path id="classpath.test">
-                <pathelement location="${classes}"/>
-                <pathelement path="${test}/build"/>
-                <fileset dir="${test}/lib">
-                        <include name="**/*.jar"/>
-                </fileset>
-                <path refid="compile.classpath"/>
-                <path refid="classpath.externals"/>
-        </path>
-
-        <!-- define src files to be included and/or excluded when JUnit searches for test cases -->
-        <fileset id="fileset.test" dir="${test}/java">
-                <include name="**/*Test.java"/>
-        </fileset>
-
-        <!-- test target, refers to pre-defined paths and filesets -->
-        <target name="test" depends="compile-tests,seed-tests" description="Runs all found unit tests">
-                <junit haltonfailure="yes" failureproperty="unittestFailed" showoutput="yes" printsummary="yes">
-                        <classpath refid="classpath.test" />
-                        <formatter type="brief" usefile="false"/>
-                        <batchtest fork="yes">
-                                <fileset refid="fileset.test"/>
-                        </batchtest>
-                </junit>
-                <fail if="unittestFailed" message="One or more unit tests failed."/>
-        </target>
-
-
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="uns" default="prepare_apphome" basedir=".">
+
+    <!-- The target that prepares the application's home directory (aka "app-home"). -->
+    <!-- It's the directory for the files that the application needs, but that shouldn't be kept in web-app directory. -->
+    <target name="prepare_apphome" unless="antrun.skip">
+
+        <!-- Load build properties, expected from ${propertiesFile} -->
+        <loadproperties srcFile="${propertiesFile}"/>
+
+        <!-- Copy all files from acl directory into the same directory in app-home, unless they already exist in the latter. -->
+        <copy todir="${app.home}/acl">
+            <fileset dir="acl">
+                <present present="srconly" targetdir="${app.home}/acl"/>
+            </fileset>
+        </copy>
+
+        <!-- Always overwrite the acl directory's permission definition file(s). -->
+        <copy todir="${app.home}/acl" overwrite="true">
+            <fileset dir="acl" includes="*.prms*"/>
+            <fileset dir="acl" includes="*.permissions*"/>
+        </copy>
+
+        <!-- Ensure that the "log" directory exists in app-home. -->
+        <mkdir dir="${app.home}/log"/>
+
+        <!-- Prepare python-source in app-home. -->
+        <mkdir dir="${uns_python_source.home}" />
+        <copy todir="${uns_python_source.home}" overwrite="true">
+            <fileset dir="${basedir}/src/main/python" />
+            <filterset>
+                <filter token="UNS_PYTHON_SOURCE_HOME" value="${uns_python_source.home}"/>
+                <filter token="UNS_HOME" value="${uns.home}"/>
+                <filter token="PYTHON_HOME" value="${python.home}"/>
+                <filter token="UNS_URL" value="${uns.url}"/>
+            </filterset>
+        </copy>
+        <chmod file="${uns_python_source.home}/UNS/unsd.sh" perm="+x"/>
+
+        <!-- Prepare "xsl" directory in app-home. -->
+        <copy  todir="${uns.home}/xsl" overwrite="true">
+            <fileset dir="${basedir}/src/main/resources/xsl" />
+        </copy>
+
+        <!-- Prepare "uns.properties" and other files in app-home root. -->
+        <copy file="${basedir}/src/main/resources/uns.properties" todir="${uns.home}" overwrite="true">
+            <filterset begintoken="$${" endtoken="}">
+                <filter token="uns_python_source.home" value="${uns_python_source.home}"/>
+                <filter token="jython.home" value="${jython.home}"/>
+            </filterset>
+        </copy>
+        <copy file="${basedir}/src/main/resources/uns-config.xml" todir="${uns.home}" overwrite="true"/>
+        <copy file="${basedir}/src/main/resources/UNSServices.xml" todir="${uns.home}" overwrite="true"/>
+
+    </target>
 </project>

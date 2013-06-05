@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+
+	<Environment name="APPLICATION_HOME" type="java.lang.String" value="${uns.home}"/>
+    
+	<Resource name="jdbc/UNS_DS" auth="Container" type="javax.sql.DataSource"
+    driverClassName="${db.driver}"
+    maxIdle="30"
+    maxWait="10000"
+    maxActive="100"
+    username="${db.user}"
+    password="${db.password}"
+    url="${db.url}?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true"
+	/>
+    
+</Context>
+
+
