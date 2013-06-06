@@ -29,22 +29,22 @@ import com.eurodyn.uns.model.User;
 
 public interface ISubscriptionDao {
 
-	public List findAllSubscriptions() throws DAOException;
+    public List findAllSubscriptions() throws DAOException;
 
-	public List findAllSubscriptions(String orderProperty, String order) throws DAOException;
+    public List findAllSubscriptions(String orderProperty, String order) throws DAOException;
 
-	public Subscription findByPK(Integer SubscriptionId) throws DAOException;
+    public Subscription findByPK(Integer SubscriptionId) throws DAOException;
 
-	public Subscription findBySecondaryId(String secondaryId) throws DAOException;
+    public Subscription findBySecondaryId(String secondaryId) throws DAOException;
 
-	public void updateSubscription(Subscription sb) throws DAOException;
+    public void updateSubscription(Subscription sb) throws DAOException;
 
-	public void createSubscription(Subscription sb) throws DAOException;
+    public void createSubscription(Subscription sb) throws DAOException;
 
-	public void deleteSubscription(Subscription sb) throws DAOException;
+    public void deleteSubscription(Subscription sb) throws DAOException;
 
-	public List findAvailableChannels(User user, List roles, String orderProperty, String order) throws DAOException;
+    public List findAvailableChannels(User user, List roles, String orderProperty, String order) throws DAOException;
 
-	public List findSubscriptionsForChannel(Channel channel) throws DAOException;
+    public List findSubscriptionsForChannel(Channel channel) throws DAOException;
 
 }

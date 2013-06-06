@@ -44,12 +44,12 @@ public abstract class BaseHibernateDao {
 
     static {
         try {
-      	String configFileLocation = System.getProperty("hibernate-config-file");
-      	if (configFileLocation == null)
-      		sessionFactory = new Configuration().configure().buildSessionFactory();
-      	else{
-      		sessionFactory = new Configuration().configure(configFileLocation).buildSessionFactory();
-      	}
+        String configFileLocation = System.getProperty("hibernate-config-file");
+        if (configFileLocation == null)
+            sessionFactory = new Configuration().configure().buildSessionFactory();
+        else{
+            sessionFactory = new Configuration().configure(configFileLocation).buildSessionFactory();
+        }
         } catch (Throwable ex) {
             ex.printStackTrace();
         }

@@ -9,33 +9,33 @@ import java.util.List;
  */
 public class ResultMessage  {
 
-	private final String key;
+    private final String key;
 
-	private final List paramList = new LinkedList();
+    private final List paramList = new LinkedList();
 
-	/**
-	 * Creates an instance.
-	 */
-	public ResultMessage(String key) {
-		this.key = key;
-	}
+    /**
+     * Creates an instance.
+     */
+    public ResultMessage(String key) {
+        this.key = key;
+    }
 
-	/**
-	 * Add a parameter to this ResultMesage. At Web tier this will be used as a key to look up a localized parameter name. If there is no key for the parameter, it will be used as is.
-	 */
-	public void addParam(Object param) {
-		paramList.add(param);
-	}
+    /**
+     * Add a parameter to this ResultMesage. At Web tier this will be used as a key to look up a localized parameter name. If there is no key for the parameter, it will be used as is.
+     */
+    public void addParam(Object param) {
+        paramList.add(param);
+    }
 
-	public Object[] getParams() {
-		return paramList.toArray();
-	}
+    public Object[] getParams() {
+        return paramList.toArray();
+    }
 
-	public String getKey() {
-		return key;
-	}
+    public String getKey() {
+        return key;
+    }
 
-	public String toString() {
-		return "ResultMessage: " + key + paramList;
-	}
+    public String toString() {
+        return "ResultMessage: " + key + paramList;
+    }
 }

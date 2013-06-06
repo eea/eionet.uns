@@ -36,70 +36,70 @@ import com.eurodyn.uns.model.Role;
 
 public class LdapRoleDao extends BaseLdapDao implements IRoleDao {
 
-	private String rolesDn;
-	private String usersDn;
-	
-	//cn=Manager,o=EIONET,l=Europe 
-	//secret
+    private String rolesDn;
+    private String usersDn;
+    
+    //cn=Manager,o=EIONET,l=Europe 
+    //secret
 
-	public LdapRoleDao() {
-		rolesDn = conf.getString("ldap.role.dir") + "," + baseDn;
-		usersDn = conf.getString("ldap.user.dir") + "," + baseDn;
-	}
+    public LdapRoleDao() {
+        rolesDn = conf.getString("ldap.role.dir") + "," + baseDn;
+        usersDn = conf.getString("ldap.user.dir") + "," + baseDn;
+    }
 
-	public List findAllRoles() throws DAOException {
-		List result = new ArrayList(1);
-		try {
+    public List findAllRoles() throws DAOException {
+        List result = new ArrayList(1);
+        try {
             DirContext ctx=getDirContext();
-			String myFilter = "objectclass=groupOfUniqueNames";
-			SearchControls sc = new SearchControls();
-			sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
-			NamingEnumeration results = ctx.search(rolesDn, myFilter, sc);
-			while (results != null && results.hasMore()) {
-				SearchResult sr = (SearchResult) results.next();
-				String dn = sr.getName();
-				if(dn!=null && dn.length()>0){
-					Role r = new Role();
-					r.setFullDn(dn + "," + baseDn);
-					r.setName(dn);
-					result.add(r);
-				}
-			}
-		} catch (NamingException e) {
-			throw new DAOException(e);
-		}
-		return result;
-	}
+            String myFilter = "objectclass=groupOfUniqueNames";
+            SearchControls sc = new SearchControls();
+            sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
+            NamingEnumeration results = ctx.search(rolesDn, myFilter, sc);
+            while (results != null && results.hasMore()) {
+                SearchResult sr = (SearchResult) results.next();
+                String dn = sr.getName();
+                if(dn!=null && dn.length()>0){
+                    Role r = new Role();
+                    r.setFullDn(dn + "," + baseDn);
+                    r.setName(dn);
+                    result.add(r);
+                }
+            }
+        } catch (NamingException e) {
+            throw new DAOException(e);
+        }
+        return result;
+    }
 
-	public Role findByPK(Integer id) throws DAOException {
-		return null;
-	}
+    public Role findByPK(Integer id) throws DAOException {
+        return null;
+    }
 
-	public void updateRoles(List roles) throws DAOException {
-	}
+    public void updateRoles(List roles) throws DAOException {
+    }
 
-	public List findUserRoles(String user) throws DAOException {
-		List result = new ArrayList();
-		try {
+    public List findUserRoles(String user) throws DAOException {
+        List result = new ArrayList();
+        try {
             DirContext ctx=getDirContext();
-			String myFilter = "(&(objectClass=groupOfUniqueNames)(uniqueMember=uid=" + user + "," + usersDn + "))";
-			SearchControls sc = new SearchControls();
-			sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
-			NamingEnumeration results = ctx.search(rolesDn, myFilter, sc);
-			while (results != null && results.hasMore()) {
-				SearchResult sr = (SearchResult) results.next();
-				String dn = sr.getName();
-				if(dn!=null && dn.length()>0){
-					Role r = new Role();
-					r.setFullDn(dn + "," + baseDn);
-					r.setName(dn);
-					result.add(r);
-				}
-			}
-		} catch (NamingException e) {
-			throw new DAOException(e);
-		}
-		return result;
-	}
+            String myFilter = "(&(objectClass=groupOfUniqueNames)(uniqueMember=uid=" + user + "," + usersDn + "))";
+            SearchControls sc = new SearchControls();
+            sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
+            NamingEnumeration results = ctx.search(rolesDn, myFilter, sc);
+            while (results != null && results.hasMore()) {
+                SearchResult sr = (SearchResult) results.next();
+                String dn = sr.getName();
+                if(dn!=null && dn.length()>0){
+                    Role r = new Role();
+                    r.setFullDn(dn + "," + baseDn);
+                    r.setName(dn);
+                    result.add(r);
+                }
+            }
+        } catch (NamingException e) {
+            throw new DAOException(e);
+        }
+        return result;
+    }
 
 }

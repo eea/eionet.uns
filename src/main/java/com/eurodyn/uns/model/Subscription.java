@@ -27,120 +27,120 @@ import java.util.List;
 
 public class Subscription implements Serializable {
 
-	private static final long serialVersionUID = -4790440204099589341L;
+    private static final long serialVersionUID = -4790440204099589341L;
 
-	// Fields
-	private Integer id;
+    // Fields
+    private Integer id;
 
-	private Channel channel;
+    private Channel channel;
 
-	private User user;
+    private User user;
 
-	private Integer leadTime;
+    private Integer leadTime;
 
-	private Date creationDate;
+    private Date creationDate;
 
-	private String secondaryId;
+    private String secondaryId;
 
-	private Short dashCordX;
+    private Short dashCordX;
 
-	private Short dashCordY;
+    private Short dashCordY;
 
-	private List deliveryTypes = new ArrayList(0);
+    private List deliveryTypes = new ArrayList(0);
 
-	private List filters = new ArrayList(0);
+    private List filters = new ArrayList(0);
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public Subscription() {
-		dashCordX = new Short((short) -1);
-		dashCordY = new Short((short) -1);
-	}
+    /** default constructor */
+    public Subscription() {
+        dashCordX = new Short((short) -1);
+        dashCordY = new Short((short) -1);
+    }
 
-	// Property accessors
+    // Property accessors
 
-	public Integer getId() {
-		return this.id;
-	}
+    public Integer getId() {
+        return this.id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Channel getChannel() {
-		return this.channel;
-	}
+    public Channel getChannel() {
+        return this.channel;
+    }
 
-	public void setChannel(Channel channel) {
-		this.channel = channel;
-	}
+    public void setChannel(Channel channel) {
+        this.channel = channel;
+    }
 
-	public User getUser() {
-		return this.user;
-	}
+    public User getUser() {
+        return this.user;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
+    public void setUser(User user) {
+        this.user = user;
 
-	}
+    }
 
-	public Integer getLeadTime() {
-		return this.leadTime;
-	}
+    public Integer getLeadTime() {
+        return this.leadTime;
+    }
 
-	public void setLeadTime(Integer leadTime) {
-		this.leadTime = leadTime;
-	}
+    public void setLeadTime(Integer leadTime) {
+        this.leadTime = leadTime;
+    }
 
-	public Date getCreationDate() {
-		return this.creationDate;
-	}
+    public Date getCreationDate() {
+        return this.creationDate;
+    }
 
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	public String getSecondaryId() {
-		return this.secondaryId;
-	}
+    public String getSecondaryId() {
+        return this.secondaryId;
+    }
 
-	public void setSecondaryId(String secondaryId) {
-		this.secondaryId = secondaryId;
-	}
+    public void setSecondaryId(String secondaryId) {
+        this.secondaryId = secondaryId;
+    }
 
-	public Short getDashCordX() {
-		return this.dashCordX;
-	}
+    public Short getDashCordX() {
+        return this.dashCordX;
+    }
 
-	public void setDashCordX(Short dashCordX) {
-		if (dashCordX != null)
-			this.dashCordX = dashCordX;
-	}
+    public void setDashCordX(Short dashCordX) {
+        if (dashCordX != null)
+            this.dashCordX = dashCordX;
+    }
 
-	public Short getDashCordY() {
-		return this.dashCordY;
-	}
+    public Short getDashCordY() {
+        return this.dashCordY;
+    }
 
-	public void setDashCordY(Short dashCordY) {
-		if (dashCordY != null)
-			this.dashCordY = dashCordY;
-	}
+    public void setDashCordY(Short dashCordY) {
+        if (dashCordY != null)
+            this.dashCordY = dashCordY;
+    }
 
-	public List getDeliveryTypes() {
-		return this.deliveryTypes;
-	}
+    public List getDeliveryTypes() {
+        return this.deliveryTypes;
+    }
 
-	public void setDeliveryTypes(List deliveryTypes) {
-		this.deliveryTypes = deliveryTypes;
-	}
+    public void setDeliveryTypes(List deliveryTypes) {
+        this.deliveryTypes = deliveryTypes;
+    }
 
-	public List getFilters() {
-		return this.filters;
-	}
+    public List getFilters() {
+        return this.filters;
+    }
 
-	public void setFilters(List filters) {
-		this.filters = filters;
-	}
+    public void setFilters(List filters) {
+        this.filters = filters;
+    }
 
 }

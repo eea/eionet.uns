@@ -48,13 +48,13 @@ public class DeliveryTypeFacade {
 
     
     public Map getDeliveryTypesMap() {
-    	Map deliveryTypesMap  = new HashMap();
+        Map deliveryTypesMap  = new HashMap();
         List deliveryTypes = (List) getSortedDeliveryTypes("name", null).get("list");        
         if (deliveryTypes != null){
             for (Iterator iter = deliveryTypes.iterator(); iter.hasNext();) {
-    			DeliveryType dt = (DeliveryType) iter.next();
-    			deliveryTypesMap.put(dt.getName(),dt);
-    		}        	
+                DeliveryType dt = (DeliveryType) iter.next();
+                deliveryTypesMap.put(dt.getName(),dt);
+            }           
         }        
         return deliveryTypesMap;
     }
@@ -62,10 +62,10 @@ public class DeliveryTypeFacade {
     
     
     public ResultDto getDeliveryTypes(Dto dto) {
-    	String orderProperty = dto.getAsString("orderProperty");
-    	if(orderProperty == null || orderProperty.length()==0)
-    		orderProperty = "name";    	
-    	String order = dto.getAsString("order");
+        String orderProperty = dto.getAsString("orderProperty");
+        if(orderProperty == null || orderProperty.length()==0)
+            orderProperty = "name";     
+        String order = dto.getAsString("order");
         return getSortedDeliveryTypes(orderProperty, order);
     }
     
@@ -96,15 +96,15 @@ public class DeliveryTypeFacade {
     }
 
     public DeliveryType findByName(String name) {
-    	DeliveryType deliveryType = null;
-    	try {
-    		deliveryType = daoFactory.getDeliveryTypeDao().findByName(name);
-    	} catch (DAOException e) {
-    		logger.error(e);
-    	} catch (Exception e) {
-    		logger.fatalError(e);
-    	}
-    	return deliveryType;
+        DeliveryType deliveryType = null;
+        try {
+            deliveryType = daoFactory.getDeliveryTypeDao().findByName(name);
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return deliveryType;
     }
     
     public boolean updateDeliveryType(DeliveryType deliveryType) {

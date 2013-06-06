@@ -30,13 +30,13 @@ import com.eurodyn.uns.model.User;
 
 public interface INotificationDao {
 
-	public List getNotificationsThroughput(Date fromDate, Date toDate, Channel channel, User user) throws DAOException;
+    public List getNotificationsThroughput(Date fromDate, Date toDate, Channel channel, User user) throws DAOException;
 
-	public List getFailedNotifications() throws DAOException;
-	
-	public void createNotification(Notification notification) throws DAOException;
-	
-	public List getNewNotifications() throws DAOException;
-	
-	public List getFailedDeliveries() throws DAOException;
+    public List getFailedNotifications() throws DAOException;
+    
+    public void createNotification(Notification notification) throws DAOException;
+    
+    public List getNewNotifications() throws DAOException;
+    
+    public List getFailedDeliveries() throws DAOException;
 }

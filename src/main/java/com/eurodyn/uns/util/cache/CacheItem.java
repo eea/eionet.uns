@@ -24,66 +24,66 @@ package com.eurodyn.uns.util.cache;
 import java.util.Date;
 
 public class CacheItem {
-	protected Object key;
+    protected Object key;
 
-	protected Object content;
+    protected Object content;
 
-	protected Date lastHarvestDate;
+    protected Date lastHarvestDate;
 
-	private CacheItem() {
-	}
+    private CacheItem() {
+    }
 
-	/**
-	 * Constructs a CacheItem object
-	 * 
-	 * @param key
-	 * @param timeToLive
-	 *              ms to keep this in the cache
-	 * @param content
-	 *              The content being cached
-	 */
-	public CacheItem(Object key, Object content, Date lastHarvestDate) {
-		this.key = key;
-		this.content = content;
-		this.lastHarvestDate = lastHarvestDate;
-	}
+    /**
+     * Constructs a CacheItem object
+     * 
+     * @param key
+     * @param timeToLive
+     *              ms to keep this in the cache
+     * @param content
+     *              The content being cached
+     */
+    public CacheItem(Object key, Object content, Date lastHarvestDate) {
+        this.key = key;
+        this.content = content;
+        this.lastHarvestDate = lastHarvestDate;
+    }
 
-	/**
-	 * Set the content in the cache
-	 * 
-	 * @param content
-	 *              the content being cached
-	 */
-	public void setContent(Object content) {
-		this.content = content;
-	}
+    /**
+     * Set the content in the cache
+     * 
+     * @param content
+     *              the content being cached
+     */
+    public void setContent(Object content) {
+        this.content = content;
+    }
 
-	/**
-	 * Get the content
-	 * 
-	 * @return the content being cached
-	 */
-	public Object getContent() {
-		return this.content;
-	}
+    /**
+     * Get the content
+     * 
+     * @return the content being cached
+     */
+    public Object getContent() {
+        return this.content;
+    }
 
-	/**
-	 * @return Returns the key.
-	 */
-	public Object getKey() {
-		return key;
-	}
+    /**
+     * @return Returns the key.
+     */
+    public Object getKey() {
+        return key;
+    }
 
-	/**
-	 * @param key
-	 *              The key to set.
-	 */
-	public void setKey(String key) {
-		this.key = key;
-	}
+    /**
+     * @param key
+     *              The key to set.
+     */
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-	public Date getLastHarvestDate() {
-		return lastHarvestDate;
-	}
+    public Date getLastHarvestDate() {
+        return lastHarvestDate;
+    }
 
 }

@@ -31,44 +31,44 @@ import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.common.WDSLogger;
 
 public class NotificationFacade {
-	
-	private static final WDSLogger logger = WDSLogger.getLogger(NotificationFacade.class);
+    
+    private static final WDSLogger logger = WDSLogger.getLogger(NotificationFacade.class);
 
-	private DAOFactory daoFactory;
-	private DAOFactory jdbcDaoFactory;
+    private DAOFactory daoFactory;
+    private DAOFactory jdbcDaoFactory;
 
-	public NotificationFacade() {
-		daoFactory = DAOFactory.getDAOFactory(DAOFactory.HIBERNATE);
-		jdbcDaoFactory= DAOFactory.getDAOFactory(DAOFactory.JDBC);
-	}
+    public NotificationFacade() {
+        daoFactory = DAOFactory.getDAOFactory(DAOFactory.HIBERNATE);
+        jdbcDaoFactory= DAOFactory.getDAOFactory(DAOFactory.JDBC);
+    }
 
-	public List getNotificationsThroughput(Date fromDate, Date toDate, Channel channel, User user) throws Exception {
-		return daoFactory.getNotificationDao().getNotificationsThroughput(fromDate, toDate, channel, user);
-	}
+    public List getNotificationsThroughput(Date fromDate, Date toDate, Channel channel, User user) throws Exception {
+        return daoFactory.getNotificationDao().getNotificationsThroughput(fromDate, toDate, channel, user);
+    }
 
-	public List getFailedNotifications() throws Exception {
-		return daoFactory.getNotificationDao().getFailedNotifications();
-	}
-	
-	public boolean createNotification(Notification notification) throws Exception {
-		boolean success = false;
-		try {
-			daoFactory.getNotificationDao().createNotification(notification);
-			success = true;
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return success;
-	}
-	
-	public List getNewNotifications() throws Exception {
-		return jdbcDaoFactory.getNotificationDao().getNewNotifications();
-	}
-	
-	public List getFailedDeliveries() throws Exception {
-		return jdbcDaoFactory.getNotificationDao().getFailedDeliveries();
-	}
+    public List getFailedNotifications() throws Exception {
+        return daoFactory.getNotificationDao().getFailedNotifications();
+    }
+    
+    public boolean createNotification(Notification notification) throws Exception {
+        boolean success = false;
+        try {
+            daoFactory.getNotificationDao().createNotification(notification);
+            success = true;
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return success;
+    }
+    
+    public List getNewNotifications() throws Exception {
+        return jdbcDaoFactory.getNotificationDao().getNewNotifications();
+    }
+    
+    public List getFailedDeliveries() throws Exception {
+        return jdbcDaoFactory.getNotificationDao().getFailedDeliveries();
+    }
 
 }

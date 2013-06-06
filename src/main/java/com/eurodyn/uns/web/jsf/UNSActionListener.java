@@ -38,8 +38,8 @@ public class UNSActionListener
 
     public void processAction(ActionEvent actionEvent) throws AbortProcessingException
     {
-	    
-	    
+        
+        
   
         FacesContext facesContext = FacesContext.getCurrentInstance();
         Application application = facesContext.getApplication();
@@ -59,7 +59,7 @@ public class UNSActionListener
         else
         {
             fromAction = methodBinding.getExpressionString();
-    	  	log.debug("UNS web action called " + fromAction);
+            log.debug("UNS web action called " + fromAction);
             try
             {
                 outcome = (String) methodBinding.invoke(facesContext, null);
@@ -86,8 +86,8 @@ public class UNSActionListener
         navigationHandler.handleNavigation(facesContext,
                                            fromAction,
                                            outcome);
-		//Render Response if needed
-		facesContext.renderResponse();
+        //Render Response if needed
+        facesContext.renderResponse();
 
     }
 }

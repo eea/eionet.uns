@@ -29,85 +29,85 @@ import com.eurodyn.uns.util.HashCodeUtil;
 
 public class Filter implements Serializable {
 
-	// Fields
-	private static final long serialVersionUID = -8427166850946922455L;
+    // Fields
+    private static final long serialVersionUID = -8427166850946922455L;
 
-	private Integer id;
+    private Integer id;
 
-	private Subscription subscription;
+    private Subscription subscription;
 
-	private Set statements = new HashSet(0);
+    private Set statements = new HashSet(0);
 
-	private boolean editMode;
+    private boolean editMode;
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public Filter() {
-	}
+    /** default constructor */
+    public Filter() {
+    }
 
-	/** minimal constructor */
-	public Filter(Integer id, Subscription subscription) {
-		this.id = id;
-		this.subscription = subscription;
-	}
+    /** minimal constructor */
+    public Filter(Integer id, Subscription subscription) {
+        this.id = id;
+        this.subscription = subscription;
+    }
 
-	/** full constructor */
-	public Filter(Integer id, Subscription subscription, Set statements) {
-		this.id = id;
-		this.subscription = subscription;
-		this.statements = statements;
-	}
+    /** full constructor */
+    public Filter(Integer id, Subscription subscription, Set statements) {
+        this.id = id;
+        this.subscription = subscription;
+        this.statements = statements;
+    }
 
-	// Property accessors
+    // Property accessors
 
-	public Integer getId() {
-		return this.id;
-	}
+    public Integer getId() {
+        return this.id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Subscription getSubscription() {
-		return this.subscription;
-	}
+    public Subscription getSubscription() {
+        return this.subscription;
+    }
 
-	public void setSubscription(Subscription subscription) {
-		this.subscription = subscription;
-	}
+    public void setSubscription(Subscription subscription) {
+        this.subscription = subscription;
+    }
 
-	public Set getStatements() {
-		return this.statements;
-	}
+    public Set getStatements() {
+        return this.statements;
+    }
 
-	public void setStatements(Set statements) {
-		this.statements = statements;
-	}
+    public void setStatements(Set statements) {
+        this.statements = statements;
+    }
 
-	public boolean isEditMode() {
-		return editMode;
-	}
+    public boolean isEditMode() {
+        return editMode;
+    }
 
-	public void setEditMode(boolean editMode) {
-		this.editMode = editMode;
-	}
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other)
-			return true;
-		if (!(other instanceof Filter))
-			return false;
-		final Filter filt = (Filter) other;
-		if (!filt.getStatements().equals(getStatements()))
-			return false;
-		return true;
-	}
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (!(other instanceof Filter))
+            return false;
+        final Filter filt = (Filter) other;
+        if (!filt.getStatements().equals(getStatements()))
+            return false;
+        return true;
+    }
 
-	public int hashCode() {
-		int result = HashCodeUtil.SEED;
-		result = HashCodeUtil.hash(result, statements);
-		return result;
-	}
+    public int hashCode() {
+        int result = HashCodeUtil.SEED;
+        result = HashCodeUtil.hash(result, statements);
+        return result;
+    }
 
 }

@@ -29,69 +29,69 @@ import org.apache.xml.serialize.XMLSerializer;
 
 public class XmlSerialization implements IXmlSerializer {
 
-	private XMLSerializer xmlSerializer;
-	private IXmlCtx ctx = null;
+    private XMLSerializer xmlSerializer;
+    private IXmlCtx ctx = null;
 
 
-	public XmlSerialization() {
-		xmlSerializer = new XMLSerializer();
-		OutputFormat outputFormat = new OutputFormat();
-		outputFormat.setAllowJavaNames(true);
-		outputFormat.setEncoding("UTF-8");
-		outputFormat.setVersion("1.0");
-		outputFormat.setIndenting(true);
-		outputFormat.setIndent(5);
-		xmlSerializer.setOutputFormat(outputFormat);
-	}
-	
-	public XmlSerialization(IXmlCtx ctx) {
-		this();
-		this.ctx=ctx;
-	}
+    public XmlSerialization() {
+        xmlSerializer = new XMLSerializer();
+        OutputFormat outputFormat = new OutputFormat();
+        outputFormat.setAllowJavaNames(true);
+        outputFormat.setEncoding("UTF-8");
+        outputFormat.setVersion("1.0");
+        outputFormat.setIndenting(true);
+        outputFormat.setIndent(5);
+        xmlSerializer.setOutputFormat(outputFormat);
+    }
+    
+    public XmlSerialization(IXmlCtx ctx) {
+        this();
+        this.ctx=ctx;
+    }
 
 
 
-	
-	public ByteArrayOutputStream serializeToOutStream() throws XmlException {
-		ByteArrayOutputStream byteOutputStream = null;
-		try {
-			byteOutputStream = new ByteArrayOutputStream();
-			xmlSerializer.setOutputByteStream(byteOutputStream);
-			xmlSerializer.serialize(ctx.getDocument());
-		} catch (IOException ioe) {
-			throw new XmlException("Error occurred while serializing XML document. Reason: " + ioe.getMessage());
-		} finally {
-		}
-		return byteOutputStream;
-	}
-	
-	
-	public void serializeToFs(String fullFileName) throws XmlException {
-		try {
-			FileOutputStream fileOutputStream = new FileOutputStream(fullFileName);
-			xmlSerializer.setOutputByteStream(fileOutputStream);
-			xmlSerializer.serialize(ctx.getDocument());
-			fileOutputStream.flush();
-			fileOutputStream.close();
-		} catch (IOException ioe) {
-			throw new XmlException("Error occurred while serializing XML document. Reason: " + ioe.getMessage());
-		}
-	}
-	
-	public ByteArrayInputStream serializeToInStream() throws XmlException {
-		ByteArrayInputStream byteInputStream = null;
-		try {
-			ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
-			xmlSerializer.setOutputByteStream(byteOutputStream);
-			xmlSerializer.serialize(ctx.getDocument());
-			byteInputStream = new ByteArrayInputStream(byteOutputStream.toByteArray());
-			byteOutputStream.flush();
-			byteOutputStream.close();
-		} catch (IOException ioe) {
-			throw new XmlException("Error occurred while serializing XML document . Reason: " + ioe.getMessage());
-		} finally {
-		}
-		return byteInputStream;
-	}
+    
+    public ByteArrayOutputStream serializeToOutStream() throws XmlException {
+        ByteArrayOutputStream byteOutputStream = null;
+        try {
+            byteOutputStream = new ByteArrayOutputStream();
+            xmlSerializer.setOutputByteStream(byteOutputStream);
+            xmlSerializer.serialize(ctx.getDocument());
+        } catch (IOException ioe) {
+            throw new XmlException("Error occurred while serializing XML document. Reason: " + ioe.getMessage());
+        } finally {
+        }
+        return byteOutputStream;
+    }
+    
+    
+    public void serializeToFs(String fullFileName) throws XmlException {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(fullFileName);
+            xmlSerializer.setOutputByteStream(fileOutputStream);
+            xmlSerializer.serialize(ctx.getDocument());
+            fileOutputStream.flush();
+            fileOutputStream.close();
+        } catch (IOException ioe) {
+            throw new XmlException("Error occurred while serializing XML document. Reason: " + ioe.getMessage());
+        }
+    }
+    
+    public ByteArrayInputStream serializeToInStream() throws XmlException {
+        ByteArrayInputStream byteInputStream = null;
+        try {
+            ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
+            xmlSerializer.setOutputByteStream(byteOutputStream);
+            xmlSerializer.serialize(ctx.getDocument());
+            byteInputStream = new ByteArrayInputStream(byteOutputStream.toByteArray());
+            byteOutputStream.flush();
+            byteOutputStream.close();
+        } catch (IOException ioe) {
+            throw new XmlException("Error occurred while serializing XML document . Reason: " + ioe.getMessage());
+        } finally {
+        }
+        return byteInputStream;
+    }
 
 }

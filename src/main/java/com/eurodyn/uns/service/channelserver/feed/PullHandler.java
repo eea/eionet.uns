@@ -33,17 +33,17 @@ import com.eurodyn.uns.util.common.ConfiguratorException;
 import com.eurodyn.uns.util.common.WDSLogger;
 
 public class PullHandler extends BaseFeedHandler {
-	private static final WDSLogger logger = WDSLogger.getLogger(PullHandler.class);
+    private static final WDSLogger logger = WDSLogger.getLogger(PullHandler.class);
 
     private BaseFeedHandler successor;
-	private static String pathPrefix;
+    private static String pathPrefix;
 
     static {
-		try {
-			pathPrefix = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar + "rdf" + File.separatorChar;
-		} catch (ConfiguratorException e) {
-			logger.fatalError(e);
-		}
+        try {
+            pathPrefix = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar + "rdf" + File.separatorChar;
+        } catch (ConfiguratorException e) {
+            logger.fatalError(e);
+        }
     }
     
     public PullHandler(BaseFeedHandler successor) {
@@ -60,30 +60,30 @@ public class PullHandler extends BaseFeedHandler {
     }
 
     public void pull(Channel channel, Dto request) throws Exception {
-    	if(channel.getMode().equals("PULL")){
-			channel.setUser(null);
-    	}
-    	else{
-			String userpath = "";
-			if(channel.getUser() != null){
-				userpath = "_" + channel.getUser().getExternalId(); 
-			}
-			String URI = pathPrefix + channel.getSecondaryId() + userpath + "_" + "data.rdf";
-			File file = new File(URI);
-			if(!file.exists()){
-				URI = pathPrefix + channel.getSecondaryId() + "_" + "data.rdf";
-				channel.setUser(null);
-				file = new File(URI);
-				if(!file.exists()){
-			        request.put("CONTENT", null);
-					return;
-				}
-			}
-			PushHandler.checkDataLifeTime(channel, channel.getUser(), file);
-			channel.setFeedUrl("file:///" + URI);
-    	}
-    	
-    	RenderingEngine re=RenderingEngine.getInstance();
+        if(channel.getMode().equals("PULL")){
+            channel.setUser(null);
+        }
+        else{
+            String userpath = "";
+            if(channel.getUser() != null){
+                userpath = "_" + channel.getUser().getExternalId(); 
+            }
+            String URI = pathPrefix + channel.getSecondaryId() + userpath + "_" + "data.rdf";
+            File file = new File(URI);
+            if(!file.exists()){
+                URI = pathPrefix + channel.getSecondaryId() + "_" + "data.rdf";
+                channel.setUser(null);
+                file = new File(URI);
+                if(!file.exists()){
+                    request.put("CONTENT", null);
+                    return;
+                }
+            }
+            PushHandler.checkDataLifeTime(channel, channel.getUser(), file);
+            channel.setFeedUrl("file:///" + URI);
+        }
+        
+        RenderingEngine re=RenderingEngine.getInstance();
         String result=channel.getTransformation()==null?re.renderContent(channel,null, new GenericRenderer())
                                                        :re.renderContent(channel,null, new XslRenderer());
         request.put("CONTENT", result);

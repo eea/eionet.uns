@@ -39,140 +39,140 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class XmlCommon {
 
-	protected Document document = null;
-	private CustomDomParser parser;
-	private ErrorStorage errorStorage;
+    protected Document document = null;
+    private CustomDomParser parser;
+    private ErrorStorage errorStorage;
 
 
-	public XmlCommon() {
-		parser = new CustomDomParser();
-		errorStorage = new ErrorStorage();
-		parser.setErrorHandler(new DefaultHandler() {
-			public void error(SAXParseException ex) throws SAXException {
-				errorStorage.setErrorMessage(ex.getMessage());
-			}
-			public void fatalError(SAXParseException ex) throws SAXException {
-				errorStorage.setFatalErrorMessage(ex.getMessage());
-			}
-			public void warning(SAXParseException ex) throws SAXException {
-				errorStorage.setWaringMessage(ex.getMessage());
-			}
-		});
-	}
+    public XmlCommon() {
+        parser = new CustomDomParser();
+        errorStorage = new ErrorStorage();
+        parser.setErrorHandler(new DefaultHandler() {
+            public void error(SAXParseException ex) throws SAXException {
+                errorStorage.setErrorMessage(ex.getMessage());
+            }
+            public void fatalError(SAXParseException ex) throws SAXException {
+                errorStorage.setFatalErrorMessage(ex.getMessage());
+            }
+            public void warning(SAXParseException ex) throws SAXException {
+                errorStorage.setWaringMessage(ex.getMessage());
+            }
+        });
+    }
 
 
-	public void checkFromInputStream(InputStream inputStream) throws XmlException {
-		try {
-			InputSource contentForParsing = new InputSource(inputStream);
-			parser.parse(contentForParsing);
-			if (!errorStorage.isEmpty()) {
-				throw new XmlException("Failure reasons: " + errorStorage.getErrors());
-			}
-			document = parser.getDocument();
-		} catch (IOException ioe) {
-			throw new XmlException("Failure reasons: " + ioe.getMessage());
-		} catch (XmlException xmle) {
-			throw xmle;
-		} catch (Exception e) {
-			throw new XmlException("Failure reasons: " + e.getMessage());
-		} finally {
-			try {
-				inputStream.close();
-			} catch (Exception e) {
-			}
-		}
-	}
-	
-	public void checkFromFile(String fullFileName) throws XmlException {
-		try {
-			parser.parse(fullFileName);
-			document = parser.getDocument();
-			if (!errorStorage.isEmpty()) {
-				throw new XmlException("Failure reasons:" + errorStorage.getErrors());
-			}
+    public void checkFromInputStream(InputStream inputStream) throws XmlException {
+        try {
+            InputSource contentForParsing = new InputSource(inputStream);
+            parser.parse(contentForParsing);
+            if (!errorStorage.isEmpty()) {
+                throw new XmlException("Failure reasons: " + errorStorage.getErrors());
+            }
+            document = parser.getDocument();
+        } catch (IOException ioe) {
+            throw new XmlException("Failure reasons: " + ioe.getMessage());
+        } catch (XmlException xmle) {
+            throw xmle;
+        } catch (Exception e) {
+            throw new XmlException("Failure reasons: " + e.getMessage());
+        } finally {
+            try {
+                inputStream.close();
+            } catch (Exception e) {
+            }
+        }
+    }
+    
+    public void checkFromFile(String fullFileName) throws XmlException {
+        try {
+            parser.parse(fullFileName);
+            document = parser.getDocument();
+            if (!errorStorage.isEmpty()) {
+                throw new XmlException("Failure reasons:" + errorStorage.getErrors());
+            }
 
-		} catch (SAXException saxe) {
-			saxe.printStackTrace();
-			throw new XmlException("Failure reasons: " + saxe.getMessage());
-		} catch (IOException ioe) {
-			throw new XmlException("Failure reasons: " + ioe.getMessage());
-		} catch(XmlException e) {
-			throw e;
-		}
-	}
-
-
-	public void setWellFormednessChecking() throws XmlException {
-		try {
-			parser.setFeature("http://apache.org/xml/features/validation/schema", false);
-			parser.setFeature("http://xml.org/sax/features/validation", false);
-
-			parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
-			parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-			parser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-
-			parser.setFeature("http://apache.org/xml/features/dom/defer-node-expansion", false);
-			parser.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
-			parser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-			parser.setFeature("http://apache.org/xml/features/continue-after-fatal-error", false);
-			parser.setFeature("http://apache.org/xml/features/allow-java-encodings", true);
-		} catch (SAXException saxe) {
-			throw new XmlException("Error occurred while setting Xerces features. Reason: " + saxe.getMessage());
-		}
-
-	}
-	
-	public void setValidationChecking() throws XmlException {
-		try {
-			parser.setFeature("http://xml.org/sax/features/validation", true);
-
-			parser.setFeature("http://xml.org/sax/features/external-general-entities", true);
-			parser.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
-			parser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", true);
-
-			parser.setFeature("http://apache.org/xml/features/dom/defer-node-expansion", true);
-			parser.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", true);
-			parser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", true);
-			parser.setFeature("http://apache.org/xml/features/continue-after-fatal-error", false);
-			parser.setFeature("http://apache.org/xml/features/allow-java-encodings", true);
-		} catch (SAXException saxe) {
-			throw new XmlException("Error occurred while setting Xerces features. Reason: " + saxe.getMessage());
-		}
-	}
-	
-	
-	public void createXMLDocument() throws XmlException {
-		try {
-			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			document=builder.newDocument();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-			throw new XmlException(e);
-		}
-
-	}
+        } catch (SAXException saxe) {
+            saxe.printStackTrace();
+            throw new XmlException("Failure reasons: " + saxe.getMessage());
+        } catch (IOException ioe) {
+            throw new XmlException("Failure reasons: " + ioe.getMessage());
+        } catch(XmlException e) {
+            throw e;
+        }
+    }
 
 
-	public void createXMLDocument(String docTypeName, String systemId) throws XmlException {
-		try {
-			DocumentImpl xmlDoc = new DocumentImpl();
-			DocumentTypeImpl dtd = new DocumentTypeImpl(xmlDoc, docTypeName, null, systemId);
-			Element name = xmlDoc.createElement(docTypeName);
-			xmlDoc.appendChild(name);
-			xmlDoc.appendChild(dtd);
-			Document res = (Document) xmlDoc;
-			document=res;
-		} catch (Exception e) {
-			throw new XmlException(e);
-		}
+    public void setWellFormednessChecking() throws XmlException {
+        try {
+            parser.setFeature("http://apache.org/xml/features/validation/schema", false);
+            parser.setFeature("http://xml.org/sax/features/validation", false);
 
-	}
+            parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            parser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+
+            parser.setFeature("http://apache.org/xml/features/dom/defer-node-expansion", false);
+            parser.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+            parser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+            parser.setFeature("http://apache.org/xml/features/continue-after-fatal-error", false);
+            parser.setFeature("http://apache.org/xml/features/allow-java-encodings", true);
+        } catch (SAXException saxe) {
+            throw new XmlException("Error occurred while setting Xerces features. Reason: " + saxe.getMessage());
+        }
+
+    }
+    
+    public void setValidationChecking() throws XmlException {
+        try {
+            parser.setFeature("http://xml.org/sax/features/validation", true);
+
+            parser.setFeature("http://xml.org/sax/features/external-general-entities", true);
+            parser.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
+            parser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", true);
+
+            parser.setFeature("http://apache.org/xml/features/dom/defer-node-expansion", true);
+            parser.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", true);
+            parser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", true);
+            parser.setFeature("http://apache.org/xml/features/continue-after-fatal-error", false);
+            parser.setFeature("http://apache.org/xml/features/allow-java-encodings", true);
+        } catch (SAXException saxe) {
+            throw new XmlException("Error occurred while setting Xerces features. Reason: " + saxe.getMessage());
+        }
+    }
+    
+    
+    public void createXMLDocument() throws XmlException {
+        try {
+            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            document=builder.newDocument();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+            throw new XmlException(e);
+        }
+
+    }
 
 
-	
+    public void createXMLDocument(String docTypeName, String systemId) throws XmlException {
+        try {
+            DocumentImpl xmlDoc = new DocumentImpl();
+            DocumentTypeImpl dtd = new DocumentTypeImpl(xmlDoc, docTypeName, null, systemId);
+            Element name = xmlDoc.createElement(docTypeName);
+            xmlDoc.appendChild(name);
+            xmlDoc.appendChild(dtd);
+            Document res = (Document) xmlDoc;
+            document=res;
+        } catch (Exception e) {
+            throw new XmlException(e);
+        }
+
+    }
 
 
-	
+    
+
+
+    
 
 
 }

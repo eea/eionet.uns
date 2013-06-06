@@ -44,10 +44,10 @@ public class MetadataElementFacade {
     }
 
     public ResultDto getMetadataElements(Dto dto) {
-    	String orderProperty = dto.getAsString("orderProperty");
-    	if(orderProperty == null || orderProperty.length()==0)
-    		orderProperty = "name";    	
-    	String order = dto.getAsString("order");
+        String orderProperty = dto.getAsString("orderProperty");
+        if(orderProperty == null || orderProperty.length()==0)
+            orderProperty = "name";     
+        String order = dto.getAsString("order");
         return getSortedMetadataElements(orderProperty, order);
     }
     
@@ -82,19 +82,19 @@ public class MetadataElementFacade {
     }
 
     public MetadataElement findByName(String name) {
-    	MetadataElement metadataElement = null;
-    	try {
-    		metadataElement = daoFactory.getMetadataElementDao().findByName(name);
-    		//XmlContext x = new XmlContext();
-    		//x.setWellFormednessChecking();
-    		//x.checkFromInputStream(new ByteArrayInputStream(metadataElement.getContent().getBytes()));
-    		//metadataElement.setContent(x.serializeToString());
-    	} catch (DAOException e) {
-    		logger.error(e);
-    	} catch (Exception e) {
-    		logger.fatalError(e);
-    	}
-    	return metadataElement;
+        MetadataElement metadataElement = null;
+        try {
+            metadataElement = daoFactory.getMetadataElementDao().findByName(name);
+            //XmlContext x = new XmlContext();
+            //x.setWellFormednessChecking();
+            //x.checkFromInputStream(new ByteArrayInputStream(metadataElement.getContent().getBytes()));
+            //metadataElement.setContent(x.serializeToString());
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return metadataElement;
     }
     
     public boolean updateMetadataElement(MetadataElement metadataElement) {

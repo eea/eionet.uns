@@ -30,61 +30,61 @@ import org.w3c.dom.Text;
 
 public class XmlManager implements IXUpdate {
 
-	protected IXmlCtx ctx = null;
+    protected IXmlCtx ctx = null;
 
 
-	public XmlManager() {
+    public XmlManager() {
 
-	}
+    }
 
-	public XmlManager(IXmlCtx ctx) {
-		this.ctx = ctx;
-	}
+    public XmlManager(IXmlCtx ctx) {
+        this.ctx = ctx;
+    }
 
-	public void updateElement(String parentId, String name, String newValue) throws XmlException {
-		String xpath = "//*[@id='" + parentId + "']/" + name + "/text()";
-		Node textNode = null;
-		try {
-			textNode = XPathAPI.selectSingleNode(ctx.getDocument(), xpath);
-			if (textNode == null) {
-				textNode = XPathAPI.selectSingleNode(ctx.getDocument(), "//" + name);
-				if (textNode == null)
-					throw new XmlException("Node " + name + " can not be found");
-				else {
-					Text newElement = ctx.getDocument().createTextNode(newValue);
-					textNode.appendChild(newElement);
-				}
-			} else {
-				Node parent = textNode.getParentNode();
-				Text newElement = ctx.getDocument().createTextNode(newValue);
-				parent.replaceChild(newElement, textNode);
-			}
-		} catch (TransformerException e) {
-			e.printStackTrace();
-			throw new XmlException("Error while setting value to element " + name + ": " + e.getMessage());
-		}
-	}
-		
-	public void deleteElement(String parentId,String name) throws XmlException {
-		try {
-			String xpath = "//*[@id='" + parentId + "']/" + name;
-			Node node = XPathAPI.selectSingleNode(ctx.getDocument(), xpath);
-			if (node == null) return;
-			Node parent = node.getParentNode();
-			((Element) parent).removeChild(node);
-		} catch (Exception e) {
-			throw new XmlException("Error while removing XML node " + name + ": " + e.getMessage());
-		}
-	}
+    public void updateElement(String parentId, String name, String newValue) throws XmlException {
+        String xpath = "//*[@id='" + parentId + "']/" + name + "/text()";
+        Node textNode = null;
+        try {
+            textNode = XPathAPI.selectSingleNode(ctx.getDocument(), xpath);
+            if (textNode == null) {
+                textNode = XPathAPI.selectSingleNode(ctx.getDocument(), "//" + name);
+                if (textNode == null)
+                    throw new XmlException("Node " + name + " can not be found");
+                else {
+                    Text newElement = ctx.getDocument().createTextNode(newValue);
+                    textNode.appendChild(newElement);
+                }
+            } else {
+                Node parent = textNode.getParentNode();
+                Text newElement = ctx.getDocument().createTextNode(newValue);
+                parent.replaceChild(newElement, textNode);
+            }
+        } catch (TransformerException e) {
+            e.printStackTrace();
+            throw new XmlException("Error while setting value to element " + name + ": " + e.getMessage());
+        }
+    }
+        
+    public void deleteElement(String parentId,String name) throws XmlException {
+        try {
+            String xpath = "//*[@id='" + parentId + "']/" + name;
+            Node node = XPathAPI.selectSingleNode(ctx.getDocument(), xpath);
+            if (node == null) return;
+            Node parent = node.getParentNode();
+            ((Element) parent).removeChild(node);
+        } catch (Exception e) {
+            throw new XmlException("Error while removing XML node " + name + ": " + e.getMessage());
+        }
+    }
 
-	public void insertElement(String parentElementName, String elementName) throws XmlException {
-		// TODO Auto-generated method stub
+    public void insertElement(String parentElementName, String elementName) throws XmlException {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	public void insertAttribute(String parentElementName, String attributeName, String attributeValue) throws XmlException {
-		// TODO Auto-generated method stub
+    public void insertAttribute(String parentElementName, String attributeName, String attributeValue) throws XmlException {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
 }

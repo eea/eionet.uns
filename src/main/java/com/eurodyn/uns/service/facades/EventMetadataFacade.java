@@ -35,136 +35,136 @@ import com.eurodyn.uns.util.common.WDSLogger;
 
 public class EventMetadataFacade {
 
-	private static final WDSLogger logger = WDSLogger.getLogger(EventMetadataFacade.class);
+    private static final WDSLogger logger = WDSLogger.getLogger(EventMetadataFacade.class);
 
-	private DAOFactory daoFactory;
-	private DAOFactory jdbcDaoFactory;
-	
+    private DAOFactory daoFactory;
+    private DAOFactory jdbcDaoFactory;
+    
 
-	public EventMetadataFacade() {
-		jdbcDaoFactory = DAOFactory.getDAOFactory(DAOFactory.JDBC);
-		daoFactory = DAOFactory.getDAOFactory(DAOFactory.HIBERNATE);
-	}
-	
-	public boolean createEvent(Event event) {
-		boolean ret = false;
-		try {
-			daoFactory.getEventMetadataDao().createEvent(event);
-			ret = true;
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return ret;
-	}
-	
-	public boolean createEventMetadata(EventMetadata em) {
-		boolean ret = false;
-		try {
-			daoFactory.getEventMetadataDao().createEventMetadata(em);
-			ret = true;
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return ret;
-	}
+    public EventMetadataFacade() {
+        jdbcDaoFactory = DAOFactory.getDAOFactory(DAOFactory.JDBC);
+        daoFactory = DAOFactory.getDAOFactory(DAOFactory.HIBERNATE);
+    }
+    
+    public boolean createEvent(Event event) {
+        boolean ret = false;
+        try {
+            daoFactory.getEventMetadataDao().createEvent(event);
+            ret = true;
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return ret;
+    }
+    
+    public boolean createEventMetadata(EventMetadata em) {
+        boolean ret = false;
+        try {
+            daoFactory.getEventMetadataDao().createEventMetadata(em);
+            ret = true;
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return ret;
+    }
 
 
-	public Map findChoosableStatements(Channel channel) {
-		Map elements = null;
-		try {
-			elements = jdbcDaoFactory.getEventMetadataDao().findChoosableStatements(channel);
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return elements;
-	}
+    public Map findChoosableStatements(Channel channel) {
+        Map elements = null;
+        try {
+            elements = jdbcDaoFactory.getEventMetadataDao().findChoosableStatements(channel);
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return elements;
+    }
 
-	
-	
-	public Set findChannelProperties(Channel channel) {
-		Set properties = null;
-		try {
-			properties = daoFactory.getEventMetadataDao().findChannelProperties(channel);
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return properties;
-	}
+    
+    
+    public Set findChannelProperties(Channel channel) {
+        Set properties = null;
+        try {
+            properties = daoFactory.getEventMetadataDao().findChannelProperties(channel);
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return properties;
+    }
 
-	
-	
-	public void deleteEventMetadataByValue(Channel channel, String value){
-		try {
-			daoFactory.getEventMetadataDao().deleteEventMetadataByValue(channel,value);
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
+    
+    
+    public void deleteEventMetadataByValue(Channel channel, String value){
+        try {
+            daoFactory.getEventMetadataDao().deleteEventMetadataByValue(channel,value);
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
 
-	}
-	
+    }
+    
 
-	public void deleteEventMetadataByProperty(Channel channel ,String property){
-		try {
-			daoFactory.getEventMetadataDao().deleteEventMetadataByProperty(channel,property);
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		
-	}
-	
-	
-	
-	public ResultDto findEventMetadataWithValue(Channel channel, String property, String value){
-		ResultDto rDto = null;
-		try {
-			rDto = daoFactory.getEventMetadataDao().findEventMetadataWithValue(channel,property,value);
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return rDto;
-	}
-	
-	public void deleteFilterStatement(Channel channel, Statement statement){
-		try {
-			daoFactory.getEventMetadataDao().deleteFilterStatement(channel,statement);
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
+    public void deleteEventMetadataByProperty(Channel channel ,String property){
+        try {
+            daoFactory.getEventMetadataDao().deleteEventMetadataByProperty(channel,property);
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        
+    }
+    
+    
+    
+    public ResultDto findEventMetadataWithValue(Channel channel, String property, String value){
+        ResultDto rDto = null;
+        try {
+            rDto = daoFactory.getEventMetadataDao().findEventMetadataWithValue(channel,property,value);
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return rDto;
+    }
+    
+    public void deleteFilterStatement(Channel channel, Statement statement){
+        try {
+            daoFactory.getEventMetadataDao().deleteFilterStatement(channel,statement);
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
 
-	}
+    }
 
-	public Event findEvent(Integer event_id) throws Exception {
-		return daoFactory.getEventMetadataDao().findEvent(event_id);
-	}
-	
-	public boolean eventExists(String extId) throws Exception {
-		return daoFactory.getEventMetadataDao().eventExists(extId);
-	}
-	
-	public void deleteOldEvents(){
-		try {
-			jdbcDaoFactory.getEventMetadataDao().deleteOldEvents();
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		
-	}
+    public Event findEvent(Integer event_id) throws Exception {
+        return daoFactory.getEventMetadataDao().findEvent(event_id);
+    }
+    
+    public boolean eventExists(String extId) throws Exception {
+        return daoFactory.getEventMetadataDao().eventExists(extId);
+    }
+    
+    public void deleteOldEvents(){
+        try {
+            jdbcDaoFactory.getEventMetadataDao().deleteOldEvents();
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        
+    }
 }

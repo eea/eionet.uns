@@ -17,7 +17,7 @@
  * 
  * Contributors(s):
  *    Original code: Dusan Popovic (ED)
- *    				      	 Nedeljko Pavlovic (ED) 
+ *                           Nedeljko Pavlovic (ED) 
  */
 package com.eurodyn.uns.service.channelserver;
 
@@ -39,107 +39,107 @@ import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.util.rdf.IChannel;
 
 public class EEAChannelServer extends BaseChannelServer {
-	private static final WDSLogger logger = WDSLogger.getLogger(EEAChannelServer.class);
+    private static final WDSLogger logger = WDSLogger.getLogger(EEAChannelServer.class);
 
-	private BaseFeedHandler handler;
-	private ChannelFacade channelFacade = new ChannelFacade();
-
-
-	public EEAChannelServer() {
-		handler = new DatabaseHandler(new PullHandler(new PushHandler(new TestHandler(new QueryHandler()))));
-	}
+    private BaseFeedHandler handler;
+    private ChannelFacade channelFacade = new ChannelFacade();
 
 
-	public String getChannelContent(Subscription subs, boolean ignoreCache) {
-		String content = null;
-		try {
+    public EEAChannelServer() {
+        handler = new DatabaseHandler(new PullHandler(new PushHandler(new TestHandler(new QueryHandler()))));
+    }
 
-			if (ignoreCache || subs.getChannel().getMode().equals("PUSH")){
-				Dto request = new Dto();
-				request.put("subscription", subs);
-				handler.handleRequest(request, BaseChannelServer.DATABASE);
-				content = (String) request.get("CONTENT");				
-			}else{
-				Channel channel = subs.getChannel();
-				CacheItem entry = MemCache.get(subs.getId(),channelFacade.getLastHarvestedDate(channel));
-				if (entry != null) {
-					logger.debug("Found entry in cache for subscription on channel" + subs.getChannel().getTitle());
-					content = (String) entry.getContent();
-				} else {
-					Dto request = new Dto();
-					request.put("subscription", subs);
-					handler.handleRequest(request, BaseChannelServer.DATABASE);
-					content = (String) request.get("CONTENT");
-					if (content != null && content.length() > 12) {
-						if (content.indexOf("</svg>") > 0) {
-							content = "<div style=\"overflow:auto; width: 100%; height:180px\">";
-							content += "<img src=\"../svg.unsvg?subs_id="+ subs.getId() +"\" alt=\"Generated SVG\" />";
-							content += "</div>";
-						}
-					}		
-					MemCache.put(subs.getId(), content, channel.getLastHarvestDate());
-				}
-				
-			}
-			if(content == null  || content.length() < 13){
-				content = "<p class=\"nocontent\">CONTENT IS NOT AVAILABLE !</p>";
-			}
-			
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception ex) {
-			logger.fatalError(ex);
-		}
-		return content;
-	}
 
-	public Dto queryNewChannel(Channel channel) {
-		Dto parameters = null;
-		try {
-			parameters = new Dto();
-			parameters.put("channel", channel);
-			handler.handleRequest(parameters, BaseChannelServer.QUERY);
-		} catch (Exception ex) {
-			logger.fatalError(ex);
-		}
-		return parameters;
-	}
+    public String getChannelContent(Subscription subs, boolean ignoreCache) {
+        String content = null;
+        try {
 
-	public String testNewChannel(IChannel channel) {
-		Dto parameters = null;
-		try {
-			parameters = new Dto();
-			parameters.put("channel", channel);
-			handler.handleRequest(parameters, BaseChannelServer.TEST);
-		} catch (Exception ex) {
-			logger.fatalError(ex);
-		}
-		return (String) parameters.get("CONTENT");
+            if (ignoreCache || subs.getChannel().getMode().equals("PUSH")){
+                Dto request = new Dto();
+                request.put("subscription", subs);
+                handler.handleRequest(request, BaseChannelServer.DATABASE);
+                content = (String) request.get("CONTENT");              
+            }else{
+                Channel channel = subs.getChannel();
+                CacheItem entry = MemCache.get(subs.getId(),channelFacade.getLastHarvestedDate(channel));
+                if (entry != null) {
+                    logger.debug("Found entry in cache for subscription on channel" + subs.getChannel().getTitle());
+                    content = (String) entry.getContent();
+                } else {
+                    Dto request = new Dto();
+                    request.put("subscription", subs);
+                    handler.handleRequest(request, BaseChannelServer.DATABASE);
+                    content = (String) request.get("CONTENT");
+                    if (content != null && content.length() > 12) {
+                        if (content.indexOf("</svg>") > 0) {
+                            content = "<div style=\"overflow:auto; width: 100%; height:180px\">";
+                            content += "<img src=\"../svg.unsvg?subs_id="+ subs.getId() +"\" alt=\"Generated SVG\" />";
+                            content += "</div>";
+                        }
+                    }       
+                    MemCache.put(subs.getId(), content, channel.getLastHarvestDate());
+                }
+                
+            }
+            if(content == null  || content.length() < 13){
+                content = "<p class=\"nocontent\">CONTENT IS NOT AVAILABLE !</p>";
+            }
+            
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception ex) {
+            logger.fatalError(ex);
+        }
+        return content;
+    }
 
-	}
+    public Dto queryNewChannel(Channel channel) {
+        Dto parameters = null;
+        try {
+            parameters = new Dto();
+            parameters.put("channel", channel);
+            handler.handleRequest(parameters, BaseChannelServer.QUERY);
+        } catch (Exception ex) {
+            logger.fatalError(ex);
+        }
+        return parameters;
+    }
 
-	public void push(String id, User user, String rdf) throws DisabledException, NotFoundException, Exception {
-		Dto request = new Dto();
-		request.put("secondaryId", id);
-		request.put("RDF", rdf);
-		request.put("user", user);
-		handler.handleRequest(request, BaseChannelServer.PUSH);
-	}
+    public String testNewChannel(IChannel channel) {
+        Dto parameters = null;
+        try {
+            parameters = new Dto();
+            parameters.put("channel", channel);
+            handler.handleRequest(parameters, BaseChannelServer.TEST);
+        } catch (Exception ex) {
+            logger.fatalError(ex);
+        }
+        return (String) parameters.get("CONTENT");
 
-	public String createChannel(IChannel channel, User creator) throws Exception {
-		Channel c = (Channel) channel;
-		if (creator.getId() == null) {
-			DAOFactory.getDAOFactory(DAOFactory.HIBERNATE).getUserDao().createUser(creator);
-		}
-		c.setCreator(creator);
-		c.setStatus(new Integer(0));
-		DAOFactory.getDAOFactory(DAOFactory.HIBERNATE).getChannelDao().createChannel((Channel) channel);
+    }
 
-		return c.getSecondaryId();
-	}
+    public void push(String id, User user, String rdf) throws DisabledException, NotFoundException, Exception {
+        Dto request = new Dto();
+        request.put("secondaryId", id);
+        request.put("RDF", rdf);
+        request.put("user", user);
+        handler.handleRequest(request, BaseChannelServer.PUSH);
+    }
 
-	public void invalidateCache() {
-		// TODO Auto-generated method stub
+    public String createChannel(IChannel channel, User creator) throws Exception {
+        Channel c = (Channel) channel;
+        if (creator.getId() == null) {
+            DAOFactory.getDAOFactory(DAOFactory.HIBERNATE).getUserDao().createUser(creator);
+        }
+        c.setCreator(creator);
+        c.setStatus(new Integer(0));
+        DAOFactory.getDAOFactory(DAOFactory.HIBERNATE).getChannelDao().createChannel((Channel) channel);
 
-	}
+        return c.getSecondaryId();
+    }
+
+    public void invalidateCache() {
+        // TODO Auto-generated method stub
+
+    }
 }

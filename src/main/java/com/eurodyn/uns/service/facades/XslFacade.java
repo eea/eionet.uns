@@ -45,10 +45,10 @@ public class XslFacade {
     }
 
     public ResultDto getStylesheets(Dto dto) {
-    	String orderProperty = dto.getAsString("orderProperty");
-    	if(orderProperty == null || orderProperty.length()==0)
-    		orderProperty = "name";    	
-    	String order = dto.getAsString("order");
+        String orderProperty = dto.getAsString("orderProperty");
+        if(orderProperty == null || orderProperty.length()==0)
+            orderProperty = "name";     
+        String order = dto.getAsString("order");
         return getSortedStylesheets(orderProperty, order);
     }
     

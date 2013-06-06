@@ -34,184 +34,184 @@ import com.tee.uit.security.SignOnException;
 
 public class UserFacade {
 
-	private static final WDSLogger logger = WDSLogger.getLogger(UserFacade.class);
+    private static final WDSLogger logger = WDSLogger.getLogger(UserFacade.class);
 
-	private DAOFactory hibernateFactory;
+    private DAOFactory hibernateFactory;
 
-	private DAOFactory ldapFactory;
+    private DAOFactory ldapFactory;
 
-	public UserFacade() {
-		hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HIBERNATE);
-		ldapFactory = DAOFactory.getDAOFactory(DAOFactory.LDAP);
+    public UserFacade() {
+        hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HIBERNATE);
+        ldapFactory = DAOFactory.getDAOFactory(DAOFactory.LDAP);
 
-	}
+    }
 
-	public List findAllUsers() {
-		List users = null;
-		try {
-			users = hibernateFactory.getUserDao().findAllUsers();
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return users;
-	}
+    public List findAllUsers() {
+        List users = null;
+        try {
+            users = hibernateFactory.getUserDao().findAllUsers();
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return users;
+    }
 
-	public User findUser(String username) {
-		User user = null;
-		try {
-			user = hibernateFactory.getUserDao().findUser(username);
-			if (user != null){
-				RoleFacade rf = new RoleFacade();
-				user.setUserRoles(rf.getUserRoles(username));				
-			}
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return user;
-	}
+    public User findUser(String username) {
+        User user = null;
+        try {
+            user = hibernateFactory.getUserDao().findUser(username);
+            if (user != null){
+                RoleFacade rf = new RoleFacade();
+                user.setUserRoles(rf.getUserRoles(username));               
+            }
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return user;
+    }
 
-	public User findUser(Integer id) {
-		User user = null;
-		try {
-			user = hibernateFactory.getUserDao().findUser(id);
-			// RoleFacade rf = new RoleFacade();
-			// user.setUserRoles(rf.getUserRoles(user.username));
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return user;
-	}
+    public User findUser(Integer id) {
+        User user = null;
+        try {
+            user = hibernateFactory.getUserDao().findUser(id);
+            // RoleFacade rf = new RoleFacade();
+            // user.setUserRoles(rf.getUserRoles(user.username));
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return user;
+    }
 
-	public User authenticate(String username, String password) {
-		User user = null;
-		try {
-			if (uitAuthenticate(username, password)) {
-				user = hibernateFactory.getUserDao().findUser(username);
-				// if (user == null && createUser(username)){
-				// RoleFacade rf = new RoleFacade();
-				// user.setUserRoles(rf.getUserRoles(username));
-				// }
-			}
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return user;
-	}
+    public User authenticate(String username, String password) {
+        User user = null;
+        try {
+            if (uitAuthenticate(username, password)) {
+                user = hibernateFactory.getUserDao().findUser(username);
+                // if (user == null && createUser(username)){
+                // RoleFacade rf = new RoleFacade();
+                // user.setUserRoles(rf.getUserRoles(username));
+                // }
+            }
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return user;
+    }
 
-	public boolean updateUser(User user) {
-		boolean success = false;
-		try {
-			hibernateFactory.getUserDao().updateUser(user);
-			success = true;
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return success;
-	}
+    public boolean updateUser(User user) {
+        boolean success = false;
+        try {
+            hibernateFactory.getUserDao().updateUser(user);
+            success = true;
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return success;
+    }
 
-	public boolean uitAuthenticate(String userName, String userPws) {
-		boolean authented = false;
-		try {
+    public boolean uitAuthenticate(String userName, String userPws) {
+        boolean authented = false;
+        try {
 
-			logger.debug("Authenticating user '" + userName + "'");
+            logger.debug("Authenticating user '" + userName + "'");
 
-			AuthMechanism.sessionLogin(userName, userPws);
+            AuthMechanism.sessionLogin(userName, userPws);
 
-			// DirectoryService.sessionLogin(userName, userPws);
-			// String fullName = DirectoryService.getFullName(userName);
+            // DirectoryService.sessionLogin(userName, userPws);
+            // String fullName = DirectoryService.getFullName(userName);
 
-			/*
-			 * user was found in LDAP, now check his rights in ACL Logger.log("Authenticating user '" + userName + "'", 5); AccessControlListIF acl = getAcl(ACL_SERVICE_NAME ); boolean isOK = acl.checkPermission(userName, ACL_UPDATE_PRM); if (!isOK) throw new Exception("User " + userName + " does not have " + "this permission: " + ACL_UPDATE_PRM); // no exceptions raised, so we must be authentic
-			 */
-			// Logger.log("Authenticated!", 5);
-			authented = true;
+            /*
+             * user was found in LDAP, now check his rights in ACL Logger.log("Authenticating user '" + userName + "'", 5); AccessControlListIF acl = getAcl(ACL_SERVICE_NAME ); boolean isOK = acl.checkPermission(userName, ACL_UPDATE_PRM); if (!isOK) throw new Exception("User " + userName + " does not have " + "this permission: " + ACL_UPDATE_PRM); // no exceptions raised, so we must be authentic
+             */
+            // Logger.log("Authenticated!", 5);
+            authented = true;
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("User '" + userName + "' not authenticated");
-		}
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("User '" + userName + "' not authenticated");
+        }
 
-		return authented;
-	}
+        return authented;
+    }
 
-	public static boolean hasPerm(String usr, String aclPath, String prm) {
-		if (!aclPath.startsWith("/"))
-			return false;
+    public static boolean hasPerm(String usr, String aclPath, String prm) {
+        if (!aclPath.startsWith("/"))
+            return false;
 
-		boolean has = false;
-		AccessControlListIF acl = null;
-		int i = aclPath.length() <= 1 ? -1 : aclPath.indexOf("/", 1); // not
-		// forgetting
-		// root
-		// path
-		// ("/")
+        boolean has = false;
+        AccessControlListIF acl = null;
+        int i = aclPath.length() <= 1 ? -1 : aclPath.indexOf("/", 1); // not
+        // forgetting
+        // root
+        // path
+        // ("/")
 
-		try {
-			while (i != -1 && !has) {
-				String subPath = aclPath.substring(0, i);
-				try {
-					acl = AccessController.getAcl(subPath);
-				} catch (Exception e) {
-					acl = null;
-				}
+        try {
+            while (i != -1 && !has) {
+                String subPath = aclPath.substring(0, i);
+                try {
+                    acl = AccessController.getAcl(subPath);
+                } catch (Exception e) {
+                    acl = null;
+                }
 
-				if (acl != null)
-					has = acl.checkPermission(usr, prm);
+                if (acl != null)
+                    has = acl.checkPermission(usr, prm);
 
-				i = aclPath.indexOf("/", i + 1);
-			}
-			if (!has) {
-				try {
-					acl = AccessController.getAcl(aclPath);
-				} catch (Exception e) {
-					logger.error(e);
-					acl = null;
-				}
+                i = aclPath.indexOf("/", i + 1);
+            }
+            if (!has) {
+                try {
+                    acl = AccessController.getAcl(aclPath);
+                } catch (Exception e) {
+                    logger.error(e);
+                    acl = null;
+                }
 
-				if (acl != null)
-					has = acl.checkPermission(usr, prm);
-			}
-		} catch (SignOnException e) {
-			return false;
-		}
+                if (acl != null)
+                    has = acl.checkPermission(usr, prm);
+            }
+        } catch (SignOnException e) {
+            return false;
+        }
 
-		return has;
-	}
+        return has;
+    }
 
-	public User getUser(String userName, boolean create) {
-		User user = null;
-		try {
-			user = hibernateFactory.getUserDao().findUser(userName);
-			if (user == null && create) {
-				user = new User(userName);
-				user.setVacationFlag(Boolean.FALSE);
-				ldapFactory.getUserDao().fillUserAttributes(user);
-				if (user.getFullName() == null) { // local user
-					user.setFullName(AuthMechanism.getFullName(userName));
-				}
+    public User getUser(String userName, boolean create) {
+        User user = null;
+        try {
+            user = hibernateFactory.getUserDao().findUser(userName);
+            if (user == null && create) {
+                user = new User(userName);
+                user.setVacationFlag(Boolean.FALSE);
+                ldapFactory.getUserDao().fillUserAttributes(user);
+                if (user.getFullName() == null) { // local user
+                    user.setFullName(AuthMechanism.getFullName(userName));
+                }
 
-				user.setNumberOfColumns(new Short((short) 2));
-				user.setPageRefreshDelay(new Integer(60));
-				user.setPreferHtml(Boolean.FALSE);
-				user.setPreferDashboard(Boolean.TRUE);
-				hibernateFactory.getUserDao().createUser(user);
-			}
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return user;
-	}
+                user.setNumberOfColumns(new Short((short) 2));
+                user.setPageRefreshDelay(new Integer(60));
+                user.setPreferHtml(Boolean.FALSE);
+                user.setPreferDashboard(Boolean.TRUE);
+                hibernateFactory.getUserDao().createUser(user);
+            }
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return user;
+    }
 
 }

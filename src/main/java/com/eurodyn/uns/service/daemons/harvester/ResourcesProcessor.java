@@ -79,7 +79,7 @@ public class ResourcesProcessor implements IRdfProcessStrategy {
             Property predicate = stmt.getPredicate();
             RDFNode object = stmt.getObject();
             if (!subject.equals(channelRes) && !subject.equals(image) && object instanceof Literal && !predicate.equals(RDF.type) && !subject.isAnon()) {
-        		if (!properties.contains(predicate.toString())) {
+                if (!properties.contains(predicate.toString())) {
                     properties.add(predicate.toString());
                 }
             }
@@ -94,7 +94,7 @@ public class ResourcesProcessor implements IRdfProcessStrategy {
             Property predicate = stmt.getPredicate();
             RDFNode object = stmt.getObject();
             if (!subject.equals(channelRes) && !subject.equals(image) && object instanceof Literal && !predicate.equals(RDF.type) && !subject.isAnon()) {
-        		if (!data.containsKey(subject.toString())) {
+                if (!data.containsKey(subject.toString())) {
                     Map elements=new HashMap();
                     data.put(subject.toString(),elements);
                     for (Iterator iterator = properties.iterator(); iterator.hasNext();) {

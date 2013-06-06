@@ -25,31 +25,31 @@ import org.w3c.dom.Document;
 
 public class XmlContext extends XmlCommon implements IXmlCtx {
 
-	public XmlContext() {
-	}
+    public XmlContext() {
+    }
 
 
-	public IXUpdate getManager() {
-		return new XmlManager(this);
-	}
+    public IXUpdate getManager() {
+        return new XmlManager(this);
+    }
 
 
-	public IXmlSerializer getSerializer() {
-		return new XmlSerialization(this);
-	}
-	
-	public IXQuery getQueryManager() {
-		return new XmlQuery(this);
-	}
+    public IXmlSerializer getSerializer() {
+        return new XmlSerialization(this);
+    }
+    
+    public IXQuery getQueryManager() {
+        return new XmlQuery(this);
+    }
 
 
-	public Document getDocument() {
-		return document;
-	}
+    public Document getDocument() {
+        return document;
+    }
 
 
-	public void setDocument(Document document) {
-		this.document = document;
-	}
+    public void setDocument(Document document) {
+        this.document = document;
+    }
 
 }

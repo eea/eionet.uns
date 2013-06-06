@@ -1,7 +1,7 @@
 package com.eurodyn.uns.util;
 
 import java.lang.reflect.Array;
-	
+    
 
 
 /**
@@ -19,9 +19,9 @@ import java.lang.reflect.Array;
 *  }
 * </pre>
 */
-	public final class HashCodeUtil {
+    public final class HashCodeUtil {
  
-	  /**
+      /**
   * An initial value for a <code>hashCode</code>, to which is added contributions
   * from fields. Using a non-zero value decreases collisons of <code>hashCode</code>
   * values.

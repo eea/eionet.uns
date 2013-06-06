@@ -27,7 +27,7 @@ import com.eurodyn.uns.model.Role;
 
 public interface IRoleDao {
     public List findAllRoles() throws DAOException;
-	public Role findByPK(Integer id) throws DAOException;
-	public List findUserRoles(String user) throws DAOException;
-	public void updateRoles(List roles) throws DAOException;
+    public Role findByPK(Integer id) throws DAOException;
+    public List findUserRoles(String user) throws DAOException;
+    public void updateRoles(List roles) throws DAOException;
 }

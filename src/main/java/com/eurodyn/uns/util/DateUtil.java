@@ -53,8 +53,8 @@ public class DateUtil {
    }
 
    public static Date dateFormatWithTime(String date) throws ParseException {
-	      SimpleDateFormat newFormat = new SimpleDateFormat(messagePattern1);
-	      return newFormat.parse(date);
+          SimpleDateFormat newFormat = new SimpleDateFormat(messagePattern1);
+          return newFormat.parse(date);
    }
 
    /**
@@ -70,8 +70,8 @@ public class DateUtil {
    }
    
    public static Date dateFormatNoTime(String date) throws ParseException {
-	      SimpleDateFormat newFormat = new SimpleDateFormat(messagePattern2);
-	      return newFormat.parse(date);
+          SimpleDateFormat newFormat = new SimpleDateFormat(messagePattern2);
+          return newFormat.parse(date);
    }
    
    /**
@@ -88,7 +88,7 @@ public class DateUtil {
    }
    
    public static long getCurrentUTC() {
-	   Calendar c = Calendar.getInstance();
+       Calendar c = Calendar.getInstance();
        c.setTime(new Date());
        c.setTimeZone(TimeZone.getTimeZone("UTC"));
        
@@ -112,7 +112,7 @@ public class DateUtil {
    
    
    public static Date getCurrentUTCDate() {
-	   Calendar c = Calendar.getInstance();
+       Calendar c = Calendar.getInstance();
        c.setTime(new Date());
        c.setTimeZone(TimeZone.getTimeZone("UTC"));
        
@@ -141,7 +141,7 @@ public class DateUtil {
 
    
    public static long getUTCTime(Date date) {
-	   Calendar c = Calendar.getInstance();
+       Calendar c = Calendar.getInstance();
        c.setTime(date);
        c.setTimeZone(TimeZone.getTimeZone("UTC"));
        c.getTime();

@@ -10,113 +10,113 @@ import java.util.Date;
 
 public class Delivery implements java.io.Serializable {
 
-	// Fields
-	private static final long serialVersionUID = 6443270929313798783L;
-	
-	private DeliveryNotification id;
-	
-	private int   deliveryStatus;
+    // Fields
+    private static final long serialVersionUID = 6443270929313798783L;
+    
+    private DeliveryNotification id;
+    
+    private int   deliveryStatus;
 
-	private Date deliveryTime;
-	
-	private DeliveryType deliveryType;
-	
-	private Notification notification;
+    private Date deliveryTime;
+    
+    private DeliveryType deliveryType;
+    
+    private Notification notification;
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public Delivery() {
-	}
+    /** default constructor */
+    public Delivery() {
+    }
 
-	// Property accessors
+    // Property accessors
 
-	public int getDeliveryStatus() {
-		return this.deliveryStatus;
-	}
+    public int getDeliveryStatus() {
+        return this.deliveryStatus;
+    }
 
-	public void setDeliveryStatus(int deliveryStatus) {
-		this.deliveryStatus = deliveryStatus;
-	}
+    public void setDeliveryStatus(int deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
+    }
 
-	public Date getDeliveryTime() {
-		return this.deliveryTime;
-	}
+    public Date getDeliveryTime() {
+        return this.deliveryTime;
+    }
 
-	public void setDeliveryTime(Date deliveryTime) {
-		this.deliveryTime = deliveryTime;
-	}
+    public void setDeliveryTime(Date deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
 
-	public DeliveryType getDeliveryType() {
-		return deliveryType;
-	}
-	
-	public void setDeliveryType(DeliveryType deliveryType) {
-		this.deliveryType = deliveryType;
-	}
+    public DeliveryType getDeliveryType() {
+        return deliveryType;
+    }
+    
+    public void setDeliveryType(DeliveryType deliveryType) {
+        this.deliveryType = deliveryType;
+    }
 
-	public Notification getNotification() {
-		return notification;
-	}
+    public Notification getNotification() {
+        return notification;
+    }
 
-	public void setNotification(Notification notification) {
-		this.notification = notification;
-	}
+    public void setNotification(Notification notification) {
+        this.notification = notification;
+    }
 
-	public DeliveryNotification getId() {
-		return id;
-	}
+    public DeliveryNotification getId() {
+        return id;
+    }
 
-	public void setId(DeliveryNotification id) {
-		this.id = id;
-	}
+    public void setId(DeliveryNotification id) {
+        this.id = id;
+    }
 
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + deliveryStatus;
-		result = prime * result
-				+ ((deliveryTime == null) ? 0 : deliveryTime.hashCode());
-		result = prime * result
-				+ ((deliveryType == null) ? 0 : deliveryType.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((notification == null) ? 0 : notification.hashCode());
-		return result;
-	}
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + deliveryStatus;
+        result = prime * result
+                + ((deliveryTime == null) ? 0 : deliveryTime.hashCode());
+        result = prime * result
+                + ((deliveryType == null) ? 0 : deliveryType.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result
+                + ((notification == null) ? 0 : notification.hashCode());
+        return result;
+    }
 
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Delivery other = (Delivery) obj;
-		if (deliveryStatus != other.deliveryStatus)
-			return false;
-		if (deliveryTime == null) {
-			if (other.deliveryTime != null)
-				return false;
-		} else if (!deliveryTime.equals(other.deliveryTime))
-			return false;
-		if (deliveryType == null) {
-			if (other.deliveryType != null)
-				return false;
-		} else if (!deliveryType.equals(other.deliveryType))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (notification == null) {
-			if (other.notification != null)
-				return false;
-		} else if (!notification.equals(other.notification))
-			return false;
-		return true;
-	}
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Delivery other = (Delivery) obj;
+        if (deliveryStatus != other.deliveryStatus)
+            return false;
+        if (deliveryTime == null) {
+            if (other.deliveryTime != null)
+                return false;
+        } else if (!deliveryTime.equals(other.deliveryTime))
+            return false;
+        if (deliveryType == null) {
+            if (other.deliveryType != null)
+                return false;
+        } else if (!deliveryType.equals(other.deliveryType))
+            return false;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (notification == null) {
+            if (other.notification != null)
+                return false;
+        } else if (!notification.equals(other.notification))
+            return false;
+        return true;
+    }
 
 
 }

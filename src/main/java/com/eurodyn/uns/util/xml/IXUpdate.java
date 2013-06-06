@@ -24,20 +24,20 @@ package com.eurodyn.uns.util.xml;
 
 public interface IXUpdate {
 
-	
-	
-	public void insertElement(String parentElementName, String elementName) throws XmlException;
+    
+    
+    public void insertElement(String parentElementName, String elementName) throws XmlException;
 
-	public void insertAttribute(String parentElementName, String attributeName, String attributeValue) throws XmlException;
-	
-	
-	/**
-	 * Update text value of the existing XML element.
-	 * 
-	 */	
-	public void updateElement(String parentId, String name, String newValue) throws XmlException;
-	
-	
-	public void deleteElement(String parentId,String name) throws XmlException;
+    public void insertAttribute(String parentElementName, String attributeName, String attributeValue) throws XmlException;
+    
+    
+    /**
+     * Update text value of the existing XML element.
+     * 
+     */ 
+    public void updateElement(String parentId, String name, String newValue) throws XmlException;
+    
+    
+    public void deleteElement(String parentId,String name) throws XmlException;
 
 }

@@ -28,77 +28,77 @@ import java.io.Serializable;
  */
 public class Role implements Serializable {
 
-	private static final long serialVersionUID = -3976232324025037068L;
+    private static final long serialVersionUID = -3976232324025037068L;
 
-	private Integer id;
+    private Integer id;
 
-	private String name;
+    private String name;
 
-	private String fullDn;
+    private String fullDn;
 
-	public Role() {
-	}
+    public Role() {
+    }
 
-	public Role(Integer id) {
-	}
+    public Role(Integer id) {
+    }
 
-	public String getFullDn() {
-		return fullDn;
-	}
+    public String getFullDn() {
+        return fullDn;
+    }
 
-	public void setFullDn(String fullDn) {
-		this.fullDn = fullDn;
-	}
+    public void setFullDn(String fullDn) {
+        this.fullDn = fullDn;
+    }
 
-	public String getLocalName() {
-		String localName = name.substring(name.indexOf("=") + 1);
-		int i = localName.indexOf(",");
-		if (i > 0) {
-			localName = localName.substring(0, i);
-		}
+    public String getLocalName() {
+        String localName = name.substring(name.indexOf("=") + 1);
+        int i = localName.indexOf(",");
+        if (i > 0) {
+            localName = localName.substring(0, i);
+        }
 
-		return localName;
-	}
+        return localName;
+    }
 
-	/**
-	 * @hibernate.property column="EXT_ID" length="50"
-	 * @return String
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * @hibernate.property column="EXT_ID" length="50"
+     * @return String
+     */
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * 
-	 * @hibernate.id column="ID" generator-class="native"
-	 */
-	public Integer getId() {
-		return id;
-	}
+    /**
+     * 
+     * @hibernate.id column="ID" generator-class="native"
+     */
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public boolean equals(Object other) {
-		if ((this == other))
-			return true;
-		if ((other == null))
-			return false;
-		if (!(other instanceof Role))
-			return false;
+    public boolean equals(Object other) {
+        if ((this == other))
+            return true;
+        if ((other == null))
+            return false;
+        if (!(other instanceof Role))
+            return false;
 
-		Role castOther = (Role) other;
+        Role castOther = (Role) other;
 
-		return (this.getName().equals(castOther.getName()));
-	}
+        return (this.getName().equals(castOther.getName()));
+    }
 
-	public int hashCode() {
-		return this.getName().hashCode();
-	}
+    public int hashCode() {
+        return this.getName().hashCode();
+    }
 
 }

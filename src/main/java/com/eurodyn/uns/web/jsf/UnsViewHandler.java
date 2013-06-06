@@ -172,7 +172,7 @@ public class UnsViewHandler extends ViewHandler
         ComponentDefinition definition = null;
         try
         {
-      	  
+          
             if (viewId.indexOf("dashboard.jsp") > -1) tilesId = "/dashboard.tiles";
             if (viewId.indexOf("rssReader.jsp") > -1) tilesId = "/rssReader.tiles";
               

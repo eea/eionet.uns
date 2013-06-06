@@ -39,57 +39,57 @@ import com.eurodyn.uns.util.xml.XSLTransformer;
 import com.hp.hpl.jena.mem.ModelMem;
 
 public class RdfContext {
-	private static final WDSLogger logger = WDSLogger.getLogger(RdfContext.class);
+    private static final WDSLogger logger = WDSLogger.getLogger(RdfContext.class);
 
-	private IChannel channel;
-	ModelMem model;
-
-
-	public RdfContext() {
-	}
+    private IChannel channel;
+    ModelMem model;
 
 
-	public RdfContext(IChannel channel) throws Exception {
-		this.channel = channel;
-		model = new ModelMem();
-		load();
-	}
+    public RdfContext() {
+    }
 
 
-	public Map getData(IRdfProcessStrategy how) throws Exception {
-		Map result = null;
-		if (channel != null) {
-			result = how.collect(model, channel);
-		}
-		return result;
-	}
+    public RdfContext(IChannel channel) throws Exception {
+        this.channel = channel;
+        model = new ModelMem();
+        load();
+    }
 
 
-	private void load() throws Exception {
-		load(this.channel);
-	}
+    public Map getData(IRdfProcessStrategy how) throws Exception {
+        Map result = null;
+        if (channel != null) {
+            result = how.collect(model, channel);
+        }
+        return result;
+    }
 
 
-	private void load(IChannel channel) throws Exception {
-		String channelContent = channel.getContent();
-		if (channelContent != null)
-			model.read(new BufferedReader(new StringReader(channelContent)),"");
-		else{
-			String URI = channel.getFeedUrl();
-			URLReader urlReader=new URLReader();
-			ByteArrayInputStream stream = urlReader.getContentAsInStream(URI);
-			if (isRss(stream)) {
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				intoRdf(stream, baos);
-				byte result [] = baos.toByteArray();
-				model.read(new ByteArrayInputStream(result), "");
-				channel.setContent(new String(result,"UTF-8"));
-			} else {
-				model.read(stream,"");
-				channel.setContent( toString(stream));				
-			}
-		}
-	}
+    private void load() throws Exception {
+        load(this.channel);
+    }
+
+
+    private void load(IChannel channel) throws Exception {
+        String channelContent = channel.getContent();
+        if (channelContent != null)
+            model.read(new BufferedReader(new StringReader(channelContent)),"");
+        else{
+            String URI = channel.getFeedUrl();
+            URLReader urlReader=new URLReader();
+            ByteArrayInputStream stream = urlReader.getContentAsInStream(URI);
+            if (isRss(stream)) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                intoRdf(stream, baos);
+                byte result [] = baos.toByteArray();
+                model.read(new ByteArrayInputStream(result), "");
+                channel.setContent(new String(result,"UTF-8"));
+            } else {
+                model.read(stream,"");
+                channel.setContent( toString(stream));              
+            }
+        }
+    }
 
 
     private boolean isRss(ByteArrayInputStream stream) throws Exception {
@@ -108,30 +108,30 @@ public class RdfContext {
     }
     
 /*   
-	private boolean isRss(byte[] stream) throws Exception {
+    private boolean isRss(byte[] stream) throws Exception {
       return isRss(new ByteArrayInputStream(stream));
     }
 */
 
-	private ByteArrayOutputStream intoRdf(InputStream rssContent, ByteArrayOutputStream baos) throws Exception {
-		XSLTransformer transform = new XSLTransformer();
-		InputSource source = new InputSource(rssContent);
-		//source.setEncoding("UTF-8");
-		String xslfilename = AppConfigurator.getInstance().getApplicationHome() + "/xsl/rss2rdf.xsl";
-		transform.transform(xslfilename, source, baos, null);
-		return baos;
-	}
-	
-	private String toString(final InputStream in) throws IOException {
-	 
-	   byte[] buffer = new byte[2048];
-	   ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-	   int bytesRead = in.read(buffer);
-	   while (bytesRead >= 0) {
-	       byteOut.write(buffer, 0, bytesRead);
-	       bytesRead = in.read(buffer);
-	   }
-	   return new String(byteOut.toByteArray(),"UTF-8");
-	}
-	
+    private ByteArrayOutputStream intoRdf(InputStream rssContent, ByteArrayOutputStream baos) throws Exception {
+        XSLTransformer transform = new XSLTransformer();
+        InputSource source = new InputSource(rssContent);
+        //source.setEncoding("UTF-8");
+        String xslfilename = AppConfigurator.getInstance().getApplicationHome() + "/xsl/rss2rdf.xsl";
+        transform.transform(xslfilename, source, baos, null);
+        return baos;
+    }
+    
+    private String toString(final InputStream in) throws IOException {
+     
+       byte[] buffer = new byte[2048];
+       ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+       int bytesRead = in.read(buffer);
+       while (bytesRead >= 0) {
+           byteOut.write(buffer, 0, bytesRead);
+           bytesRead = in.read(buffer);
+       }
+       return new String(byteOut.toByteArray(),"UTF-8");
+    }
+    
 }

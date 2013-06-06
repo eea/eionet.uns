@@ -27,18 +27,18 @@ import com.eurodyn.uns.model.NotificationTemplate;
 
 public interface INotificationTemplateDao {
 
-	public List findAllNotificationTemplates() throws DAOException;
+    public List findAllNotificationTemplates() throws DAOException;
 
-	public List findAllNotificationTemplates(String orderProperty, String order) throws DAOException;
+    public List findAllNotificationTemplates(String orderProperty, String order) throws DAOException;
 
-	public NotificationTemplate findByPK(Integer metadataElementId) throws DAOException;
+    public NotificationTemplate findByPK(Integer metadataElementId) throws DAOException;
 
-	public void updateNotificationTemplate(NotificationTemplate me) throws DAOException;
+    public void updateNotificationTemplate(NotificationTemplate me) throws DAOException;
 
-	public void createNotificationTemplate(NotificationTemplate me) throws DAOException;
+    public void createNotificationTemplate(NotificationTemplate me) throws DAOException;
 
-	public boolean deleteNotificationTemplate(NotificationTemplate me) throws DAOException;
+    public boolean deleteNotificationTemplate(NotificationTemplate me) throws DAOException;
 
-	public List findNotificationTemplatesForAssigment() throws DAOException;
+    public List findNotificationTemplatesForAssigment() throws DAOException;
 
 }

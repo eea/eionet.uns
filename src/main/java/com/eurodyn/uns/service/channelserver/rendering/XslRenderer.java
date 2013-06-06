@@ -47,83 +47,83 @@ import com.hp.hpl.jena.vocabulary.RSS;
 
 public class XslRenderer implements IRenderStrategy {
 
-	public static XSLTransformer transform;
+    public static XSLTransformer transform;
 
-	static {
-		transform = new XSLTransformer();
-	}
+    static {
+        transform = new XSLTransformer();
+    }
 
-	public String render(Channel channel, Map things) throws Exception {
-		InputSource source = null;
+    public String render(Channel channel, Map things) throws Exception {
+        InputSource source = null;
 
-		String url = channel.getFeedUrl();
-		
-		if (things != null){
-			String rssContent = toRss(channel,things);
-			source = new InputSource(new BufferedReader(new StringReader(rssContent)));
-		}		
-		else if (channel.getContent() != null) {
-			URLReader urlReader = new URLReader();
-			InputStream stream = urlReader.getContentAsInStream(url);
-			source = new InputSource(stream);
-			source.setSystemId(url);
-			
-		} else {
-			URLReader urlReader = new URLReader();
-			InputStream stream = urlReader.getContentAsInStream(url);
-			source = new InputSource(stream);
-			source.setSystemId(url);
-		}
+        String url = channel.getFeedUrl();
+        
+        if (things != null){
+            String rssContent = toRss(channel,things);
+            source = new InputSource(new BufferedReader(new StringReader(rssContent)));
+        }       
+        else if (channel.getContent() != null) {
+            URLReader urlReader = new URLReader();
+            InputStream stream = urlReader.getContentAsInStream(url);
+            source = new InputSource(stream);
+            source.setSystemId(url);
+            
+        } else {
+            URLReader urlReader = new URLReader();
+            InputStream stream = urlReader.getContentAsInStream(url);
+            source = new InputSource(stream);
+            source.setSystemId(url);
+        }
 
-		Map parameters = new HashMap();
-		parameters.put("openinpopup", "true");
-		parameters.put("showdescription", "true");
-		parameters.put("showtitle", "true");
+        Map parameters = new HashMap();
+        parameters.put("openinpopup", "true");
+        parameters.put("showdescription", "true");
+        parameters.put("showtitle", "true");
 
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		transform.transform(channel.getTransformation().getName(), channel.getTransformation().getContent(), source, baos, parameters);
-		return baos.toString();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        transform.transform(channel.getTransformation().getName(), channel.getTransformation().getContent(), source, baos, parameters);
+        return baos.toString();
 
-	}
+    }
 
-	public String toRss(Channel channel, Map things) throws Exception {
+    public String toRss(Channel channel, Map things) throws Exception {
 
-		
-		Model rdf = ModelFactory.createDefaultModel();
-		rdf.setNsPrefix("", "http://purl.org/rss/1.0/");
-		rdf.setNsPrefix("content", "http://purl.org/rss/1.0/modules/content/");
-		rdf.setNsPrefix("slash", "http://purl.org/rss/1.0/modules/slash/");
-		Resource rssChannel = rdf.createResource(RSS.channel);
-		rssChannel.addProperty(RSS.title, channel.getTitle());
-		if (channel.getFeedUrl() != null)
-			rssChannel.addProperty(RSS.link, channel.getFeedUrl());
-		rssChannel.addProperty(RSS.description, channel.getDescription());
-		try {
-			Iterator it = things.entrySet().iterator();
-			while (it.hasNext()) {
-				Map.Entry pairs = (Map.Entry) it.next();
-				RDFThing rdfThing = (RDFThing) pairs.getValue();
-				Resource item = rdf.createResource(rdfThing.getExt_id(), ResourceFactory.createResource(rdfThing.getType()));
-				Iterator iter = rdfThing.getMetadata().entrySet().iterator();
-				while (iter.hasNext()) {
-					Map.Entry pairs2 = (Map.Entry) iter.next();
-					String pred = (String) pairs2.getKey();
-					ArrayList values = (ArrayList) pairs2.getValue();
-					for (int i = 0; i < values.size(); i++) {
-						item.addProperty(ResourceFactory.createProperty(pred) , (String) values.get(i));
-					}
-				}
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        
+        Model rdf = ModelFactory.createDefaultModel();
+        rdf.setNsPrefix("", "http://purl.org/rss/1.0/");
+        rdf.setNsPrefix("content", "http://purl.org/rss/1.0/modules/content/");
+        rdf.setNsPrefix("slash", "http://purl.org/rss/1.0/modules/slash/");
+        Resource rssChannel = rdf.createResource(RSS.channel);
+        rssChannel.addProperty(RSS.title, channel.getTitle());
+        if (channel.getFeedUrl() != null)
+            rssChannel.addProperty(RSS.link, channel.getFeedUrl());
+        rssChannel.addProperty(RSS.description, channel.getDescription());
+        try {
+            Iterator it = things.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pairs = (Map.Entry) it.next();
+                RDFThing rdfThing = (RDFThing) pairs.getValue();
+                Resource item = rdf.createResource(rdfThing.getExt_id(), ResourceFactory.createResource(rdfThing.getType()));
+                Iterator iter = rdfThing.getMetadata().entrySet().iterator();
+                while (iter.hasNext()) {
+                    Map.Entry pairs2 = (Map.Entry) iter.next();
+                    String pred = (String) pairs2.getKey();
+                    ArrayList values = (ArrayList) pairs2.getValue();
+                    for (int i = 0; i < values.size(); i++) {
+                        item.addProperty(ResourceFactory.createProperty(pred) , (String) values.get(i));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		StringWriter out = new StringWriter();
-		RDFWriter writer = rdf.getWriter("RDF/XML-ABBREV");
-		writer.write(rdf, new BufferedWriter(out), null);		
-		return out.toString();
+        StringWriter out = new StringWriter();
+        RDFWriter writer = rdf.getWriter("RDF/XML-ABBREV");
+        writer.write(rdf, new BufferedWriter(out), null);       
+        return out.toString();
 
-	}
+    }
 
 }

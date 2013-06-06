@@ -37,52 +37,52 @@ import com.eurodyn.uns.dao.IUserDao;
 
 public class HibernateDAOFactory extends DAOFactory {
 
-	public IFeedDao getFeedDao() {
-		return null;
-	}
+    public IFeedDao getFeedDao() {
+        return null;
+    }
 
-	public IChannelDao getChannelDao() {
-		return new HibernateChannelDao();
-	}
+    public IChannelDao getChannelDao() {
+        return new HibernateChannelDao();
+    }
 
-	public IUserDao getUserDao() {
-		return new HibernateUserDao();
-	}
+    public IUserDao getUserDao() {
+        return new HibernateUserDao();
+    }
 
-	public IStylesheetDao getStylesheetDao() {
-		return new HibernateStylesheetDao();
-	}
+    public IStylesheetDao getStylesheetDao() {
+        return new HibernateStylesheetDao();
+    }
 
-	public IMetadataElementDao getMetadataElementDao() {
-		return new HibernateMetadataElementDao();
-	}
+    public IMetadataElementDao getMetadataElementDao() {
+        return new HibernateMetadataElementDao();
+    }
 
-	public IRoleDao getRoleDao() {
-		return new HibernateRoleDao();
-	}
+    public IRoleDao getRoleDao() {
+        return new HibernateRoleDao();
+    }
 
-	public IDeliveryTypeDao getDeliveryTypeDao() {
-		return new HibernateDeliveryTypeDao();
-	}
-	
-	public IDeliveryDao getDeliveryDao() {
-		return new HibernateDeliveryDao();
-	}
+    public IDeliveryTypeDao getDeliveryTypeDao() {
+        return new HibernateDeliveryTypeDao();
+    }
+    
+    public IDeliveryDao getDeliveryDao() {
+        return new HibernateDeliveryDao();
+    }
 
-	public INotificationTemplateDao getNotificationTemplateDao() {
-		return new HibernateNotificationTemplateDao();
-	}
+    public INotificationTemplateDao getNotificationTemplateDao() {
+        return new HibernateNotificationTemplateDao();
+    }
 
-	public ISubscriptionDao getSubscriptionDao() {
-		return new HibernateSubscriptionDao();
-	}
+    public ISubscriptionDao getSubscriptionDao() {
+        return new HibernateSubscriptionDao();
+    }
 
-	public IEventMetadataDao getEventMetadataDao() {
-		return new HibernateEventMetadataDao();
-	}
+    public IEventMetadataDao getEventMetadataDao() {
+        return new HibernateEventMetadataDao();
+    }
 
-	public INotificationDao getNotificationDao() {
-		return new HibernateNotificationDao();
-	}
+    public INotificationDao getNotificationDao() {
+        return new HibernateNotificationDao();
+    }
 
 }

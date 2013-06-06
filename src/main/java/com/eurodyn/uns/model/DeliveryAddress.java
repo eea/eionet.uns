@@ -25,66 +25,66 @@ import java.io.Serializable;
 
 public class DeliveryAddress implements Serializable {
 
-	private static final long serialVersionUID = -2905658215261453682L;
+    private static final long serialVersionUID = -2905658215261453682L;
 
-	// Fields
+    // Fields
 
-	private long id;
+    private long id;
 
-	private String address;
+    private String address;
 
-	private DeliveryType deliveryType;
+    private DeliveryType deliveryType;
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public DeliveryAddress() {
-	}
+    /** default constructor */
+    public DeliveryAddress() {
+    }
 
-	/** minimal constructor */
-	public DeliveryAddress(long id) {
-		this.id = id;
-	}
+    /** minimal constructor */
+    public DeliveryAddress(long id) {
+        this.id = id;
+    }
 
-	/** minimal constructor */
-	public DeliveryAddress(String address) {
-		this.address = address;
-	}
+    /** minimal constructor */
+    public DeliveryAddress(String address) {
+        this.address = address;
+    }
 
-	public DeliveryAddress(DeliveryType deliveryType) {
-		this.deliveryType = deliveryType;
-	}
+    public DeliveryAddress(DeliveryType deliveryType) {
+        this.deliveryType = deliveryType;
+    }
 
-	/** full constructor */
-	public DeliveryAddress(long id, String address) {
-		this.id = id;
-		this.address = address;
-	}
+    /** full constructor */
+    public DeliveryAddress(long id, String address) {
+        this.id = id;
+        this.address = address;
+    }
 
-	// Property accessors
+    // Property accessors
 
-	public long getId() {
-		return this.id;
-	}
+    public long getId() {
+        return this.id;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public String getAddress() {
-		return this.address;
-	}
+    public String getAddress() {
+        return this.address;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public DeliveryType getDeliveryType() {
-		return deliveryType;
-	}
+    public DeliveryType getDeliveryType() {
+        return deliveryType;
+    }
 
-	public void setDeliveryType(DeliveryType deliveryType) {
-		this.deliveryType = deliveryType;
-	}
+    public void setDeliveryType(DeliveryType deliveryType) {
+        this.deliveryType = deliveryType;
+    }
 
 }

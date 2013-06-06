@@ -44,10 +44,10 @@ public class NotificationTemplateFacade {
     }
 
     public ResultDto getNotificationTemplates(Dto dto) {
-    	String orderProperty = dto.getAsString("orderProperty");
-    	if(orderProperty == null || orderProperty.length()==0)
-    		orderProperty = "name";    	
-    	String order = dto.getAsString("order");
+        String orderProperty = dto.getAsString("orderProperty");
+        if(orderProperty == null || orderProperty.length()==0)
+            orderProperty = "name";     
+        String order = dto.getAsString("order");
         return getSortedNotificationTemplates(orderProperty, order);
     }
     
@@ -111,8 +111,8 @@ public class NotificationTemplateFacade {
     }
 
     public List findNotificationTemplatesForAssigment() throws Exception {
-	    return daoFactory.getNotificationTemplateDao().findNotificationTemplatesForAssigment();
-	    
+        return daoFactory.getNotificationTemplateDao().findNotificationTemplatesForAssigment();
+        
     }
     
 

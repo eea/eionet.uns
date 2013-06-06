@@ -16,52 +16,52 @@ import com.eurodyn.uns.dao.IUserDao;
 
 public class JdbcDaoFactory extends DAOFactory {
 
-	public IChannelDao getChannelDao() {
-		return new JdbcChannelDao();
-	}
+    public IChannelDao getChannelDao() {
+        return new JdbcChannelDao();
+    }
 
-	public IUserDao getUserDao() {
-		return null;
-	}
+    public IUserDao getUserDao() {
+        return null;
+    }
 
-	public IStylesheetDao getStylesheetDao() {
-		return null;
-	}
+    public IStylesheetDao getStylesheetDao() {
+        return null;
+    }
 
-	public IRoleDao getRoleDao() {
-		return null;
-	}
+    public IRoleDao getRoleDao() {
+        return null;
+    }
 
-	public IMetadataElementDao getMetadataElementDao() {
-		return null;
-	}
+    public IMetadataElementDao getMetadataElementDao() {
+        return null;
+    }
 
-	public IDeliveryTypeDao getDeliveryTypeDao() {
-		return null;
-	}
-	
-	public IDeliveryDao getDeliveryDao() {
-		return null;
-	}
+    public IDeliveryTypeDao getDeliveryTypeDao() {
+        return null;
+    }
+    
+    public IDeliveryDao getDeliveryDao() {
+        return null;
+    }
 
-	public INotificationTemplateDao getNotificationTemplateDao() {
-		return null;
-	}
+    public INotificationTemplateDao getNotificationTemplateDao() {
+        return null;
+    }
 
-	public ISubscriptionDao getSubscriptionDao() {
-		return null;
-	}
+    public ISubscriptionDao getSubscriptionDao() {
+        return null;
+    }
 
-	public IFeedDao getFeedDao() {
-		return new JdbcFeedDao();
-	}
+    public IFeedDao getFeedDao() {
+        return new JdbcFeedDao();
+    }
 
-	public IEventMetadataDao getEventMetadataDao() {
-		return new JdbcEventMetadataDao();
-	}
+    public IEventMetadataDao getEventMetadataDao() {
+        return new JdbcEventMetadataDao();
+    }
 
-	public INotificationDao getNotificationDao() {
-		return new JdbcNotificationDao();
-	}
+    public INotificationDao getNotificationDao() {
+        return new JdbcNotificationDao();
+    }
 
 }

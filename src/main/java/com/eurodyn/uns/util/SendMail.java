@@ -20,8 +20,8 @@ import com.eurodyn.uns.util.common.WDSLogger;
  * Send notifications by email
 */
 public class SendMail implements java.io.Serializable {
-	
-	private static final WDSLogger logger = WDSLogger.getLogger(SendMail.class);
+    
+    private static final WDSLogger logger = WDSLogger.getLogger(SendMail.class);
 
   /**
    * Creates a new instance of SendMail.
@@ -38,66 +38,66 @@ public class SendMail implements java.io.Serializable {
    * @param attachments List of files on the server ( with absolute paths )
    */
   public static synchronized void sendMail (
-		  final String mailTo,
-		  final String subject,
-		  final String body,
-		  final String html,
-		  final String id,
-		  final String SMTP_SERVER,
-		  final String smtp_username,
-		  final String smtp_password,
-		  final String smtp_accountFrom) throws Exception
-  	{
+          final String mailTo,
+          final String subject,
+          final String body,
+          final String html,
+          final String id,
+          final String SMTP_SERVER,
+          final String smtp_username,
+          final String smtp_password,
+          final String smtp_accountFrom) throws Exception
+    {
     // JavaMail API
     Properties sysProps = System.getProperties();
     sysProps.put( "mail.smtp.host", SMTP_SERVER );
 
     MailAuthenticator auth = null;
     if ( smtp_username != null && smtp_password != null ){
-    	auth = new MailAuthenticator( smtp_username, smtp_password );
+        auth = new MailAuthenticator( smtp_username, smtp_password );
     }
     Session s = Session.getDefaultInstance( sysProps, auth );
     s.setDebug( true );
     MimeMessage msg = new MimeMessage( s );
     try
     {
-    	msg.setFrom( new InternetAddress( smtp_accountFrom ) );
-    	msg.setRecipients( Message.RecipientType.TO, InternetAddress.parse( mailTo, false ) );
-    	msg.setSubject( subject );
+        msg.setFrom( new InternetAddress( smtp_accountFrom ) );
+        msg.setRecipients( Message.RecipientType.TO, InternetAddress.parse( mailTo, false ) );
+        msg.setSubject( subject );
 
-    	if(html != null && html.length() > 0){
-    		
-    		Multipart mp = new MimeMultipart("alternative");
+        if(html != null && html.length() > 0){
+            
+            Multipart mp = new MimeMultipart("alternative");
 
-    		BodyPart textPart = new MimeBodyPart();
-    		textPart.setText(body); // sets type to "text/plain"
-    		textPart.setHeader("Content-Type","text/plain; charset=\"utf-8\"");
-    		textPart.setHeader("Content-Transfer-Encoding", "quoted-printable");
+            BodyPart textPart = new MimeBodyPart();
+            textPart.setText(body); // sets type to "text/plain"
+            textPart.setHeader("Content-Type","text/plain; charset=\"utf-8\"");
+            textPart.setHeader("Content-Transfer-Encoding", "quoted-printable");
 
-    		BodyPart pixPart = new MimeBodyPart();
-    		pixPart.setContent(html, "text/html");
-    		pixPart.setHeader("Content-Type","text/html; charset=\"utf-8\"");
-    		pixPart.setHeader("Content-Transfer-Encoding", "quoted-printable");
+            BodyPart pixPart = new MimeBodyPart();
+            pixPart.setContent(html, "text/html");
+            pixPart.setHeader("Content-Type","text/html; charset=\"utf-8\"");
+            pixPart.setHeader("Content-Transfer-Encoding", "quoted-printable");
 
-    		// Collect the Parts into the MultiPart
-    		mp.addBodyPart(textPart);
-    		mp.addBodyPart(pixPart);
-    		
-    		// Put the MultiPart into the Message
-    		msg.setContent(mp);
-    	}else{
-    		msg.setText(body);
-    	}
+            // Collect the Parts into the MultiPart
+            mp.addBodyPart(textPart);
+            mp.addBodyPart(pixPart);
+            
+            // Put the MultiPart into the Message
+            msg.setContent(mp);
+        }else{
+            msg.setText(body);
+        }
       
-    	msg.setSentDate( new Date() );
-    	msg.setContentID(id);
-    	Transport.send( msg );
+        msg.setSentDate( new Date() );
+        msg.setContentID(id);
+        Transport.send( msg );
     }
     catch ( Exception ex )
     {
-    	logger.error(ex.getMessage());
-    	ex.printStackTrace();
-    	throw new Exception("Error occured when trying to send an e-mail: "+ex.toString());
+        logger.error(ex.getMessage());
+        ex.printStackTrace();
+        throw new Exception("Error occured when trying to send an e-mail: "+ex.toString());
     }
   }
 }

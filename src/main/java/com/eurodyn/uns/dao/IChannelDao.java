@@ -31,43 +31,43 @@ import com.eurodyn.uns.model.User;
 
 public interface IChannelDao {
 
-	public List findAllChannels() throws DAOException;
+    public List findAllChannels() throws DAOException;
 
-	public List findAllChannels(String orderProperty, String order) throws DAOException;
-	
-	public List findHarvestChannels() throws DAOException;
+    public List findAllChannels(String orderProperty, String order) throws DAOException;
+    
+    public List findHarvestChannels() throws DAOException;
 
-	public List findAllChannelsByMode(String mode, String orderProperty, String order) throws DAOException;
+    public List findAllChannelsByMode(String mode, String orderProperty, String order) throws DAOException;
 
-	public List findAllChannelsByModeAndCreator(String mode, User creator, String orderProperty, String order) throws DAOException;
+    public List findAllChannelsByModeAndCreator(String mode, User creator, String orderProperty, String order) throws DAOException;
 
-	public Channel findChannel(Channel channel) throws DAOException;
+    public Channel findChannel(Channel channel) throws DAOException;
 
-	public Channel findChannel(Integer id) throws DAOException;
+    public Channel findChannel(Integer id) throws DAOException;
 
-	public Channel findChannel(String secondaryId) throws DAOException;
+    public Channel findChannel(String secondaryId) throws DAOException;
 
-	public void deleteChannel(Channel channel) throws DAOException;
+    public void deleteChannel(Channel channel) throws DAOException;
 
-	public void createChannel(Channel channel) throws DAOException;
+    public void createChannel(Channel channel) throws DAOException;
 
-	public void updateChannel(Channel channel) throws DAOException;
-	
-	public void updateEvent(Event event) throws DAOException;
+    public void updateChannel(Channel channel) throws DAOException;
+    
+    public void updateEvent(Event event) throws DAOException;
 
-	public List findRpcUserChannels(User user, String orderProperty, String order) throws DAOException;
+    public List findRpcUserChannels(User user, String orderProperty, String order) throws DAOException;
 
-	public List findOneEventForChannel() throws DAOException;
-	
-	public List findUnprocessedEvents() throws DAOException;
+    public List findOneEventForChannel() throws DAOException;
+    
+    public List findUnprocessedEvents() throws DAOException;
 
-	public Map findTestEventsForChannel(Channel channel) throws DAOException;
-	
-	public Date getLastHarvestedDate(Channel channel) throws DAOException ;
-	
-	public void unsetVacations() throws DAOException;
-	
-	public void setProcessed() throws DAOException;
-	
-	public List getSubscriptions(String channelId) throws DAOException;
+    public Map findTestEventsForChannel(Channel channel) throws DAOException;
+    
+    public Date getLastHarvestedDate(Channel channel) throws DAOException ;
+    
+    public void unsetVacations() throws DAOException;
+    
+    public void setProcessed() throws DAOException;
+    
+    public List getSubscriptions(String channelId) throws DAOException;
 }

@@ -9,23 +9,23 @@ import com.eurodyn.uns.web.jsf.SortableTable;
 
 
 public class RpcChannelListForm extends BaseBean {
-	private ChannelFacade channelFacade;
+    private ChannelFacade channelFacade;
 
-	public RpcChannelListForm()
-	{		
-		channelFacade = new ChannelFacade();
-		st = new SortableTable("title");
-	}
-	
-	public List getChannels()
-	{		
-		Dto dto = new Dto();
-		String order = st.isAscending()?"asc":"desc";
-		dto.put("orderProperty",st.getSort());
-		dto.put("order",order);
-		dto.put("user",getUser());
-		return (List) channelFacade.getRpcUserChannels(dto).get("list");
-	}
+    public RpcChannelListForm()
+    {       
+        channelFacade = new ChannelFacade();
+        st = new SortableTable("title");
+    }
+    
+    public List getChannels()
+    {       
+        Dto dto = new Dto();
+        String order = st.isAscending()?"asc":"desc";
+        dto.put("orderProperty",st.getSort());
+        dto.put("order",order);
+        dto.put("user",getUser());
+        return (List) channelFacade.getRpcUserChannels(dto).get("list");
+    }
 
-	
+    
 }

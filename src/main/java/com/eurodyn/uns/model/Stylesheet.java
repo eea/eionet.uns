@@ -28,98 +28,98 @@ import java.io.Serializable;
  */
 public class Stylesheet implements Serializable {
 
-	private static final long serialVersionUID = 1096385920108846821L;
+    private static final long serialVersionUID = 1096385920108846821L;
 
-	private Integer id;
+    private Integer id;
 
-	private String name;
+    private String name;
 
-	private String description;
+    private String description;
 
-	private String content;
+    private String content;
 
-	private Boolean editOnly;
+    private Boolean editOnly;
 
-	private Integer channelsCount;
+    private Integer channelsCount;
 
-	public Stylesheet() {
+    public Stylesheet() {
 
-	}
+    }
 
-	public Stylesheet(int id) {
-		this.id = new Integer(id);
-	}
+    public Stylesheet(int id) {
+        this.id = new Integer(id);
+    }
 
-	/**
-	 * @hibernate.property column="CONTENT" not-null="true" length="65535" sql-type="text"
-	 * @return String
-	 */
-	public String getContent() {
-		return content;
-	}
+    /**
+     * @hibernate.property column="CONTENT" not-null="true" length="65535" sql-type="text"
+     * @return String
+     */
+    public String getContent() {
+        return content;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	/**
-	 * @hibernate.property column="DESCRIPTION" length="255"
-	 * @return String
-	 */
-	public String getDescription() {
-		return description;
-	}
+    /**
+     * @hibernate.property column="DESCRIPTION" length="255"
+     * @return String
+     */
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/**
-	 * 
-	 * @hibernate.id column="ID" generator-class="native"
-	 */
-	public Integer getId() {
-		return id;
-	}
+    /**
+     * 
+     * @hibernate.id column="ID" generator-class="native"
+     */
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	/**
-	 * @hibernate.property column="NAME" length="50" not-null="true" unique="true"
-	 * @return String
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * @hibernate.property column="NAME" length="50" not-null="true" unique="true"
+     * @return String
+     */
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getFullName() {
-		return name + " - " + description;
-	}
+    public String getFullName() {
+        return name + " - " + description;
+    }
 
-	/**
-	 * @hibernate.property formula="( SELECT (SELECT COUNT(*) FROM CHANNEL c WHERE s.ID = c.STYLESHEET_ID) FROM STYLESHEET s WHERE s.ID = id )"
-	 * @return Integer
-	 */
-	public Integer getChannelsCount() {
-		return channelsCount;
-	}
+    /**
+     * @hibernate.property formula="( SELECT (SELECT COUNT(*) FROM CHANNEL c WHERE s.ID = c.STYLESHEET_ID) FROM STYLESHEET s WHERE s.ID = id )"
+     * @return Integer
+     */
+    public Integer getChannelsCount() {
+        return channelsCount;
+    }
 
-	public void setChannelsCount(Integer channelsCount) {
-		this.channelsCount = channelsCount;
-	}
+    public void setChannelsCount(Integer channelsCount) {
+        this.channelsCount = channelsCount;
+    }
 
-	public Boolean getEditOnly() {
-		return this.editOnly;
-	}
+    public Boolean getEditOnly() {
+        return this.editOnly;
+    }
 
-	public void setEditOnly(Boolean editOnly) {
-		this.editOnly = editOnly;
-	}
+    public void setEditOnly(Boolean editOnly) {
+        this.editOnly = editOnly;
+    }
 
 }

@@ -34,91 +34,91 @@ import com.eurodyn.uns.util.rdf.FlResourcesProcessor;
 import com.eurodyn.uns.util.rdf.RdfContext;
 
 public class GenericRenderer implements IRenderStrategy {
-	//private static final WDSLogger logger = WDSLogger.getLogger(GenericRenderer.class);
+    //private static final WDSLogger logger = WDSLogger.getLogger(GenericRenderer.class);
 
 
-	public String render(Channel channel, Map things) throws Exception {
-		StringBuffer result = new StringBuffer();
-		List properties = new ArrayList();
-		List elements = new ArrayList(channel.getMetadataElements());
-		Collections.sort(elements);
-		if (elements != null) {
-			for (Iterator iter = elements.iterator(); iter.hasNext();) {
-				ChannelMetadataElement element = (ChannelMetadataElement) iter.next();
-				if(element.isVisible().booleanValue())
-					properties.add(element.getMetadataElement().getName());
-			}
-		} else {
-			properties.add("http://www.w3.org/2000/01/rdf-schema#label");
-		}
-		
-		
+    public String render(Channel channel, Map things) throws Exception {
+        StringBuffer result = new StringBuffer();
+        List properties = new ArrayList();
+        List elements = new ArrayList(channel.getMetadataElements());
+        Collections.sort(elements);
+        if (elements != null) {
+            for (Iterator iter = elements.iterator(); iter.hasNext();) {
+                ChannelMetadataElement element = (ChannelMetadataElement) iter.next();
+                if(element.isVisible().booleanValue())
+                    properties.add(element.getMetadataElement().getName());
+            }
+        } else {
+            properties.add("http://www.w3.org/2000/01/rdf-schema#label");
+        }
+        
+        
 
-		boolean loadedThings = things != null; 
-		if (!loadedThings){
-			RdfContext rdfctx = new RdfContext(channel);
-			things = rdfctx.getData(new FlResourcesProcessor(properties));			
-		}
-				
-		ArrayList values = null;
-		if (things != null) {
-			result.append("<ul>\n");
-			for (Iterator iter = things.keySet().iterator(); iter.hasNext();) {
-				String subject = (String) iter.next();
-				Map el = null;
-				if (!loadedThings)
-					el = (Map)  things.get(subject);
-				else
-					el = ((RDFThing) things.get(subject)).getMetadata();
-				result.append("\t<li>\n");
-				for (int i = 0; i < properties.size(); i++) {
-					String property = (String) properties.get(i);
-					if (!loadedThings){
-						values = new ArrayList();
-						values.add(el.get(property));
-					}else{
-						values = (ArrayList) el.get(property);
-					}						
-					if (values == null) continue;
-					for (int j = 0; j < values.size(); j++) {
-						String value = (String) values.get(j);
-						if (i == 0 && j == 0) {
-							result.append("<span>");
-							result.append(getLablel(property).toUpperCase()).append(": ");
-							result.append("</span>");
-							result.append("<a href=\"").append(subject).append("\" target=\"_blank\">").append(value).append("</a>\n");
-							result.append("\n");
-						} else if (value != null) {
-							result.append("<p>");
-							result.append("<span>");
-							result.append(getLablel(property).toUpperCase()).append(": ");
-							result.append("</span>");
-							result.append(value);
-							result.append("</p>\n");
-						}
-					}
-				}
-				result.append("\t</li>\n");
-			}
-			result.append("</ul>\n");
-		}
+        boolean loadedThings = things != null; 
+        if (!loadedThings){
+            RdfContext rdfctx = new RdfContext(channel);
+            things = rdfctx.getData(new FlResourcesProcessor(properties));          
+        }
+                
+        ArrayList values = null;
+        if (things != null) {
+            result.append("<ul>\n");
+            for (Iterator iter = things.keySet().iterator(); iter.hasNext();) {
+                String subject = (String) iter.next();
+                Map el = null;
+                if (!loadedThings)
+                    el = (Map)  things.get(subject);
+                else
+                    el = ((RDFThing) things.get(subject)).getMetadata();
+                result.append("\t<li>\n");
+                for (int i = 0; i < properties.size(); i++) {
+                    String property = (String) properties.get(i);
+                    if (!loadedThings){
+                        values = new ArrayList();
+                        values.add(el.get(property));
+                    }else{
+                        values = (ArrayList) el.get(property);
+                    }                       
+                    if (values == null) continue;
+                    for (int j = 0; j < values.size(); j++) {
+                        String value = (String) values.get(j);
+                        if (i == 0 && j == 0) {
+                            result.append("<span>");
+                            result.append(getLablel(property).toUpperCase()).append(": ");
+                            result.append("</span>");
+                            result.append("<a href=\"").append(subject).append("\" target=\"_blank\">").append(value).append("</a>\n");
+                            result.append("\n");
+                        } else if (value != null) {
+                            result.append("<p>");
+                            result.append("<span>");
+                            result.append(getLablel(property).toUpperCase()).append(": ");
+                            result.append("</span>");
+                            result.append(value);
+                            result.append("</p>\n");
+                        }
+                    }
+                }
+                result.append("\t</li>\n");
+            }
+            result.append("</ul>\n");
+        }
 
-		return result.toString();
-	}
+        return result.toString();
+    }
 
 
-	
-	
-	private String getLablel(String uri) {
-		String result = "";
-		int i1 = uri.lastIndexOf("#");
-		int i2 = uri.lastIndexOf("/");
-		if (i1 < 0) {
-			result = uri.substring(i2 + 1);
-		} else {
-			result = uri.substring(i1 + 1);
-		}
-		return result;
-	}
+    
+    
+    private String getLablel(String uri) {
+        String result = "";
+        int i1 = uri.lastIndexOf("#");
+        int i2 = uri.lastIndexOf("/");
+        if (i1 < 0) {
+            result = uri.substring(i2 + 1);
+        } else {
+            result = uri.substring(i1 + 1);
+        }
+        return result;
+    }
 
 }

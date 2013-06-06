@@ -140,9 +140,9 @@ public class MemoryCache implements Comparator {
         }
 
         if ( !entry.getLastHarvestDate().equals(lastHarvestDate)){
-      	  return null;
+          return null;
         }
-      	  
+          
         logger.debug("Transformed content found in cache! Transform: " + key);
         return entry;
     }
@@ -175,6 +175,6 @@ public class MemoryCache implements Comparator {
     }
 
     public Set getKeys(){
-    	return cache.keySet();
+        return cache.keySet();
     }
 }

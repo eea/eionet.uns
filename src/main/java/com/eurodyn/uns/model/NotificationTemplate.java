@@ -23,80 +23,80 @@ package com.eurodyn.uns.model;
 
 public class NotificationTemplate implements java.io.Serializable {
 
-	// Fields
-	private static final long serialVersionUID = -2612315275388774722L;
+    // Fields
+    private static final long serialVersionUID = -2612315275388774722L;
 
-	private Integer id;
+    private Integer id;
 
-	private String name;
+    private String name;
 
-	private String subject;
+    private String subject;
 
-	private String plainText;
+    private String plainText;
 
-	private String htmlText;
+    private String htmlText;
 
-	private Boolean editOnly;
+    private Boolean editOnly;
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public NotificationTemplate() {
-	}
+    /** default constructor */
+    public NotificationTemplate() {
+    }
 
-	/** minimal constructor */
-	public NotificationTemplate(Integer id) {
-		this.id = id;
-	}
+    /** minimal constructor */
+    public NotificationTemplate(Integer id) {
+        this.id = id;
+    }
 
-	// Property accessors
+    // Property accessors
 
-	public Integer getId() {
-		return this.id;
-	}
+    public Integer getId() {
+        return this.id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getSubject() {
-		return this.subject;
-	}
+    public String getSubject() {
+        return this.subject;
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public String getHtmlText() {
-		return htmlText;
-	}
+    public String getHtmlText() {
+        return htmlText;
+    }
 
-	public void setHtmlText(String htmlText) {
-		this.htmlText = htmlText;
-	}
+    public void setHtmlText(String htmlText) {
+        this.htmlText = htmlText;
+    }
 
-	public String getPlainText() {
-		return plainText;
-	}
+    public String getPlainText() {
+        return plainText;
+    }
 
-	public void setPlainText(String plainText) {
-		this.plainText = plainText;
-	}
+    public void setPlainText(String plainText) {
+        this.plainText = plainText;
+    }
 
-	public Boolean getEditOnly() {
-		return this.editOnly;
-	}
+    public Boolean getEditOnly() {
+        return this.editOnly;
+    }
 
-	public void setEditOnly(Boolean editOnly) {
-		this.editOnly = editOnly;
-	}
+    public void setEditOnly(Boolean editOnly) {
+        this.editOnly = editOnly;
+    }
 
 }

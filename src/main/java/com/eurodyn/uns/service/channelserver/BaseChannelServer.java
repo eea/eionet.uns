@@ -30,32 +30,32 @@ import com.eurodyn.uns.util.rdf.IChannel;
 
 public abstract class BaseChannelServer {
 
-	public static final short DATABASE = 0;
+    public static final short DATABASE = 0;
 
-	public static final short PULL = 1;
+    public static final short PULL = 1;
 
-	public static final short PUSH = 2;
+    public static final short PUSH = 2;
 
-	public static final short QUERY = 3;
+    public static final short QUERY = 3;
 
-	public static final short TEST = 4;
+    public static final short TEST = 4;
 
-	protected static MemoryCache MemCache;
+    protected static MemoryCache MemCache;
 
-	static {
-		MemCache = new MemoryCache(100, 10);
-	}
+    static {
+        MemCache = new MemoryCache(100, 10);
+    }
 
-	public abstract String getChannelContent(Subscription subscription, boolean ignoreCache);
+    public abstract String getChannelContent(Subscription subscription, boolean ignoreCache);
 
-	public abstract Dto queryNewChannel(Channel channel);
+    public abstract Dto queryNewChannel(Channel channel);
 
-	public abstract String testNewChannel(IChannel channel);
+    public abstract String testNewChannel(IChannel channel);
 
-	public abstract void invalidateCache();
+    public abstract void invalidateCache();
 
-	public abstract void push(String channelId, User user, String rdf) throws DisabledException, NotFoundException, Exception;
+    public abstract void push(String channelId, User user, String rdf) throws DisabledException, NotFoundException, Exception;
 
-	public abstract String createChannel(IChannel channel, User creator) throws Exception;
+    public abstract String createChannel(IChannel channel, User creator) throws Exception;
 
 }

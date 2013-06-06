@@ -24,17 +24,17 @@ package com.eurodyn.uns.dao;
 
 public class DAOException extends Exception {
 
-	private static final long serialVersionUID = -1684638067057404487L;
+    private static final long serialVersionUID = -1684638067057404487L;
 
-	public DAOException() {
-	}
+    public DAOException() {
+    }
 
-	public DAOException(String message) {
-		super(message);
-	}
+    public DAOException(String message) {
+        super(message);
+    }
 
-	public DAOException(Exception ex) {
-		super(ex);
-	}
+    public DAOException(Exception ex) {
+        super(ex);
+    }
 
 }

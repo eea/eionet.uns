@@ -29,115 +29,115 @@ import java.util.Set;
 
 public class Event implements java.io.Serializable {
 
-	private static final long serialVersionUID = 6687769519436084622L;
+    private static final long serialVersionUID = 6687769519436084622L;
 
-	private int id;
+    private int id;
 
-	private Channel channel;
+    private Channel channel;
 
-	private String extId;
+    private String extId;
 
-	private Date creationDate;
+    private Date creationDate;
 
-	private String rtype;
+    private String rtype;
 
-	private byte processed;
+    private byte processed;
 
-	private Map eventMetadata = new HashMap(0);
+    private Map eventMetadata = new HashMap(0);
 
-	private Set notifications = new HashSet(0);
+    private Set notifications = new HashSet(0);
 
-	private Set eventMetadataSet =new HashSet(0);
-	
-	// Constructors
+    private Set eventMetadataSet =new HashSet(0);
+    
+    // Constructors
 
-	/** default constructor */
-	public Event() {
-	}
+    /** default constructor */
+    public Event() {
+    }
 
-	/** minimal constructor */
-	public Event(int id, Channel channel, String extId, Date creationDate, String rtype, byte processed) {
-		this.id = id;
-		this.channel = channel;
-		this.extId = extId;
-		this.creationDate = creationDate;
-		this.rtype = rtype;
-		this.processed = processed;
-	}
+    /** minimal constructor */
+    public Event(int id, Channel channel, String extId, Date creationDate, String rtype, byte processed) {
+        this.id = id;
+        this.channel = channel;
+        this.extId = extId;
+        this.creationDate = creationDate;
+        this.rtype = rtype;
+        this.processed = processed;
+    }
 
-	// Property accessors
+    // Property accessors
 
-	public int getId() {
-		return this.id;
-	}
+    public int getId() {
+        return this.id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public Channel getChannel() {
-		return this.channel;
-	}
+    public Channel getChannel() {
+        return this.channel;
+    }
 
-	public void setChannel(Channel channel) {
-		this.channel = channel;
-	}
+    public void setChannel(Channel channel) {
+        this.channel = channel;
+    }
 
 
-	public String getExtId() {
-		return this.extId;
-	}
+    public String getExtId() {
+        return this.extId;
+    }
 
-	public void setExtId(String extId) {
-		this.extId = extId;
-	}
+    public void setExtId(String extId) {
+        this.extId = extId;
+    }
 
-	public Date getCreationDate() {
-		return this.creationDate;
-	}
+    public Date getCreationDate() {
+        return this.creationDate;
+    }
 
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	public String getRtype() {
-		return this.rtype;
-	}
+    public String getRtype() {
+        return this.rtype;
+    }
 
-	public void setRtype(String rtype) {
-		this.rtype = rtype;
-	}
+    public void setRtype(String rtype) {
+        this.rtype = rtype;
+    }
 
-	public byte getProcessed() {
-		return this.processed;
-	}
+    public byte getProcessed() {
+        return this.processed;
+    }
 
-	public void setProcessed(byte processed) {
-		this.processed = processed;
-	}
+    public void setProcessed(byte processed) {
+        this.processed = processed;
+    }
 
-	public Map getEventMetadata() {
-		return this.eventMetadata;
-	}
+    public Map getEventMetadata() {
+        return this.eventMetadata;
+    }
 
-	public void setEventMetadata(Map eventMetadata) {
-		this.eventMetadata = eventMetadata;
-	}
+    public void setEventMetadata(Map eventMetadata) {
+        this.eventMetadata = eventMetadata;
+    }
 
-	public Set getNotifications() {
-		return this.notifications;
-	}
+    public Set getNotifications() {
+        return this.notifications;
+    }
 
-	public void setNotifications(Set notifications) {
-		this.notifications = notifications;
-	}
+    public void setNotifications(Set notifications) {
+        this.notifications = notifications;
+    }
 
-	
-	public Set getEventMetadataSet() {
-		return eventMetadataSet;
-	}
-	
-	public void setEventMetadataSet(Set eventMetadataSet) {
-		this.eventMetadataSet = eventMetadataSet;
-	}
+    
+    public Set getEventMetadataSet() {
+        return eventMetadataSet;
+    }
+    
+    public void setEventMetadataSet(Set eventMetadataSet) {
+        this.eventMetadataSet = eventMetadataSet;
+    }
 }

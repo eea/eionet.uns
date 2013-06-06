@@ -28,16 +28,16 @@ import com.eurodyn.uns.model.User;
 
 public interface IUserDao {
 
-	public User findUser(String username) throws DAOException;
-	
-	public User findUser(Integer id) throws DAOException;	
+    public User findUser(String username) throws DAOException;
+    
+    public User findUser(Integer id) throws DAOException;   
 
-	public List findAllUsers() throws DAOException;
+    public List findAllUsers() throws DAOException;
 
-	public void createUser(User user) throws DAOException;
+    public void createUser(User user) throws DAOException;
 
-	public void updateUser(User user) throws DAOException;
-	
-	public void fillUserAttributes(User user) throws DAOException;
+    public void updateUser(User user) throws DAOException;
+    
+    public void fillUserAttributes(User user) throws DAOException;
 
 }

@@ -32,7 +32,7 @@ import com.eurodyn.uns.service.channelserver.rendering.XslRenderer;
 import com.eurodyn.uns.service.facades.FeedFacade;
 
 public class DatabaseHandler extends BaseFeedHandler {
-	
+    
 
     private BaseFeedHandler successor;
 
@@ -50,29 +50,29 @@ public class DatabaseHandler extends BaseFeedHandler {
 
     
     protected void feed(Dto request)throws Exception {
-	    FeedFacade feedFacade = new FeedFacade();
-	    Map things = null;
-	    Channel channel = null;
-	    Subscription subs = (Subscription) request.get("subscription");
-	    if (subs != null){
-		    channel = subs.getChannel();
-		    things = feedFacade.findUserEvents(subs);		    
-	    }else{
-		    channel = (Channel) request.get("channel");
-		    things = feedFacade.findChannelEvents(channel);
-	    }
-		
-	    if (things == null || things.size() == 0){
-		    request.put("CONTENT", "");
-		    return;
-	    }
-	    
-	    RenderingEngine re=RenderingEngine.getInstance();
+        FeedFacade feedFacade = new FeedFacade();
+        Map things = null;
+        Channel channel = null;
+        Subscription subs = (Subscription) request.get("subscription");
+        if (subs != null){
+            channel = subs.getChannel();
+            things = feedFacade.findUserEvents(subs);           
+        }else{
+            channel = (Channel) request.get("channel");
+            things = feedFacade.findChannelEvents(channel);
+        }
+        
+        if (things == null || things.size() == 0){
+            request.put("CONTENT", "");
+            return;
+        }
+        
+        RenderingEngine re=RenderingEngine.getInstance();
 
-	    String result=channel.getTransformation()==null?re.renderContent(channel,things, new GenericRenderer())
-	                                                       :re.renderContent(channel,things, new XslRenderer());
-	    request.put("CONTENT", result);	    
-	    
+        String result=channel.getTransformation()==null?re.renderContent(channel,things, new GenericRenderer())
+                                                           :re.renderContent(channel,things, new XslRenderer());
+        request.put("CONTENT", result);     
+        
     }
     
     

@@ -34,78 +34,78 @@ import org.w3c.dom.DOMException;
 
 public class UIManager implements IUIManager {
 
-	Document doc = null;
+    Document doc = null;
 
-	public UIManager(Document doc) {
-		this.doc = doc;
-	}
+    public UIManager(Document doc) {
+        this.doc = doc;
+    }
 
-	public UIManager() {
+    public UIManager() {
 
-	}
+    }
 
-	/*
-	 *  (non-Javadoc)
-	 * @see com.eurodyn.uns.util.uimanage.IUIManager#removeCell(int, int)
-	 */
-	
-	public void removeCell(int row, int col) throws Exception {
+    /*
+     *  (non-Javadoc)
+     * @see com.eurodyn.uns.util.uimanage.IUIManager#removeCell(int, int)
+     */
+    
+    public void removeCell(int row, int col) throws Exception {
 
-		try {
-			Node cell = XPathAPI.selectSingleNode(doc, "ui-templates/template[@id='temp']/row[@id='" + row + "']/cell[@cols='" + col + "']");
-			Node parent = cell.getParentNode();
-			Element emptyCell = doc.createElement("cell");
-			emptyCell.setAttribute("cols", String.valueOf(col));
-			emptyCell.setAttribute("type", "blank");
-			parent.replaceChild(emptyCell, cell);
+        try {
+            Node cell = XPathAPI.selectSingleNode(doc, "ui-templates/template[@id='temp']/row[@id='" + row + "']/cell[@cols='" + col + "']");
+            Node parent = cell.getParentNode();
+            Element emptyCell = doc.createElement("cell");
+            emptyCell.setAttribute("cols", String.valueOf(col));
+            emptyCell.setAttribute("type", "blank");
+            parent.replaceChild(emptyCell, cell);
 
-		} catch (TransformerException Te) {
-			throw new Exception(Te.getMessage());
+        } catch (TransformerException Te) {
+            throw new Exception(Te.getMessage());
 
-		}
-	}
-	/*
-	 *  (non-Javadoc)
-	 * @see com.eurodyn.uns.util.uimanage.IUIManager#createCell(int, java.lang.String, java.lang.String, java.lang.String, java.util.Map)
-	 */
-	public Node createCell(int col, String type, String link, String content, Map styleMap) throws Exception{
-		try{
-		Element cell = doc.createElement("cell");
-		cell.setAttribute("cols", Integer.toString(col));
-		cell.setAttribute("type", type);
-		Node contentNode = doc.createElement("content");
-		Text newT = doc.createTextNode(content);
-		contentNode.appendChild(newT);
-		cell.appendChild(contentNode);
-		if((link!=null)&&(!link.equalsIgnoreCase(""))){
-			Node linkNode = doc.createElement("link");
-			Text newL = doc.createTextNode(link);
-			cell.appendChild(linkNode);
-			linkNode.appendChild(newL);
-		}
-		Node styleNode = doc.createElement("style");
-		Iterator styleKeys = styleMap.keySet().iterator();
-		while (styleKeys.hasNext()) {
-			String key = (String) styleKeys.next();
-			Element tempStyle = doc.createElement(key);
-			Text tempStyleText = doc.createTextNode((String) styleMap.get(key));
-			tempStyle.appendChild(tempStyleText);
-			styleNode.appendChild(tempStyle);
-		}
-		cell.appendChild(styleNode);
-		return cell;
-		}catch(DOMException domex){
-			throw new Exception(domex.getMessage());
-		}
-	}
-	/*
-	 *  (non-Javadoc)
-	 * @see com.eurodyn.uns.util.uimanage.IUIManager#createCell(int, java.lang.String, java.lang.String, java.util.Map)
-	 */
-	public Node createCell(int col, String type, String content, Map styleMap) throws Exception
-	{
-		Node cell=createCell(col ,type,null,content, styleMap);
-		return cell;
-		
-	}
+        }
+    }
+    /*
+     *  (non-Javadoc)
+     * @see com.eurodyn.uns.util.uimanage.IUIManager#createCell(int, java.lang.String, java.lang.String, java.lang.String, java.util.Map)
+     */
+    public Node createCell(int col, String type, String link, String content, Map styleMap) throws Exception{
+        try{
+        Element cell = doc.createElement("cell");
+        cell.setAttribute("cols", Integer.toString(col));
+        cell.setAttribute("type", type);
+        Node contentNode = doc.createElement("content");
+        Text newT = doc.createTextNode(content);
+        contentNode.appendChild(newT);
+        cell.appendChild(contentNode);
+        if((link!=null)&&(!link.equalsIgnoreCase(""))){
+            Node linkNode = doc.createElement("link");
+            Text newL = doc.createTextNode(link);
+            cell.appendChild(linkNode);
+            linkNode.appendChild(newL);
+        }
+        Node styleNode = doc.createElement("style");
+        Iterator styleKeys = styleMap.keySet().iterator();
+        while (styleKeys.hasNext()) {
+            String key = (String) styleKeys.next();
+            Element tempStyle = doc.createElement(key);
+            Text tempStyleText = doc.createTextNode((String) styleMap.get(key));
+            tempStyle.appendChild(tempStyleText);
+            styleNode.appendChild(tempStyle);
+        }
+        cell.appendChild(styleNode);
+        return cell;
+        }catch(DOMException domex){
+            throw new Exception(domex.getMessage());
+        }
+    }
+    /*
+     *  (non-Javadoc)
+     * @see com.eurodyn.uns.util.uimanage.IUIManager#createCell(int, java.lang.String, java.lang.String, java.util.Map)
+     */
+    public Node createCell(int col, String type, String content, Map styleMap) throws Exception
+    {
+        Node cell=createCell(col ,type,null,content, styleMap);
+        return cell;
+        
+    }
 }

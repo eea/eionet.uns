@@ -27,89 +27,89 @@ import com.eurodyn.uns.util.HashCodeUtil;
 
 public class ChannelMetadataElement implements Comparable,Serializable{
 
-	
-	private static final long serialVersionUID = 1862510090982883644L;	
-	private Boolean visible;
-	private Boolean filtered;
-	private Integer appearanceOrder;
-	private Boolean obsolete;
-	private MetadataElement metadataElement;
-	
-	public MetadataElement getMetadataElement() {
-		return metadataElement;
-	}
-	public void setMetadataElement(MetadataElement metadataElement) {
-		this.metadataElement = metadataElement;
-	}
-	public Integer getAppearanceOrder() {
-		return appearanceOrder;
-	}
-	public void setAppearanceOrder(Integer appearanceOrder) {
-		this.appearanceOrder = appearanceOrder;
-	}
-	public Boolean isFiltered() {
-		return filtered;
-	}
+    
+    private static final long serialVersionUID = 1862510090982883644L;  
+    private Boolean visible;
+    private Boolean filtered;
+    private Integer appearanceOrder;
+    private Boolean obsolete;
+    private MetadataElement metadataElement;
+    
+    public MetadataElement getMetadataElement() {
+        return metadataElement;
+    }
+    public void setMetadataElement(MetadataElement metadataElement) {
+        this.metadataElement = metadataElement;
+    }
+    public Integer getAppearanceOrder() {
+        return appearanceOrder;
+    }
+    public void setAppearanceOrder(Integer appearanceOrder) {
+        this.appearanceOrder = appearanceOrder;
+    }
+    public Boolean isFiltered() {
+        return filtered;
+    }
 
-	public Boolean getFiltered() {
-		return filtered;
-	}
-	public void setFiltered(Boolean filtered) {
-		this.filtered = filtered;
-	}
-	public Boolean isObsolete() {
-		return obsolete;
-	}
+    public Boolean getFiltered() {
+        return filtered;
+    }
+    public void setFiltered(Boolean filtered) {
+        this.filtered = filtered;
+    }
+    public Boolean isObsolete() {
+        return obsolete;
+    }
 
-	public Boolean getObsolete() {
-		return obsolete;
-	}
-	public void setObsolete(Boolean obsolete) {
-		this.obsolete = obsolete;
-	}
-	
-	public Boolean isVisible() {
-		return visible;
-	}
-	
-	public Boolean getVisible() {
-		return visible;
-	}
-	
-	public void setVisible(Boolean visible) {
-		this.visible = visible;
-	}
-	
+    public Boolean getObsolete() {
+        return obsolete;
+    }
+    public void setObsolete(Boolean obsolete) {
+        this.obsolete = obsolete;
+    }
+    
+    public Boolean isVisible() {
+        return visible;
+    }
+    
+    public Boolean getVisible() {
+        return visible;
+    }
+    
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
+    }
+    
 
-	public boolean equals(Object other) {
-		if (this == other)
-			return true;
-		if (!(other instanceof ChannelMetadataElement))
-			return false;
-		final ChannelMetadataElement cme = (ChannelMetadataElement) other;
-		
-		if (!cme.getMetadataElement().equals(getMetadataElement()))
-			return false;
-		
-		return true;
-	}
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (!(other instanceof ChannelMetadataElement))
+            return false;
+        final ChannelMetadataElement cme = (ChannelMetadataElement) other;
+        
+        if (!cme.getMetadataElement().equals(getMetadataElement()))
+            return false;
+        
+        return true;
+    }
 
-	public int hashCode() {
-		int result = HashCodeUtil.SEED;
-		result = HashCodeUtil.hash(result, metadataElement);
-		return result;
-	}
+    public int hashCode() {
+        int result = HashCodeUtil.SEED;
+        result = HashCodeUtil.hash(result, metadataElement);
+        return result;
+    }
 
-	
+    
 
-	public int compareTo(Object o) {
-		if (o != null && o instanceof ChannelMetadataElement) {
-			ChannelMetadataElement cme = (ChannelMetadataElement) o;
-			return (appearanceOrder==null ? -1 : appearanceOrder.compareTo(cme.getAppearanceOrder()));
-		}
-		else
-			return 1;
-	}
+    public int compareTo(Object o) {
+        if (o != null && o instanceof ChannelMetadataElement) {
+            ChannelMetadataElement cme = (ChannelMetadataElement) o;
+            return (appearanceOrder==null ? -1 : appearanceOrder.compareTo(cme.getAppearanceOrder()));
+        }
+        else
+            return 1;
+    }
 
-	
+    
 }

@@ -33,27 +33,27 @@ import com.eurodyn.uns.model.Statement;
 
 public interface IEventMetadataDao {
 
-	public Event findEvent(Integer event_id) throws DAOException;
-	
-	public boolean eventExists(String extId) throws DAOException;
-	
-	public void createEventMetadata(EventMetadata em) throws DAOException;
+    public Event findEvent(Integer event_id) throws DAOException;
+    
+    public boolean eventExists(String extId) throws DAOException;
+    
+    public void createEventMetadata(EventMetadata em) throws DAOException;
 
-	public void deleteEventMetadata(EventMetadata em) throws DAOException;
+    public void deleteEventMetadata(EventMetadata em) throws DAOException;
 
-	public Map findChoosableStatements(Channel channel) throws DAOException;
+    public Map findChoosableStatements(Channel channel) throws DAOException;
 
-	public Set findChannelProperties(Channel channel) throws DAOException;
+    public Set findChannelProperties(Channel channel) throws DAOException;
 
-	public ResultDto findEventMetadataWithValue(Channel channel, String property, String value) throws DAOException;
+    public ResultDto findEventMetadataWithValue(Channel channel, String property, String value) throws DAOException;
 
-	public void deleteEventMetadataByValue(Channel channel, String value) throws DAOException;
-	
-	public void deleteOldEvents() throws DAOException;
+    public void deleteEventMetadataByValue(Channel channel, String value) throws DAOException;
+    
+    public void deleteOldEvents() throws DAOException;
 
-	public void deleteEventMetadataByProperty(Channel channel, String value) throws DAOException;
+    public void deleteEventMetadataByProperty(Channel channel, String value) throws DAOException;
 
-	public void deleteFilterStatement(Channel channel, Statement st) throws DAOException;
-	
-	public void createEvent(Event event) throws DAOException;
+    public void deleteFilterStatement(Channel channel, Statement st) throws DAOException;
+    
+    public void createEvent(Event event) throws DAOException;
 }

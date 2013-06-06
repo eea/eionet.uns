@@ -27,72 +27,72 @@ import com.eurodyn.uns.util.HashCodeUtil;
 
 public class DeliveryType implements Serializable {
 
-	private static final long serialVersionUID = -4294827145445178090L;
+    private static final long serialVersionUID = -4294827145445178090L;
 
-	public static final int EMAIL = 1;
-	public static final int JABBER = 2;
-	public static final int WDB = 3;
-	public static final int RSS = 4;
-	
-	
-	// Fields
+    public static final int EMAIL = 1;
+    public static final int JABBER = 2;
+    public static final int WDB = 3;
+    public static final int RSS = 4;
+    
+    
+    // Fields
 
-	private Integer id;
+    private Integer id;
 
-	private String name;
+    private String name;
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public DeliveryType() {
-	}
+    /** default constructor */
+    public DeliveryType() {
+    }
 
-	/** minimal constructor */
-	public DeliveryType(Integer id) {
-		this.id = id;
-	}
+    /** minimal constructor */
+    public DeliveryType(Integer id) {
+        this.id = id;
+    }
 
-	/** full constructor */
-	public DeliveryType(Integer id, String name) {
-		this.id = id;
-		this.name = name;
-	}
+    /** full constructor */
+    public DeliveryType(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
-	// Property accessors
+    // Property accessors
 
-	public Integer getId() {
-		return this.id;
-	}
+    public Integer getId() {
+        return this.id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other)
-			return true;
-		if (!(other instanceof DeliveryType))
-			return false;
-		final DeliveryType dt = (DeliveryType) other;
-		if (!dt.getId().equals(getId()))
-			return false;
-		// if ( !dt.getName().equals( getName() ) ) return false;
-		return true;
-	}
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (!(other instanceof DeliveryType))
+            return false;
+        final DeliveryType dt = (DeliveryType) other;
+        if (!dt.getId().equals(getId()))
+            return false;
+        // if ( !dt.getName().equals( getName() ) ) return false;
+        return true;
+    }
 
-	public int hashCode() {
-		int result = HashCodeUtil.SEED;
-		result = HashCodeUtil.hash(result, id);
-		// result = HashCodeUtil.hash( result, name);
-		return result;
-	}
+    public int hashCode() {
+        int result = HashCodeUtil.SEED;
+        result = HashCodeUtil.hash(result, id);
+        // result = HashCodeUtil.hash( result, name);
+        return result;
+    }
 
 }

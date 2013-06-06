@@ -6,16 +6,16 @@ import javax.faces.event.PhaseListener;
 
 public class UnsPhaseListener implements PhaseListener {
 
-	private static final long serialVersionUID = 8833602239376172818L;
+    private static final long serialVersionUID = 8833602239376172818L;
 
-	public void afterPhase(PhaseEvent event) {
-	}
+    public void afterPhase(PhaseEvent event) {
+    }
 
-	public void beforePhase(PhaseEvent event) {
-		event.getFacesContext().getExternalContext().getRequestMap().put(PhaseId.RENDER_RESPONSE, Boolean.TRUE);
-	}
+    public void beforePhase(PhaseEvent event) {
+        event.getFacesContext().getExternalContext().getRequestMap().put(PhaseId.RENDER_RESPONSE, Boolean.TRUE);
+    }
 
-	public PhaseId getPhaseId() {
-		return PhaseId.RENDER_RESPONSE;
-	}
+    public PhaseId getPhaseId() {
+        return PhaseId.RENDER_RESPONSE;
+    }
 }

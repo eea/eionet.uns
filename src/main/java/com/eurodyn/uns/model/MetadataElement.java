@@ -27,63 +27,63 @@ import com.eurodyn.uns.util.HashCodeUtil;
 
 public class MetadataElement implements Comparable, Serializable {
 
-	private Integer id;
+    private Integer id;
 
-	private String name;
+    private String name;
 
-	private static final long serialVersionUID = 6183619606841264376L;
+    private static final long serialVersionUID = 6183619606841264376L;
 
-	public MetadataElement() {
-	}
+    public MetadataElement() {
+    }
 
-	public MetadataElement(String name) {
-		this.name = name;
-	}
+    public MetadataElement(String name) {
+        this.name = name;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getLocalName() {
-		int index = name.lastIndexOf("#");
-		return  (index > 0)?name.substring(index + 1):name.substring(name.lastIndexOf("/") + 1);  
-	}
+    public String getLocalName() {
+        int index = name.lastIndexOf("#");
+        return  (index > 0)?name.substring(index + 1):name.substring(name.lastIndexOf("/") + 1);  
+    }
 
-	public int compareTo(Object o) {
-		if (o != null && o instanceof MetadataElement) {
-			MetadataElement me = (MetadataElement) o;
-			return (getLocalName() == null ? -1 : getLocalName().compareTo(me.getLocalName()));
-		} else
-			return 1;
-	}
+    public int compareTo(Object o) {
+        if (o != null && o instanceof MetadataElement) {
+            MetadataElement me = (MetadataElement) o;
+            return (getLocalName() == null ? -1 : getLocalName().compareTo(me.getLocalName()));
+        } else
+            return 1;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other)
-			return true;
-		if (!(other instanceof MetadataElement))
-			return false;
-		final MetadataElement me = (MetadataElement) other;
-		if (!me.getName().equals(getName()))
-			return false;
-		return true;
-	}
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (!(other instanceof MetadataElement))
+            return false;
+        final MetadataElement me = (MetadataElement) other;
+        if (!me.getName().equals(getName()))
+            return false;
+        return true;
+    }
 
-	public int hashCode() {
-		int result = HashCodeUtil.SEED;
-		result = HashCodeUtil.hash(result, name);
-		return result;
-	}
+    public int hashCode() {
+        int result = HashCodeUtil.SEED;
+        result = HashCodeUtil.hash(result, name);
+        return result;
+    }
 
 }

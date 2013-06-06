@@ -32,167 +32,167 @@ import com.hp.hpl.jena.vocabulary.RSS;
 
 public class RssReaderForm extends BaseBean {
 
-	FeedFacade feedFacade;
+    FeedFacade feedFacade;
 
-	public RssReaderForm() {
-		feedFacade = new FeedFacade();
-	}
+    public RssReaderForm() {
+        feedFacade = new FeedFacade();
+    }
 
-	protected List channels;
+    protected List channels;
 
-	protected Channel channel;
+    protected Channel channel;
 
-	public List getChannels() {
-		return channels;
-	}
+    public List getChannels() {
+        return channels;
+    }
 
-	public void setChannels(List channels) {
-		this.channels = channels;
-	}
+    public void setChannels(List channels) {
+        this.channels = channels;
+    }
 
-	public void setChannel(Channel channel) {
-		this.channel = channel;
-	}
+    public void setChannel(Channel channel) {
+        this.channel = channel;
+    }
 
-	protected String renderedEvents;
+    protected String renderedEvents;
 
-	protected List events;
+    protected List events;
 
-	public Collection getEvents() {
-		return events;
+    public Collection getEvents() {
+        return events;
 
-	}
+    }
 
-	public String getRenderedEvents() {
-		return renderedEvents;
-	}
+    public String getRenderedEvents() {
+        return renderedEvents;
+    }
 
-	protected void populateThings(Subscription subs) throws TransformException {
-		List properties = new ArrayList();
-		Map parameters = new HashMap();
-		Channel channel = subs.getChannel();
-		if (channel.getTransformation() == null) {
-			List elements = new ArrayList(channel.getMetadataElements());
-			Collections.sort(elements);
-			if (elements != null) {
-				for (Iterator iter = elements.iterator(); iter.hasNext();) {
-					ChannelMetadataElement element = (ChannelMetadataElement) iter.next();
-					if (element.isVisible().booleanValue())
-						properties.add(element.getMetadataElement().getName());
-				}
-			} else {
-				properties.add("http://www.w3.org/2000/01/rdf-schema#label");
-			}
-		} else {
-			parameters.put("openinpopup", "true");
-			parameters.put("showdescription", "true");
-			parameters.put("showtitle", "true");
-		}
+    protected void populateThings(Subscription subs) throws TransformException {
+        List properties = new ArrayList();
+        Map parameters = new HashMap();
+        Channel channel = subs.getChannel();
+        if (channel.getTransformation() == null) {
+            List elements = new ArrayList(channel.getMetadataElements());
+            Collections.sort(elements);
+            if (elements != null) {
+                for (Iterator iter = elements.iterator(); iter.hasNext();) {
+                    ChannelMetadataElement element = (ChannelMetadataElement) iter.next();
+                    if (element.isVisible().booleanValue())
+                        properties.add(element.getMetadataElement().getName());
+                }
+            } else {
+                properties.add("http://www.w3.org/2000/01/rdf-schema#label");
+            }
+        } else {
+            parameters.put("openinpopup", "true");
+            parameters.put("showdescription", "true");
+            parameters.put("showtitle", "true");
+        }
 
-		Map things = feedFacade.findUserEvents(subs);
-		Iterator iterator = things.values().iterator();
-		while (iterator.hasNext()) {
-			RDFThing rdfThing = (RDFThing) iterator.next();
+        Map things = feedFacade.findUserEvents(subs);
+        Iterator iterator = things.values().iterator();
+        while (iterator.hasNext()) {
+            RDFThing rdfThing = (RDFThing) iterator.next();
 
-			if (channel.getTransformation() != null) {
-				String rssContent = toRss(channel, rdfThing);
-				InputSource source = new InputSource(new BufferedReader(new StringReader(rssContent)));
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				XSLTransformer transform = new XSLTransformer();
-				transform.transform(channel.getTransformation().getName(), channel.getTransformation().getContent(), source, baos, parameters);
-				String transformedContent = baos.toString();
-				rdfThing.setTransformedContent(transformedContent);
+            if (channel.getTransformation() != null) {
+                String rssContent = toRss(channel, rdfThing);
+                InputSource source = new InputSource(new BufferedReader(new StringReader(rssContent)));
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                XSLTransformer transform = new XSLTransformer();
+                transform.transform(channel.getTransformation().getName(), channel.getTransformation().getContent(), source, baos, parameters);
+                String transformedContent = baos.toString();
+                rdfThing.setTransformedContent(transformedContent);
 
-				channel.getTransformedEvents().put(rdfThing.getEventId(), rdfThing);
-			} else {
-				String transformedContent = renderVisbleElements(rdfThing, properties);
-				rdfThing.setTransformedContent(transformedContent);
-				channel.getTransformedEvents().put(rdfThing.getEventId(), rdfThing);
-			}
+                channel.getTransformedEvents().put(rdfThing.getEventId(), rdfThing);
+            } else {
+                String transformedContent = renderVisbleElements(rdfThing, properties);
+                rdfThing.setTransformedContent(transformedContent);
+                channel.getTransformedEvents().put(rdfThing.getEventId(), rdfThing);
+            }
 
-		}
-	}
+        }
+    }
 
-	private String renderVisbleElements(RDFThing thing, List properties) {
-		StringBuffer result = new StringBuffer();
+    private String renderVisbleElements(RDFThing thing, List properties) {
+        StringBuffer result = new StringBuffer();
 
-		result.append("<ul>\n");
+        result.append("<ul>\n");
 
-		String subject = (String) thing.getExt_id();
+        String subject = (String) thing.getExt_id();
 
-		result.append("\t<li>\n");
-		Map metadata = thing.getMetadata();
-		for (int i = 0; i < properties.size(); i++) {
-			String property = (String) properties.get(i);
-			ArrayList values = (ArrayList) metadata.get(property);
-			if (values == null) continue;
-			for (int j = 0; j < values.size(); j++) {
-				String value = (String) values.get(j);
-				if (i == 0) {
-					result.append("<span>");
-					result.append(getLabel(property).toUpperCase()).append(": ");
-					result.append("</span>");
-					result.append("<a href=\"").append(subject).append("\" target=\"_blank\">").append(value).append("</a>\n");
-					result.append("\n");
-				} else if (value != null) {
-					result.append("<p>");
-					result.append("<span>");
-					result.append(getLabel(property).toUpperCase()).append(": ");
-					result.append("</span>");
-					result.append(value);
-					result.append("</p>\n");
-				}
-			}
-		}
-		result.append("\t</li>\n");
-		result.append("</ul>\n");
+        result.append("\t<li>\n");
+        Map metadata = thing.getMetadata();
+        for (int i = 0; i < properties.size(); i++) {
+            String property = (String) properties.get(i);
+            ArrayList values = (ArrayList) metadata.get(property);
+            if (values == null) continue;
+            for (int j = 0; j < values.size(); j++) {
+                String value = (String) values.get(j);
+                if (i == 0) {
+                    result.append("<span>");
+                    result.append(getLabel(property).toUpperCase()).append(": ");
+                    result.append("</span>");
+                    result.append("<a href=\"").append(subject).append("\" target=\"_blank\">").append(value).append("</a>\n");
+                    result.append("\n");
+                } else if (value != null) {
+                    result.append("<p>");
+                    result.append("<span>");
+                    result.append(getLabel(property).toUpperCase()).append(": ");
+                    result.append("</span>");
+                    result.append(value);
+                    result.append("</p>\n");
+                }
+            }
+        }
+        result.append("\t</li>\n");
+        result.append("</ul>\n");
 
-		return result.toString();
-	}
+        return result.toString();
+    }
 
-	private String getLabel(String uri) {
-		String result = "";
-		int i1 = uri.lastIndexOf("#");
-		int i2 = uri.lastIndexOf("/");
-		if (i1 < 0) {
-			result = uri.substring(i2 + 1);
-		} else {
-			result = uri.substring(i1 + 1);
-		}
-		return result;
-	}
+    private String getLabel(String uri) {
+        String result = "";
+        int i1 = uri.lastIndexOf("#");
+        int i2 = uri.lastIndexOf("/");
+        if (i1 < 0) {
+            result = uri.substring(i2 + 1);
+        } else {
+            result = uri.substring(i1 + 1);
+        }
+        return result;
+    }
 
-	private String toRss(Channel channel, RDFThing rdfThing) {
-		String result = "";
-		Model rdf = ModelFactory.createDefaultModel();
+    private String toRss(Channel channel, RDFThing rdfThing) {
+        String result = "";
+        Model rdf = ModelFactory.createDefaultModel();
 
-		rdf.setNsPrefix("rss", "http://purl.org/rss/1.0/");
-		rdf.setNsPrefix("content", "http://purl.org/rss/1.0/modules/content/");
-		rdf.setNsPrefix("slash", "http://purl.org/rss/1.0/modules/slash/");
-		Resource rssChannel = rdf.createResource(RSS.channel);
-		rssChannel.addProperty(RSS.title, channel.getTitle());
-		rssChannel.addProperty(RSS.link, channel.getFeedUrl() != null ? channel.getFeedUrl() : "http://testChannel.com");
-		rssChannel.addProperty(RSS.description, channel.getDescription());
+        rdf.setNsPrefix("rss", "http://purl.org/rss/1.0/");
+        rdf.setNsPrefix("content", "http://purl.org/rss/1.0/modules/content/");
+        rdf.setNsPrefix("slash", "http://purl.org/rss/1.0/modules/slash/");
+        Resource rssChannel = rdf.createResource(RSS.channel);
+        rssChannel.addProperty(RSS.title, channel.getTitle());
+        rssChannel.addProperty(RSS.link, channel.getFeedUrl() != null ? channel.getFeedUrl() : "http://testChannel.com");
+        rssChannel.addProperty(RSS.description, channel.getDescription());
 
-		Resource item = rdf.createResource(rdfThing.getExt_id(), ResourceFactory.createResource(rdfThing.getType()));
+        Resource item = rdf.createResource(rdfThing.getExt_id(), ResourceFactory.createResource(rdfThing.getType()));
 
-		Iterator iter = rdfThing.getMetadata().entrySet().iterator();
-		while (iter.hasNext()) {
-			Map.Entry pairs2 = (Map.Entry) iter.next();
-			String pred = (String) pairs2.getKey();
-			ArrayList values = (ArrayList) pairs2.getValue();
-			for (int i = 0; i < values.size(); i++) {
-				item.addProperty(ResourceFactory.createProperty(pred), (String) values.get(i));
-			}
-			//item.addProperty(ResourceFactory.createProperty((String) pairs2.getKey()), (String) pairs2.getValue());
-		}
-		StringWriter out = new StringWriter();
-		RDFWriter writer = rdf.getWriter("RDF/XML-ABBREV");
-		writer.write(rdf, new BufferedWriter(out), null);
-		result = out.toString();
+        Iterator iter = rdfThing.getMetadata().entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry pairs2 = (Map.Entry) iter.next();
+            String pred = (String) pairs2.getKey();
+            ArrayList values = (ArrayList) pairs2.getValue();
+            for (int i = 0; i < values.size(); i++) {
+                item.addProperty(ResourceFactory.createProperty(pred), (String) values.get(i));
+            }
+            //item.addProperty(ResourceFactory.createProperty((String) pairs2.getKey()), (String) pairs2.getValue());
+        }
+        StringWriter out = new StringWriter();
+        RDFWriter writer = rdf.getWriter("RDF/XML-ABBREV");
+        writer.write(rdf, new BufferedWriter(out), null);
+        result = out.toString();
 
-		return result;
+        return result;
 
-	}
+    }
 
 }

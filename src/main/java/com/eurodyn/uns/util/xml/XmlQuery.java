@@ -31,79 +31,79 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 
 public class XmlQuery implements IXQuery {
-	
-	private IXmlCtx ctx = null;
-	
-	public XmlQuery(IXmlCtx ctx) {
-		this.ctx=ctx;
-	}
-	
-	public Node findElementByAttrs(String parentId, Map attributes) throws XmlException {
-		String xpath = "//*[@id='" + parentId + "']/*[";
-		Iterator attrs = attributes.keySet().iterator();
-		int i = 0;
-		while (attrs.hasNext()) {
-			String key = (String) attrs.next();
-			if (i == 0) {
-				xpath += "@" + key + "='" + attributes.get(key) + "' ";
-			} else {
-				xpath += "and @" + key + "='" + attributes.get(key) + "' ";
-			}
-			++i;
-		}
-		xpath += "]";
+    
+    private IXmlCtx ctx = null;
+    
+    public XmlQuery(IXmlCtx ctx) {
+        this.ctx=ctx;
+    }
+    
+    public Node findElementByAttrs(String parentId, Map attributes) throws XmlException {
+        String xpath = "//*[@id='" + parentId + "']/*[";
+        Iterator attrs = attributes.keySet().iterator();
+        int i = 0;
+        while (attrs.hasNext()) {
+            String key = (String) attrs.next();
+            if (i == 0) {
+                xpath += "@" + key + "='" + attributes.get(key) + "' ";
+            } else {
+                xpath += "and @" + key + "='" + attributes.get(key) + "' ";
+            }
+            ++i;
+        }
+        xpath += "]";
 
-		Node result = null;
-		try {
-			result = XPathAPI.selectSingleNode(ctx.getDocument(), xpath);
-		} catch (TransformerException e) {
-			throw new XmlException(e);
-		}
-		return result;
-	}
-	
+        Node result = null;
+        try {
+            result = XPathAPI.selectSingleNode(ctx.getDocument(), xpath);
+        } catch (TransformerException e) {
+            throw new XmlException(e);
+        }
+        return result;
+    }
+    
 
-	public String getAttributeValue(String elementId, String attribute) throws XmlException {
-		String xpath = "//*[@id='"+elementId+"']/@"+attribute;
-		Attr el = null;
-		String result=null;
-		try {
-			el =(Attr) XPathAPI.selectSingleNode(ctx.getDocument(), xpath);
-			if(el!=null ) {
-				result=el.getValue();
-			}
-		} catch (TransformerException e) {
-			throw new XmlException(e);
-		}
-		return result;
-	}
-	
-	
-	public String getElementValue(String parentId, String name) throws XmlException {
-		String value = null;
-		try {
-			String xpath = "//*[@id='" + parentId + "']/" + name + "/text()";
-			Node textNode = XPathAPI.selectSingleNode(ctx.getDocument(), xpath);
-			if (textNode != null) {
-				value = textNode.getNodeValue().trim();
-				if (value.equalsIgnoreCase("")) value = null;
-			}
-		} catch (TransformerException e) {
-			throw new XmlException(e);
-		}
-		return value;
-	}
+    public String getAttributeValue(String elementId, String attribute) throws XmlException {
+        String xpath = "//*[@id='"+elementId+"']/@"+attribute;
+        Attr el = null;
+        String result=null;
+        try {
+            el =(Attr) XPathAPI.selectSingleNode(ctx.getDocument(), xpath);
+            if(el!=null ) {
+                result=el.getValue();
+            }
+        } catch (TransformerException e) {
+            throw new XmlException(e);
+        }
+        return result;
+    }
+    
+    
+    public String getElementValue(String parentId, String name) throws XmlException {
+        String value = null;
+        try {
+            String xpath = "//*[@id='" + parentId + "']/" + name + "/text()";
+            Node textNode = XPathAPI.selectSingleNode(ctx.getDocument(), xpath);
+            if (textNode != null) {
+                value = textNode.getNodeValue().trim();
+                if (value.equalsIgnoreCase("")) value = null;
+            }
+        } catch (TransformerException e) {
+            throw new XmlException(e);
+        }
+        return value;
+    }
 
 
-	public Node findElementById(String id) throws XmlException {
-		String xpath = "//*[@id='" + id + "']";
-		Node result = null;
-		try {
-			result = XPathAPI.selectSingleNode(ctx.getDocument(), xpath);
-		} catch (TransformerException e) {
-			throw new XmlException(e);
-		}
-		return result;
-	}
+    public Node findElementById(String id) throws XmlException {
+        String xpath = "//*[@id='" + id + "']";
+        Node result = null;
+        try {
+            result = XPathAPI.selectSingleNode(ctx.getDocument(), xpath);
+        } catch (TransformerException e) {
+            throw new XmlException(e);
+        }
+        return result;
+    }
 
 }

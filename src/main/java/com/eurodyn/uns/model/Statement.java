@@ -25,74 +25,74 @@ import com.eurodyn.uns.util.HashCodeUtil;
 
 public class Statement implements java.io.Serializable {
 
-	private static final long serialVersionUID = 852475451895441178L;
+    private static final long serialVersionUID = 852475451895441178L;
 
-	private MetadataElement metadataElement;
+    private MetadataElement metadataElement;
 
-	private Integer id;
+    private Integer id;
 
-	private String value;
+    private String value;
 
-	private String property;
+    private String property;
 
-	public Statement() {
-	}
+    public Statement() {
+    }
 
-	public Statement(String property, String value) {
-		this.property = property;
-		this.value = value;
-	}
+    public Statement(String property, String value) {
+        this.property = property;
+        this.value = value;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public MetadataElement getMetadataElement() {
-		return metadataElement;
-	}
+    public MetadataElement getMetadataElement() {
+        return metadataElement;
+    }
 
-	public void setMetadataElement(MetadataElement metadataElement) {
-		this.metadataElement = metadataElement;
-	}
+    public void setMetadataElement(MetadataElement metadataElement) {
+        this.metadataElement = metadataElement;
+    }
 
-	public String getProperty() {
-		return property;
-	}
+    public String getProperty() {
+        return property;
+    }
 
-	public void setProperty(String property) {
-		this.property = property;
-	}
+    public void setProperty(String property) {
+        this.property = property;
+    }
 
-	public String getValue() {
-		return value;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other)
-			return true;
-		if (!(other instanceof Statement))
-			return false;
-		final Statement st = (Statement) other;
-		if (!st.getProperty().equals(getProperty()))
-			return false;
-		if (!st.getValue().equals(getValue()))
-			return false;
-		return true;
-	}
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (!(other instanceof Statement))
+            return false;
+        final Statement st = (Statement) other;
+        if (!st.getProperty().equals(getProperty()))
+            return false;
+        if (!st.getValue().equals(getValue()))
+            return false;
+        return true;
+    }
 
-	public int hashCode() {
-		int result = HashCodeUtil.SEED;
-		result = HashCodeUtil.hash(result, property);
-		result = HashCodeUtil.hash(result, value);
-		return result;
-	}
+    public int hashCode() {
+        int result = HashCodeUtil.SEED;
+        result = HashCodeUtil.hash(result, property);
+        result = HashCodeUtil.hash(result, value);
+        return result;
+    }
 
 }

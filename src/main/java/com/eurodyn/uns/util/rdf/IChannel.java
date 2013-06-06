@@ -28,44 +28,44 @@ import com.eurodyn.uns.model.User;
 
 public interface IChannel extends Serializable {
 
-	public Integer getId();
+    public Integer getId();
 
-	public void setId(Integer id);
+    public void setId(Integer id);
 
-	public String getContent();
+    public String getContent();
 
-	public void setContent(String content);
+    public void setContent(String content);
 
-	public String getDescription();
+    public String getDescription();
 
-	public void setDescription(String description);
+    public void setDescription(String description);
 
-	public String getFeedUrl();
+    public String getFeedUrl();
 
-	public void setFeedUrl(String feedUrl);
+    public void setFeedUrl(String feedUrl);
 
-	public String getTitle();
+    public String getTitle();
 
-	public void setTitle(String title);
+    public void setTitle(String title);
 
-	public Integer getRefreshDelay();
+    public Integer getRefreshDelay();
 
-	public void setRefreshDelay(Integer refreshDelay);
+    public void setRefreshDelay(Integer refreshDelay);
 
-	public String getMode();
+    public String getMode();
 
-	public void setMode(String mode);
+    public void setMode(String mode);
 
-	public String getSecondaryId();
+    public String getSecondaryId();
 
-	public void setSecondaryId(String secondaryId);
+    public void setSecondaryId(String secondaryId);
 
-	public User getUser();
+    public User getUser();
 
-	public void setUser(User user);
-	
-	public Date getLastHarvestDate();
+    public void setUser(User user);
+    
+    public Date getLastHarvestDate();
 
-	public void setLastHarvestDate(Date lastHarvestDate);
+    public void setLastHarvestDate(Date lastHarvestDate);
 
 }

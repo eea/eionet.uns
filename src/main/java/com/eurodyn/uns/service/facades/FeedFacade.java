@@ -32,36 +32,36 @@ import com.eurodyn.uns.util.common.WDSLogger;
 
 public class FeedFacade {
 
-	private static final WDSLogger logger = WDSLogger.getLogger(DeliveryTypeFacade.class);
+    private static final WDSLogger logger = WDSLogger.getLogger(DeliveryTypeFacade.class);
 
-	private DAOFactory daoFactory;
+    private DAOFactory daoFactory;
 
-	public FeedFacade() {
-		daoFactory = DAOFactory.getDAOFactory(DAOFactory.JDBC);
-	}
+    public FeedFacade() {
+        daoFactory = DAOFactory.getDAOFactory(DAOFactory.JDBC);
+    }
 
-	public Map findUserEvents(Subscription subscription) {
-		Map result = new HashMap();
-		try {
-			result = daoFactory.getFeedDao().findUserEvents(subscription);
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return result;
-	}
+    public Map findUserEvents(Subscription subscription) {
+        Map result = new HashMap();
+        try {
+            result = daoFactory.getFeedDao().findUserEvents(subscription);
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return result;
+    }
 
-	public Map findChannelEvents(Channel channel) {
-		Map result = new HashMap();
-		try {
-			result = daoFactory.getFeedDao().findChannelsEvents(channel);
-		} catch (DAOException e) {
-			logger.error(e);
-		} catch (Exception e) {
-			logger.fatalError(e);
-		}
-		return result;
-	}
+    public Map findChannelEvents(Channel channel) {
+        Map result = new HashMap();
+        try {
+            result = daoFactory.getFeedDao().findChannelsEvents(channel);
+        } catch (DAOException e) {
+            logger.error(e);
+        } catch (Exception e) {
+            logger.fatalError(e);
+        }
+        return result;
+    }
 
 }

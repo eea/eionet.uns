@@ -27,31 +27,31 @@ import org.w3c.dom.Node;
 
 
 public interface IXQuery {
-	
-	/**
-	 *  Finds element which conatins given attributes map.
-	 *  For this elemebnt will be searched under element with provided ID .
-	 *
-	 */
-	public Node findElementByAttrs(String parentId, Map attributes) throws XmlException;
-	
-	public String getAttributeValue(String parentId, String attribute) throws XmlException;
-	
-	/**
-	 * Gets value of element which parent is specified by ID.
-	 * 
-	 * @param parentId        		Identifier of the parent element.  
-	 * @param name             	Name of the element we are searching for
-	 * @return                      		String representing element value 
-	 * @throws XmlException    Thrown in case of system erros 
-	 */
-	public String getElementValue(String parentId, String name) throws XmlException;
+    
+    /**
+     *  Finds element which conatins given attributes map.
+     *  For this elemebnt will be searched under element with provided ID .
+     *
+     */
+    public Node findElementByAttrs(String parentId, Map attributes) throws XmlException;
+    
+    public String getAttributeValue(String parentId, String attribute) throws XmlException;
+    
+    /**
+     * Gets value of element which parent is specified by ID.
+     * 
+     * @param parentId              Identifier of the parent element.  
+     * @param name              Name of the element we are searching for
+     * @return                              String representing element value 
+     * @throws XmlException    Thrown in case of system erros 
+     */
+    public String getElementValue(String parentId, String name) throws XmlException;
 
 
-	/**
-	 *  Finds element by Id in a DOM Document
-	 *
-	 */
-	public Node findElementById(String id) throws XmlException;
+    /**
+     *  Finds element by Id in a DOM Document
+     *
+     */
+    public Node findElementById(String id) throws XmlException;
 
 }

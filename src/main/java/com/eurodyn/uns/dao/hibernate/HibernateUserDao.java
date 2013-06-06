@@ -38,75 +38,75 @@ import com.eurodyn.uns.model.User;
 
 public class HibernateUserDao extends BaseHibernateDao implements IUserDao {
 
-	protected Class getReferenceClass() {
-		return com.eurodyn.uns.model.User.class;
-	}
+    protected Class getReferenceClass() {
+        return com.eurodyn.uns.model.User.class;
+    }
 
-	public List findAllUsers() throws DAOException {
-		return findAll();
-	}
+    public List findAllUsers() throws DAOException {
+        return findAll();
+    }
 
-	public User findUser(Integer id) throws DAOException {
-		User user = null;
-		Session session = null;
-		try {
-			session = getSession();
-			Query query = session.createQuery("select u from User as u where u.id=:userId");
-			query.setInteger("userId",id.intValue());
-			List list = query.list();
-			if (list.size() > 0) {
-				user = (User) list.get(0);
-				Hibernate.initialize(user.getDeliveryAddresses());
-			}
-		} catch (HibernateException e) {
-			throw new DAOException(e);
-		}
-		return user;
-	}
+    public User findUser(Integer id) throws DAOException {
+        User user = null;
+        Session session = null;
+        try {
+            session = getSession();
+            Query query = session.createQuery("select u from User as u where u.id=:userId");
+            query.setInteger("userId",id.intValue());
+            List list = query.list();
+            if (list.size() > 0) {
+                user = (User) list.get(0);
+                Hibernate.initialize(user.getDeliveryAddresses());
+            }
+        } catch (HibernateException e) {
+            throw new DAOException(e);
+        }
+        return user;
+    }
 
-	public User findUser(String username) throws DAOException {
-		Session session = null;
-		User user = null;
+    public User findUser(String username) throws DAOException {
+        Session session = null;
+        User user = null;
 
-		try {
-			session = getSession();
-			Query query = session.createQuery("select u from User as u where u.externalId=:username");
-			query.setString("username", username);
-			List list = query.list();
-			if (list.size() > 0) {
-				user = (User) list.get(0);
-				Hibernate.initialize(user.getSubscriptions());
-				Hibernate.initialize(user.getDeliveryAddresses());
-				Collection subscriptions = user.getSubscriptions().values();
-				for (Iterator iter = subscriptions.iterator(); iter.hasNext();) {
-					Subscription subcription = (Subscription) iter.next();
-					Hibernate.initialize(subcription.getFilters());
-				}
-			}
-		} catch (HibernateException e) {
-			throw new DAOException(e);
-		} finally {
-			closeSession(session);
-		}
-		return user;
-	}
+        try {
+            session = getSession();
+            Query query = session.createQuery("select u from User as u where u.externalId=:username");
+            query.setString("username", username);
+            List list = query.list();
+            if (list.size() > 0) {
+                user = (User) list.get(0);
+                Hibernate.initialize(user.getSubscriptions());
+                Hibernate.initialize(user.getDeliveryAddresses());
+                Collection subscriptions = user.getSubscriptions().values();
+                for (Iterator iter = subscriptions.iterator(); iter.hasNext();) {
+                    Subscription subcription = (Subscription) iter.next();
+                    Hibernate.initialize(subcription.getFilters());
+                }
+            }
+        } catch (HibernateException e) {
+            throw new DAOException(e);
+        } finally {
+            closeSession(session);
+        }
+        return user;
+    }
 
-	public void createUser(User user) throws DAOException {
-		try {
-			save(user);
-		} catch (HibernateException e) {
-			throw new DAOException(e);
-		}
-	}
+    public void createUser(User user) throws DAOException {
+        try {
+            save(user);
+        } catch (HibernateException e) {
+            throw new DAOException(e);
+        }
+    }
 
-	public void updateUser(User user) throws DAOException {
-		try {
-			saveOrUpdate(user);
-		} catch (HibernateException e) {
-			throw new DAOException(e);
-		}
-	}
+    public void updateUser(User user) throws DAOException {
+        try {
+            saveOrUpdate(user);
+        } catch (HibernateException e) {
+            throw new DAOException(e);
+        }
+    }
 
-	public void fillUserAttributes(User user) throws DAOException {
-	}
+    public void fillUserAttributes(User user) throws DAOException {
+    }
 }

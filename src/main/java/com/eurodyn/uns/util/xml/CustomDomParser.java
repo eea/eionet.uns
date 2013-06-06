@@ -28,47 +28,47 @@ import org.apache.xerces.xni.parser.XMLParserConfiguration;
 
 
 public class CustomDomParser extends DOMParser {
-	String _mimeEncoding = "UTF-8";
-	
-	public CustomDomParser() {
-	      super();
-	}
-	
-	public CustomDomParser(XMLParserConfiguration config) {
-	      super(config);
-	   }
+    String _mimeEncoding = "UTF-8";
+    
+    public CustomDomParser() {
+          super();
+    }
+    
+    public CustomDomParser(XMLParserConfiguration config) {
+          super(config);
+       }
 
 
-	private void setMimeEncoding(String encoding) {
-		_mimeEncoding = encoding;
-	}
+    private void setMimeEncoding(String encoding) {
+        _mimeEncoding = encoding;
+    }
 
 
-	private String getMimeEncoding() {
-		return (_mimeEncoding);
-	}
+    private String getMimeEncoding() {
+        return (_mimeEncoding);
+    }
 
 
-	public String getJavaEncoding() {
-		String javaEncoding = null;
-		String mimeEncoding = getMimeEncoding();
-		if (mimeEncoding != null) {
-			if (mimeEncoding.equals("DEFAULT"))
-				javaEncoding = "UTF8";
-			else if (mimeEncoding.equalsIgnoreCase("UTF-16"))
-				javaEncoding = "Unicode";
-			else
-				javaEncoding = EncodingMap.getIANA2JavaMapping(mimeEncoding);
-		}
-		if (javaEncoding == null) javaEncoding = "UTF8";
-		return (javaEncoding);
-	}//getJavaEncoding()
+    public String getJavaEncoding() {
+        String javaEncoding = null;
+        String mimeEncoding = getMimeEncoding();
+        if (mimeEncoding != null) {
+            if (mimeEncoding.equals("DEFAULT"))
+                javaEncoding = "UTF8";
+            else if (mimeEncoding.equalsIgnoreCase("UTF-16"))
+                javaEncoding = "Unicode";
+            else
+                javaEncoding = EncodingMap.getIANA2JavaMapping(mimeEncoding);
+        }
+        if (javaEncoding == null) javaEncoding = "UTF8";
+        return (javaEncoding);
+    }//getJavaEncoding()
 
 
-	public void startGeneralEntity(String name, XMLResourceIdentifier identifier, String encoding, Augmentations augs) throws XNIException {
-		if (encoding != null) {
-			setMimeEncoding(encoding);
-		}
-		super.startGeneralEntity(name, identifier, encoding, augs);
-	}//startGeneralEntity
+    public void startGeneralEntity(String name, XMLResourceIdentifier identifier, String encoding, Augmentations augs) throws XNIException {
+        if (encoding != null) {
+            setMimeEncoding(encoding);
+        }
+        super.startGeneralEntity(name, identifier, encoding, augs);
+    }//startGeneralEntity
 }

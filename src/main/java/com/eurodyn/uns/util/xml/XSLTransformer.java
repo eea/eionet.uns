@@ -81,7 +81,7 @@ public class XSLTransformer {
                 }
 
             } catch (MissingResourceException mre) {
-            	mre.printStackTrace();
+                mre.printStackTrace();
             }
 
         }
@@ -135,13 +135,13 @@ public class XSLTransformer {
                 throw new TransformException(e);
             }
         } else {
-			java.io.FileInputStream is;
-			try {
-				is = new java.io.FileInputStream(xslt);
-			} catch (FileNotFoundException e) {
+            java.io.FileInputStream is;
+            try {
+                is = new java.io.FileInputStream(xslt);
+            } catch (FileNotFoundException e) {
                 throw new TransformException(e);
-			}
-	        InputStreamReader ssreader = new InputStreamReader(is);
+            }
+            InputStreamReader ssreader = new InputStreamReader(is);
             transformStream(xslt, ssreader, inputSource,  new StreamResult(os), parameters);
         }
     }
@@ -154,41 +154,41 @@ public class XSLTransformer {
                 throw new TransformException(e);
             }
         } else {
-			java.io.FileInputStream is;
-			try {
-				is = new java.io.FileInputStream(xslt);
-			} catch (FileNotFoundException e) {
+            java.io.FileInputStream is;
+            try {
+                is = new java.io.FileInputStream(xslt);
+            } catch (FileNotFoundException e) {
                 throw new TransformException(e);
-			}
-	        InputStreamReader ssreader = new InputStreamReader(is);
+            }
+            InputStreamReader ssreader = new InputStreamReader(is);
             transformStream(xslt, ssreader, inputSource, new StreamResult(writer), parameters);
         }
     }
-	
-	public void transform(String xsltName, String xslContent, InputSource inputSource, OutputStream os, Map parameters) throws TransformException {
-		  ByteArrayInputStream bais=new ByteArrayInputStream(xslContent.getBytes());
+    
+    public void transform(String xsltName, String xslContent, InputSource inputSource, OutputStream os, Map parameters) throws TransformException {
+          ByteArrayInputStream bais=new ByteArrayInputStream(xslContent.getBytes());
           InputStreamReader ssreader = new InputStreamReader(bais);
-		  transformStream(xsltName, ssreader, inputSource,  new StreamResult(os), parameters);
-		  
-	}
-	
-	
-	/**
-	 * 
-	 * @param xsltName
-	 * @param xslIs
-	 * @param is
-	 * @param os
-	 * @param parameters
-	 * @throws TransformException
-	 */
-	public void transform(String xsltName, InputStream xslIs, InputStream is, OutputStream os, Map parameters) throws TransformException {
+          transformStream(xsltName, ssreader, inputSource,  new StreamResult(os), parameters);
+          
+    }
+    
+    
+    /**
+     * 
+     * @param xsltName
+     * @param xslIs
+     * @param is
+     * @param os
+     * @param parameters
+     * @throws TransformException
+     */
+    public void transform(String xsltName, InputStream xslIs, InputStream is, OutputStream os, Map parameters) throws TransformException {
         InputStreamReader ssreader = new InputStreamReader(xslIs);
-		  transformStream(xsltName, ssreader, new InputSource(is),  new StreamResult(os), parameters);
-		  
-	}
-	
-	
+          transformStream(xsltName, ssreader, new InputSource(is),  new StreamResult(os), parameters);
+          
+    }
+    
+    
 
     private void transformStream(String xslt, InputStreamReader xslReader, InputSource inputSource, StreamResult streamResult, Map parameters) throws TransformException {
         if (xslt == null) {

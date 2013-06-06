@@ -27,37 +27,37 @@ import org.w3c.dom.Document;
 
 public interface IXmlCtx {
 
-	
-	public void setWellFormednessChecking() throws XmlException;
+    
+    public void setWellFormednessChecking() throws XmlException;
 
 
-	public void setValidationChecking() throws XmlException;
+    public void setValidationChecking() throws XmlException;
 
 
-	public void checkFromInputStream(InputStream inputStream) throws XmlException;
+    public void checkFromInputStream(InputStream inputStream) throws XmlException;
 
 
-	public void checkFromFile(String fullFileName) throws XmlException;
+    public void checkFromFile(String fullFileName) throws XmlException;
 
 
-	public void createXMLDocument() throws XmlException;
+    public void createXMLDocument() throws XmlException;
 
 
-	public void createXMLDocument(String docTypeName, String systemId) throws XmlException;
+    public void createXMLDocument(String docTypeName, String systemId) throws XmlException;
 
 
-	public IXUpdate getManager();
+    public IXUpdate getManager();
 
 
-	public IXmlSerializer getSerializer();
+    public IXmlSerializer getSerializer();
 
 
-	public IXQuery getQueryManager();
+    public IXQuery getQueryManager();
 
 
-	public Document getDocument();
+    public Document getDocument();
 
 
-	public void setDocument(Document document);
+    public void setDocument(Document document);
 
 }

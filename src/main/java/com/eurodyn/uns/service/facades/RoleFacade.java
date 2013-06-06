@@ -37,18 +37,18 @@ public class RoleFacade {
     
     private static final WDSLogger logger = WDSLogger.getLogger(RoleFacade.class);
     private static RoleFacade instance = null;
-    public static long SYNC_PERIOD = 2 * 60 * 60 * 1000;	//2 hours in ms
-    private static Date lastSync = new Date(0);	//January 1, 1970, 00:00:00 GMT.
+    public static long SYNC_PERIOD = 2 * 60 * 60 * 1000;    //2 hours in ms
+    private static Date lastSync = new Date(0); //January 1, 1970, 00:00:00 GMT.
     private static Object mutex = new Object();
     private DAOFactory daoFactory;
 
     static {
-		try {
-			SYNC_PERIOD=60 * 1000 * Integer.parseInt(AppConfigurator.getInstance().getBoundle("uns").getString("ldap.sync_period"));
-		} catch (ConfiguratorException e) {
-			logger.fatalError(e);
-		}
-	}
+        try {
+            SYNC_PERIOD=60 * 1000 * Integer.parseInt(AppConfigurator.getInstance().getBoundle("uns").getString("ldap.sync_period"));
+        } catch (ConfiguratorException e) {
+            logger.fatalError(e);
+        }
+    }
     
     public RoleFacade() {
         daoFactory=DAOFactory.getDAOFactory(DAOFactory.HIBERNATE);
@@ -65,7 +65,7 @@ public class RoleFacade {
         }
         return roles;
     }
-	
+    
     public Role getRole(Integer id) {
         Role role=null;
         try {
@@ -79,10 +79,10 @@ public class RoleFacade {
     }
     
     public boolean updateRoles(List roles) {
-		boolean ret = false;
+        boolean ret = false;
         try {
             daoFactory.getRoleDao().updateRoles(roles);
-			ret = true;
+            ret = true;
         } catch (DAOException e) {
             logger.error(e);
         } catch (Exception e) {
@@ -91,61 +91,61 @@ public class RoleFacade {
         return ret;
     }
 
-	public boolean synchronizeRoles() {
-		synchronized (mutex) {
-			if(new Date().getTime() - lastSync.getTime() < SYNC_PERIOD)
-				return true;
-			
-			boolean ret = false;
-			IRoleDao roleDao = DAOFactory.getDAOFactory(DAOFactory.LDAP).getRoleDao();
-			List LDAPRoles = new ArrayList();
-			List DBRoles = new ArrayList();
-			List newDBRoles = new ArrayList();
-	        try {
-				long time = new Date().getTime();
-				DBRoles = getRoles();
-				logger.info("Roles LDAP syncronization started");
-				logger.info("DB=" + (new Date().getTime() - time) + "ms");
-				time = new Date().getTime();
-				LDAPRoles = roleDao.findAllRoles();
-				logger.info("LDAP=" + (new Date().getTime() - time) + "ms");
-				time = new Date().getTime();
-				for (int i = 0; i < LDAPRoles.size(); i++) {
-					Role role = (Role)LDAPRoles.get(i);
-					if(!DBRoles.contains(role)){
-						newDBRoles.add(role);
-					}
-				}
-				logger.info("Compare=" + (new Date().getTime() - time) + "ms");
-				time = new Date().getTime();
-				logger.info("Found " + newDBRoles.size() + " new roles");
-				ret = updateRoles(newDBRoles);
-				logger.info("UpdateDB=" + (new Date().getTime() - time) + "ms");
-				if(ret)
-					lastSync = new Date();
-	        } catch (DAOException e) {
-	            logger.error(e);
-	        } catch (Exception e) {
-	            logger.fatalError(e);
-	        }
-	        return ret;
-		}
+    public boolean synchronizeRoles() {
+        synchronized (mutex) {
+            if(new Date().getTime() - lastSync.getTime() < SYNC_PERIOD)
+                return true;
+            
+            boolean ret = false;
+            IRoleDao roleDao = DAOFactory.getDAOFactory(DAOFactory.LDAP).getRoleDao();
+            List LDAPRoles = new ArrayList();
+            List DBRoles = new ArrayList();
+            List newDBRoles = new ArrayList();
+            try {
+                long time = new Date().getTime();
+                DBRoles = getRoles();
+                logger.info("Roles LDAP syncronization started");
+                logger.info("DB=" + (new Date().getTime() - time) + "ms");
+                time = new Date().getTime();
+                LDAPRoles = roleDao.findAllRoles();
+                logger.info("LDAP=" + (new Date().getTime() - time) + "ms");
+                time = new Date().getTime();
+                for (int i = 0; i < LDAPRoles.size(); i++) {
+                    Role role = (Role)LDAPRoles.get(i);
+                    if(!DBRoles.contains(role)){
+                        newDBRoles.add(role);
+                    }
+                }
+                logger.info("Compare=" + (new Date().getTime() - time) + "ms");
+                time = new Date().getTime();
+                logger.info("Found " + newDBRoles.size() + " new roles");
+                ret = updateRoles(newDBRoles);
+                logger.info("UpdateDB=" + (new Date().getTime() - time) + "ms");
+                if(ret)
+                    lastSync = new Date();
+            } catch (DAOException e) {
+                logger.error(e);
+            } catch (Exception e) {
+                logger.fatalError(e);
+            }
+            return ret;
+        }
     }
-	
-	public List getUserRoles(String user) {
-		IRoleDao roleDao = DAOFactory.getDAOFactory(DAOFactory.LDAP).getRoleDao();
-		List userroles = null;
-		try {
-			userroles = roleDao.findUserRoles(user);
+    
+    public List getUserRoles(String user) {
+        IRoleDao roleDao = DAOFactory.getDAOFactory(DAOFactory.LDAP).getRoleDao();
+        List userroles = null;
+        try {
+            userroles = roleDao.findUserRoles(user);
         } catch (DAOException e) {
             logger.error(e);
         } catch (Exception e) {
             logger.fatalError(e);
         }
-		return userroles;
-	}
+        return userroles;
+    }
 
-	public static RoleFacade getInstance() {
+    public static RoleFacade getInstance() {
         if (null == instance) {
            synchronized (RoleFacade.class) {
               if (null == instance) {

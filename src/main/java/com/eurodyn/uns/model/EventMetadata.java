@@ -25,74 +25,74 @@ import com.eurodyn.uns.util.HashCodeUtil;
 
 public class EventMetadata implements java.io.Serializable {
 
-	private static final long serialVersionUID = 6337919440628627208L;
-	
-	private Integer id;
+    private static final long serialVersionUID = 6337919440628627208L;
+    
+    private Integer id;
 
-	private String property;
+    private String property;
 
-	private String value;
+    private String value;
 
-	private Event event;
+    private Event event;
 
-	public EventMetadata() {
-	}
+    public EventMetadata() {
+    }
 
-	public EventMetadata(String property, String value) {
-		this.property = property;
-		this.value = value;
-	}
+    public EventMetadata(String property, String value) {
+        this.property = property;
+        this.value = value;
+    }
 
-	public Event getEvent() {
-		return event;
-	}
+    public Event getEvent() {
+        return event;
+    }
 
-	public void setEvent(Event event) {
-		this.event = event;
-	}
+    public void setEvent(Event event) {
+        this.event = event;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getProperty() {
-		return property;
-	}
+    public String getProperty() {
+        return property;
+    }
 
-	public void setProperty(String property) {
-		this.property = property;
-	}
+    public void setProperty(String property) {
+        this.property = property;
+    }
 
-	public String getValue() {
-		return value;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other)
-			return true;
-		if (!(other instanceof Filter))
-			return false;
-		final EventMetadata em = (EventMetadata) other;
-		if (!em.getValue().equals(getValue()))
-			return false;
-		if (!em.getProperty().equals(getProperty()))
-			return false;
-		return true;
-	}
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (!(other instanceof Filter))
+            return false;
+        final EventMetadata em = (EventMetadata) other;
+        if (!em.getValue().equals(getValue()))
+            return false;
+        if (!em.getProperty().equals(getProperty()))
+            return false;
+        return true;
+    }
 
-	public int hashCode() {
-		int result = HashCodeUtil.SEED;
-		result = HashCodeUtil.hash(result, property);
-		result = HashCodeUtil.hash(result, value);
-		return result;
-	}
+    public int hashCode() {
+        int result = HashCodeUtil.SEED;
+        result = HashCodeUtil.hash(result, property);
+        result = HashCodeUtil.hash(result, value);
+        return result;
+    }
 
 }

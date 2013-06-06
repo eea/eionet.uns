@@ -17,7 +17,7 @@
  * 
  * Contributors(s):
  *    Original code: Dusan Popovic (ED) 
- *    							 Nedeljko Pavlovic (ED)
+ *                               Nedeljko Pavlovic (ED)
  */
 
 package com.eurodyn.uns.web.listeners;
@@ -33,96 +33,96 @@ import com.eurodyn.uns.util.common.ConfiguratorException;
 
 public class AppServletContextListener implements ServletContextListener, Runnable {
 
-	private Thread thread;
-	private boolean contextDestroyed = false;
+    private Thread thread;
+    private boolean contextDestroyed = false;
 
 
-	/**
-	 * Public constuctor
-	 */
-	public AppServletContextListener() {
-	}
+    /**
+     * Public constuctor
+     */
+    public AppServletContextListener() {
+    }
 
 
-	/**
-	 * Method that is triggered once on start of application (context
-	 * initialization):
-	 * 
-	 * @param servletContextEvent
-	 *            ServletContextEvent
-	 */
-	public void contextInitialized(ServletContextEvent servletContextEvent) {
+    /**
+     * Method that is triggered once on start of application (context
+     * initialization):
+     * 
+     * @param servletContextEvent
+     *            ServletContextEvent
+     */
+    public void contextInitialized(ServletContextEvent servletContextEvent) {
 
-		try {
-			String hval=AppConfigurator.getInstance().getBoundle("uns").getString("java.awt.headless").trim();
-			if(hval.equalsIgnoreCase("true")) {
-				System.setProperty("java.awt.headless", "true");
-			}
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		try {
-			checkHomeDirectories();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		thread = new Thread(this);
-		thread.start();
-	}
-
-
-	/**
-	 * Checks persistence of all home directories needed for correct WDS work.
-	 * Home directory must be present. Rest directories will be created in case
-	 * that they don't exist.
-	 */
-	private void checkHomeDirectories() throws Exception {
-		try {
-			String pathPrefix = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar;
-			File log = new File(pathPrefix + "log");
-			if (!log.exists()) {
-				if (!log.mkdir()) {
-					throw new Exception("Log directory can not be created ! You will stay out of log data !!!");
-				}
-			}
-
-		} catch (ConfiguratorException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            String hval=AppConfigurator.getInstance().getBoundle("uns").getString("java.awt.headless").trim();
+            if(hval.equalsIgnoreCase("true")) {
+                System.setProperty("java.awt.headless", "true");
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        try {
+            checkHomeDirectories();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        thread = new Thread(this);
+        thread.start();
+    }
 
 
-	/**
-	 * Method that is triggered once on destroy of servlet context
-	 * 
-	 * @param servletContextEvent
-	 *            ServletContextEvent
-	 */
-	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-		contextDestroyed = true;
-		thread.interrupt();
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
+    /**
+     * Checks persistence of all home directories needed for correct WDS work.
+     * Home directory must be present. Rest directories will be created in case
+     * that they don't exist.
+     */
+    private void checkHomeDirectories() throws Exception {
+        try {
+            String pathPrefix = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar;
+            File log = new File(pathPrefix + "log");
+            if (!log.exists()) {
+                if (!log.mkdir()) {
+                    throw new Exception("Log directory can not be created ! You will stay out of log data !!!");
+                }
+            }
 
-		}
+        } catch (ConfiguratorException e) {
+            e.printStackTrace();
+        }
+    }
 
-	}
+
+    /**
+     * Method that is triggered once on destroy of servlet context
+     * 
+     * @param servletContextEvent
+     *            ServletContextEvent
+     */
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+        contextDestroyed = true;
+        thread.interrupt();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+
+        }
+
+    }
 
 
-	public void run() {
-		RoleFacade rf = new RoleFacade();
+    public void run() {
+        RoleFacade rf = new RoleFacade();
 
-		try {
-			Thread.sleep(10 * 60 * 1000); //Wait to contextInitialized
-			while (!contextDestroyed) {
-				rf.synchronizeRoles();
-				Thread.sleep(RoleFacade.SYNC_PERIOD);
-			}
-		} catch (InterruptedException e) {
+        try {
+            Thread.sleep(10 * 60 * 1000); //Wait to contextInitialized
+            while (!contextDestroyed) {
+                rf.synchronizeRoles();
+                Thread.sleep(RoleFacade.SYNC_PERIOD);
+            }
+        } catch (InterruptedException e) {
 
-			return;
-		}
-	}
+            return;
+        }
+    }
 
 }

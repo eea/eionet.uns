@@ -20,7 +20,7 @@ public class HibernateRoleDao extends BaseHibernateDao implements IRoleDao {
         return result;
     }
 
-	public Role findByPK(Integer id) throws DAOException {
+    public Role findByPK(Integer id) throws DAOException {
         Role result=null;
         try {
             result= (Role) load(getReferenceClass(), id);
@@ -28,25 +28,25 @@ public class HibernateRoleDao extends BaseHibernateDao implements IRoleDao {
             throw new DAOException(e);
         }
         return result;
-	}
+    }
 
-	public void updateRoles(List roles) throws DAOException {
+    public void updateRoles(List roles) throws DAOException {
         try {
-			for (int i = 0; i < roles.size(); i++) {
-				Role role = (Role)roles.get(i);
-				saveOrUpdate(role);
-			}
+            for (int i = 0; i < roles.size(); i++) {
+                Role role = (Role)roles.get(i);
+                saveOrUpdate(role);
+            }
         } catch (HibernateException e) {
             throw new DAOException(e);
         }
-	}
+    }
 
-	protected Class getReferenceClass() {
+    protected Class getReferenceClass() {
         return com.eurodyn.uns.model.Role.class;
     }
 
-	public List findUserRoles(String user) throws DAOException {
-		return null;
-	}
+    public List findUserRoles(String user) throws DAOException {
+        return null;
+    }
 
 }
