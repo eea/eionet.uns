@@ -13,64 +13,64 @@ import com.eurodyn.uns.web.jsf.BaseBean;
 
 public class NotificationTemplateForm extends BaseBean {
 
-	protected NotificationTemplateFacade notificationTemplateFacade = null;
+    protected NotificationTemplateFacade notificationTemplateFacade = null;
 
-	protected ChannelFacade channelFacade = null;
-	
-	protected EventMetadataFacade eventMetadataFacade;
+    protected ChannelFacade channelFacade = null;
+    
+    protected EventMetadataFacade eventMetadataFacade;
 
-	protected List testEventsList ;
-	
-	protected NotificationTemplate notificationTemplate;
-	
-	protected String resultText;
+    protected List testEventsList ;
+    
+    protected NotificationTemplate notificationTemplate;
+    
+    protected String resultText;
 
-	protected String resultHtml;
+    protected String resultHtml;
 
-	protected Event testEvent;
-	
-	public NotificationTemplateForm() {
-	}
-
-
-	public NotificationTemplate getNotificationTemplate() {
-		return notificationTemplate;
-	}
-	
-	public void setNotificationTemplate(NotificationTemplate notificationTemplate) {
-		this.notificationTemplate = notificationTemplate;
-	}
-
-	
-	protected String getLocalName(String name) {
-		return name.substring(name.lastIndexOf("/") + 1);
-	}
-	
-	
-
-	public String getResultText() {
-		return resultText;
-	}
+    protected Event testEvent;
+    
+    public NotificationTemplateForm() {
+    }
 
 
-	public String getResultHtml() {
-		return resultHtml;
-	}
+    public NotificationTemplate getNotificationTemplate() {
+        return notificationTemplate;
+    }
+    
+    public void setNotificationTemplate(NotificationTemplate notificationTemplate) {
+        this.notificationTemplate = notificationTemplate;
+    }
 
-	
-	public List getTestEventsItems() {
-		return toSelectItems(testEventsList, "id", "channel.title");
-	}
-	
-	protected String afterTest = "notificationTemplates";
+    
+    protected String getLocalName(String name) {
+        return name.substring(name.lastIndexOf("/") + 1);
+    }
+    
+    
 
-	public String afterTest(){
-		return afterTest;
-	}
+    public String getResultText() {
+        return resultText;
+    }
 
-	public void changeAfterTest(ActionEvent event){
-		afterTest="notificationTemplate";
-	}
-	
+
+    public String getResultHtml() {
+        return resultHtml;
+    }
+
+    
+    public List getTestEventsItems() {
+        return toSelectItems(testEventsList, "id", "channel.title");
+    }
+    
+    protected String afterTest = "notificationTemplates";
+
+    public String afterTest(){
+        return afterTest;
+    }
+
+    public void changeAfterTest(ActionEvent event){
+        afterTest="notificationTemplate";
+    }
+    
 
 }

@@ -24,161 +24,161 @@ import com.eurodyn.uns.util.xml.XmlException;
 public class DashTemplateActions extends DashTemplateForm {
 
 
-	private static final WDSLogger logger = WDSLogger.getLogger(DashTemplateActions.class);
-	
-	public DashTemplateActions() {
-		try {
-			xslFacade = XslFacade.getInstance();
-			channelFacade = new ChannelFacade();
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			addSystemErrorMessage();
-		}
-	}
+    private static final WDSLogger logger = WDSLogger.getLogger(DashTemplateActions.class);
+    
+    public DashTemplateActions() {
+        try {
+            xslFacade = XslFacade.getInstance();
+            channelFacade = new ChannelFacade();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            addSystemErrorMessage();
+        }
+    }
 
-	
-	public String edit() {
-		if(reset){
-			stylesheet = new Stylesheet();
-			reset = false;
-		}
-		return "editDashTemplate";
-	}
-	
+    
+    public String edit() {
+        if(reset){
+            stylesheet = new Stylesheet();
+            reset = false;
+        }
+        return "editDashTemplate";
+    }
+    
 
-	public String prepareTest() {
+    public String prepareTest() {
 
-		try {
-			testChannels = (List) channelFacade.getChannels().get("list");
-			setId(null);
-			testChannel = new Channel();
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			addSystemErrorMessage();
-		}
-		return "testChannelsList";
-	}
-	
-	
-	
-	public String upload() {
-		try {
-			if (checkXML(upFile))
-				stylesheet.setContent(new String(upFile.getBytes(), "UTF8"));
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			addSystemErrorMessage();
-		}
-		return null;
-	}
+        try {
+            testChannels = (List) channelFacade.getChannels().get("list");
+            setId(null);
+            testChannel = new Channel();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            addSystemErrorMessage();
+        }
+        return "testChannelsList";
+    }
+    
+    
+    
+    public String upload() {
+        try {
+            if (checkXML(upFile))
+                stylesheet.setContent(new String(upFile.getBytes(), "UTF8"));
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            addSystemErrorMessage();
+        }
+        return null;
+    }
 
-	public String save() {
-				
-		try {
-			if (stylesheet.getId() == null){
-				xslFacade.createStylesheet(stylesheet);	
-				addInfoMessage(null, "messages.stylesheet.success.create", new Object[] { stylesheet.getName() });					
-			}
-			else{
-				xslFacade.updateStylesheet(stylesheet);
-				addInfoMessage(null, "messages.stylesheet.success.update", new Object[] { stylesheet.getName() });
-			}
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			addSystemErrorMessage();
-		}
-		
-		
-		return "dashTemplates";
-	}
+    public String save() {
+                
+        try {
+            if (stylesheet.getId() == null){
+                xslFacade.createStylesheet(stylesheet); 
+                addInfoMessage(null, "messages.stylesheet.success.create", new Object[] { stylesheet.getName() });                  
+            }
+            else{
+                xslFacade.updateStylesheet(stylesheet);
+                addInfoMessage(null, "messages.stylesheet.success.update", new Object[] { stylesheet.getName() });
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            addSystemErrorMessage();
+        }
+        
+        
+        return "dashTemplates";
+    }
 
-	public String remove() {
-		try {
-			xslFacade.deleteStylesheetl(stylesheet);
-			addInfoMessage(null, "messages.stylesheet.success.delete", new Object[] { stylesheet.getName() });
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			addSystemErrorMessage();
-		}
+    public String remove() {
+        try {
+            xslFacade.deleteStylesheetl(stylesheet);
+            addInfoMessage(null, "messages.stylesheet.success.delete", new Object[] { stylesheet.getName() });
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            addSystemErrorMessage();
+        }
 
-		return null;
-	}
-
-
-	public String download() {
-		try {
-
-		
-			HttpServletResponse response = getResponse();
-			response.setHeader("Content-Disposition", "atachement; filename=\"" + stylesheet.getName() + "\"");
-			response.setHeader("Content-Length", "" + stylesheet.getContent().getBytes().length);
-			response.setContentType("text/xsl");
-			PrintWriter out;
-
-			out = new PrintWriter(new OutputStreamWriter(response.getOutputStream(), "UTF8"), true);
-			out.print(stylesheet.getContent());
-			out.flush();
-			out.close();
-			getFacesContext().responseComplete();
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			addSystemErrorMessage();
-		}
-		return null;
-
-	}
+        return null;
+    }
 
 
-	public String testChannel() {
+    public String download() {
+        try {
 
-		try {
-			if (testChannel.getFeedUrl().equals(""))
-				testChannel = channelFacade.getChannel(getId());
-			else
-				testChannel.setMode("PULL");
-			
-			
-			testChannel.setTransformation(stylesheet);
-			testChannel.setContent(null);
-			String result = ChannelServerDelegate.instance.testNewChannel(testChannel);
-			if (result != null && result.length() > 12) {
-				if (result.indexOf("</svg>") > 0) {
-					result = "<div style=\"overflow:auto; width: 100%; height:180px\">";
-					result += "<img src=\"../svg.unsvg\" alt=\"Generated SVG\" />";
-					result += "</div>";
-					getSession().setAttribute("testChannel",testChannel);
-				}
-			} else {
-				result = "<p class=\"nocontent\">CONTENT IS NOT AVAILABLE !</p>";
-			}
-			testChannel.setContent(result);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			addSystemErrorMessage();
-		}
+        
+            HttpServletResponse response = getResponse();
+            response.setHeader("Content-Disposition", "atachement; filename=\"" + stylesheet.getName() + "\"");
+            response.setHeader("Content-Length", "" + stylesheet.getContent().getBytes().length);
+            response.setContentType("text/xsl");
+            PrintWriter out;
 
-		return "testStylesheet";
-	}
+            out = new PrintWriter(new OutputStreamWriter(response.getOutputStream(), "UTF8"), true);
+            out.print(stylesheet.getContent());
+            out.flush();
+            out.close();
+            getFacesContext().responseComplete();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            addSystemErrorMessage();
+        }
+        return null;
 
-	private boolean checkXML(UploadedFile file) throws IOException {
-		boolean valid = true;
-		
-		try {
-			IXmlCtx x = new XmlContext();
-			x.setWellFormednessChecking();
-			x.checkFromInputStream(new ByteArrayInputStream(file.getBytes()));
-		} catch (XmlException e) {
-			addErrorMessage(null,"errors.xsl",null);
-			valid = false;
-		}
-		
-		return valid;
-	}
+    }
 
-	
-	public void changeAfterTest(ActionEvent event){
-		afterTest="editDashTemplate";
-	}
 
-	
+    public String testChannel() {
+
+        try {
+            if (testChannel.getFeedUrl().equals(""))
+                testChannel = channelFacade.getChannel(getId());
+            else
+                testChannel.setMode("PULL");
+            
+            
+            testChannel.setTransformation(stylesheet);
+            testChannel.setContent(null);
+            String result = ChannelServerDelegate.instance.testNewChannel(testChannel);
+            if (result != null && result.length() > 12) {
+                if (result.indexOf("</svg>") > 0) {
+                    result = "<div style=\"overflow:auto; width: 100%; height:180px\">";
+                    result += "<img src=\"../svg.unsvg\" alt=\"Generated SVG\" />";
+                    result += "</div>";
+                    getSession().setAttribute("testChannel",testChannel);
+                }
+            } else {
+                result = "<p class=\"nocontent\">CONTENT IS NOT AVAILABLE !</p>";
+            }
+            testChannel.setContent(result);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            addSystemErrorMessage();
+        }
+
+        return "testStylesheet";
+    }
+
+    private boolean checkXML(UploadedFile file) throws IOException {
+        boolean valid = true;
+        
+        try {
+            IXmlCtx x = new XmlContext();
+            x.setWellFormednessChecking();
+            x.checkFromInputStream(new ByteArrayInputStream(file.getBytes()));
+        } catch (XmlException e) {
+            addErrorMessage(null,"errors.xsl",null);
+            valid = false;
+        }
+        
+        return valid;
+    }
+
+    
+    public void changeAfterTest(ActionEvent event){
+        afterTest="editDashTemplate";
+    }
+
+    
 }

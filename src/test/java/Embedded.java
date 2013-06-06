@@ -11,17 +11,17 @@ public class Embedded {
   public static void main(String []args) throws PyException {
     
     System.setProperty("python.home", "c:/Program Files/Jython/2.2");
-    //System.setProperty("python.path", "c:/Program Files/Jython/2.2");	  
+    //System.setProperty("python.path", "c:/Program Files/Jython/2.2");   
     //System.setProperty("python.home", "c:/Program Files/Python24");
     //System.setProperty("python.home", "c:/work/eclipse-workspaces/UNS2/src/main/python/UNS");
 
-	  
+      
     PythonInterpreter interp =  new PythonInterpreter(null, new PySystemState());;
     PySystemState sys = Py.getSystemState();
     sys.path.append(new PyString("c:/work/eclipse-workspaces/UNS2/src/main/python"));
     //sys.path.append(new PyString("c:/Program Files/Jython/2.2/Lib"));
 
-    //sys.path.append(new PyString("c:/Program Files/Jython/2.2"));	  
+    //sys.path.append(new PyString("c:/Program Files/Jython/2.2"));   
 
 
     interp.exec("import sys");
@@ -87,12 +87,12 @@ public class PythonAdaptor implements ICommand {
            if (localsObject != null)
               interp.setLocals(localsObject);
         }  // end if
-	// Pass variables to interpreter's local namespace so that 
-	// they may be accessed in a Jython (.py) script
-	interp.set("event",(Object) event); 
-	interp.set("context",(Object) context); 
+    // Pass variables to interpreter's local namespace so that 
+    // they may be accessed in a Jython (.py) script
+    interp.set("event",(Object) event); 
+    interp.set("context",(Object) context); 
         interp.set("setTimer",(Object) setTimer);
-	interp.set("args",(Object) arg); 
+    interp.set("args",(Object) arg); 
         if (arg[1] instanceof String)  { // Interpret a string
             interp.exec((String)arg[1]); // run the string
         }  // end if

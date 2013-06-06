@@ -12,57 +12,57 @@ import com.eurodyn.uns.web.jsf.BaseBean;
 
 public class DashTemplateForm extends BaseBean {
 
-	protected XslFacade xslFacade;
+    protected XslFacade xslFacade;
 
-	protected UploadedFile upFile;
+    protected UploadedFile upFile;
 
-	protected Channel testChannel;
+    protected Channel testChannel;
 
-	protected Stylesheet stylesheet;
+    protected Stylesheet stylesheet;
 
-	protected ChannelFacade channelFacade;
-	
-	protected List testChannels;
+    protected ChannelFacade channelFacade;
+    
+    protected List testChannels;
 
-	protected String afterTest = "dashTemplates";
-	
-	public DashTemplateForm() {
-	}
-
-
-	public Stylesheet getStylesheet() {
-		return stylesheet;
-	}
-
-	public void setStylesheet(Stylesheet stylesheet) {
-		this.stylesheet = stylesheet;
-	}
-
-	public UploadedFile getUpFile() {
-		return upFile;
-	}
-
-	public void setUpFile(UploadedFile file) {
-		this.upFile = file;
-	}
-
-	public List getTestChannelsItems() {
-		return toSelectItems(testChannels, "id", "title");
-	}
-
-	public Channel getTestChannel() {
-		return testChannel;
-	}
-
-	public void setTestChannel(Channel testChannel) {
-		this.testChannel = testChannel;
-	}
+    protected String afterTest = "dashTemplates";
+    
+    public DashTemplateForm() {
+    }
 
 
-	public String afterTest(){
-		return afterTest;
-	}
-	
+    public Stylesheet getStylesheet() {
+        return stylesheet;
+    }
 
-	
+    public void setStylesheet(Stylesheet stylesheet) {
+        this.stylesheet = stylesheet;
+    }
+
+    public UploadedFile getUpFile() {
+        return upFile;
+    }
+
+    public void setUpFile(UploadedFile file) {
+        this.upFile = file;
+    }
+
+    public List getTestChannelsItems() {
+        return toSelectItems(testChannels, "id", "title");
+    }
+
+    public Channel getTestChannel() {
+        return testChannel;
+    }
+
+    public void setTestChannel(Channel testChannel) {
+        this.testChannel = testChannel;
+    }
+
+
+    public String afterTest(){
+        return afterTest;
+    }
+    
+
+    
 }

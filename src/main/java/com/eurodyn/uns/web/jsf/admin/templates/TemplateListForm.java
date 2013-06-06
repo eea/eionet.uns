@@ -11,79 +11,79 @@ import com.eurodyn.uns.web.jsf.SortableTable;
 
 public class TemplateListForm extends BaseBean {
 
-	private static final WDSLogger logger = WDSLogger.getLogger(TemplateListForm.class);
+    private static final WDSLogger logger = WDSLogger.getLogger(TemplateListForm.class);
 
-	private XslFacade xslFacade;
+    private XslFacade xslFacade;
 
-	private NotificationTemplateFacade notificationTemplateFacade;
+    private NotificationTemplateFacade notificationTemplateFacade;
 
-	private List notificationTemplates;
+    private List notificationTemplates;
 
-	private List stylesheets;
+    private List stylesheets;
 
-	public TemplateListForm() {
-		st = new SortableTable("name");
-		xslFacade = new XslFacade();
-		notificationTemplateFacade = new NotificationTemplateFacade();
-	}
+    public TemplateListForm() {
+        st = new SortableTable("name");
+        xslFacade = new XslFacade();
+        notificationTemplateFacade = new NotificationTemplateFacade();
+    }
 
-	public boolean isPreparedNotificationTemplates() {
-		try {
-			if (isRenderPhase()) {
-				if (notificationTemplates == null || reset) {
-					Dto dto = new Dto();
-					String order = st.isAscending() ? "asc" : "desc";
-					dto.put("orderProperty", st.getSort());
-					dto.put("order", order);
-					// getExternalContext().getSessionMap().remove("notificationTemplateBean");
-					reset = false;
-					notificationTemplates = (List) notificationTemplateFacade.getNotificationTemplates(dto).get("list");
-				}
-				st.sort(notificationTemplates);
-			}
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			addSystemErrorMessage();
-		}
-		return true;
-	}
+    public boolean isPreparedNotificationTemplates() {
+        try {
+            if (isRenderPhase()) {
+                if (notificationTemplates == null || reset) {
+                    Dto dto = new Dto();
+                    String order = st.isAscending() ? "asc" : "desc";
+                    dto.put("orderProperty", st.getSort());
+                    dto.put("order", order);
+                    // getExternalContext().getSessionMap().remove("notificationTemplateBean");
+                    reset = false;
+                    notificationTemplates = (List) notificationTemplateFacade.getNotificationTemplates(dto).get("list");
+                }
+                st.sort(notificationTemplates);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            addSystemErrorMessage();
+        }
+        return true;
+    }
 
-	public boolean isPreparedStylesheets() {
-		try {
-			if (isRenderPhase()) {
-				if (stylesheets == null || reset) {
-					Dto dto = new Dto();
-					String order = st.isAscending() ? "asc" : "desc";
-					dto.put("orderProperty", st.getSort());
-					dto.put("order", order);
-					// getExternalContext().getSessionMap().remove("dashTemplate");
-					stylesheets = (List) xslFacade.getStylesheets(dto).get("list");
-					reset = false;
-				}
-				st.sort(stylesheets);
+    public boolean isPreparedStylesheets() {
+        try {
+            if (isRenderPhase()) {
+                if (stylesheets == null || reset) {
+                    Dto dto = new Dto();
+                    String order = st.isAscending() ? "asc" : "desc";
+                    dto.put("orderProperty", st.getSort());
+                    dto.put("order", order);
+                    // getExternalContext().getSessionMap().remove("dashTemplate");
+                    stylesheets = (List) xslFacade.getStylesheets(dto).get("list");
+                    reset = false;
+                }
+                st.sort(stylesheets);
 
-			}
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			addSystemErrorMessage();
-		}
-		return true;
-	}
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            addSystemErrorMessage();
+        }
+        return true;
+    }
 
-	public List getNotificationTemplates() {		
-		return notificationTemplates;
-	}
+    public List getNotificationTemplates() {        
+        return notificationTemplates;
+    }
 
-	public void setNotificationTemplates(List notificationTemplates) {
-		this.notificationTemplates = notificationTemplates;
-	}
+    public void setNotificationTemplates(List notificationTemplates) {
+        this.notificationTemplates = notificationTemplates;
+    }
 
-	public List getStylesheets() {		
-		return stylesheets;
-	}
+    public List getStylesheets() {      
+        return stylesheets;
+    }
 
-	public void setStylesheets(List stylesheets) {
-		this.stylesheets = stylesheets;
-	}
+    public void setStylesheets(List stylesheets) {
+        this.stylesheets = stylesheets;
+    }
 
 }

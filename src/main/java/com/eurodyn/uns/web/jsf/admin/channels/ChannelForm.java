@@ -24,168 +24,168 @@ import com.eurodyn.uns.web.jsf.util.Period;
 
 public abstract class ChannelForm extends BaseChannelBean {
 
-	protected RoleFacade roleFacade;
+    protected RoleFacade roleFacade;
 
-	protected XslFacade xslFacade;
+    protected XslFacade xslFacade;
 
-	protected UserFacade userFacade;
+    protected UserFacade userFacade;
 
-	protected DeliveryTypeFacade deliveryTypeFacade;
+    protected DeliveryTypeFacade deliveryTypeFacade;
 
-	protected NotificationTemplateFacade notificationTemplateFacade;
-	
-	protected SubscriptionFacade subscriptionFacade;
+    protected NotificationTemplateFacade notificationTemplateFacade;
+    
+    protected SubscriptionFacade subscriptionFacade;
 
-	protected List availableRoles;
+    protected List availableRoles;
 
-	protected List allStylesheets;
+    protected List allStylesheets;
 
-	protected boolean stylesheetSelected;
+    protected boolean stylesheetSelected;
 
-	protected List allDeliveryTypes;
+    protected List allDeliveryTypes;
 
-	protected String[] deliveryTypes;
+    protected String[] deliveryTypes;
 
-	protected String transformedContent;
+    protected String transformedContent;
 
-	protected Period refreshDelay;
+    protected Period refreshDelay;
 
-	protected List allNotificationTemplates;
+    protected List allNotificationTemplates;
 
-	protected String currentChannelRoles;
+    protected String currentChannelRoles;
 
-	protected List allRoles;
-	
-	protected Subscription subscription;
-	
-	protected String newSubscriber;
+    protected List allRoles;
+    
+    protected Subscription subscription;
+    
+    protected String newSubscriber;
 
-	protected String visibleElements;
-
-
-	protected SortableTable st = new SortableTable("name");
-	
-	public SortableTable getSt() {
-		return st;
-	}
-
-	protected void initForm() {
-		roleFacade = new RoleFacade();
-		channelFacade = new ChannelFacade();
-		xslFacade = new XslFacade();
-		userFacade = new UserFacade();
-		metadataElementFacade = new MetadataElementFacade();
-		deliveryTypeFacade = new DeliveryTypeFacade();
-		notificationTemplateFacade = new NotificationTemplateFacade();
-		eventMetadataFacade = new EventMetadataFacade();
-		subscriptionFacade = new SubscriptionFacade();
-		allDeliveryTypes = (List) deliveryTypeFacade.getDeliveryTypes().get("list");
-		subscription = new Subscription();
-	}
-
-	protected void setUpChannelRoles() {
-		if (currentChannelRoles != null) {
-			Set channelRoles = new HashSet();
-			if (currentChannelRoles.length() > 0) {
-				String roles[] = currentChannelRoles.split(";");
-				for (int i = 0; i < roles.length; i++) {
-					Role role = roleFacade.getRole(new Integer(roles[i]));
-					channelRoles.add(role);
-				}
-			}
-			channel.setRoles(channelRoles);
-		}
-		currentChannelRoles = null;
-	}
-
-	protected void setUpVisibleElements() {
-		if (visibleElements != null && visibleElements.length() > 0) {
-			List visibleElementsList = Arrays.asList(visibleElements.split(";"));
-			for (Iterator iter = channel.getMetadataElements().iterator(); iter.hasNext();) {
-				ChannelMetadataElement cme = (ChannelMetadataElement) iter.next();
-				int index = visibleElementsList.indexOf(cme.getMetadataElement().getName());
-				cme.setVisible(index > -1 ? Boolean.TRUE : Boolean.FALSE);
-				cme.setAppearanceOrder(new Integer(index));
-			}
-		}
-	}
-
-	public boolean isStylesheetSelected() {
-		return stylesheetSelected;
-	}
-
-	public void setStylesheetSelected(boolean stylesheetSelected) {
-		this.stylesheetSelected = stylesheetSelected;
-	}
-
-	public void setCurrentChannelRoles(String currentChannelRoles) {
-		this.currentChannelRoles = currentChannelRoles;
-	}
-
-	public String getCurrentChannelRoles() {
-		return "";
-	}
-
-	public String getVisibleElements() {
-		return "";
-	}
-
-	public void setVisibleElements(String visibleElements) {
-		this.visibleElements = visibleElements;
-	}
-
-	public String getTransformedContent() {
-		return transformedContent;
-	}
-
-	public Period getRefreshDelay() {
-		return refreshDelay;
-	}
-
-	public List getAvailableRolesItems() {
-		return toSelectItems(availableRoles, "id", "localName");
-	}
-
-	public List getChannelRolesItems() {
-		return toSelectItems(channel, "roles", "id", "localName", false);
-	}
+    protected String visibleElements;
 
 
-	public List getAvailableElementsItems() {
-		return toConditionalSelectItems(channelMetadataElements, "metadataElement.name", "metadataElement.localName", "visible", new Boolean(false));
-	}
+    protected SortableTable st = new SortableTable("name");
+    
+    public SortableTable getSt() {
+        return st;
+    }
 
-	public List getVisibleElementsItems() {
-		return toConditionalSelectItems(channelMetadataElements, "metadataElement.name", "metadataElement.localName", "visible", new Boolean(true));
+    protected void initForm() {
+        roleFacade = new RoleFacade();
+        channelFacade = new ChannelFacade();
+        xslFacade = new XslFacade();
+        userFacade = new UserFacade();
+        metadataElementFacade = new MetadataElementFacade();
+        deliveryTypeFacade = new DeliveryTypeFacade();
+        notificationTemplateFacade = new NotificationTemplateFacade();
+        eventMetadataFacade = new EventMetadataFacade();
+        subscriptionFacade = new SubscriptionFacade();
+        allDeliveryTypes = (List) deliveryTypeFacade.getDeliveryTypes().get("list");
+        subscription = new Subscription();
+    }
 
-	}
+    protected void setUpChannelRoles() {
+        if (currentChannelRoles != null) {
+            Set channelRoles = new HashSet();
+            if (currentChannelRoles.length() > 0) {
+                String roles[] = currentChannelRoles.split(";");
+                for (int i = 0; i < roles.length; i++) {
+                    Role role = roleFacade.getRole(new Integer(roles[i]));
+                    channelRoles.add(role);
+                }
+            }
+            channel.setRoles(channelRoles);
+        }
+        currentChannelRoles = null;
+    }
 
-	public List getStylesheetsItems() {
-		return toSelectItems((List) allStylesheets, "id", "fullName");
-	}
+    protected void setUpVisibleElements() {
+        if (visibleElements != null && visibleElements.length() > 0) {
+            List visibleElementsList = Arrays.asList(visibleElements.split(";"));
+            for (Iterator iter = channel.getMetadataElements().iterator(); iter.hasNext();) {
+                ChannelMetadataElement cme = (ChannelMetadataElement) iter.next();
+                int index = visibleElementsList.indexOf(cme.getMetadataElement().getName());
+                cme.setVisible(index > -1 ? Boolean.TRUE : Boolean.FALSE);
+                cme.setAppearanceOrder(new Integer(index));
+            }
+        }
+    }
 
-	public List getDeliveryTypesItems() {
-		return toSelectItems(allDeliveryTypes, "id", "name", true);
-	}
+    public boolean isStylesheetSelected() {
+        return stylesheetSelected;
+    }
 
-	public List getNotificationTemplatesItems() {
-		return toSelectItems(allNotificationTemplates, "id", "name");
-	}
+    public void setStylesheetSelected(boolean stylesheetSelected) {
+        this.stylesheetSelected = stylesheetSelected;
+    }
 
-	public Subscription getSubscription() {
-		return subscription;
-	}
+    public void setCurrentChannelRoles(String currentChannelRoles) {
+        this.currentChannelRoles = currentChannelRoles;
+    }
 
-	public void setSubscription(Subscription subscription) {
-		this.subscription = subscription;
-	}
+    public String getCurrentChannelRoles() {
+        return "";
+    }
 
-	public String getNewSubscriber() {
-		return newSubscriber;
-	}
+    public String getVisibleElements() {
+        return "";
+    }
 
-	public void setNewSubscriber(String newSubscriber) {
-		this.newSubscriber = newSubscriber;
-	}
+    public void setVisibleElements(String visibleElements) {
+        this.visibleElements = visibleElements;
+    }
+
+    public String getTransformedContent() {
+        return transformedContent;
+    }
+
+    public Period getRefreshDelay() {
+        return refreshDelay;
+    }
+
+    public List getAvailableRolesItems() {
+        return toSelectItems(availableRoles, "id", "localName");
+    }
+
+    public List getChannelRolesItems() {
+        return toSelectItems(channel, "roles", "id", "localName", false);
+    }
+
+
+    public List getAvailableElementsItems() {
+        return toConditionalSelectItems(channelMetadataElements, "metadataElement.name", "metadataElement.localName", "visible", new Boolean(false));
+    }
+
+    public List getVisibleElementsItems() {
+        return toConditionalSelectItems(channelMetadataElements, "metadataElement.name", "metadataElement.localName", "visible", new Boolean(true));
+
+    }
+
+    public List getStylesheetsItems() {
+        return toSelectItems((List) allStylesheets, "id", "fullName");
+    }
+
+    public List getDeliveryTypesItems() {
+        return toSelectItems(allDeliveryTypes, "id", "name", true);
+    }
+
+    public List getNotificationTemplatesItems() {
+        return toSelectItems(allNotificationTemplates, "id", "name");
+    }
+
+    public Subscription getSubscription() {
+        return subscription;
+    }
+
+    public void setSubscription(Subscription subscription) {
+        this.subscription = subscription;
+    }
+
+    public String getNewSubscriber() {
+        return newSubscriber;
+    }
+
+    public void setNewSubscriber(String newSubscriber) {
+        this.newSubscriber = newSubscriber;
+    }
 
 }

@@ -11,84 +11,84 @@ import com.eurodyn.uns.web.jsf.SortableTable;
 
 public abstract class MetadataForm extends BaseChannelBean {
 
-	protected String searchValue;
+    protected String searchValue;
 
-	protected String searchMetadataElement;
+    protected String searchMetadataElement;
 
-	protected SortableTable st = new SortableTable("metadataElement.localName");
-	protected SortableTable st1 = new SortableTable("value");
+    protected SortableTable st = new SortableTable("metadataElement.localName");
+    protected SortableTable st1 = new SortableTable("value");
 
-	public SortableTable getSt1() {
-		return st1;
-	}
-	
+    public SortableTable getSt1() {
+        return st1;
+    }
+    
 
-	
-	protected ChannelMetadataElement channelMetadataElement;
+    
+    protected ChannelMetadataElement channelMetadataElement;
 
-	protected EventMetadata eventMetadataValue;
+    protected EventMetadata eventMetadataValue;
 
-	protected List metadataElementValues;
+    protected List metadataElementValues;
 
-	protected void initForm() {
-		channelFacade = new ChannelFacade();
-		metadataElementFacade = new MetadataElementFacade();
-		eventMetadataFacade = new EventMetadataFacade();
-	}
+    protected void initForm() {
+        channelFacade = new ChannelFacade();
+        metadataElementFacade = new MetadataElementFacade();
+        eventMetadataFacade = new EventMetadataFacade();
+    }
 
-	public SortableTable getSt() {
-		return st;
-	}
-	
+    public SortableTable getSt() {
+        return st;
+    }
+    
 
-	public List getChannelMetadataElements() {
-		return st.sort(channelMetadataElements);
-	}
+    public List getChannelMetadataElements() {
+        return st.sort(channelMetadataElements);
+    }
 
-	
-	public List getMetadataElementValues() {
-		return st1.sort(metadataElementValues);
-	}
+    
+    public List getMetadataElementValues() {
+        return st1.sort(metadataElementValues);
+    }
 
-	public void setMetadataElementValues(List metadataElementValues) {
-		if (this.metadataElementValues == null)
-			this.metadataElementValues = metadataElementValues;
-	}
-	
-	public String getSearchValue() {
-		return searchValue;
-	}
+    public void setMetadataElementValues(List metadataElementValues) {
+        if (this.metadataElementValues == null)
+            this.metadataElementValues = metadataElementValues;
+    }
+    
+    public String getSearchValue() {
+        return searchValue;
+    }
 
-	public void setSearchValue(String searchValue) {
-		this.searchValue = searchValue;
-	}
+    public void setSearchValue(String searchValue) {
+        this.searchValue = searchValue;
+    }
 
-	public void setSearchMetadataElement(String searchMetadataElement) {
-		this.searchMetadataElement = searchMetadataElement;
-	}
+    public void setSearchMetadataElement(String searchMetadataElement) {
+        this.searchMetadataElement = searchMetadataElement;
+    }
 
-	public String getSearchMetadataElement() {
-		return searchMetadataElement;
-	}
-	
-	public void setEventMetadataValue(EventMetadata eventMetadataValue) {
-		this.eventMetadataValue = eventMetadataValue;
-	}
+    public String getSearchMetadataElement() {
+        return searchMetadataElement;
+    }
+    
+    public void setEventMetadataValue(EventMetadata eventMetadataValue) {
+        this.eventMetadataValue = eventMetadataValue;
+    }
 
-	
-	public ChannelMetadataElement getChannelMetadataElement() {
-		return channelMetadataElement;
-	}
-	
-	public void setChannelMetadataElement(ChannelMetadataElement channelMetadataElement) {
-		this.channelMetadataElement = channelMetadataElement;
-	}
+    
+    public ChannelMetadataElement getChannelMetadataElement() {
+        return channelMetadataElement;
+    }
+    
+    public void setChannelMetadataElement(ChannelMetadataElement channelMetadataElement) {
+        this.channelMetadataElement = channelMetadataElement;
+    }
 
 
-	public List getChannelMetadataElementsItems() {
-		return toSelectItems(channel,"metadataElements", "metadataElement.name", "metadataElement.localName",false);
+    public List getChannelMetadataElementsItems() {
+        return toSelectItems(channel,"metadataElements", "metadataElement.name", "metadataElement.localName",false);
 
-	}
+    }
 
-	
+    
 }
