@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="heinlja (generated)" id="1378905945993-1">
+        <createTable tableName="acl_rows">
+            <column defaultValueNumeric="0" name="ACL_ID" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="'object'" name="TYPE" type="enum('object','doc','dcc')">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="'user'" name="ENTRY_TYPE" type="enum('owner','user','localgroup','other','foreign','unauthenticated','authenticated','mask')">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="PRINCIPAL" type="CHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="PERMISSIONS" type="CHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-2">
+        <createTable tableName="acls">
+            <column autoIncrement="true" name="ACL_ID" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValue="" name="ACL_NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PARENT_NAME" type="VARCHAR(100)"/>
+            <column defaultValue="" name="OWNER" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="DESCRIPTION" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-3">
+        <createTable tableName="channel">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="STYLESHEET_ID" type="INT UNSIGNED"/>
+            <column name="NOTIFICATION_TEMPLATE_ID" type="INT UNSIGNED"/>
+            <column defaultValueNumeric="0" name="CREATOR" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="TITLE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(255)"/>
+            <column name="LAST_HARVEST" type="DATETIME"/>
+            <column defaultValue="PULL" name="MODE" type="VARCHAR(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FEED_URL" type="VARCHAR(255)"/>
+            <column defaultValueNumeric="600" name="REFRESH_DELAY" type="INT UNSIGNED"/>
+            <column defaultValueDate="0002-11-30T00:00:00.0" name="CREATION_DATE" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="CSTATUS" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SECONDARY_ID" type="VARCHAR(255)"/>
+            <column defaultValue="" name="LANGUAGE_ID" type="CHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-4">
+        <createTable tableName="channel_delivery_type">
+            <column defaultValueNumeric="0" name="CHANNEL_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="DELIVERY_TYPE_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-5">
+        <createTable tableName="channel_metadata_elements">
+            <column defaultValueNumeric="0" name="CHANNEL_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="METADATA_ELEMENT_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="VISIBLE" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="APPEARANCE_ORDER" type="INT"/>
+            <column defaultValueBoolean="false" name="FILTERED" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="OBSOLETE" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-6">
+        <createTable tableName="channel_role">
+            <column defaultValueNumeric="0" name="CHANNEL_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="EEA_ROLE_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-7">
+        <createTable tableName="delivery">
+            <column defaultValueNumeric="0" name="NOTIFICATION_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="DELIVERY_TYPE_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="DELIVERY_STATUS" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueDate="0002-11-30T00:00:00.0" name="DELIVERY_TIME" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-8">
+        <createTable tableName="delivery_address">
+            <column defaultValueNumeric="0" name="EEA_USER_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="DELIVERY_TYPE_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ADDRESS" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-9">
+        <createTable tableName="delivery_type">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValue="" name="NAME" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-10">
+        <createTable tableName="eea_role">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValue="" name="EXT_ID" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-11">
+        <createTable tableName="eea_user">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValue="" name="EXT_USER_ID" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="CN" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VACATION_EXPIRATION" type="DATETIME"/>
+            <column defaultValueBoolean="false" name="VACATION_FLAG" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PAGE_REFRESH_DELAY" type="INT UNSIGNED"/>
+            <column name="NUMCOLUMNS" type="SMALLINT UNSIGNED"/>
+            <column defaultValueBoolean="false" name="PREFER_HTML" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="PREFER_DASHBOARD" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-12">
+        <createTable tableName="event">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueNumeric="0" name="CHANNEL_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="EXT_ID" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueDate="0002-11-30T00:00:00.0" name="CREATION_DATE" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="RTYPE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="PROCESSED" type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-13">
+        <createTable tableName="event_metadata">
+            <column defaultValueNumeric="0" name="EVENT_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="PROPERTY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VALUE" type="TEXT"/>
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-14">
+        <createTable tableName="filter">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueNumeric="0" name="SUBSCRIPTION_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-15">
+        <createTable tableName="metadata_elements">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValue="" name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-16">
+        <createTable tableName="notification">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueNumeric="0" name="EEA_USER_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="EVENT_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONTENT" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="CHANNEL_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SUBJECT" type="VARCHAR(255)"/>
+            <column name="HTML_CONTENT" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-17">
+        <createTable tableName="notification_template">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValue="" name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SUBJECT" type="VARCHAR(255)"/>
+            <column name="TEXT_PLAIN" type="TEXT"/>
+            <column name="TEXT_HTML" type="TEXT"/>
+            <column defaultValueBoolean="false" name="EDIT_ONLY" type="BIT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-18">
+        <createTable tableName="statement">
+            <column name="FILTER_ID" type="INT UNSIGNED"/>
+            <column defaultValue="" name="PROPERTY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="VALUE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="METADATA_ELEMENT_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-19">
+        <createTable tableName="stylesheet">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValue="" name="NAME" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="DESCRIPTION" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONTENT" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-20">
+        <createTable tableName="subscription">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueNumeric="0" name="EEA_USER_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="CHANNEL_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LEAD_TIME" type="INT UNSIGNED"/>
+            <column defaultValueDate="0002-11-30T00:00:00.0" name="CREATION_DATE" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="SECONDARY_ID" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DASH_CORD_X" type="SMALLINT"/>
+            <column name="DASH_CORD_Y" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-21">
+        <createTable tableName="subscription_dt">
+            <column defaultValueNumeric="0" name="SUBSCRIPTION_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="DELIVERY_TYPE_ID" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-22">
+        <addPrimaryKey columnNames="ACL_ID, TYPE, ENTRY_TYPE, PRINCIPAL" tableName="acl_rows"/>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-23">
+        <addPrimaryKey columnNames="CHANNEL_ID, DELIVERY_TYPE_ID" tableName="channel_delivery_type"/>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-24">
+        <addPrimaryKey columnNames="CHANNEL_ID, METADATA_ELEMENT_ID" tableName="channel_metadata_elements"/>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-25">
+        <addPrimaryKey columnNames="CHANNEL_ID, EEA_ROLE_ID" tableName="channel_role"/>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-26">
+        <addPrimaryKey columnNames="NOTIFICATION_ID, DELIVERY_TYPE_ID" tableName="delivery"/>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-27">
+        <addPrimaryKey columnNames="EEA_USER_ID, DELIVERY_TYPE_ID" tableName="delivery_address"/>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-28">
+        <addPrimaryKey columnNames="SUBSCRIPTION_ID, DELIVERY_TYPE_ID" tableName="subscription_dt"/>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-29">
+        <createIndex indexName="ACL_NAME" tableName="acls" unique="true">
+            <column name="ACL_NAME"/>
+            <column name="PARENT_NAME"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-30">
+        <createIndex indexName="CHANNEL_FKIndex3" tableName="channel" unique="false">
+            <column name="STYLESHEET_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-31">
+        <createIndex indexName="IX_EEAUSER_FK" tableName="channel" unique="false">
+            <column name="CREATOR"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-32">
+        <createIndex indexName="IX_NAME_UNIQ" tableName="channel" unique="true">
+            <column name="TITLE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-33">
+        <createIndex indexName="IX_SECID_UNIQ" tableName="channel" unique="true">
+            <column name="SECONDARY_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-34">
+        <createIndex indexName="IX_TEMPLATE_FK" tableName="channel" unique="false">
+            <column name="NOTIFICATION_TEMPLATE_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-35">
+        <createIndex indexName="IX_URL_UINQUE" tableName="channel" unique="true">
+            <column name="FEED_URL"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-36">
+        <createIndex indexName="IX_CHANNEL_FK" tableName="channel_delivery_type" unique="false">
+            <column name="CHANNEL_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-37">
+        <createIndex indexName="IX_DT_FK" tableName="channel_delivery_type" unique="false">
+            <column name="DELIVERY_TYPE_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-38">
+        <createIndex indexName="IX_CHANNEL_FK" tableName="channel_metadata_elements" unique="false">
+            <column name="CHANNEL_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-39">
+        <createIndex indexName="IX_METADATA_ELEMENT_FK" tableName="channel_metadata_elements" unique="false">
+            <column name="METADATA_ELEMENT_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-40">
+        <createIndex indexName="IX_CHANNEL_FK" tableName="channel_role" unique="false">
+            <column name="CHANNEL_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-41">
+        <createIndex indexName="IX_ROLE_FK" tableName="channel_role" unique="false">
+            <column name="EEA_ROLE_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-42">
+        <createIndex indexName="IX_DELIVERY_TYPE_FK" tableName="delivery" unique="false">
+            <column name="DELIVERY_TYPE_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-43">
+        <createIndex indexName="IX_DSTATUS" tableName="delivery" unique="false">
+            <column name="DELIVERY_STATUS"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-44">
+        <createIndex indexName="IX_NOTIFICATION_FK" tableName="delivery" unique="false">
+            <column name="NOTIFICATION_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-45">
+        <createIndex indexName="IX_DELIVERY_TYPE_FK" tableName="delivery_address" unique="false">
+            <column name="DELIVERY_TYPE_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-46">
+        <createIndex indexName="IX_EEA_USER_FK" tableName="delivery_address" unique="false">
+            <column name="EEA_USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-47">
+        <createIndex indexName="Index_2" tableName="eea_role" unique="false">
+            <column name="EXT_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-48">
+        <createIndex indexName="IX_CHANNEL_FK" tableName="event" unique="false">
+            <column name="CHANNEL_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-49">
+        <createIndex indexName="IX_CREATION_DATE" tableName="event" unique="false">
+            <column name="CREATION_DATE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-50">
+        <createIndex indexName="IX_EXT_ID_UNIQ" tableName="event" unique="true">
+            <column name="EXT_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-51">
+        <createIndex indexName="EVENT_METADATA_FKIndex1" tableName="event_metadata" unique="false">
+            <column name="EVENT_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-52">
+        <createIndex indexName="IX_SUBSCRIPTION_FK" tableName="filter" unique="false">
+            <column name="SUBSCRIPTION_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-53">
+        <createIndex indexName="IX_METADATANAME_UNIQ" tableName="metadata_elements" unique="true">
+            <column name="NAME"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-54">
+        <createIndex indexName="IX_EEA_USER_FK" tableName="notification" unique="false">
+            <column name="EEA_USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-55">
+        <createIndex indexName="IX_EVENT_FK" tableName="notification" unique="false">
+            <column name="EVENT_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-56">
+        <createIndex indexName="IX_USEREV_UNIQ" tableName="notification" unique="true">
+            <column name="EEA_USER_ID"/>
+            <column name="EVENT_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-57">
+        <createIndex indexName="IX_TNAME_UNIQ" tableName="notification_template" unique="true">
+            <column name="NAME"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-58">
+        <createIndex indexName="FK_STATEMENT_2" tableName="statement" unique="false">
+            <column name="METADATA_ELEMENT_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-59">
+        <createIndex indexName="IX_FILTER_FK" tableName="statement" unique="false">
+            <column name="FILTER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-60">
+        <createIndex indexName="IX_PROPERTY" tableName="statement" unique="false">
+            <column name="PROPERTY"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-61">
+        <createIndex indexName="IX_VALUE" tableName="statement" unique="false">
+            <column name="VALUE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-62">
+        <createIndex indexName="IX_NAME_UNIQ" tableName="stylesheet" unique="true">
+            <column name="NAME"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-63">
+        <createIndex indexName="IX_CHANNEL_FK" tableName="subscription" unique="false">
+            <column name="CHANNEL_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-64">
+        <createIndex indexName="IX_EEA_USER_FK" tableName="subscription" unique="false">
+            <column name="EEA_USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-65">
+        <createIndex indexName="IX_SCREATION_DATE" tableName="subscription" unique="false">
+            <column name="CREATION_DATE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-66">
+        <createIndex indexName="IX_SECID_UNIQ" tableName="subscription" unique="true">
+            <column name="SECONDARY_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-67">
+        <createIndex indexName="IX_USER_CHANNEL_UNIQ" tableName="subscription" unique="true">
+            <column name="EEA_USER_ID"/>
+            <column name="CHANNEL_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-68">
+        <createIndex indexName="IX_DELIVERY_TYPE_FK" tableName="subscription_dt" unique="false">
+            <column name="DELIVERY_TYPE_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="heinlja (generated)" id="1378905945993-69">
+        <createIndex indexName="IX_SUBSCRIPTION" tableName="subscription_dt" unique="false">
+            <column name="SUBSCRIPTION_ID"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

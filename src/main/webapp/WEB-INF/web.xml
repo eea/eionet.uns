@@ -12,7 +12,7 @@
     <context-param>
         <param-name>javax.servlet.jsp.jstl.fmt.fallbackLocale</param-name>
         <param-value>en</param-value>
-    </context-param>	
+    </context-param>
 	<context-param>
 		<param-name>tiles-definitions</param-name>
 		<param-value>/WEB-INF/tiles.xml</param-value>
@@ -38,6 +38,29 @@
 		<param-value>true</param-value>
 	</context-param>
 
+	<!-- Liquibase configuration. -->
+
+    <context-param>
+        <param-name>liquibase.changelog</param-name>
+        <param-value>sql/uns-struct.xml</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>liquibase.datasource</param-name>
+        <param-value>java:comp/env/jdbc/liquibase</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>liquibase.onerror.fail</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>liquibase.contexts</param-name>
+        <param-value>production</param-value>
+    </context-param>
+
+	<!--  Filters. -->
 
 	<filter>
 	    <filter-name>CAS Filter</filter-name>
@@ -101,31 +124,31 @@
 	        <param-value>20m</param-value>
 	    </init-param>
 	</filter>
-	
+
 	<!-- extension mapping for adding <script/>, <link/>, and other resource tags to JSF-pages  -->
 	<filter-mapping>
 	    <filter-name>MyFacesExtensionsFilter</filter-name>
 	    <!-- servlet-name must match the name of your javax.faces.webapp.FacesServlet entry -->
 	    <servlet-name>Faces Servlet</servlet-name>
 	</filter-mapping>
-	
+
 	<!-- extension mapping for serving page-independent resources (javascript, stylesheets, images, etc.)  -->
 	<filter-mapping>
 	    <filter-name>MyFacesExtensionsFilter</filter-name>
 	    <url-pattern>/faces/myFacesExtensionResource/*</url-pattern>
 	</filter-mapping>
-	
+
 
 	<!-- Filter Mappings -->
-	
+
 	<filter-mapping>
 		<filter-name>Set Character Encoding</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>	
+	</filter-mapping>
 	<filter-mapping>
 		<filter-name>multipartFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>	
+	</filter-mapping>
 	<filter-mapping>
 		<filter-name>UNS Request Wrapper</filter-name>
 		<url-pattern>*.jsf</url-pattern>
@@ -152,10 +175,12 @@
   	</filter-mapping>
   	<filter-mapping>
     	<filter-name>CAS Filter</filter-name>
-		<url-pattern>/eionetCookieLogin/*</url-pattern>		
+		<url-pattern>/eionetCookieLogin/*</url-pattern>
   	</filter-mapping>
-	
-	
+
+	<listener>
+        <listener-class>liquibase.integration.servlet.LiquibaseServletListener</listener-class>
+    </listener>
 	<listener>
 		<listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
 	</listener>
@@ -200,7 +225,7 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet-mapping>
 		<servlet-name>RpcRouter</servlet-name>
 		<url-pattern>/rpcrouter</url-pattern>
