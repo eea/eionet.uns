@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+     You can run this change log on your database as many times as you want, it will ignore the
+     changes that are already applied. It also means that you can't modify an existing revision.
+     Always add to the end.
+
+     Use the maven goals: liquibase:update, liquibase:status or liquibase:changelogSync
+      Potentially with -Dliquibase.dropFirst=true
+     $Id$
+ -->
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
-    <changeSet author="heinlja (generated)" id="1378905945993-1">
-        <createTable tableName="acl_rows">
+
+    <!-- <property name="text.type" value="text" dbms="mysql"/> -->
+
+    <changeSet author="heinlja" id="rev-1">
+        <createTable tableName="ACL_ROWS">
             <column defaultValueNumeric="0" name="ACL_ID" type="INT">
                 <constraints nullable="false"/>
             </column>
@@ -19,9 +31,20 @@
             </column>
             <column name="STATUS" type="INT"/>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
+        <modifySql dbms="h2">
+            <replace replace="enum('object','doc','dcc')" with="CHAR(6)"/>
+            <replace replace="enum('owner','user','localgroup','other','foreign','unauthenticated','authenticated','mask')" with="CHAR(20)"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-2">
-        <createTable tableName="acls">
+    <changeSet author="heinlja" id="rev-2">
+        <addPrimaryKey columnNames="ACL_ID, TYPE, ENTRY_TYPE, PRINCIPAL" tableName="ACL_ROWS"/>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-3">
+        <createTable tableName="ACLS">
             <column autoIncrement="true" name="ACL_ID" type="INT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -34,9 +57,19 @@
             </column>
             <column defaultValue="" name="DESCRIPTION" type="VARCHAR(255)"/>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-3">
-        <createTable tableName="channel">
+    <changeSet author="heinlja" id="rev-4">
+        <createIndex indexName="ACL_NAME" tableName="ACLS" unique="true">
+            <column name="ACL_NAME"/>
+            <column name="PARENT_NAME"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-5">
+        <createTable tableName="CHANNEL">
             <column autoIncrement="true" name="ID" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -55,7 +88,7 @@
             </column>
             <column name="FEED_URL" type="VARCHAR(255)"/>
             <column defaultValueNumeric="600" name="REFRESH_DELAY" type="INT UNSIGNED"/>
-            <column defaultValueDate="0002-11-30T00:00:00.0" name="CREATION_DATE" type="DATETIME">
+            <column defaultValue="0000-00-00 00:00:00" name="CREATION_DATE" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
             <column defaultValueBoolean="false" name="CSTATUS" type="BIT">
@@ -66,9 +99,33 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-4">
-        <createTable tableName="channel_delivery_type">
+    <changeSet author="heinlja" id="rev-6">
+        <createIndex indexName="CHANNEL_FKIndex3" tableName="CHANNEL" unique="false">
+            <column name="STYLESHEET_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_EEAUSER_FK" tableName="CHANNEL" unique="false">
+            <column name="CREATOR"/>
+        </createIndex>
+        <createIndex indexName="IX_NAME_UNIQ1" tableName="CHANNEL" unique="true">
+            <column name="TITLE"/>
+        </createIndex>
+        <createIndex indexName="IX_SECID_UNIQ1" tableName="CHANNEL" unique="true">
+            <column name="SECONDARY_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_TEMPLATE_FK" tableName="CHANNEL" unique="false">
+            <column name="NOTIFICATION_TEMPLATE_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_URL_UINQUE" tableName="CHANNEL" unique="true">
+            <column name="FEED_URL"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-7">
+        <createTable tableName="CHANNEL_DELIVERY_TYPE">
             <column defaultValueNumeric="0" name="CHANNEL_ID" type="INT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
@@ -76,9 +133,22 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-5">
-        <createTable tableName="channel_metadata_elements">
+    <changeSet author="heinlja" id="rev-8">
+        <addPrimaryKey columnNames="CHANNEL_ID, DELIVERY_TYPE_ID" tableName="CHANNEL_DELIVERY_TYPE"/>
+        <createIndex indexName="IX_CHANNEL_FK1" tableName="CHANNEL_DELIVERY_TYPE" unique="false">
+            <column name="CHANNEL_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_DT_FK" tableName="CHANNEL_DELIVERY_TYPE" unique="false">
+            <column name="DELIVERY_TYPE_ID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-9">
+        <createTable tableName="CHANNEL_METADATA_ELEMENTS">
             <column defaultValueNumeric="0" name="CHANNEL_ID" type="INT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
@@ -96,9 +166,22 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-6">
-        <createTable tableName="channel_role">
+    <changeSet author="heinlja" id="rev-10">
+        <addPrimaryKey columnNames="CHANNEL_ID, METADATA_ELEMENT_ID" tableName="CHANNEL_METADATA_ELEMENTS"/>
+        <createIndex indexName="IX_CHANNEL_FK2" tableName="CHANNEL_METADATA_ELEMENTS" unique="false">
+            <column name="CHANNEL_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_METADATA_ELEMENT_FK" tableName="CHANNEL_METADATA_ELEMENTS" unique="false">
+            <column name="METADATA_ELEMENT_ID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-11">
+        <createTable tableName="CHANNEL_ROLE">
             <column defaultValueNumeric="0" name="CHANNEL_ID" type="INT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
@@ -106,9 +189,22 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-7">
-        <createTable tableName="delivery">
+    <changeSet author="heinlja" id="rev-12">
+        <addPrimaryKey columnNames="CHANNEL_ID, EEA_ROLE_ID" tableName="CHANNEL_ROLE"/>
+        <createIndex indexName="IX_CHANNEL_FK3" tableName="CHANNEL_ROLE" unique="false">
+            <column name="CHANNEL_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_ROLE_FK" tableName="CHANNEL_ROLE" unique="false">
+            <column name="EEA_ROLE_ID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-13">
+        <createTable tableName="DELIVERY">
             <column defaultValueNumeric="0" name="NOTIFICATION_ID" type="INT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
@@ -118,13 +214,29 @@
             <column defaultValueNumeric="0" name="DELIVERY_STATUS" type="INT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
-            <column defaultValueDate="0002-11-30T00:00:00.0" name="DELIVERY_TIME" type="DATETIME">
+            <column defaultValue="0000-00-00 00:00:00" name="DELIVERY_TIME" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-8">
-        <createTable tableName="delivery_address">
+    <changeSet author="heinlja" id="rev-14">
+        <addPrimaryKey columnNames="NOTIFICATION_ID, DELIVERY_TYPE_ID" tableName="DELIVERY"/>
+        <createIndex indexName="IX_DELIVERY_TYPE_FK1" tableName="DELIVERY" unique="false">
+            <column name="DELIVERY_TYPE_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_DSTATUS" tableName="DELIVERY" unique="false">
+            <column name="DELIVERY_STATUS"/>
+        </createIndex>
+        <createIndex indexName="IX_NOTIFICATION_FK" tableName="DELIVERY" unique="false">
+            <column name="NOTIFICATION_ID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-15">
+        <createTable tableName="DELIVERY_ADDRESS">
             <column defaultValueNumeric="0" name="EEA_USER_ID" type="INT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
@@ -133,9 +245,22 @@
             </column>
             <column name="ADDRESS" type="VARCHAR(255)"/>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-9">
-        <createTable tableName="delivery_type">
+    <changeSet author="heinlja" id="rev-16">
+        <addPrimaryKey columnNames="EEA_USER_ID, DELIVERY_TYPE_ID" tableName="DELIVERY_ADDRESS"/>
+        <createIndex indexName="IX_DELIVERY_TYPE_FK2" tableName="DELIVERY_ADDRESS" unique="false">
+            <column name="DELIVERY_TYPE_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_EEA_USER_FK1" tableName="DELIVERY_ADDRESS" unique="false">
+            <column name="EEA_USER_ID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-17">
+        <createTable tableName="DELIVERY_TYPE">
             <column autoIncrement="true" name="ID" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -143,9 +268,13 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-10">
-        <createTable tableName="eea_role">
+
+    <changeSet author="heinlja" id="rev-18">
+        <createTable tableName="EEA_ROLE">
             <column autoIncrement="true" name="ID" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -153,9 +282,18 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-11">
-        <createTable tableName="eea_user">
+    <changeSet author="heinlja" id="rev-19">
+        <createIndex indexName="Index_2" tableName="EEA_ROLE" unique="false">
+            <column name="EXT_ID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-20">
+        <createTable tableName="EEA_USER">
             <column autoIncrement="true" name="ID" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -178,9 +316,13 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-12">
-        <createTable tableName="event">
+
+    <changeSet author="heinlja" id="rev-21">
+        <createTable tableName="EVENT">
             <column autoIncrement="true" name="ID" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -190,7 +332,7 @@
             <column defaultValue="" name="EXT_ID" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column defaultValueDate="0002-11-30T00:00:00.0" name="CREATION_DATE" type="DATETIME">
+            <column defaultValue="0000-00-00 00:00:00" name="CREATION_DATE" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
             <column defaultValue="" name="RTYPE" type="VARCHAR(255)">
@@ -200,9 +342,24 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-13">
-        <createTable tableName="event_metadata">
+    <changeSet author="heinlja" id="rev-22">
+        <createIndex indexName="IX_CHANNEL_FK4" tableName="EVENT" unique="false">
+            <column name="CHANNEL_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_CREATION_DATE" tableName="EVENT" unique="false">
+            <column name="CREATION_DATE"/>
+        </createIndex>
+        <createIndex indexName="IX_EXT_ID_UNIQ" tableName="EVENT" unique="true">
+            <column name="EXT_ID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-23">
+        <createTable tableName="EVENT_METADATA">
             <column defaultValueNumeric="0" name="EVENT_ID" type="INT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
@@ -214,9 +371,18 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-14">
-        <createTable tableName="filter">
+    <changeSet author="heinlja" id="rev-24">
+        <createIndex indexName="EVENT_METADATA_FKIndex1" tableName="EVENT_METADATA" unique="false">
+            <column name="EVENT_ID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-25">
+        <createTable tableName="FILTER">
             <column autoIncrement="true" name="ID" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -224,9 +390,18 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-15">
-        <createTable tableName="metadata_elements">
+    <changeSet author="heinlja" id="rev-26">
+        <createIndex indexName="IX_SUBSCRIPTION_FK" tableName="FILTER" unique="false">
+            <column name="SUBSCRIPTION_ID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-27">
+        <createTable tableName="METADATA_ELEMENTS">
             <column autoIncrement="true" name="ID" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -234,9 +409,18 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-16">
-        <createTable tableName="notification">
+    <changeSet author="heinlja" id="rev-28">
+        <createIndex indexName="IX_METADATANAME_UNIQ" tableName="METADATA_ELEMENTS" unique="true">
+            <column name="NAME"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-29">
+        <createTable tableName="NOTIFICATION">
             <column autoIncrement="true" name="ID" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -255,9 +439,25 @@
             <column name="SUBJECT" type="VARCHAR(255)"/>
             <column name="HTML_CONTENT" type="TEXT"/>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-17">
-        <createTable tableName="notification_template">
+    <changeSet author="heinlja" id="rev-30">
+        <createIndex indexName="IX_EEA_USER_FK2" tableName="NOTIFICATION" unique="false">
+            <column name="EEA_USER_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_EVENT_FK" tableName="NOTIFICATION" unique="false">
+            <column name="EVENT_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_USEREV_UNIQ" tableName="NOTIFICATION" unique="true">
+            <column name="EEA_USER_ID"/>
+            <column name="EVENT_ID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-31">
+        <createTable tableName="NOTIFICATION_TEMPLATE">
             <column autoIncrement="true" name="ID" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -269,9 +469,18 @@
             <column name="TEXT_HTML" type="TEXT"/>
             <column defaultValueBoolean="false" name="EDIT_ONLY" type="BIT"/>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-18">
-        <createTable tableName="statement">
+    <changeSet author="heinlja" id="rev-32">
+        <createIndex indexName="IX_TNAME_UNIQ" tableName="NOTIFICATION_TEMPLATE" unique="true">
+            <column name="NAME"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-33">
+        <createTable tableName="STATEMENT">
             <column name="FILTER_ID" type="INT UNSIGNED"/>
             <column defaultValue="" name="PROPERTY" type="VARCHAR(255)">
                 <constraints nullable="false"/>
@@ -283,9 +492,28 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-19">
-        <createTable tableName="stylesheet">
+    <changeSet author="heinlja" id="rev-34">
+        <createIndex indexName="FK_STATEMENT_2" tableName="STATEMENT" unique="false">
+            <column name="METADATA_ELEMENT_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_FILTER_FK" tableName="STATEMENT" unique="false">
+            <column name="FILTER_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_PROPERTY" tableName="STATEMENT" unique="false">
+            <column name="PROPERTY"/>
+        </createIndex>
+        <createIndex indexName="IX_VALUE" tableName="STATEMENT" unique="false">
+            <column name="VALUE"/>
+        </createIndex>
+    </changeSet>
+
+
+    <changeSet author="heinlja" id="rev-35">
+        <createTable tableName="STYLESHEET">
             <column autoIncrement="true" name="ID" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -299,9 +527,18 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-20">
-        <createTable tableName="subscription">
+    <changeSet author="heinlja" id="rev-36">
+        <createIndex indexName="IX_NAME_UNIQ2" tableName="STYLESHEET" unique="true">
+            <column name="NAME"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="heinlja" id="rev-37">
+        <createTable tableName="SUBSCRIPTION">
             <column autoIncrement="true" name="ID" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -312,7 +549,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="LEAD_TIME" type="INT UNSIGNED"/>
-            <column defaultValueDate="0002-11-30T00:00:00.0" name="CREATION_DATE" type="DATETIME">
+            <column defaultValue="0000-00-00 00:00:00" name="CREATION_DATE" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
             <column defaultValue="" name="SECONDARY_ID" type="VARCHAR(255)">
@@ -321,9 +558,32 @@
             <column name="DASH_CORD_X" type="SMALLINT"/>
             <column name="DASH_CORD_Y" type="SMALLINT"/>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-21">
-        <createTable tableName="subscription_dt">
+    <changeSet author="heinlja" id="rev-38">
+        <createIndex indexName="IX_CHANNEL_FK5" tableName="SUBSCRIPTION" unique="false">
+            <column name="CHANNEL_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_EEA_USER_FK3" tableName="SUBSCRIPTION" unique="false">
+            <column name="EEA_USER_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_SCREATION_DATE" tableName="SUBSCRIPTION" unique="false">
+            <column name="CREATION_DATE"/>
+        </createIndex>
+        <createIndex indexName="IX_SECID_UNIQ2" tableName="SUBSCRIPTION" unique="true">
+            <column name="SECONDARY_ID"/>
+        </createIndex>
+        <createIndex indexName="IX_USER_CHANNEL_UNIQ" tableName="SUBSCRIPTION" unique="true">
+            <column name="EEA_USER_ID"/>
+            <column name="CHANNEL_ID"/>
+        </createIndex>
+    </changeSet>
+
+
+    <changeSet author="heinlja" id="rev-39">
+        <createTable tableName="SUBSCRIPTION_DT">
             <column defaultValueNumeric="0" name="SUBSCRIPTION_ID" type="INT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
@@ -331,234 +591,18 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=MyISAM DEFAULT CHARSET=utf8"/>
+        </modifySql>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-22">
-        <addPrimaryKey columnNames="ACL_ID, TYPE, ENTRY_TYPE, PRINCIPAL" tableName="acl_rows"/>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-23">
-        <addPrimaryKey columnNames="CHANNEL_ID, DELIVERY_TYPE_ID" tableName="channel_delivery_type"/>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-24">
-        <addPrimaryKey columnNames="CHANNEL_ID, METADATA_ELEMENT_ID" tableName="channel_metadata_elements"/>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-25">
-        <addPrimaryKey columnNames="CHANNEL_ID, EEA_ROLE_ID" tableName="channel_role"/>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-26">
-        <addPrimaryKey columnNames="NOTIFICATION_ID, DELIVERY_TYPE_ID" tableName="delivery"/>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-27">
-        <addPrimaryKey columnNames="EEA_USER_ID, DELIVERY_TYPE_ID" tableName="delivery_address"/>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-28">
-        <addPrimaryKey columnNames="SUBSCRIPTION_ID, DELIVERY_TYPE_ID" tableName="subscription_dt"/>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-29">
-        <createIndex indexName="ACL_NAME" tableName="acls" unique="true">
-            <column name="ACL_NAME"/>
-            <column name="PARENT_NAME"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-30">
-        <createIndex indexName="CHANNEL_FKIndex3" tableName="channel" unique="false">
-            <column name="STYLESHEET_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-31">
-        <createIndex indexName="IX_EEAUSER_FK" tableName="channel" unique="false">
-            <column name="CREATOR"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-32">
-        <createIndex indexName="IX_NAME_UNIQ" tableName="channel" unique="true">
-            <column name="TITLE"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-33">
-        <createIndex indexName="IX_SECID_UNIQ" tableName="channel" unique="true">
-            <column name="SECONDARY_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-34">
-        <createIndex indexName="IX_TEMPLATE_FK" tableName="channel" unique="false">
-            <column name="NOTIFICATION_TEMPLATE_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-35">
-        <createIndex indexName="IX_URL_UINQUE" tableName="channel" unique="true">
-            <column name="FEED_URL"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-36">
-        <createIndex indexName="IX_CHANNEL_FK" tableName="channel_delivery_type" unique="false">
-            <column name="CHANNEL_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-37">
-        <createIndex indexName="IX_DT_FK" tableName="channel_delivery_type" unique="false">
+    <changeSet author="heinlja" id="rev-40">
+        <addPrimaryKey columnNames="SUBSCRIPTION_ID, DELIVERY_TYPE_ID" tableName="SUBSCRIPTION_DT"/>
+        <createIndex indexName="IX_DELIVERY_TYPE_FK3" tableName="SUBSCRIPTION_DT" unique="false">
             <column name="DELIVERY_TYPE_ID"/>
         </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-38">
-        <createIndex indexName="IX_CHANNEL_FK" tableName="channel_metadata_elements" unique="false">
-            <column name="CHANNEL_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-39">
-        <createIndex indexName="IX_METADATA_ELEMENT_FK" tableName="channel_metadata_elements" unique="false">
-            <column name="METADATA_ELEMENT_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-40">
-        <createIndex indexName="IX_CHANNEL_FK" tableName="channel_role" unique="false">
-            <column name="CHANNEL_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-41">
-        <createIndex indexName="IX_ROLE_FK" tableName="channel_role" unique="false">
-            <column name="EEA_ROLE_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-42">
-        <createIndex indexName="IX_DELIVERY_TYPE_FK" tableName="delivery" unique="false">
-            <column name="DELIVERY_TYPE_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-43">
-        <createIndex indexName="IX_DSTATUS" tableName="delivery" unique="false">
-            <column name="DELIVERY_STATUS"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-44">
-        <createIndex indexName="IX_NOTIFICATION_FK" tableName="delivery" unique="false">
-            <column name="NOTIFICATION_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-45">
-        <createIndex indexName="IX_DELIVERY_TYPE_FK" tableName="delivery_address" unique="false">
-            <column name="DELIVERY_TYPE_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-46">
-        <createIndex indexName="IX_EEA_USER_FK" tableName="delivery_address" unique="false">
-            <column name="EEA_USER_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-47">
-        <createIndex indexName="Index_2" tableName="eea_role" unique="false">
-            <column name="EXT_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-48">
-        <createIndex indexName="IX_CHANNEL_FK" tableName="event" unique="false">
-            <column name="CHANNEL_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-49">
-        <createIndex indexName="IX_CREATION_DATE" tableName="event" unique="false">
-            <column name="CREATION_DATE"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-50">
-        <createIndex indexName="IX_EXT_ID_UNIQ" tableName="event" unique="true">
-            <column name="EXT_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-51">
-        <createIndex indexName="EVENT_METADATA_FKIndex1" tableName="event_metadata" unique="false">
-            <column name="EVENT_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-52">
-        <createIndex indexName="IX_SUBSCRIPTION_FK" tableName="filter" unique="false">
+        <createIndex indexName="IX_SUBSCRIPTION" tableName="SUBSCRIPTION_DT" unique="false">
             <column name="SUBSCRIPTION_ID"/>
         </createIndex>
     </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-53">
-        <createIndex indexName="IX_METADATANAME_UNIQ" tableName="metadata_elements" unique="true">
-            <column name="NAME"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-54">
-        <createIndex indexName="IX_EEA_USER_FK" tableName="notification" unique="false">
-            <column name="EEA_USER_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-55">
-        <createIndex indexName="IX_EVENT_FK" tableName="notification" unique="false">
-            <column name="EVENT_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-56">
-        <createIndex indexName="IX_USEREV_UNIQ" tableName="notification" unique="true">
-            <column name="EEA_USER_ID"/>
-            <column name="EVENT_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-57">
-        <createIndex indexName="IX_TNAME_UNIQ" tableName="notification_template" unique="true">
-            <column name="NAME"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-58">
-        <createIndex indexName="FK_STATEMENT_2" tableName="statement" unique="false">
-            <column name="METADATA_ELEMENT_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-59">
-        <createIndex indexName="IX_FILTER_FK" tableName="statement" unique="false">
-            <column name="FILTER_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-60">
-        <createIndex indexName="IX_PROPERTY" tableName="statement" unique="false">
-            <column name="PROPERTY"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-61">
-        <createIndex indexName="IX_VALUE" tableName="statement" unique="false">
-            <column name="VALUE"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-62">
-        <createIndex indexName="IX_NAME_UNIQ" tableName="stylesheet" unique="true">
-            <column name="NAME"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-63">
-        <createIndex indexName="IX_CHANNEL_FK" tableName="subscription" unique="false">
-            <column name="CHANNEL_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-64">
-        <createIndex indexName="IX_EEA_USER_FK" tableName="subscription" unique="false">
-            <column name="EEA_USER_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-65">
-        <createIndex indexName="IX_SCREATION_DATE" tableName="subscription" unique="false">
-            <column name="CREATION_DATE"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-66">
-        <createIndex indexName="IX_SECID_UNIQ" tableName="subscription" unique="true">
-            <column name="SECONDARY_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-67">
-        <createIndex indexName="IX_USER_CHANNEL_UNIQ" tableName="subscription" unique="true">
-            <column name="EEA_USER_ID"/>
-            <column name="CHANNEL_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-68">
-        <createIndex indexName="IX_DELIVERY_TYPE_FK" tableName="subscription_dt" unique="false">
-            <column name="DELIVERY_TYPE_ID"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="heinlja (generated)" id="1378905945993-69">
-        <createIndex indexName="IX_SUBSCRIPTION" tableName="subscription_dt" unique="false">
-            <column name="SUBSCRIPTION_ID"/>
-        </createIndex>
-    </changeSet>
+
 </databaseChangeLog>
