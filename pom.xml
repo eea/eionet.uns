@@ -136,7 +136,7 @@
                         </resource>
                         <resource>
                             <directory>${basedir}/sql</directory>
-                            <targetPath>WEB-INF/classes</targetPath>
+                            <targetPath>WEB-INF/classes/sql</targetPath>
                             <includes>
                                 <include>uns-struct.xml</include>
                             </includes>

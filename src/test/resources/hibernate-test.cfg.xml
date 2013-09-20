@@ -7,10 +7,10 @@
 <hibernate-configuration>
 	<session-factory>
 
-		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql:mxj://localhost:3336/uns_test?createDatabaseIfNotExist=true&amp;server.basedir=/tmp/uns-mxj&amp;server.initialize-user=true&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true</property>
-		<property name="hibernate.connection.username">unsuser</property>
-		<property name="hibernate.connection.password">xxx</property>
+		<property name="hibernate.connection.driver_class">${db.unittest.driver}</property>
+		<property name="hibernate.connection.url">${db.unittest.url.xmlEscaped}</property>
+		<property name="hibernate.connection.username">${db.unittest.user}</property>
+		<property name="hibernate.connection.password">${db.unittest.password}</property>
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
 		<property name="hibernate.use_sql_comments">true</property>

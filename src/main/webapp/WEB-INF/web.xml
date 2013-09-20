@@ -47,7 +47,7 @@
 
     <context-param>
         <param-name>liquibase.datasource</param-name>
-        <param-value>java:comp/env/jdbc/liquibase</param-value>
+        <param-value>java:comp/env/jdbc/UNS_DS</param-value>
     </context-param>
 
     <context-param>
