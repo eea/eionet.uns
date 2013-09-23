@@ -1,4 +1,3 @@
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,15 +16,31 @@ import javax.naming.directory.InitialDirContext;
 import org.jivesoftware.smack.SSLXMPPConnection;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import com.eurodyn.uns.util.common.UnsProperties;
-import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
 import com.sun.mail.smtp.SMTPTransport;
 
+/**
+ * Unit tests for external interface connections.
+ */
 public class TestConfigUpdater {
 
     /**
-     * @param args
+     * First test method.
+     */
+    @Test
+    @Ignore
+    public void test() {
+        // TODO Rewrite this class to have proper tests. Right now it's just a main() method that doesn't check much.
+        // @Ignore to prevent the test phase from failing until the tests have been written.
+    }
+
+    /**
+     * Main executable method.
+     *
+     * @param args From command line.
      */
     public static void main(String[] args) {
         try {
@@ -42,12 +57,15 @@ public class TestConfigUpdater {
 
     }
 
+    /**
+     *
+     */
     public static void testChangeValue() {
 
         try {
-            //ConfigManager configUpdater = new ConfigManager();
-            //File unsConfig = new File("c:/work/eclipse-workspaces/UNS2/src/main/resources/uns-config.xml");
-            //configUpdater.parseWithSAX(unsConfig);
+            // ConfigManager configUpdater = new ConfigManager();
+            // File unsConfig = new File("c:/work/eclipse-workspaces/UNS2/src/main/resources/uns-config.xml");
+            // configUpdater.parseWithSAX(unsConfig);
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -55,6 +73,9 @@ public class TestConfigUpdater {
         }
     }
 
+    /**
+     *
+     */
     public static void testJabberConnection() {
 
         try {
@@ -69,6 +90,9 @@ public class TestConfigUpdater {
         System.out.println("Exit");
     }
 
+    /**
+     *
+     */
     public static void testSMTPConnection() {
 
         try {
@@ -100,13 +124,16 @@ public class TestConfigUpdater {
         System.out.println("Exit");
     }
 
+    /**
+     *
+     */
     public static void testPop3Connection() {
 
         try {
             System.out.println("Enter ");
             Properties props = new Properties();
             // props.put("mail.smtp.host", );
-            //          
+            //
             // props.put("mail.smtp.auth", "true");
 
             props.put("mail.pop3.host", "192.168.0.1");
@@ -133,6 +160,9 @@ public class TestConfigUpdater {
         System.out.println("Exit");
     }
 
+    /**
+     *
+     */
     public static void testDbConnection() {
 
         try {
@@ -145,23 +175,23 @@ public class TestConfigUpdater {
             // //e.printStackTrace();
             // //System.out.println("se.getSQLState()" + se.getSQLState());;
             // //System.out.println("se.getErrorCode()" + se.getErrorCode());
-            //                  
+            //
         } catch (SQLException se) {
             // TODO Auto-generated catch block
             // se.getSQLState();
             switch (se.getErrorCode()) {
-            case 0:
-                System.out.println("Bad host or port ");
-                break;
-            case 1044:
-                System.out.println("Unknown database ");
-                break;
-            case 1045:
-                System.out.println("Bad username or password  ");
-                break;
+                case 0:
+                    System.out.println("Bad host or port ");
+                    break;
+                case 1044:
+                    System.out.println("Unknown database ");
+                    break;
+                case 1045:
+                    System.out.println("Bad username or password  ");
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
             System.out.println(" se " + se.getErrorCode());
             // System.out.println("se.getSQLState()" + se.getSQLState());;
@@ -173,6 +203,9 @@ public class TestConfigUpdater {
         System.out.println("Exit");
     }
 
+    /**
+     *
+     */
     public static void testLdapConnection() {
 
         try {
@@ -187,7 +220,7 @@ public class TestConfigUpdater {
 
             System.out.println("ldapUrl is " + ldapUrl);
             // ldapUrl = "ldap://ldap.reportnet.eurodyn.com:389";
-            //ldapUrl is ldap://ldap.eionet.europa.eu:389/
+            // ldapUrl is ldap://ldap.eionet.europa.eu:389/
 
             Hashtable env = new Hashtable();
             env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
@@ -198,10 +231,10 @@ public class TestConfigUpdater {
             if (ctx != null) {
                 ctx.close();
             }
-            //ldapUrl = "ldap://ldap.reportnet.eurodyn.com:389";
+            // ldapUrl = "ldap://ldap.reportnet.eurodyn.com:389";
             UnsProperties unsProperties = new UnsProperties();
-            unsProperties.setLdapParams(ldapUrl,ldapContext,ldapUserDir,ldapAttrUid);
-            
+            unsProperties.setLdapParams(ldapUrl, ldapContext, ldapUserDir, ldapAttrUid);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -210,13 +243,30 @@ public class TestConfigUpdater {
 
 }
 
+/**
+ *
+ */
 class SmtpAuthenticator extends Authenticator {
+
+    /**  */
     private PasswordAuthentication password_auth;
 
+    /**
+     * Class constructor.
+     *
+     * @param smtp_user
+     * @param smtp_password
+     */
     public SmtpAuthenticator(String smtp_user, String smtp_password) {
         password_auth = new PasswordAuthentication(smtp_user, smtp_password);
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see javax.mail.Authenticator#getPasswordAuthentication()
+     */
+    @Override
     public PasswordAuthentication getPasswordAuthentication() {
         return password_auth;
     }

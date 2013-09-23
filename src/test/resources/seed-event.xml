@@ -13,12 +13,12 @@ You may unsubscribe yourself from the &quot;$EVENT.CHANNEL&quot; channel by usin
 Best Regards,
 European Environment Agency" TEXT_HTML="&lt;p&gt;$EVENT &lt;/p&gt;&lt;hr /&gt;You may unsubscribe yourself from the &amp;quot;$EVENT.CHANNEL&amp;quot; channel by using the following link: $UNSUSCRIBE_LINK&lt;br /&gt;&lt;br /&gt;Best Regards,&lt;br /&gt;European Environment Agency" EDIT_ONLY="true"/>
   <NOTIFICATION_TEMPLATE ID="2" NAME="Unsubscribed - channel access rights changed notification" SUBJECT="Unsubscribed from &quot;$EVENT.CHANNEL&quot; channel" TEXT_PLAIN="You have been unsubscribed form the channel &quot;$EVENT.CHANNEL&quot; due to access rigths changes.
- 
+
 Sorry for the inconvenience,
 European Environment Agency" TEXT_HTML="You have been unsubscribed form the channel &amp;quot;$EVENT.CHANNEL&amp;quot; due to access rigths changes.&lt;br /&gt;&amp;nbsp;&lt;br /&gt;Sorry for the inconvenience,&lt;br /&gt;European Environment Agency" EDIT_ONLY="true"/>
   <NOTIFICATION_TEMPLATE ID="3" NAME="Unsubscribed - channel removed notification" SUBJECT="Unsubscribed from &quot;$EVENT.CHANNEL&quot; channel" TEXT_PLAIN="Channel &quot;$EVENT.CHANNEL&quot; does not exist anymore.
 You will not be receving notification for this channel anymore.
- 
+
 Sorry for the inconvenience,
 European Environment Agency" TEXT_HTML="Channel &amp;quot;$EVENT.CHANNEL&amp;quot; does not exist anymore.&lt;br /&gt; You will not be receving notification for this channel anymore.&lt;br /&gt; &amp;nbsp;&lt;br /&gt; Sorry for the inconvenience,&lt;br /&gt; European Environment Agency&lt;br /&gt;" EDIT_ONLY="true"/>
   <NOTIFICATION_TEMPLATE ID="4" NAME="CDRTest template" SUBJECT="ROD notification for &quot;$EVENT.TITLE&quot;" TEXT_PLAIN="&lt;%
@@ -146,6 +146,7 @@ European Environment Agency" TEXT_HTML="" EDIT_ONLY="false"/>
   <SUBSCRIPTION ID="1" EEA_USER_ID="3" CHANNEL_ID="4" CREATION_DATE="2006-01-25 16:12:14.0" SECONDARY_ID="f1be51348037855d2bfa59f890cdc5f9" DASH_CORD_X="-1" DASH_CORD_Y="-1"/>
 
   <EVENT ID="1" CHANNEL_ID="4" EXT_ID="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=830" CREATION_DATE="2006-01-26 09:45:21.0" RTYPE="http://purl.org/rss/1.0/item" PROCESSED="1"/>
+  <EVENT ID="2" CHANNEL_ID="4" EXT_ID="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=831" CREATION_DATE="2999-01-26 09:45:21.0" RTYPE="http://purl.org/rss/1.0/item" PROCESSED="1"/>
 
   <EVENT_METADATA EVENT_ID="1" PROPERTY="http://purl.org/dc/elements/1.1/date" VALUE="2005-12-16T00:00:00Z" ID="1"/>
   <EVENT_METADATA EVENT_ID="1" PROPERTY="http://purl.org/rss/1.0/title" VALUE="Population density disaggregated with CLC2000 " ID="2"/>
@@ -156,9 +157,13 @@ This version is improved by including more countries.&lt;br /&gt;
 " ID="4"/>
   <EVENT_METADATA EVENT_ID="1" PROPERTY="http://rod.eionet.eu.int/schema.rdf#locality" VALUE="United Kingdom" ID="5"/>
 
+  <EVENT_METADATA EVENT_ID="2" PROPERTY="http://purl.org/dc/elements/1.1/date" VALUE="2005-12-16T01:01:00Z" ID="6"/>
+  <EVENT_METADATA EVENT_ID="2" PROPERTY="http://purl.org/rss/1.0/title" VALUE="Test title 2 " ID="7"/>
+  <EVENT_METADATA EVENT_ID="2" PROPERTY="http://purl.org/rss/1.0/link" VALUE="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=831" ID="8"/>
+
   <NOTIFICATION ID="1" EEA_USER_ID="3" EVENT_ID="1" CONTENT="
 
-TITLE: Population density disaggregated with CLC2000 
+TITLE: Population density disaggregated with CLC2000
 DESCRIPTION: Distribution of population using Corine land cover 2000 (CLC2000).
 This version is improved by including more countries.&lt;br /&gt;
 
@@ -171,9 +176,15 @@ You may unsubscribe yourself from the &quot;EEA Hightlights&quot; channel by usi
 Best Regards,
 European Environment Agency" CHANNEL_ID="4" SUBJECT="&quot;EEA Hightlights&quot; channel: Population density disaggregated with CLC2000"/>
 
+  <NOTIFICATION ID="2" EEA_USER_ID="3" EVENT_ID="2" CONTENT="test notification content" CHANNEL_ID="4" SUBJECT="test notification subject"/>
+
   <DELIVERY NOTIFICATION_ID="1" DELIVERY_TYPE_ID="2" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:52.0"/>
   <DELIVERY NOTIFICATION_ID="1" DELIVERY_TYPE_ID="3" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:51.0"/>
   <DELIVERY NOTIFICATION_ID="1" DELIVERY_TYPE_ID="4" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:50.0"/>
+
+  <DELIVERY NOTIFICATION_ID="2" DELIVERY_TYPE_ID="2" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:52.0"/>
+  <DELIVERY NOTIFICATION_ID="2" DELIVERY_TYPE_ID="3" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:51.0"/>
+  <DELIVERY NOTIFICATION_ID="2" DELIVERY_TYPE_ID="4" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:50.0"/>
 
   <FILTER ID="123" SUBSCRIPTION_ID="1"/>
   <FILTER ID="124" SUBSCRIPTION_ID="1"/>
@@ -688,7 +699,7 @@ European Environment Agency" CHANNEL_ID="4" SUBJECT="&quot;EEA Hightlights&quot;
     &lt;xsl:param name=&quot;openinpopup&quot; select=&quot;&apos;false&apos;&quot;/&gt;
     &lt;xsl:param name=&quot;showdescription&quot; select=&quot;&apos;true&apos;&quot;/&gt;
     &lt;xsl:param name=&quot;showtitle&quot; select=&quot;&apos;true&apos;&quot;/&gt;
-    
+
     &lt;xsl:template match=&quot;/rdf:RDF&quot;&gt;
         &lt;ul&gt;
             &lt;xsl:apply-templates select=&quot;j.0:ObligationChange&quot;&gt;
@@ -708,13 +719,13 @@ European Environment Agency" CHANNEL_ID="4" SUBJECT="&quot;EEA Hightlights&quot;
             &lt;/a&gt;
             &lt;p&gt;&lt;strong&gt;Event type: &lt;/strong&gt; &lt;xsl:value-of select=&quot;j.0:event_type&quot;/&gt;&lt;/p&gt;
             &lt;p&gt;&lt;strong&gt;Actor: &lt;/strong&gt; &lt;xsl:value-of select=&quot;j.0:actor&quot;/&gt;&lt;/p&gt;
-            &lt;p&gt;&lt;strong&gt;Localities: &lt;/strong&gt; 
+            &lt;p&gt;&lt;strong&gt;Localities: &lt;/strong&gt;
               &lt;xsl:apply-templates select=&quot;j.0:locality&quot; /&gt;
             &lt;/p&gt;
         &lt;/li&gt;
     &lt;/xsl:template&gt;
     &lt;xsl:template match=&quot;j.0:locality&quot;&gt;
-        &lt;xsl:value-of select=&quot;text()&quot;/&gt;, 
+        &lt;xsl:value-of select=&quot;text()&quot;/&gt;,
     &lt;/xsl:template&gt;
 
 &lt;/xsl:stylesheet&gt;
@@ -731,7 +742,7 @@ European Environment Agency" CHANNEL_ID="4" SUBJECT="&quot;EEA Hightlights&quot;
     &lt;xsl:param name=&quot;openinpopup&quot; select=&quot;&apos;false&apos;&quot;/&gt;
     &lt;xsl:param name=&quot;showdescription&quot; select=&quot;&apos;true&apos;&quot;/&gt;
     &lt;xsl:param name=&quot;showtitle&quot; select=&quot;&apos;true&apos;&quot;/&gt;
-    
+
     &lt;xsl:template match=&quot;/rdf:RDF&quot;&gt;
         &lt;ul&gt;
             &lt;xsl:apply-templates select=&quot;j.0:Workflowevent&quot;&gt;

@@ -1,45 +1,26 @@
 package com.eurodyn.uns.dao.jdbc;
 
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Map;
+
+import junit.framework.TestCase;
+
 import org.apache.xerces.parsers.DOMParser;
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.dbunit.operation.DatabaseOperation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-
-import java.io.InputStream;
-import java.io.BufferedWriter;
-import java.io.StringWriter;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.ResultSet;
-
-import com.eurodyn.uns.dao.DAOException;
-import com.eurodyn.uns.dao.hibernate.HibernateEventMetadataDao;
-import com.eurodyn.uns.dao.jdbc.BaseJdbcDao;
-import com.eurodyn.uns.dao.jdbc.JdbcFeedDao;
 import com.eurodyn.uns.model.Channel;
-import com.eurodyn.uns.model.EventMetadata;
-//import com.eurodyn.uns.model.RDFThing;
-//import com.eurodyn.uns.model.Statement;
-//import com.eurodyn.uns.model.User;
-
-import junit.framework.TestCase;
-import org.dbunit.DatabaseTestCase;
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.ITable;
-import org.dbunit.database.QueryDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 
 
@@ -47,6 +28,7 @@ public class EventMetadataTest extends TestCase {
 
     private FlatXmlDataSet loadedDataSet;
 
+    @Override
     public void setUp() throws Exception {
         System.setProperty("hibernate-config-file", "/hibernate-test.cfg.xml");
         InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(
@@ -129,13 +111,13 @@ public class EventMetadataTest extends TestCase {
 
     public void test_deleteOldEvents() throws Exception {
         JdbcEventMetadataDao em = new JdbcEventMetadataDao();
+        assertEquals(6, getLines("DELIVERY"));
+        assertEquals(2, getLines("NOTIFICATION"));
+        assertEquals(2, getLines("EVENT"));
+        em.deleteOldEvents();
         assertEquals(3, getLines("DELIVERY"));
         assertEquals(1, getLines("NOTIFICATION"));
         assertEquals(1, getLines("EVENT"));
-        em.deleteOldEvents();
-        assertEquals(0, getLines("DELIVERY"));
-        assertEquals(0, getLines("NOTIFICATION"));
-        assertEquals(0, getLines("EVENT"));
     }
 
     public void test_findChoosableStatements() throws Exception {

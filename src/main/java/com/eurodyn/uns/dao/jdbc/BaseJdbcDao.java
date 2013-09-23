@@ -17,11 +17,11 @@ public class BaseJdbcDao {
     private static DataSource ds = null;
 
     private static final WDSLogger logger = WDSLogger.getLogger(BaseJdbcDao.class);
-    
+
     public static void setDataSouce(DataSource dataSource){
         ds = dataSource;
     }
-    
+
     public static DataSource getDatasource() {
         try {
             if (ds == null) {
@@ -36,15 +36,15 @@ public class BaseJdbcDao {
         return ds;
     }
 
-    public static void closeAllResources(ResultSet rs, Statement pstmt, Connection conn) {
+    public static void closeAllResources(ResultSet rs, Statement stmt, Connection conn) {
         try {
             if (rs != null) {
                 rs.close();
                 rs = null;
             }
-            if (pstmt != null) {
-                pstmt.close();
-                pstmt = null;
+            if (stmt != null) {
+                stmt.close();
+                stmt = null;
             }
             if ((conn != null) && (!conn.isClosed())) {
                 conn.close();
@@ -67,7 +67,9 @@ public class BaseJdbcDao {
 
     public static void commit(Connection conn) {
         try {
-            conn.commit();
+            if (conn != null) {
+                conn.commit();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,7 +77,9 @@ public class BaseJdbcDao {
 
     public static void rollback(Connection conn) {
         try {
-            conn.rollback();
+            if (conn != null) {
+                conn.rollback();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

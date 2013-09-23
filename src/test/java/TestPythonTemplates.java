@@ -4,60 +4,51 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.junit.Ignore;
+import org.junit.Test;
+
 import com.eurodyn.uns.model.NotificationTemplate;
 import com.eurodyn.uns.service.facades.NotificationTemplateFacade;
 import com.eurodyn.uns.web.jsf.admin.templates.NotificationTemplateActions;
 
+/**
+ * Tests for the Python templates.
+ */
 public class TestPythonTemplates {
 
+    /** Plain notification template. */
+    private static final String PLAIN_TEMPLATE = "" + "Dear  <# subscription['user']['fullName'] #> \n\n" + " $EVENT \n\n"
+            + "<% for key,value in event['metadata'].items(): print ('%s %s')% (key,value) %>"
+            + "You may unsubscribe yourself from the <# subscription['channel']['title'] #> channel \n"
+            + "by using the follwing link: $UNSUSCRIBE_LINK \n\n" + "Best Regards, <% print ' Soren roug' %> \n"
+            + "<% print 'European Environment Agency' %>";
+
     /**
-     * @param args
+     * First test method.
      */
-    
-    
-    public static String plainTemplateOld = ""
-    + "Dear <# subscription.getUser().getFullName() #> \n\n"
-    + " $EVENT \n\n"
-    + "You may unsubscribe yourself from the <# subscription.getChannel().getTitle() #> channel \n"
-    + "by using the follwing link: $UNSUSCRIBE_LINK \n\n"
-    + "Best Regards, <% print ' Soren roug' %> \n"
-    + "<% print 'European Environment Agency' %>";
-    
+    @Test
+    @Ignore
+    public void test() {
+        // TODO Rewrite this class to have proper tests. Right now it's just a main() method that doesn't check much.
+        // @Ignore to prevent the test phase from failing until the tests have been written.
+    }
 
- 
-    public static String plainTemplate = ""
-        + "Dear  <# subscription['user']['fullName'] #> \n\n"
-        + " $EVENT \n\n"
-        + "<% for key,value in event['metadata'].items(): print ('%s %s')% (key,value) %>"
-        + "You may unsubscribe yourself from the <# subscription['channel']['title'] #> channel \n"
-        + "by using the follwing link: $UNSUSCRIBE_LINK \n\n"
-        + "Best Regards, <% print ' Soren roug' %> \n"
-        + "<% print 'European Environment Agency' %>";
-    
-    
-    
-
-
-
-
-    
+    /**
+     * Executable main() method.
+     *
+     * @param args From command line.
+     */
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        //TestRssReader rssReader = new TestRssReader();
-        // rssReader.connect();
 
         try {
             NotificationTemplateActions notificationTemplateBean = new NotificationTemplateActions();
             NotificationTemplateFacade notificationTemplateFacade = new NotificationTemplateFacade();
             NotificationTemplate notificationTemplate = notificationTemplateFacade.getNotificationTemplate(new Integer(1));
-            notificationTemplate.setPlainText(plainTemplate);
+            notificationTemplate.setPlainText(PLAIN_TEMPLATE);
             notificationTemplateBean.setNotificationTemplate(notificationTemplate);
             notificationTemplateBean.setId(new Integer(54));
-            //notificationTemplateBean.setUser(new Integer(54));
+            // notificationTemplateBean.setUser(new Integer(54));
             notificationTemplateBean.test();
-
-            
-
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -66,8 +57,11 @@ public class TestPythonTemplates {
 
     }
 
-    
-
+    /**
+     * Get JDBC connection.
+     *
+     * @return The JDBC connection.
+     */
     public Connection getConnection() {
         Connection conn = null;
         try {
@@ -86,11 +80,13 @@ public class TestPythonTemplates {
         return conn;
     }
 
-    
-
-        
-
-
+    /**
+     * Close all given resources. Null-safe.
+     *
+     * @param rs SQL result set.
+     * @param pstmt SQL statement.
+     * @param conn JDBC connection.
+     */
     public static void closeAllResources(ResultSet rs, Statement pstmt, Connection conn) {
         try {
             if (rs != null) {
