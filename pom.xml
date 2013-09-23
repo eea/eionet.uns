@@ -8,6 +8,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <env>local</env>
         <javaVersion>1.6</javaVersion>
         <sesame.openrdf.version>2.6.9</sesame.openrdf.version>
@@ -75,6 +76,7 @@
                     <compilerVersion>${javaVersion}</compilerVersion>
                     <source>${javaVersion}</source>
                     <target>${javaVersion}</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
 
