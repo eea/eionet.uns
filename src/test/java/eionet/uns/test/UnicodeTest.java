@@ -21,6 +21,9 @@ public class UnicodeTest extends UnsDatabaseTestCase {
 
     /**
      * A round-trip database storage-retrieval test for UTF-8 characters, executed on the NOTIFICATION_TEMPLATE table.
+     * The number of letters and spaces of the test string is 23. The number of bytes is 44. A UNICODE-aware
+     * database is expected to return 23. Otherwise a LEFT() or SUBSTRING() database function can cut the string in the
+     * middle of the letter.
      *
      * @throws Exception when any sort of error happens.
      */
@@ -29,7 +32,8 @@ public class UnicodeTest extends UnsDatabaseTestCase {
 
         // Russian for "environmental protection".
         String testStr = "охрана окружающей среды";
-        int testStrBytesLength = testStr.getBytes("UTF-8").length;
+        //int testStrBytesLength = testStr.getBytes("UTF-8").length;
+        int testStrBytesLength = 23;
 
         Connection conn = null;
         PreparedStatement pstmt = null;
