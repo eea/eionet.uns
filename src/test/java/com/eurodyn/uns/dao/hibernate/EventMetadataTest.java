@@ -1,23 +1,22 @@
 package com.eurodyn.uns.dao.hibernate;
 
 
-import org.apache.xerces.parsers.DOMParser;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-
-import java.io.InputStream;
 import java.io.BufferedWriter;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.eurodyn.uns.dao.hibernate.HibernateEventMetadataDao;
+import junit.framework.TestCase;
+
+import org.apache.xerces.parsers.DOMParser;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
 import com.eurodyn.uns.dao.jdbc.BaseJdbcDao;
 import com.eurodyn.uns.dao.jdbc.JdbcFeedDao;
 import com.eurodyn.uns.model.Channel;
@@ -31,12 +30,12 @@ import com.hp.hpl.jena.rdf.model.RDFWriter;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RSS;
-
-import junit.framework.TestCase;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 
 public class EventMetadataTest extends TestCase {
 
+    @Override
     public void setUp() throws Exception {
         System.setProperty("hibernate-config-file", "/hibernate-test.cfg.xml");
         InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(
@@ -57,13 +56,13 @@ public class EventMetadataTest extends TestCase {
             String attribute = node.getAttributes().getNamedItem("name").getNodeValue();
 
             if (attribute.equals("hibernate.connection.url")) {
-                connectionUrl = node.getChildNodes().item(0).getNodeValue();
+                connectionUrl = getFirstChildNodeValue(node);
             }
             if (attribute.equals("hibernate.connection.username")) {
-                connectionUserName = node.getChildNodes().item(0).getNodeValue();
+                connectionUserName = getFirstChildNodeValue(node);
             }
             if (attribute.equals("hibernate.connection.password")) {
-                connectionPassword = node.getChildNodes().item(0).getNodeValue();
+                connectionPassword = getFirstChildNodeValue(node);
             }
 
         }
@@ -76,6 +75,31 @@ public class EventMetadataTest extends TestCase {
 
         BaseJdbcDao.setDataSouce(mds);
 
+    }
+
+    /**
+     * Returns the string value of the first child node of the given node.
+     * Null-safe and safe when there are no child nodes actually.
+     * Returns empty string when the child node value cannot be found.
+     *
+     * @param node The node whose first child is to be checked.
+     * @return The first child node's value.
+     *
+     */
+    private String getFirstChildNodeValue(Node node) {
+
+        String result = null;
+        if (node != null) {
+            NodeList childNodes = node.getChildNodes();
+            if (childNodes != null && childNodes.getLength() > 0) {
+                Node firstChild = childNodes.item(0);
+                if (firstChild != null) {
+                    result = firstChild.getNodeValue();
+                }
+            }
+        }
+
+        return result == null ? "" : result;
     }
 
     public void testChoosableElements() {
