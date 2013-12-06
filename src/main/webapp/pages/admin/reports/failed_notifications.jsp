@@ -2,8 +2,8 @@
 <t:div id="formInitialization" rendered="#{ not reportBean.preparedFailedNotifications}" />
 <h:form >
 	<htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
-	<t:div rendered="#{not empty reportBean.failedNotificationsRecords }">
-		<t:dataTable  style="width:99%" styleClass="sortable" rowClasses="zebraeven," var="record" value="#{reportBean.failedNotificationsRecords}" preserveDataModel="true" sortColumn="#{reportBean.st1.sort}" sortAscending="#{reportBean.st1.ascending}" preserveSort="true">
+	<t:div rendered="#{not empty reportBean.notificationsRecords }">
+		<t:dataTable  style="width:99%" styleClass="sortable" rowClasses="zebraeven," var="record" value="#{reportBean.notificationsRecords}" preserveDataModel="true" sortColumn="#{reportBean.st1.sort}" sortAscending="#{reportBean.st1.ascending}" preserveSort="true">
 			<h:column>
 				<f:facet name="header">
 					<t:commandSortHeader id="sasa1" columnName="subscription.user.externalId" value="User" title="#{'subscription.user.externalId'!= reportBean.st1.sort ? msg['table.sortable']:( reportBean.st1.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" arrow="false" immediate="true">
@@ -72,9 +72,9 @@
 				</t:commandLink>
 			</h:column>			
 		</t:dataTable>
-		<t:saveState value="#{reportBean.failedNotificationsRecords}" />
+		<t:saveState value="#{reportBean.notificationsRecords}" />
 	</t:div>
-	<t:div rendered="#{empty reportBean.failedNotificationsRecords}">
+	<t:div rendered="#{empty reportBean.notificationsRecords}">
 		<h:outputText value="There is no failed notifications in the system" />
 	</t:div>
 

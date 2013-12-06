@@ -1,21 +1,21 @@
 package com.eurodyn.uns.dao.hibernate;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.INotificationDao;
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Notification;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
+import com.eurodyn.uns.util.DateUtil;
 import com.eurodyn.uns.web.jsf.admin.reports.FailedNotificationsRecord;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 public class HibernateNotificationDao extends BaseHibernateDao implements INotificationDao {
 
@@ -115,4 +115,25 @@ public class HibernateNotificationDao extends BaseHibernateDao implements INotif
         return null;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Notification> getNotifications(Date fromDate, User user, Notification example) throws DAOException {
+        Session session = null;
+        try {
+            session = createSession();
+            return session.createQuery("FROM Notification n inner join fetch n.deliveries d " +
+                    "WHERE n.user.externalId like lower(:userId) " +
+                    "AND n.subject like lower(:subject) " +
+                    "AND d.deliveryTime BETWEEN :start AND :end ")
+                    .setString("userId", "%" + user.getExternalId() + "%")
+                    .setString("subject", "%" + example.getSubject() + "%")
+                    .setTimestamp("start", DateUtil.startOfADay(fromDate))
+                    .setTimestamp("end", DateUtil.secondBeforeMidnight(fromDate))
+                    .list();
+        } catch (HibernateException e) {
+            throw new DAOException(e);
+        } finally {
+            closeSession(session);
+        }
+    }
 }

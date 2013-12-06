@@ -178,6 +178,10 @@
         <put name="selectedSubMenu" value="failed" type="string" />
         <put name="body" value="/pages/admin/reports/failed_notifications.jsp" />
     </definition>
+    <definition name="/admin/reports/notifications_report.tiles" extends="layout.reports" >
+        <put name="selectedSubMenu" value="notifications" type="string" />
+        <put name="body" value="/pages/admin/reports/notifications_report.jsp" />
+    </definition>
     <!-- reports end  -->
 
 

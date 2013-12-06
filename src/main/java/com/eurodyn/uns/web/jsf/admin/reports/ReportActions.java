@@ -1,16 +1,17 @@
 package com.eurodyn.uns.web.jsf.admin.reports;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import com.eurodyn.uns.model.Channel;
+import com.eurodyn.uns.model.Notification;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.service.facades.NotificationFacade;
 import com.eurodyn.uns.service.facades.UserFacade;
 import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.web.jsf.SortableTable;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class ReportActions extends ReportForm {
 
@@ -23,6 +24,7 @@ public class ReportActions extends ReportForm {
             notificationFacade = new NotificationFacade();
             channel = new Channel();
             user = new User();
+            notification = new Notification();
             st = new SortableTable("realDay");
             st1 = new SortableTable("subscription.user.externalId");
         } catch (Exception e) {
@@ -48,15 +50,25 @@ public class ReportActions extends ReportForm {
     public boolean isPreparedFailedNotifications() {
         try {
             if (isRenderPhase()) {
-                if (failedNotificationsRecords == null)
-                    failedNotificationsRecords = notificationFacade.getFailedNotifications();
-                st1.sort(failedNotificationsRecords);
+                if (notificationsRecords == null)
+                    notificationsRecords = notificationFacade.getFailedNotifications();
+                st1.sort(notificationsRecords);
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return true;
+    }
+
+    public String createNotificationsReport() {
+        try {
+            notificationsRecords = notificationFacade.getNotifications(fromDate, user, notification);
+        } catch (Exception e) {
+            logger.error(e);
+            addSystemErrorMessage();
+        }
+        return "notificationsReport";
     }
 
     public String generateTrouthputReport() {

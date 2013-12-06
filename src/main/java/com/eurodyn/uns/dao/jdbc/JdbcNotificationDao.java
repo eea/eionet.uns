@@ -1,17 +1,17 @@
 package com.eurodyn.uns.dao.jdbc;
 
+import com.eurodyn.uns.dao.DAOException;
+import com.eurodyn.uns.dao.INotificationDao;
+import com.eurodyn.uns.model.Channel;
+import com.eurodyn.uns.model.Notification;
+import com.eurodyn.uns.model.User;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import com.eurodyn.uns.dao.DAOException;
-import com.eurodyn.uns.dao.INotificationDao;
-import com.eurodyn.uns.model.Channel;
-import com.eurodyn.uns.model.Notification;
-import com.eurodyn.uns.model.User;
 
 public class JdbcNotificationDao extends BaseJdbcDao implements INotificationDao {
 
@@ -116,6 +116,9 @@ public class JdbcNotificationDao extends BaseJdbcDao implements INotificationDao
             Channel channel, User user) throws DAOException {
         return null;
     }
-    
-    
+
+    @Override
+    public List<Notification> getNotifications(Date fromDate, User user, Notification example) {
+        return null;
+    }
 }

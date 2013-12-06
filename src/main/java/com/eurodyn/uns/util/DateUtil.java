@@ -22,10 +22,15 @@
 
 package com.eurodyn.uns.util;
 
-import java.sql.*;
-import java.text.*;
-import java.util.*;
+import org.apache.commons.lang.time.DateUtils;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 
 
@@ -163,6 +168,19 @@ public class DateUtil {
        
        return trt.getTimeInMillis();
    }
-   
-   
+
+    public static Date startOfADay(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        return DateUtils.truncate(date, Calendar.DAY_OF_MONTH);
+    }
+
+    public static Date secondBeforeMidnight(Date dayBefore) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(dayBefore);
+        c.set(Calendar.HOUR_OF_DAY, 23);
+        c.set(Calendar.MINUTE, 59);
+        c.set(Calendar.SECOND, 59);
+        return c.getTime();
+    }
 }

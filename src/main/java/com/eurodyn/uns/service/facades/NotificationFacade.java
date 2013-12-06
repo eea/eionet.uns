@@ -20,15 +20,15 @@
  */
 package com.eurodyn.uns.service.facades;
 
-import java.util.Date;
-import java.util.List;
-
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Notification;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.common.WDSLogger;
+
+import java.util.Date;
+import java.util.List;
 
 public class NotificationFacade {
     
@@ -48,6 +48,10 @@ public class NotificationFacade {
 
     public List getFailedNotifications() throws Exception {
         return daoFactory.getNotificationDao().getFailedNotifications();
+    }
+
+    public List<Notification> getNotifications(Date fromDate, User user, Notification notification) throws DAOException {
+        return daoFactory.getNotificationDao().getNotifications(fromDate, user, notification);
     }
     
     public boolean createNotification(Notification notification) throws Exception {

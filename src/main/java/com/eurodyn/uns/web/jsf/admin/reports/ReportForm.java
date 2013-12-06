@@ -1,12 +1,7 @@
 package com.eurodyn.uns.web.jsf.admin.reports;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
-import org.apache.taglibs.standard.tag.common.core.SetSupport;
-
 import com.eurodyn.uns.model.Channel;
+import com.eurodyn.uns.model.Notification;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.ChannelFacade;
@@ -14,6 +9,10 @@ import com.eurodyn.uns.service.facades.NotificationFacade;
 import com.eurodyn.uns.service.facades.UserFacade;
 import com.eurodyn.uns.web.jsf.BaseBean;
 import com.eurodyn.uns.web.jsf.SortableTable;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class ReportForm extends BaseBean {
 
@@ -33,13 +32,15 @@ public class ReportForm extends BaseBean {
     
     protected Subscription subscription;
 
+    protected Notification notification;
+
     protected List channels;
 
     protected List users;
 
     protected List throuthputRecords;
 
-    protected List failedNotificationsRecords;
+    protected List notificationsRecords;
 
     protected int totalSuccess = 0;
 
@@ -117,12 +118,12 @@ public class ReportForm extends BaseBean {
         return toSelectItems(users, "id", "externalId");
     }
 
-    public List getFailedNotificationsRecords() {
-        return failedNotificationsRecords;
+    public List getNotificationsRecords() {
+        return notificationsRecords;
     }
     
-    public void setFailedNotificationsRecords(List failedNotificationsRecords) {
-        this.failedNotificationsRecords = failedNotificationsRecords;
+    public void setNotificationsRecords(List notificationsRecords) {
+        this.notificationsRecords = notificationsRecords;
     }
 
     public List getThrouthputRecords() {
@@ -160,5 +161,12 @@ public class ReportForm extends BaseBean {
     public void setSubscription(Subscription subscription) {
         this.subscription = subscription;
     }
-    
+
+    public Notification getNotification() {
+        return notification;
+    }
+
+    public void setNotification(Notification notification) {
+        this.notification = notification;
+    }
 }

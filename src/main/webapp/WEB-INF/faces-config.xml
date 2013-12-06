@@ -287,6 +287,10 @@
 			<from-outcome>reportCriteria</from-outcome>
 			<to-view-id>/admin/reports/report_criteria.jsp</to-view-id>
 		</navigation-case>
+        <navigation-case>
+			<from-outcome>notificationsReport</from-outcome>
+			<to-view-id>/admin/reports/notifications_report.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 
 	<!-- reports navigation end -->

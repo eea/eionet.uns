@@ -68,9 +68,9 @@
 			<h:panelGroup>
 				<h:outputText value="Automatically disable on " />
 				<h:inputText id="Vacation-Date" value="#{sessionScope['user'].vacationExpiration}" size="10">
-					<f:convertDateTime pattern="yyyy-mm-dd" />
+					<f:convertDateTime pattern="yyyy-MM-dd" />
 				</h:inputText>
-				<h:outputText value=" (yyyy-mm-dd)" />
+				<h:outputText value=" (yyyy-MM-dd)" />
 			</h:panelGroup>
 			<h:outputText value="(Leave empty if you want to disable vacation flag manually)" />
 		</h:panelGrid>
@@ -78,7 +78,7 @@
 			<h:panelGroup>
 				<h:outputText value="Automatically disabled on " />
 				<h:outputText value="#{sessionScope['user'].vacationExpiration}">
-					<f:convertDateTime pattern="yyyy-mm-dd" />
+					<f:convertDateTime pattern="yyyy-MM-dd" />
 				</h:outputText>
 			</h:panelGroup>
 		</h:panelGrid>

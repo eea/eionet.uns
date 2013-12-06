@@ -1,12 +1,11 @@
 package com.eurodyn.uns.web.jsf;
 
+import com.eurodyn.uns.util.common.WDSLogger;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-
-import javax.servlet.http.HttpServletRequest;
-
-import com.eurodyn.uns.util.common.WDSLogger;
 
 public class BreadCrumbBean extends BaseBean {
 
@@ -104,6 +103,7 @@ public class BreadCrumbBean extends BaseBean {
         breadcrumbsMap.put("report_criteria.jsp", new String[] { null, "Generate report", "/admin/reports/report_criteria.jsf" });
         breadcrumbsMap.put("notification_throughput.jsp", new String[] { null, "Throughput of notifications", null });
         breadcrumbsMap.put("failed_notifications.jsp", new String[] { "report_criteria.jsp", "Failed notifications", null });
+        breadcrumbsMap.put("notifications_report.jsp", new String[] { null , "Notifications report", null });
 
         // templates
         breadcrumbsMap.put("dashTemplates.jsp", new String[] { null, "Stylesheets", "/admin/templates/dashTemplates.jsf" });
