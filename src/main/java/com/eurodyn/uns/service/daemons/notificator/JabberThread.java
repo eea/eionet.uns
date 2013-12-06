@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.jivesoftware.smack.GoogleTalkConnection;
+import org.apache.commons.lang.StringUtils;
 import org.jivesoftware.smack.SSLXMPPConnection;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.packet.Message;
@@ -20,20 +20,21 @@ import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
 
 public class JabberThread implements Runnable {
-    
+
     private static final WDSLogger logger = WDSLogger.getLogger(JabberThread.class);
-    
+
     List notifications;
-    
+
     public JabberThread(List notifications) {
         this.notifications = notifications;
     }
-    
+
+    @Override
     public void run() {
-        
+
         try{
             XMPPConnection conn = null;
-            
+
             Map configMap = ConfigManager.getInstance().getConfigMap();
             String jabberServer = (String)((ConfigElement) configMap.get("jabberserver/host")).getValue();
             Integer jabberPort = new Integer((String) ((ConfigElement) configMap.get("jabberserver/port")).getValue());
@@ -41,38 +42,39 @@ public class JabberThread implements Runnable {
             String jabberPassword = (String)((ConfigElement) configMap.get("jabberserver/password")).getValue();
             Boolean usessl = (Boolean) ((ConfigElement) configMap.get("jabberserver/usessl")).getValue();
             String msg_type = (String)((ConfigElement) configMap.get("jabberserver/jabber_message_type")).getValue();
-            
-            if (usessl.booleanValue())
-                conn = new SSLXMPPConnection(jabberServer, jabberPort.intValue());
-            else
-                conn = new XMPPConnection(jabberServer, jabberPort.intValue());
 
-            //GoogleTalkConnection conn = new GoogleTalkConnection();
-            
-            conn.login(jabberUsername, jabberPassword);
-            
-            if(notifications != null){
-                
+            // Do not connect of the server host is blank!
+            if (StringUtils.isNotBlank(jabberServer)) {
+                if (usessl.booleanValue()) {
+                    conn = new SSLXMPPConnection(jabberServer, jabberPort.intValue());
+                } else {
+                    conn = new XMPPConnection(jabberServer, jabberPort.intValue());
+                }
+                conn.login(jabberUsername, jabberPassword);
+            }
+
+            if (notifications != null){
+
                 DeliveryFacade deliveryFacade = new DeliveryFacade();
-                
+
                 for(Iterator it = notifications.iterator(); it.hasNext(); ){
                     Notification notif = (Notification)it.next();
-                    
+
                     DeliveryType dt = new DeliveryType();
                     dt.setId(new Integer(notif.getDeliveryTypeId()));
-                    
+
                     Delivery delivery = new Delivery();
                     delivery.setNotification(notif);
-                    delivery.setDeliveryStatus(0);              
+                    delivery.setDeliveryStatus(0);
                     delivery.setDeliveryType(dt);
                     delivery.setDeliveryTime(new Date());
-                    
+
                     DeliveryNotification dtnotif = new DeliveryNotification();
                     dtnotif.setDeliveryType(dt);
                     dtnotif.setNotification(notif);
-                    
+
                     delivery.setId(dtnotif);
-                    
+
                     if(notif.getFailed() == 0){
                         deliveryFacade.createDelivery(delivery);
                     }
@@ -80,7 +82,7 @@ public class JabberThread implements Runnable {
                     String to = notif.getDeliveryAddress();
                     String subj = notif.getSubject();
                     String body = notif.getContent();
-                    
+
                     if(to != null && to.length() > 0){
                         Message message = new Message();
                         message.setTo(to);
@@ -88,7 +90,12 @@ public class JabberThread implements Runnable {
                         message.setBody(body);
                         message.setType(Message.Type.fromString(msg_type));
                         try {
-                            conn.sendPacket(message);
+                            // If connection is not null then send, otherwise log message about emulation.
+                            if (conn != null) {
+                                conn.sendPacket(message);
+                            } else {
+                                logger.debug("Eumlating Jabber message to <" + to + ">, subject: " + subj);
+                            }
                         }catch(Exception e){
                             logger.error(e.getMessage());
                             e.printStackTrace();
@@ -97,17 +104,19 @@ public class JabberThread implements Runnable {
                     } else {
                         logger.error("Not valid jabber address: "+to);
                     }
-                    
+
                     delivery.setDeliveryStatus(1);
                     delivery.setDeliveryTime(new Date());
                     deliveryFacade.updateDelivery(delivery);
                 }
             }
-            conn.close();
+            if (conn != null) {
+                conn.close();
+            }
         } catch(Exception e){
             logger.error(e.getMessage());
             e.printStackTrace();
         }
     }
-    
+
 }

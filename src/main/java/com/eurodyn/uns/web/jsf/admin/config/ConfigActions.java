@@ -15,6 +15,7 @@ import javax.naming.Context;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.jivesoftware.smack.SSLXMPPConnection;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
@@ -100,8 +101,9 @@ public class ConfigActions extends BaseBean {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
             Connection con = DriverManager.getConnection(url, username, password);
-            if (con != null)
+            if (con != null) {
                 con.close();
+            }
 
             configManager.updateConfiguration(configMap);
             addInfoMessage(null, "msg.updateSuccess", null);
@@ -136,22 +138,34 @@ public class ConfigActions extends BaseBean {
             String password = (String) ((ConfigElement) configMap.get("smtpserver/smtp_password")).getTempValue();
             Boolean useauth = (Boolean) ((ConfigElement) configMap.get("smtpserver/smtp_useauth")).getTempValue();
 
-            Properties props = new Properties();
-            props.put("mail.smtp.host", host);
-            props.put("mail.transport.protocol", "smtp");
-            props.put("mail.smtp.port", port);
-            props.put("mail.smtp.auth", useauth.toString());
+            // Test SMTP connection only when host is blank.
+            if (!StringUtils.isBlank(host)) {
 
-            MailAuthenticator auth = new MailAuthenticator(username, password);
-            Session mailSession = Session.getInstance(props, auth);
-            // mailSession.setDebug(true);
-            SMTPTransport t = (SMTPTransport) mailSession.getTransport("smtp");
-            t.connect();
-            returnToOriginal("pop3server");
+                Properties props = new Properties();
+                props.put("mail.smtp.host", host);
+                props.put("mail.transport.protocol", "smtp");
+                props.put("mail.smtp.port", port);
+                props.put("mail.smtp.auth", useauth.toString());
+
+                MailAuthenticator auth = new MailAuthenticator(username, password);
+                Session mailSession = Session.getInstance(props, auth);
+                // mailSession.setDebug(true);
+                SMTPTransport t = (SMTPTransport) mailSession.getTransport("smtp");
+                t.connect();
+                returnToOriginal("pop3server");
+                if (t != null) {
+                    t.close();
+                }
+            }
+
             configManager.updateConfiguration(configMap);
-            addInfoMessage(null, "msg.updateSuccess", null);
-            if (t != null)
-                t.close();
+
+            // Success message depends on whether the supplied SMTP host is blank or not.
+            if (StringUtils.isNotBlank(host)) {
+                addInfoMessage(null, "msg.updateSuccess", null);
+            } else {
+                addInfoMessage(null, "msg.updateSuccess.smptHostEmpty", null);
+            }
         } catch (javax.mail.MessagingException e) {
             addErrorMessagePlain(null, e.getMessage());
         } catch (Exception e) {
@@ -183,8 +197,9 @@ public class ConfigActions extends BaseBean {
             returnToOriginal("smtpserver");
             configManager.updateConfiguration(configMap);
             addInfoMessage(null, "msg.updateSuccess", null);
-            if (store != null)
+            if (store != null) {
                 store.close();
+            }
         } catch (javax.mail.MessagingException e) {
             addErrorMessagePlain(null, e.getMessage());
         } catch (Exception e) {
@@ -205,17 +220,26 @@ public class ConfigActions extends BaseBean {
             String username = (String) ((ConfigElement) configMap.get("jabberserver/username")).getTempValue();
             String password = (String) ((ConfigElement) configMap.get("jabberserver/password")).getTempValue();
             Boolean usessl = (Boolean) ((ConfigElement) configMap.get("jabberserver/usessl")).getTempValue();
-            if (usessl.booleanValue())
-                conn = new SSLXMPPConnection(host, port.intValue());
-            else
-                conn = new XMPPConnection(host, port.intValue());
 
-            conn.login(username, password);
+            // Test connection only if host is not blank.
+            if (StringUtils.isNotBlank(host)) {
+                if (usessl.booleanValue()) {
+                    conn = new SSLXMPPConnection(host, port.intValue());
+                } else {
+                    conn = new XMPPConnection(host, port.intValue());
+                }
+                conn.login(username, password);
+            }
 
             configManager.updateConfiguration(configMap);
-            addInfoMessage(null, "msg.updateSuccess", null);
-            if (conn != null)
+            if (StringUtils.isNotBlank(host)) {
+                addInfoMessage(null, "msg.updateSuccess", null);
+            } else {
+                addInfoMessage(null, "msg.updateSuccess.jabberHostEmpty", null);
+            }
+            if (conn != null) {
                 conn.close();
+            }
         } catch (XMPPException e) {
             addErrorMessagePlain(null, e.getMessage());
         } catch (Exception e) {

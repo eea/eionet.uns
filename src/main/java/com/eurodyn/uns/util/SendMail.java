@@ -13,6 +13,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.eurodyn.uns.util.common.WDSLogger;
 
 
@@ -20,7 +22,7 @@ import com.eurodyn.uns.util.common.WDSLogger;
  * Send notifications by email
 */
 public class SendMail implements java.io.Serializable {
-    
+
     private static final WDSLogger logger = WDSLogger.getLogger(SendMail.class);
 
   /**
@@ -48,6 +50,12 @@ public class SendMail implements java.io.Serializable {
           final String smtp_password,
           final String smtp_accountFrom) throws Exception
     {
+
+    if (StringUtils.isBlank(SMTP_SERVER)) {
+        logger.debug("Eumlating e-mail to <" + mailTo + ">, subject: " + subject);
+        return;
+    }
+
     // JavaMail API
     Properties sysProps = System.getProperties();
     sysProps.put( "mail.smtp.host", SMTP_SERVER );
@@ -66,7 +74,7 @@ public class SendMail implements java.io.Serializable {
         msg.setSubject( subject );
 
         if(html != null && html.length() > 0){
-            
+
             Multipart mp = new MimeMultipart("alternative");
 
             BodyPart textPart = new MimeBodyPart();
@@ -82,13 +90,13 @@ public class SendMail implements java.io.Serializable {
             // Collect the Parts into the MultiPart
             mp.addBodyPart(textPart);
             mp.addBodyPart(pixPart);
-            
+
             // Put the MultiPart into the Message
             msg.setContent(mp);
         }else{
             msg.setText(body);
         }
-      
+
         msg.setSentDate( new Date() );
         msg.setContentID(id);
         Transport.send( msg );
