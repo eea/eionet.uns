@@ -50,8 +50,8 @@ public class NotificationFacade {
         return daoFactory.getNotificationDao().getFailedNotifications();
     }
 
-    public List<Notification> getNotifications(Date fromDate, User user, Notification notification) throws DAOException {
-        return daoFactory.getNotificationDao().getNotifications(fromDate, user, notification);
+    public List<Notification> getNotifications(Date fromDate, Date toDate, User user, Notification notification) throws DAOException {
+        return daoFactory.getNotificationDao().getNotifications(fromDate, toDate, user, notification);
     }
     
     public boolean createNotification(Notification notification) throws Exception {

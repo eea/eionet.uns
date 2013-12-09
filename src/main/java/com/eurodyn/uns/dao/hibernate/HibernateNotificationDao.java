@@ -117,7 +117,7 @@ public class HibernateNotificationDao extends BaseHibernateDao implements INotif
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Notification> getNotifications(Date fromDate, User user, Notification example) throws DAOException {
+    public List<Notification> getNotifications(Date fromDate, Date toDate, User user, Notification example) throws DAOException {
         Session session = null;
         try {
             session = createSession();
@@ -128,7 +128,7 @@ public class HibernateNotificationDao extends BaseHibernateDao implements INotif
                     .setString("userId", "%" + user.getExternalId() + "%")
                     .setString("subject", "%" + example.getSubject() + "%")
                     .setTimestamp("start", DateUtil.startOfADay(fromDate))
-                    .setTimestamp("end", DateUtil.secondBeforeMidnight(fromDate))
+                    .setTimestamp("end", DateUtil.secondBeforeMidnight(toDate))
                     .list();
         } catch (HibernateException e) {
             throw new DAOException(e);

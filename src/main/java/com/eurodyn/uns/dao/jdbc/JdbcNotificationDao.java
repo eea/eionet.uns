@@ -118,7 +118,7 @@ public class JdbcNotificationDao extends BaseJdbcDao implements INotificationDao
     }
 
     @Override
-    public List<Notification> getNotifications(Date fromDate, User user, Notification example) {
+    public List<Notification> getNotifications(Date fromDate, Date toDate, User user, Notification example) {
         return null;
     }
 }

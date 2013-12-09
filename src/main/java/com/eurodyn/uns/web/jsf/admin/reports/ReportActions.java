@@ -63,7 +63,7 @@ public class ReportActions extends ReportForm {
 
     public String createNotificationsReport() {
         try {
-            notificationsRecords = notificationFacade.getNotifications(fromDate, user, notification);
+            notificationsRecords = notificationFacade.getNotifications(fromDate, toDate, user, notification);
         } catch (Exception e) {
             logger.error(e);
             addSystemErrorMessage();

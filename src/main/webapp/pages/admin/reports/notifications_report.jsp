@@ -5,9 +5,11 @@
     <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
         <h:outputLabel value="Notification subject" for="notificationSubject" />
         <h:inputText id="notificationSubject" value="#{reportBean.notification.subject}"/>
-        <h:outputLabel value="Delivery date" for="date" />
-        <h:panelGroup id="date">
+        <h:outputLabel value="Delivery period" for="period" />
+        <h:panelGroup id="period">
             <t:inputDate value="#{reportBean.fromDate}" />
+            <h:outputText value=" -- " />
+            <t:inputDate id="toDate" value="#{reportBean.toDate}" />
         </h:panelGroup>
         <h:outputLabel value="User id" for="user" />
         <h:inputText id="user" value="#{reportBean.user.externalId}"/>

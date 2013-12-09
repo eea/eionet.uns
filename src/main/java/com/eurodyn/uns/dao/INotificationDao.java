@@ -40,5 +40,5 @@ public interface INotificationDao {
     
     public List getFailedDeliveries() throws DAOException;
 
-    List<Notification> getNotifications(Date fromDate, User user, Notification example) throws DAOException;
+    List<Notification> getNotifications(Date fromDate, Date toDate, User user, Notification example) throws DAOException;
 }
