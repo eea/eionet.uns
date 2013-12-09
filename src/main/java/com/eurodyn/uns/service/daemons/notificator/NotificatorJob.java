@@ -1,18 +1,5 @@
 package com.eurodyn.uns.service.daemons.notificator;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.EventMetadata;
@@ -27,6 +14,18 @@ import com.eurodyn.uns.service.facades.NotificationFacade;
 import com.eurodyn.uns.service.facades.SubscriptionFacade;
 import com.eurodyn.uns.util.common.AppConfigurator;
 import com.eurodyn.uns.util.common.WDSLogger;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class NotificatorJob implements Job {
     
@@ -56,6 +55,7 @@ public class NotificatorJob implements Job {
     
     private void scan() throws Exception {
         try {
+            logger.info("Start generating notifications");
             HashMap channels = channelFacade.findUnprocessedEvents();
             channelFacade.setProcessed();
             int i = 0;
@@ -176,13 +176,22 @@ public class NotificatorJob implements Job {
                 else if(dtid == 2)
                     jabber_messages.add(notif);
             }
+            logger.info("Notifications prepared. " +
+                    "e-mails=" + email_messages.size() + ", jabber=" + jabber_messages.size());
             Thread emailThread = new Thread(new EMailThread(email_messages));
             Thread jabberThread = new Thread(new JabberThread(jabber_messages));
+
+            logger.info("Start sending notifications.");
             emailThread.start();
             jabberThread.start();
             try{
+                logger.info("Sending e-mails.");
                 emailThread.join();
+                logger.info("Done sending e-mails.");
+
+                logger.info("Sending jabber messages.");
                 jabberThread.join();
+                logger.info("Done sending jabber messages.");
             } catch(InterruptedException ie){
                 ie.printStackTrace();
                 logger.error(ie.getMessage());
@@ -190,7 +199,7 @@ public class NotificatorJob implements Job {
         }catch(Exception e){
             e.printStackTrace();
             logger.error(e.getMessage());
-            throw new Exception("Error occured when delivering notifications: "+e.toString());
+            throw new Exception("Error occurred when delivering notifications: "+e.toString());
         }
     }
     

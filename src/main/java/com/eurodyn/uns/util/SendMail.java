@@ -1,7 +1,7 @@
 package com.eurodyn.uns.util;
 
-import java.util.Date;
-import java.util.Properties;
+import com.eurodyn.uns.util.common.WDSLogger;
+import org.apache.commons.lang.StringUtils;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -12,10 +12,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-
-import org.apache.commons.lang.StringUtils;
-
-import com.eurodyn.uns.util.common.WDSLogger;
+import java.util.Date;
+import java.util.Properties;
 
 
 /**
@@ -37,7 +35,6 @@ public class SendMail implements java.io.Serializable {
    * @param mailTo  Recipient.
    * @param subject Subject of e-mail.
    * @param body    Body of e-mail.
-   * @param attachments List of files on the server ( with absolute paths )
    */
   public static synchronized void sendMail (
           final String mailTo,
@@ -99,7 +96,9 @@ public class SendMail implements java.io.Serializable {
 
         msg.setSentDate( new Date() );
         msg.setContentID(id);
+        logger.info("Sending e-mail, id=" + id);
         Transport.send( msg );
+        logger.info("E-mail sent, id=" + id);
     }
     catch ( Exception ex )
     {
