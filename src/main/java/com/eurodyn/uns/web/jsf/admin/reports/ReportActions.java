@@ -9,9 +9,13 @@ import com.eurodyn.uns.service.facades.UserFacade;
 import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.web.jsf.SortableTable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class ReportActions extends ReportForm {
 
@@ -58,6 +62,32 @@ public class ReportActions extends ReportForm {
             logger.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
+        return true;
+    }
+
+    public boolean isPreparedNotificationsReport() {
+        Map request = getExternalContext().getRequestParameterMap();
+        Object userId = request.get("user");
+        if (userId != null) {
+            user.setExternalId(userId.toString());
+        }
+        Object subject = request.get("subject");
+        if (subject != null) {
+            notification.setSubject(subject.toString());
+        }
+        Object notificationDate = request.get("notificationDate");
+        if (notificationDate != null) {
+            SimpleDateFormat dateFormat = getDateFormat();
+            try {
+                Date date = dateFormat.parse(notificationDate.toString());
+                fromDate = date;
+                toDate = date;
+            } catch (ParseException e) {
+                logger.error("Unable to parse date from string=" + notificationDate
+                        + ", expected date format=" + dateFormat.toPattern());
+            }
+        }
+        createNotificationsReport();
         return true;
     }
 

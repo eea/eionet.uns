@@ -605,4 +605,9 @@
         </createIndex>
     </changeSet>
 
+    <changeSet id="rev-40" author="dmitrant">
+        <addColumn tableName="CHANNEL">
+            <column name="inspectors" type="TEXT"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

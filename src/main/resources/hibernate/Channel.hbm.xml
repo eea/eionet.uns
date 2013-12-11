@@ -34,6 +34,7 @@
 
 		<property name="status" type="java.lang.Integer" update="true" insert="true" column="CSTATUS" />
 
+        <property name="inspectorsCsv" type="java.lang.String" update="true" insert="true" column="INSPECTORS"/>
 
 		<many-to-one name="transformation" class="com.eurodyn.uns.model.Stylesheet" cascade="none" outer-join="auto" update="true" insert="true" column="STYLESHEET_ID" />
 

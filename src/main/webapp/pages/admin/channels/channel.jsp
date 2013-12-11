@@ -30,6 +30,8 @@
 				<h:inputText id="hours" size="3" required="true" value="#{channelBean.refreshDelay.hours}" />
 				<h:inputText id="minutes" size="3" required="true" value="#{channelBean.refreshDelay.minutes}" />
 			</h:panelGrid>
+            <h:outputLabel for="inspectors" value="#{msg['label.inspectors']}"/>
+            <h:inputText id="inspectors" size="30" required="false" value="#{channelBean.channel.inspectorsCsv}" style="width: 20em;" />
 		</h:panelGrid>
 	</htm:fieldset>
 	<htm:fieldset>

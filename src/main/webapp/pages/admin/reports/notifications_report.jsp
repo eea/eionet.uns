@@ -1,5 +1,6 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 
+<t:div rendered="#{reportBean.preparedNotificationsReport}"/>
 <h:form>
     <htm:h1><h:outputText value="Notifications report" /></htm:h1>
     <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
@@ -16,12 +17,17 @@
     </h:panelGrid>
     <htm:br />
     <h:commandButton action="#{reportBean.createNotificationsReport}" value="Generate Report" />
+
+    <t:saveState value="#{reportBean.notification.subject}" />
+    <t:saveState value="#{reportBean.fromDate}" />
+    <t:saveState value="#{reportBean.toDate}" />
+    <t:saveState value="#{reportBean.user.externalId}" />
 </h:form>
 
 <t:div rendered="#{not empty reportBean.notificationsRecords}">
     <t:dataTable style="width:99%" styleClass="sortable"
                  rowClasses="zebraeven,"
-                 var="notification" value="#{reportBean.notificationsRecords}">
+                 var="notification" value="#{reportBean.notificationsRecords}" >
         <h:column>
             <f:facet name="header">
                 <h:outputText value="Receiver" title="Receiver" />

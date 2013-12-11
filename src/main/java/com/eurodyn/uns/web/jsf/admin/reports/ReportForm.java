@@ -86,6 +86,10 @@ public class ReportForm extends BaseBean {
         this.toDate = toDate;
     }
 
+    public static SimpleDateFormat getDateFormat() {
+        return sdf;
+    }
+
     public User getUser() {
         return user;
     }

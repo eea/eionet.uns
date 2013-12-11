@@ -22,6 +22,8 @@
 
 package com.eurodyn.uns.model;
 
+import com.eurodyn.uns.util.rdf.IChannel;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,8 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import com.eurodyn.uns.util.rdf.IChannel;
 
 /**
  * @hibernate.class table="CHANNEL" lazy="false"
@@ -84,6 +84,8 @@ public class Channel implements IChannel, Serializable {
     private Date lastHarvestDate;
 
     private String language;
+
+    private String inspectorsCsv;
 
     private boolean left;
 
@@ -240,6 +242,14 @@ public class Channel implements IChannel, Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getInspectorsCsv() {
+        return inspectorsCsv;
+    }
+
+    public void setInspectorsCsv(String inspectorsCsv) {
+        this.inspectorsCsv = inspectorsCsv;
     }
 
     /**
