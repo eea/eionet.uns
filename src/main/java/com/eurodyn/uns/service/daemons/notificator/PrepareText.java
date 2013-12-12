@@ -7,20 +7,20 @@ import com.eurodyn.uns.model.NotificationTemplate;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.common.WDSLogger;
+import org.apache.commons.lang.StringUtils;
 import org.python.core.PyList;
 import org.python.core.PyObject;
 import org.python.core.PyString;
 import org.python.core.PyStringMap;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PrepareText {
-
     private static final WDSLogger logger = WDSLogger.getLogger(PrepareText.class);
-    private static final SimpleDateFormat DATE_TIME_FORMATTER = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     public static final String UNSUBSCRIBE_LINK_PATH = "/subscriptions/unsubscribe.jsf?subsc=";
@@ -31,144 +31,66 @@ public class PrepareText {
     public static final String PLAIN_TEXT_NOTIFICATION = "plain";
     public static final String HTML_NOTIFICATION = "html";
     public static final String NOTIFICATION_SUBJECT = "subj";
+    public static final String INSPECTOR_LINK_TEXT = "List of other receivers";
 
     public static HashMap<String, String> prepare(NotificationTemplate template, Event event, Subscription subscription, String homeUrl) throws Exception {
         try {
-            Map event_md = event.getEventMetadata();
+            PrepareTextContext context = new PrepareTextContext(template, event, subscription, homeUrl);
 
-            String event_title = findEventTitle(event_md);
+            String subject = replaceSummaryPlaceholders(template.getSubject(), context);
+            String plainTextNotification = replacePlaceHoldersInTemplate(template.getPlainText(), subject, false, context);
+            String htmlNotification = context.buildHtml
+                    ? replacePlaceHoldersInTemplate(template.getHtmlText(), subject, true, context)
+                    : null;
 
-            String ev_creation_date = DATE_TIME_FORMATTER.format(event.getCreationDate());
+            PyStringMap pythonNamespace = setupPythonNamespace(context);
 
-            User user = subscription.getUser();
-            Boolean buildHtml = user.getPreferHtml();
-            Map<String, String> content = new HashMap<String, String>();
-            content.put(PLAIN_TEXT_NOTIFICATION, template.getPlainText());
-            if (buildHtml) {
-                content.put(HTML_NOTIFICATION, template.getHtmlText());
-            }
-
-            //REPLACE common placeholders, create string from metadata.
-            String subj = replaceSummaryPlaceholders(template.getSubject(), subscription, event_title, ev_creation_date);
-
-            for (String key : content.keySet()) {
-                String text = content.get(key);
-
-                boolean isHtml = key.equals(HTML_NOTIFICATION);
-                if (text != null) {
-                    text = replaceSummaryPlaceholders(text, subscription, event_title, ev_creation_date);
-                    if (text.contains("$UNSUBSCRIBE_LINK") || text.contains("$UNSUSCRIBE_LINK")) {
-                        String unsub_link = homeUrl + UNSUBSCRIBE_LINK_PATH + subscription.getSecondaryId();
-                        unsub_link = createHtmlLinkIfRequired(isHtml, unsub_link);
-                        text = text.replaceAll("\\$UNSUBSCRIBE_LINK", unsub_link);
-                        text = text.replaceAll("\\$UNSUSCRIBE_LINK", unsub_link);
-                    }
-                    String inspectorLink = isChannelInspector(subscription.getUser(), subscription.getChannel())
-                            ? createInspectorLink(homeUrl, subj, user.getExternalId(), event.getCreationDate())
-                            : "";
-                    text = text.replaceAll("\\$INSPECTOR_LINK", inspectorLink);
-                    String nl = isHtml ? "<br/>" : "\n";
-                    StringBuilder event_body = new StringBuilder();
-                    for (Object o : event_md.keySet()) {
-                        String event_key = (String) o;
-                        EventMetadata em = (EventMetadata) event_md.get(event_key);
-                        String prop = em.getProperty();
-                        String val = em.getValue();
-                        if (val == null) {
-                            val = "";
-                        }
-
-                        event_body.append(getLocalName(prop)).append(": ");
-                        if (isHtml) {
-                            val = val.replaceAll("\n", "<br/>");
-                            val = createHtmlLinkIfRequired(val.matches("https?://"), val);
-                        }
-                        event_body.append(val).append(nl);
-                    }
-                    text = text.replaceAll("\\$EVENT", event_body.toString());
-                    content.put(key, text);
-                }
-            }
-
-            //SETUP of python objects
-            PyStringMap pyUser = new PyStringMap();
-            pyUser.__setitem__("fullName", new PyString(user.getFullName()));
-            pyUser.__setitem__("externalId", new PyString(user.getExternalId()));
-
-            PyStringMap channel = new PyStringMap();
-            channel.__setitem__("title", new PyString(subscription.getChannel().getTitle()));
-
-            PyStringMap pysubscription = new PyStringMap();
-            pysubscription.__setitem__("channel", channel);
-            pysubscription.__setitem__("user", pyUser);
-
-            PyStringMap event_metadata = new PyStringMap();
-            PyStringMap metadata_dict = new PyStringMap();
-            PyList metadata_list = new PyList();
-
-            Map<String, PyList> multipleMap = new HashMap<String, PyList>();
-
-            for (Object o : event_md.keySet()) {
-                String key = (String) o;
-                EventMetadata em = (EventMetadata) event_md.get(key);
-                String property = em.getProperty();
-                String val = em.getValue();
-                if (val == null) {
-                    val = "";
-                }
-
-                event_metadata.__setitem__(property, new PyString(val));
-                PyObject dict_val = metadata_dict.get(new PyString(property), new PyString());
-                String dval = dict_val.toString() + val;
-                if (property != null && isMultiple(property, event_md)) {
-                    PyList list = new PyList();
-                    if (multipleMap.containsKey(property)) {
-                        list = multipleMap.get(property);
-                    }
-                    if (list != null) {
-                        list.add(new PyString(dval));
-                        multipleMap.put(property, list);
-                    }
-                } else {
-                    metadata_dict.__setitem__(property, new PyString(dval));
-                }
-                metadata_list.add(new PyString(dval));
-            }
-            for (Map.Entry<String, PyList> entry : multipleMap.entrySet()) {
-                metadata_dict.__setitem__(entry.getKey(), entry.getValue());
-            }
-
-            PyStringMap pyevent = new PyStringMap();
-            pyevent.__setitem__("date", new PyString(ev_creation_date));
-            pyevent.__setitem__("title", new PyString(event_title));
-            pyevent.__setitem__("metadata", event_metadata);
-
-            PyStringMap templ_namespace = new PyStringMap();
-            templ_namespace.__setitem__("subscription", pysubscription);
-            templ_namespace.__setitem__("event", pyevent);
-            templ_namespace.__setitem__("metadata_dict", metadata_dict);
-            templ_namespace.__setitem__("metadata_list", metadata_list);
-
-            //EVALUATE python in templates
             HashMap<String, String> ret = new HashMap<String, String>();
-            String plain = content.get(PLAIN_TEXT_NOTIFICATION);
-            if (plain != null) {
-                plain = RenderText.executeTemplate(plain, templ_namespace, false);
-                ret.put(PLAIN_TEXT_NOTIFICATION, plain);
+            if (plainTextNotification != null) {
+                ret.put(PLAIN_TEXT_NOTIFICATION, RenderText.executeTemplate(plainTextNotification, pythonNamespace, false));
+            }
+            if (htmlNotification != null) {
+                ret.put(HTML_NOTIFICATION, RenderText.executeTemplate(htmlNotification, pythonNamespace, true));
             }
 
-            String html = content.get(HTML_NOTIFICATION);
-            if (html != null) {
-                html = RenderText.executeTemplate(html, templ_namespace, true);
-                ret.put(HTML_NOTIFICATION, html);
-            }
-
-            ret.put(NOTIFICATION_SUBJECT, subj);
+            ret.put(NOTIFICATION_SUBJECT, subject);
             return ret;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            throw new Exception("Error occured when prepearing notification text: " + e.toString(), e);
+            throw new Exception("Error occurred when preparing notification text: " + e.toString(), e);
         }
+    }
+
+    private static String replacePlaceHoldersInTemplate(String template, String subject,
+                                                        boolean isHtml, PrepareTextContext context) {
+        if (template != null) {
+            template = replaceSummaryPlaceholders(template, context);
+            template = template.replaceAll("(\\$UNSUBSCRIBE_LINK)|(\\$UNSUSCRIBE_LINK)",
+                        createUnsubscribeLink(isHtml, context));
+            String inspectorLink = isChannelInspector(context.user, context.subscription.getChannel())
+                    ? createInspectorLink(subject, isHtml, context) : "";
+            template = template.replaceAll("\\$INSPECTOR_LINK", inspectorLink);
+            String newLineSeparator = isHtml ? "<br/>" : "\n";
+            StringBuilder event_body = new StringBuilder();
+            for (EventMetadata em : context.eventMetadata.values()) {
+                String value = StringUtils.defaultString(em.getValue());
+
+                event_body.append(getLocalName(em.getProperty())).append(": ");
+                if (isHtml) {
+                    value = value.replaceAll("\n", "<br/>");
+                    value = createHtmlLinkIfRequired(value.matches("https?://"), value);
+                }
+                event_body.append(value).append(newLineSeparator);
+            }
+            template = template.replaceAll("\\$EVENT", event_body.toString());
+        }
+        return template;
+    }
+
+    private static String createUnsubscribeLink(boolean isHtml, PrepareTextContext context) {
+        String unsub_link = context.homeUrl + UNSUBSCRIBE_LINK_PATH + context.subscription.getSecondaryId();
+        unsub_link = createHtmlLinkIfRequired(isHtml, unsub_link);
+        return unsub_link;
     }
 
     private static boolean isChannelInspector(User user, Channel channel) {
@@ -183,42 +105,89 @@ public class PrepareText {
         return false;
     }
 
-    private static String createHtmlLinkIfRequired(boolean isHtml, String unsub_link) {
-        if (isHtml)
-            unsub_link = createLink(unsub_link, unsub_link);
-        return unsub_link;
+    private static String createHtmlLinkIfRequired(boolean isHtml, String link) {
+        return isHtml ? createLink(link, link) : link;
     }
 
-    private static String createInspectorLink(String homeUrl, String subject, String user, Date notificationDate) {
-        String baseUrl = homeUrl + INSPECTOR_LINK_PATH
+    private static String createInspectorLink(String subject, boolean isHtml, PrepareTextContext context) {
+        String link = context.homeUrl + INSPECTOR_LINK_PATH
                 + "subject=" + subject
-                + "&user=" + user
+                + "&user=" + context.user.getExternalId()
                 + "&notificationDate=" +
-                DATE_FORMAT.format(notificationDate);
-
-        return createLink(baseUrl, "List of other receivers");
+                DATE_FORMAT.format(context.event.getCreationDate());
+        try {
+            link = URLEncoder.encode(link, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return isHtml ? createLink(link, INSPECTOR_LINK_TEXT) : INSPECTOR_LINK_TEXT + ": " + link;
     }
 
     private static String createLink(String link, String text) {
         return "<a href=\"" + link + "\">" + text + "</a>";
     }
 
-    private static String replaceSummaryPlaceholders(String text, Subscription subscription, String eventTitle, String creationDate) {
-        text = text.replaceAll("\\$EVENT.DATE", creationDate);
-        text = text.replaceAll("\\$USER", subscription.getUser().getFullName());
-        text = text.replaceAll("\\$EVENT.TITLE", eventTitle);
-        return text.replaceAll("\\$EVENT.CHANNEL", subscription.getChannel().getTitle());
+    private static String replaceSummaryPlaceholders(String text, PrepareTextContext context) {
+        text = text.replaceAll("\\$EVENT.DATE", context.eventCreationDate);
+        text = text.replaceAll("\\$USER", context.user.getFullName());
+        text = text.replaceAll("\\$EVENT.TITLE", context.eventTitle);
+        return text.replaceAll("\\$EVENT.CHANNEL", context.subscription.getChannel().getTitle());
     }
 
-    private static String findEventTitle(Map event_md) {
-        for (Object v : event_md.values()) {
-            EventMetadata em = (EventMetadata) v;
+    private static PyStringMap setupPythonNamespace(PrepareTextContext context) {
+        PyStringMap pyUser = new PyStringMap();
+        pyUser.__setitem__("fullName", new PyString(context.user.getFullName()));
+        pyUser.__setitem__("externalId", new PyString(context.user.getExternalId()));
+
+        PyStringMap channel = new PyStringMap();
+        channel.__setitem__("title", new PyString(context.subscription.getChannel().getTitle()));
+
+        PyStringMap pysubscription = new PyStringMap();
+        pysubscription.__setitem__("channel", channel);
+        pysubscription.__setitem__("user", pyUser);
+
+        PyStringMap event_metadata = new PyStringMap();
+        PyStringMap metadata_dict = new PyStringMap();
+        PyList metadata_list = new PyList();
+
+        Map<String, PyList> multipleMap = new HashMap<String, PyList>();
+
+        for (EventMetadata em : context.eventMetadata.values()) {
             String property = em.getProperty();
-            if (TITLE_RSS_PREDICATE.equals(property) || TITLE_ELEMENTS_PREDICATE.equals(property)) {
-                return em.getValue();
+            String val = StringUtils.defaultString(em.getValue());
+
+            event_metadata.__setitem__(property, new PyString(val));
+            PyObject dict_val = metadata_dict.get(new PyString(property), new PyString());
+            String dval = dict_val.toString() + val;
+            if (property != null && isMultiple(property, context.eventMetadata)) {
+                PyList list = new PyList();
+                if (multipleMap.containsKey(property)) {
+                    list = multipleMap.get(property);
+                }
+                if (list != null) {
+                    list.add(new PyString(dval));
+                    multipleMap.put(property, list);
+                }
+            } else {
+                metadata_dict.__setitem__(property, new PyString(dval));
             }
+            metadata_list.add(new PyString(dval));
         }
-        return "";
+        for (Map.Entry<String, PyList> entry : multipleMap.entrySet()) {
+            metadata_dict.__setitem__(entry.getKey(), entry.getValue());
+        }
+
+        PyStringMap pyevent = new PyStringMap();
+        pyevent.__setitem__("date", new PyString(context.eventCreationDate));
+        pyevent.__setitem__("title", new PyString(context.eventTitle));
+        pyevent.__setitem__("metadata", event_metadata);
+
+        PyStringMap templ_namespace = new PyStringMap();
+        templ_namespace.__setitem__("subscription", pysubscription);
+        templ_namespace.__setitem__("event", pyevent);
+        templ_namespace.__setitem__("metadata_dict", metadata_dict);
+        templ_namespace.__setitem__("metadata_list", metadata_list);
+        return templ_namespace;
     }
 
     private static boolean isMultiple(String predicate, Map event_md) {
@@ -244,6 +213,42 @@ public class PrepareText {
             return tokens[tokens.length - 1];
         } else {
             return tokens[1];
+        }
+    }
+
+    private static class PrepareTextContext {
+        private static final SimpleDateFormat DATE_TIME_FORMATTER = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
+        final NotificationTemplate template;
+        final Event event;
+        final Subscription subscription;
+        final String homeUrl;
+        final String eventCreationDate;
+        final Map<String, EventMetadata> eventMetadata;
+        final String eventTitle;
+        final User user;
+        final boolean buildHtml;
+
+        @SuppressWarnings("unchecked")
+        private PrepareTextContext(NotificationTemplate template, Event event, Subscription subscription, String homeUrl) {
+            this.template = template;
+            this.event = event;
+            this.subscription = subscription;
+            this.homeUrl = homeUrl;
+            this.eventCreationDate = DATE_TIME_FORMATTER.format(event.getCreationDate());
+            eventMetadata = event.getEventMetadata();
+            eventTitle = findEventTitle(eventMetadata);
+            user = subscription.getUser();
+            buildHtml = user.getPreferHtml();
+        }
+
+        private String findEventTitle(Map<String, EventMetadata> metadata) {
+            for (EventMetadata em : metadata.values()) {
+                String property = em.getProperty();
+                if (TITLE_RSS_PREDICATE.equals(property) || TITLE_ELEMENTS_PREDICATE.equals(property)) {
+                    return em.getValue();
+                }
+            }
+            return "";
         }
     }
 }
