@@ -22,9 +22,9 @@ public class ReportForm extends BaseBean {
 
     protected NotificationFacade notificationFacade;
 
-    protected Date fromDate;
+    protected Date fromDate = new Date();
 
-    protected Date toDate;
+    protected Date toDate = new Date();
 
     protected Channel channel;
 
@@ -47,7 +47,9 @@ public class ReportForm extends BaseBean {
     protected int totalFailed = 0;
     
     protected SortableTable st1;
-    
+
+    protected SortableTable notificationsSortTable;
+
     public SortableTable getSt1() {
         return st1;
     }
@@ -172,5 +174,9 @@ public class ReportForm extends BaseBean {
 
     public void setNotification(Notification notification) {
         this.notification = notification;
+    }
+
+    public SortableTable getNotificationsSortTable() {
+        return notificationsSortTable;
     }
 }

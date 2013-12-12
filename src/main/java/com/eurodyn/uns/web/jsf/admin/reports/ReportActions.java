@@ -31,6 +31,7 @@ public class ReportActions extends ReportForm {
             notification = new Notification();
             st = new SortableTable("realDay");
             st1 = new SortableTable("subscription.user.externalId");
+            notificationsSortTable = new SortableTable("user.fullName");
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             addSystemErrorMessage();
@@ -66,38 +67,12 @@ public class ReportActions extends ReportForm {
     }
 
     public boolean isPreparedNotificationsReport() {
-        Map request = getExternalContext().getRequestParameterMap();
-        Object userId = request.get("user");
-        if (userId != null) {
-            user.setExternalId(userId.toString());
-        }
-        Object subject = request.get("subject");
-        if (subject != null) {
-            notification.setSubject(subject.toString());
-        }
-        Object notificationDate = request.get("notificationDate");
-        if (notificationDate != null) {
-            SimpleDateFormat dateFormat = getDateFormat();
-            try {
-                Date date = dateFormat.parse(notificationDate.toString());
-                fromDate = date;
-                toDate = date;
-            } catch (ParseException e) {
-                logger.error("Unable to parse date from string=" + notificationDate
-                        + ", expected date format=" + dateFormat.toPattern());
-            }
-        }
-        createNotificationsReport();
+        setSearchFieldsFromRequest(getExternalContext().getRequestParameterMap());
+        loadAndSortNotifications();
         return true;
     }
 
     public String createNotificationsReport() {
-        try {
-            notificationsRecords = notificationFacade.getNotifications(fromDate, toDate, user, notification);
-        } catch (Exception e) {
-            logger.error(e);
-            addSystemErrorMessage();
-        }
         return "notificationsReport";
     }
 
@@ -171,6 +146,37 @@ public class ReportActions extends ReportForm {
         
         return null;
     }
-    
-    
+
+    private void setSearchFieldsFromRequest(Map request) {
+        Object userId = request.get("user");
+        if (userId != null) {
+            user.setExternalId(userId.toString());
+        }
+        Object subject = request.get("subject");
+        if (subject != null) {
+            notification.setSubject(subject.toString());
+        }
+        Object notificationDate = request.get("notificationDate");
+        if (notificationDate != null) {
+            SimpleDateFormat dateFormat = getDateFormat();
+            try {
+                Date date = dateFormat.parse(notificationDate.toString());
+                fromDate = date;
+                toDate = date;
+            } catch (ParseException e) {
+                logger.error("Unable to parse date from string=" + notificationDate
+                        + ", expected date format=" + dateFormat.toPattern());
+            }
+        }
+    }
+
+    private void loadAndSortNotifications() {
+        try {
+            notificationsRecords = notificationFacade.getNotifications(fromDate, toDate, user, notification);
+            notificationsSortTable.sort(notificationsRecords);
+        } catch (Exception e) {
+            logger.error(e);
+            addSystemErrorMessage();
+        }
+    }
 }

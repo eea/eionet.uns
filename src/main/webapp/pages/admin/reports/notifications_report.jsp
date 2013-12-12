@@ -25,18 +25,35 @@
 </h:form>
 
 <t:div rendered="#{not empty reportBean.notificationsRecords}">
-    <t:dataTable style="width:99%" styleClass="sortable"
-                 rowClasses="zebraeven,"
-                 var="notification" value="#{reportBean.notificationsRecords}" >
-        <h:column>
+    <t:dataTable id="notifications" style="width:99%" styleClass="sortable"
+                 rowClasses="zebraeven," rows="20"
+                 var="notification" value="#{reportBean.notificationsRecords}"
+                 preserveDataModel="true" sortColumn="#{reportBean.notificationsSortTable.sort}" sortAscending="#{reportBean.notificationsSortTable.ascending}" preserveSort="true">
+        <t:column>
             <f:facet name="header">
-                <h:outputText value="Receiver" title="Receiver" />
+                <f:facet name="header">
+                    <t:commandSortHeader columnName="user.fullName" value="Receiver" title="#{'user.fullName'!= reportBean.notificationsSortTable.sort ? msg['table.sortable']:( reportBean.notificationsSortTable.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" arrow="false" immediate="true">
+                        <f:facet name="descending">
+                            <h:graphicImage url="/images/sort_desc.gif" />
+                        </f:facet>
+                        <f:facet name="ascending">
+                            <h:graphicImage url="/images/sort_asc.gif" />
+                        </f:facet>
+                    </t:commandSortHeader>
+                </f:facet>
             </f:facet>
             <h:outputText value="#{notification.user.fullName}" />
-        </h:column>
+        </t:column>
         <h:column>
             <f:facet name="header">
-                <h:outputText value="Subject" title="Subject" />
+                <t:commandSortHeader columnName="subject" value="Subject" title="#{'subject'!= reportBean.notificationsSortTable.sort ? msg['table.sortable']:( reportBean.notificationsSortTable.ascending?msg['table.sort.asc.az']:msg['table.sort.desc.za'] )}" rel="noflow" arrow="false" immediate="true">
+                    <f:facet name="descending">
+                        <h:graphicImage url="/images/sort_desc.gif" />
+                    </f:facet>
+                    <f:facet name="ascending">
+                        <h:graphicImage url="/images/sort_asc.gif" />
+                    </f:facet>
+                </t:commandSortHeader>
             </f:facet>
             <h:outputText value="#{notification.subject}" />
         </h:column>
@@ -62,4 +79,21 @@
             </h:dataTable>
         </h:column>
     </t:dataTable>
+    <t:dataScroller for="notifications" fastStep="10"
+                    pageIndexVar="pageIndex" renderFacetsIfSinglePage="true"
+                    pageCountVar="pageCount" paginator="true" paginatorMaxPages="9"
+                    immediate="true">
+        <f:facet name="first">
+            <t:outputText value="First"/>
+        </f:facet>
+        <f:facet name="last">
+            <t:outputText value="Last"/>
+        </f:facet>
+        <f:facet name="previous">
+            <t:outputText value="Previous"/>
+        </f:facet>
+        <f:facet name="next">
+            <t:outputText value="Next"/>
+        </f:facet>
+    </t:dataScroller>
 </t:div>
