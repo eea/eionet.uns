@@ -48,7 +48,7 @@ public class UnicodeTest extends UnsDatabaseTestCase {
             closeAllResources(null, pstmt, null);
 
             pstmt =
-                    conn.prepareStatement("select SUBJECT, TEXT_PLAIN, length(SUBJECT), length(TEXT_PLAIN)"
+                    conn.prepareStatement("select SUBJECT, TEXT_PLAIN, char_length(SUBJECT), char_length(TEXT_PLAIN)"
                             + " from NOTIFICATION_TEMPLATE limit 1");
             rs = pstmt.executeQuery();
             assertTrue("Expected the result set to contain at least one record", rs.next());
