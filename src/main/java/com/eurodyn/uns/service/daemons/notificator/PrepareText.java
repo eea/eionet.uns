@@ -1,5 +1,17 @@
 package com.eurodyn.uns.service.daemons.notificator;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.python.core.PyList;
+import org.python.core.PyObject;
+import org.python.core.PyString;
+import org.python.core.PyStringMap;
+
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.EventMetadata;
@@ -7,17 +19,6 @@ import com.eurodyn.uns.model.NotificationTemplate;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.common.WDSLogger;
-import org.apache.commons.lang.StringUtils;
-import org.python.core.PyList;
-import org.python.core.PyObject;
-import org.python.core.PyString;
-import org.python.core.PyStringMap;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PrepareText {
     private static final WDSLogger logger = WDSLogger.getLogger(PrepareText.class);
@@ -110,17 +111,22 @@ public class PrepareText {
     }
 
     private static String createInspectorLink(String subject, boolean isHtml, PrepareTextContext context) {
-        String link = context.homeUrl + INSPECTOR_LINK_PATH
-                + "subject=" + subject
-                + "&user=" + context.user.getExternalId()
-                + "&notificationDate=" +
-                DATE_FORMAT.format(context.event.getCreationDate());
+
+        String link = "";
         try {
-            link = URLEncoder.encode(link, "UTF-8");
+            link = context.homeUrl + INSPECTOR_LINK_PATH
+                    + "subject=" + URLEncoder.encode(subject, "UTF-8")
+                    + "&user=" + URLEncoder.encode(context.user.getExternalId(), "UTF-8")
+                    + "&notificationDate=" +
+                    URLEncoder.encode(DATE_FORMAT.format(context.event.getCreationDate()), "UTF-8");
+
+            return isHtml ? createLink(link, INSPECTOR_LINK_TEXT) : INSPECTOR_LINK_TEXT + ": " + link;
+
         } catch (UnsupportedEncodingException e) {
             logger.error(e.getMessage(), e);
         }
-        return isHtml ? createLink(link, INSPECTOR_LINK_TEXT) : INSPECTOR_LINK_TEXT + ": " + link;
+
+        return link;
     }
 
     private static String createLink(String link, String text) {

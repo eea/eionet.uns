@@ -1,7 +1,7 @@
 package com.eurodyn.uns.util;
 
-import com.eurodyn.uns.util.common.WDSLogger;
-import org.apache.commons.lang.StringUtils;
+import java.util.Date;
+import java.util.Properties;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -12,8 +12,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.util.Date;
-import java.util.Properties;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.eurodyn.uns.util.common.WDSLogger;
 
 
 /**
@@ -49,7 +51,7 @@ public class SendMail implements java.io.Serializable {
     {
 
     if (StringUtils.isBlank(SMTP_SERVER)) {
-        logger.debug("Eumlating e-mail to <" + mailTo + ">, subject: " + subject);
+        logger.debug("Emulating e-mail to <" + mailTo + ">, subject: " + subject);
         return;
     }
 
