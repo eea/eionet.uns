@@ -605,7 +605,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="rev-40" author="dmitrant">
+    <changeSet id="rev-41" author="dmitrant">
         <addColumn tableName="CHANNEL">
             <column name="inspectors" type="TEXT"/>
         </addColumn>
