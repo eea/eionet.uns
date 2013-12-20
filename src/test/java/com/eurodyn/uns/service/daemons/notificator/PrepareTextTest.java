@@ -20,14 +20,6 @@
  */
 package com.eurodyn.uns.service.daemons.notificator;
 
-import com.eurodyn.uns.model.Channel;
-import com.eurodyn.uns.model.Event;
-import com.eurodyn.uns.model.EventMetadata;
-import com.eurodyn.uns.model.NotificationTemplate;
-import com.eurodyn.uns.model.Subscription;
-import com.eurodyn.uns.model.User;
-import junit.framework.TestCase;
-
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,6 +27,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import junit.framework.TestCase;
+
+import com.eurodyn.uns.model.Channel;
+import com.eurodyn.uns.model.Event;
+import com.eurodyn.uns.model.EventMetadata;
+import com.eurodyn.uns.model.NotificationTemplate;
+import com.eurodyn.uns.model.Subscription;
+import com.eurodyn.uns.model.User;
 
 /**
  */
@@ -54,12 +55,11 @@ public class PrepareTextTest extends TestCase {
     public static final String UNSUSCRIBE_LINK_MISSPELLED_PLACEHOLDER = "$UNSUSCRIBE_LINK";
     public static final String CHANNEL_INSPECTORS_PLACEHOLDER = "$INSPECTOR_LINK";
 
-    public static final String TEMPLATE = "Important message from " + EVENT_CHANNEL_PLACEHOLDER
-            + " (user: " + USER_PLACEHOLDER + ") about " + EVENT_TITLE_PLACEHOLDER
-            + " happened at " + EVENT_DATE_PLACEHOLDER
+    public static final String TEMPLATE = "Important message from " + EVENT_CHANNEL_PLACEHOLDER + " (user: " + USER_PLACEHOLDER
+            + ") about " + EVENT_TITLE_PLACEHOLDER + " happened at " + EVENT_DATE_PLACEHOLDER
             + ", there is an option to unsubscribe using " + UNSUBSCRIBE_LINK_PLACEHOLDER;
-    public static final String TEMPLATE_WITH_MISSPELLED_UNSUBSCRIBE_PLACEHOLDER = "Another important message, " +
-            "there is an option to unsubscribe using " + UNSUSCRIBE_LINK_MISSPELLED_PLACEHOLDER;
+    public static final String TEMPLATE_WITH_MISSPELLED_UNSUBSCRIBE_PLACEHOLDER = "Another important message, "
+            + "there is an option to unsubscribe using " + UNSUSCRIBE_LINK_MISSPELLED_PLACEHOLDER;
     public static final String TEMPLATE_WITH_INSPECTOR_LINK = "Inspect other receivers\n" + CHANNEL_INSPECTORS_PLACEHOLDER;
 
     public static final String EVENT_TITLE = "Event title";
@@ -179,10 +179,8 @@ public class PrepareTextTest extends TestCase {
 
         HashMap<String, String> preparedText = prepareText(template, createEvent(), createSubscription());
 
-        assertFalse(preparedText.get(PrepareText.HTML_NOTIFICATION)
-                .contains(CHANNEL_INSPECTORS_PLACEHOLDER));
-        assertFalse(preparedText.get(PrepareText.PLAIN_TEXT_NOTIFICATION)
-                .contains(CHANNEL_INSPECTORS_PLACEHOLDER));
+        assertFalse(preparedText.get(PrepareText.HTML_NOTIFICATION).contains(CHANNEL_INSPECTORS_PLACEHOLDER));
+        assertFalse(preparedText.get(PrepareText.PLAIN_TEXT_NOTIFICATION).contains(CHANNEL_INSPECTORS_PLACEHOLDER));
     }
 
     public void test_ifNotifiedUserIsChannelInspector_replacePlaceHolderWithALink() throws Exception {
@@ -192,11 +190,12 @@ public class PrepareTextTest extends TestCase {
 
         String plainTextNotification = prepareText.get(PrepareText.PLAIN_TEXT_NOTIFICATION);
         assertFalse(plainTextNotification.contains(CHANNEL_INSPECTORS_PLACEHOLDER));
-        assertTrue(plainTextNotification.contains(URLEncoder.encode(PrepareText.INSPECTOR_LINK_PATH, "UTF-8")));
+        assertTrue(plainTextNotification.contains(PrepareText.INSPECTOR_LINK_PATH));
     }
 
     public void test_ifNotifiedUserIsNotChannelInspector_replacePlaceHolderWithEmptyString() throws Exception {
-        HashMap<String, String> prepareText = prepareText(getNotificationTemplateForInspector(), createEvent(), createSubscription());
+        HashMap<String, String> prepareText =
+                prepareText(getNotificationTemplateForInspector(), createEvent(), createSubscription());
 
         String plainTextNotification = prepareText.get(PrepareText.PLAIN_TEXT_NOTIFICATION);
         assertFalse(plainTextNotification.contains(CHANNEL_INSPECTORS_PLACEHOLDER));
@@ -205,15 +204,20 @@ public class PrepareTextTest extends TestCase {
 
     public void test_placeholdersInSubjectShouldBeSubstitutedWithRightData() throws Exception {
         NotificationTemplate template = new NotificationTemplate();
-        template.setSubject(subjectTemplate(EVENT_CHANNEL_PLACEHOLDER, EVENT_DATE_PLACEHOLDER,
-                EVENT_TITLE_PLACEHOLDER, USER_PLACEHOLDER));
+        template.setSubject(subjectTemplate(EVENT_CHANNEL_PLACEHOLDER, EVENT_DATE_PLACEHOLDER, EVENT_TITLE_PLACEHOLDER,
+                USER_PLACEHOLDER));
         Event event = createEventWithTitleUsingPredicate(PrepareText.TITLE_RSS_PREDICATE);
         event.setCreationDate(defaultDate());
 
         HashMap<String, String> prepareText = prepareText(template, event, createSubscription());
 
-        assertEquals(subjectTemplate(DEFAULT_CHANNEL_TITLE, "0006-May-04 01:02:03", EVENT_TITLE, DEFAULT_USER_FULL_NAME),
-                prepareText.get(PrepareText.NOTIFICATION_SUBJECT));
+        // Since the tested code uses 3-letter months, ensure we set up the expected date in the same locale with tested code.
+        Date expectedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("0006-05-04 01:02:03");
+        String expectedDateStr = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss").format(expectedDate);
+        String subjectTemplate =
+                subjectTemplate(DEFAULT_CHANNEL_TITLE, expectedDateStr, EVENT_TITLE, DEFAULT_USER_FULL_NAME);
+        String notificationSubject = prepareText.get(PrepareText.NOTIFICATION_SUBJECT);
+        assertEquals(subjectTemplate, notificationSubject);
     }
 
     public void test_createsTextFromEventsMetadata() throws Exception {
@@ -227,27 +231,21 @@ public class PrepareTextTest extends TestCase {
         HashMap<String, String> prepareText =
                 prepareText(createTemplate("Subject", EVENT_PLACEHOLDER), event, createSubscription());
 
-        assertEquals("property1: value1\n"
-                 + "property2: value2\n"
-                + "property3: value3\n" , prepareText.get(PrepareText.PLAIN_TEXT_NOTIFICATION));
+        assertEquals("property1: value1\n" + "property2: value2\n" + "property3: value3\n",
+                prepareText.get(PrepareText.PLAIN_TEXT_NOTIFICATION));
 
-        assertEquals("property1: value1<br/>"
-                + "property2: value2<br/>"
-                + "property3: value3<br/>", prepareText.get(PrepareText.HTML_NOTIFICATION));
+        assertEquals("property1: value1<br/>" + "property2: value2<br/>" + "property3: value3<br/>",
+                prepareText.get(PrepareText.HTML_NOTIFICATION));
     }
 
     public void test_placeholdersInPlainTextAndHtmlShouldBeSubstitutedWithRightData() throws Exception {
         String templatePrefix = "Text with all placeholders: ";
         String subject = "Notification subject";
-        NotificationTemplate template = createTemplate(subject, templatePrefix
-                + EVENT_PLACEHOLDER
-                + "," + EVENT_CHANNEL_PLACEHOLDER
-                + "," + USER_PLACEHOLDER
-                + "," + EVENT_TITLE_PLACEHOLDER
-                + "," + EVENT_DATE_PLACEHOLDER
-                + "," + UNSUBSCRIBE_LINK_PLACEHOLDER
-                + "," + UNSUSCRIBE_LINK_MISSPELLED_PLACEHOLDER
-                + "," + CHANNEL_INSPECTORS_PLACEHOLDER);
+        NotificationTemplate template =
+                createTemplate(subject, templatePrefix + EVENT_PLACEHOLDER + "," + EVENT_CHANNEL_PLACEHOLDER + ","
+                        + USER_PLACEHOLDER + "," + EVENT_TITLE_PLACEHOLDER + "," + EVENT_DATE_PLACEHOLDER + ","
+                        + UNSUBSCRIBE_LINK_PLACEHOLDER + "," + UNSUSCRIBE_LINK_MISSPELLED_PLACEHOLDER + ","
+                        + CHANNEL_INSPECTORS_PLACEHOLDER);
 
         Event event = createEventWithTitleUsingPredicate(PrepareText.TITLE_RSS_PREDICATE);
         event.setCreationDate(defaultDate());
@@ -256,24 +254,23 @@ public class PrepareTextTest extends TestCase {
         subscription.getChannel().setInspectorsCsv(TEST_USER_EXTERNAL_ID);
         HashMap<String, String> prepareText = prepareText(template, event, subscription);
 
-        String inspectorUrl = URLEncoder.encode(HOME_URL + PrepareText.INSPECTOR_LINK_PATH + "subject=" + subject
-                + "&user=" + TEST_USER_EXTERNAL_ID
-                + "&notificationDate=04-05-0006", "UTF-8");
+        String inspectorUrl =
+                HOME_URL + PrepareText.INSPECTOR_LINK_PATH + "subject=" + URLEncoder.encode(subject, "UTF-8") + "&user="
+                        + URLEncoder.encode(TEST_USER_EXTERNAL_ID, "UTF-8") + "&notificationDate=04-05-0006";
 
-        assertEquals(templatePrefix + "title: " + EVENT_TITLE + "\n" + ","
-                + DEFAULT_CHANNEL_TITLE + ","
-                + DEFAULT_USER_FULL_NAME + ","
-                + EVENT_TITLE + ",0006-May-04 01:02:03,"
-                + UNSUBSCRIBE_LINK + "," + UNSUBSCRIBE_LINK
-                + "," + PrepareText.INSPECTOR_LINK_TEXT +": " + inspectorUrl,
-                prepareText.get(PrepareText.PLAIN_TEXT_NOTIFICATION));
+        // Since the tested code uses 3-letter months, ensure we set up the expected date in the same locale with tested code.
+        Date expectedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("0006-05-04 01:02:03");
+        String expectedDateStr = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss").format(expectedDate);
 
-        assertEquals(templatePrefix + "title: " + EVENT_TITLE + "<br/>" + ","
-                + DEFAULT_CHANNEL_TITLE + ","
-                + DEFAULT_USER_FULL_NAME + ","
-                + EVENT_TITLE + ",0006-May-04 01:02:03,"
-                + UNSUBSCRIBE_HTML_LINK + "," + UNSUBSCRIBE_HTML_LINK
-                + ",<a href=\"" + inspectorUrl + "\">" + PrepareText.INSPECTOR_LINK_TEXT + "</a>",
+        String expected = templatePrefix + "title: " + EVENT_TITLE + "\n" + "," + DEFAULT_CHANNEL_TITLE + "," + DEFAULT_USER_FULL_NAME
+                + "," + EVENT_TITLE + "," + expectedDateStr + "," + UNSUBSCRIBE_LINK + "," + UNSUBSCRIBE_LINK + ","
+                + PrepareText.INSPECTOR_LINK_TEXT + ": " + inspectorUrl;
+        String actual = prepareText.get(PrepareText.PLAIN_TEXT_NOTIFICATION);
+        assertEquals(expected, actual);
+
+        assertEquals(templatePrefix + "title: " + EVENT_TITLE + "<br/>" + "," + DEFAULT_CHANNEL_TITLE + ","
+                + DEFAULT_USER_FULL_NAME + "," + EVENT_TITLE + "," + expectedDateStr + "," + UNSUBSCRIBE_HTML_LINK + ","
+                + UNSUBSCRIBE_HTML_LINK + ",<a href=\"" + inspectorUrl + "\">" + PrepareText.INSPECTOR_LINK_TEXT + "</a>",
                 prepareText.get(PrepareText.HTML_NOTIFICATION));
     }
 
@@ -296,12 +293,14 @@ public class PrepareTextTest extends TestCase {
     }
 
     private HashMap<String, String> prepareText(String template, boolean preferHtml) throws Exception {
-        Subscription subscriptionWithUser = createSubscriptionWithUserAndChannel(createChannel(), createUserAndSetPreferHtmlTo(preferHtml));
+        Subscription subscriptionWithUser =
+                createSubscriptionWithUserAndChannel(createChannel(), createUserAndSetPreferHtmlTo(preferHtml));
 
         return prepareText(createTemplate(template), createEvent(), subscriptionWithUser);
     }
 
-    private HashMap<String, String> prepareText(NotificationTemplate template, Event event, Subscription subscription) throws Exception {
+    private HashMap<String, String> prepareText(NotificationTemplate template, Event event, Subscription subscription)
+            throws Exception {
         return PrepareText.prepare(template, event, subscription, HOME_URL);
     }
 
@@ -322,8 +321,7 @@ public class PrepareTextTest extends TestCase {
     }
 
     private Subscription createSubscription() {
-        return createSubscriptionWithUserAndChannel(createChannel(),
-                createUserAndSetPreferHtmlTo(true));
+        return createSubscriptionWithUserAndChannel(createChannel(), createUserAndSetPreferHtmlTo(true));
     }
 
     private User createUserAndSetPreferHtmlTo(boolean preferHtml) {
