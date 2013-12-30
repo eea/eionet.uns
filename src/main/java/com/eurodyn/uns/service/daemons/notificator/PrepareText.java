@@ -116,8 +116,7 @@ public class PrepareText {
         try {
             link = context.homeUrl + INSPECTOR_LINK_PATH
                     + "subject=" + URLEncoder.encode(subject, "UTF-8")
-                    + "&user=" + URLEncoder.encode(context.user.getExternalId(), "UTF-8")
-                    + "&notificationDate=" +
+                    + "&user=&notificationDate=" +
                     URLEncoder.encode(DATE_FORMAT.format(context.event.getCreationDate()), "UTF-8");
 
             return isHtml ? createLink(link, INSPECTOR_LINK_TEXT) : INSPECTOR_LINK_TEXT + ": " + link;

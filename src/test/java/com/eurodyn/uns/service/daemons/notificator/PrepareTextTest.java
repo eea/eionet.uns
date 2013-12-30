@@ -214,8 +214,7 @@ public class PrepareTextTest extends TestCase {
         // Since the tested code uses 3-letter months, ensure we set up the expected date in the same locale with tested code.
         Date expectedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("0006-05-04 01:02:03");
         String expectedDateStr = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss").format(expectedDate);
-        String subjectTemplate =
-                subjectTemplate(DEFAULT_CHANNEL_TITLE, expectedDateStr, EVENT_TITLE, DEFAULT_USER_FULL_NAME);
+        String subjectTemplate = subjectTemplate(DEFAULT_CHANNEL_TITLE, expectedDateStr, EVENT_TITLE, DEFAULT_USER_FULL_NAME);
         String notificationSubject = prepareText.get(PrepareText.NOTIFICATION_SUBJECT);
         assertEquals(subjectTemplate, notificationSubject);
     }
@@ -255,16 +254,17 @@ public class PrepareTextTest extends TestCase {
         HashMap<String, String> prepareText = prepareText(template, event, subscription);
 
         String inspectorUrl =
-                HOME_URL + PrepareText.INSPECTOR_LINK_PATH + "subject=" + URLEncoder.encode(subject, "UTF-8") + "&user="
-                        + URLEncoder.encode(TEST_USER_EXTERNAL_ID, "UTF-8") + "&notificationDate=04-05-0006";
+                HOME_URL + PrepareText.INSPECTOR_LINK_PATH + "subject=" + URLEncoder.encode(subject, "UTF-8")
+                        + "&user=&notificationDate=04-05-0006";
 
         // Since the tested code uses 3-letter months, ensure we set up the expected date in the same locale with tested code.
         Date expectedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("0006-05-04 01:02:03");
         String expectedDateStr = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss").format(expectedDate);
 
-        String expected = templatePrefix + "title: " + EVENT_TITLE + "\n" + "," + DEFAULT_CHANNEL_TITLE + "," + DEFAULT_USER_FULL_NAME
-                + "," + EVENT_TITLE + "," + expectedDateStr + "," + UNSUBSCRIBE_LINK + "," + UNSUBSCRIBE_LINK + ","
-                + PrepareText.INSPECTOR_LINK_TEXT + ": " + inspectorUrl;
+        String expected =
+                templatePrefix + "title: " + EVENT_TITLE + "\n" + "," + DEFAULT_CHANNEL_TITLE + "," + DEFAULT_USER_FULL_NAME + ","
+                        + EVENT_TITLE + "," + expectedDateStr + "," + UNSUBSCRIBE_LINK + "," + UNSUBSCRIBE_LINK + ","
+                        + PrepareText.INSPECTOR_LINK_TEXT + ": " + inspectorUrl;
         String actual = prepareText.get(PrepareText.PLAIN_TEXT_NOTIFICATION);
         assertEquals(expected, actual);
 
