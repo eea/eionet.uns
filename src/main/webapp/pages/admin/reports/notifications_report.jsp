@@ -5,7 +5,7 @@
     <htm:h1><h:outputText value="Notifications report" /></htm:h1>
     <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
         <h:outputLabel value="Notification subject" for="notificationSubject" />
-        <h:inputText id="notificationSubject" value="#{reportBean.notification.subject}"/>
+        <h:inputText id="notificationSubject" value="#{reportBean.notification.subject}" size="100"/>
         <h:outputLabel value="Delivery period" for="period" />
         <h:panelGroup id="period">
             <t:inputDate value="#{reportBean.fromDate}" />
