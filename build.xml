@@ -47,9 +47,10 @@
             <filterset begintoken="$${" endtoken="}">
                 <filter token="uns_python_source.home" value="${uns_python_source.home}"/>
                 <filter token="jython.home" value="${jython.home}"/>
+            	<filter token="uns.url" value="${uns.url}"/>
             </filterset>
         </copy>
-    	
+
     	<!-- Prepare "eionetdir.properties" and other files in app-home root. -->
         <copy file="${basedir}/src/main/resources/eionetdir.properties" todir="${uns.home}" overwrite="true">
             <filterset begintoken="$${" endtoken="}">
@@ -58,7 +59,7 @@
             	<filter token="ldap.password" value="${ldap.password}"/>
             </filterset>
         </copy>
-        	
+
         <copy file="${basedir}/src/main/resources/uns-config.xml" todir="${uns.home}" overwrite="true"/>
         <copy file="${basedir}/src/main/resources/UNSServices.xml" todir="${uns.home}" overwrite="true"/>
 
