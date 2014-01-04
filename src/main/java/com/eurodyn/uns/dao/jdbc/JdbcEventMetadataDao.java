@@ -44,18 +44,17 @@ public class JdbcEventMetadataDao extends BaseJdbcDao implements IEventMetadataD
     private static final String DELETE_OLD_EVENTS = " delete from EVENT where DATE_SUB(now(), interval 60 day) > creation_date";
 
     /** SQL for deleting all metadata of events older than 60 days. */
-    private static final String DELETE_OLD_EVENTS_METADATA = "delete from EVENT_METADATA where EVENT_ID in ("
-            + "select ID from EVENT where DATE_SUB(now(), interval 60 day) > CREATION_DATE)";
+    private static final String DELETE_OLD_EVENTS_METADATA = "delete EVENT_METADATA from EVENT_METADATA"
+            + " JOIN EVENT on EVENT_ID=EVENT.ID where DATE_SUB(now(), interval 60 day) > CREATION_DATE";
 
     /** SQL for deleting all deliveries of notifications of events older than 60 days. */
-    private static final String DELETE_OLD_DELIVERIES = "delete from DELIVERY where NOTIFICATION_ID in ("
-            + "select ID from NOTIFICATION where EVENT_ID in ("
-            + "select ID from EVENT where DATE_SUB(now(), interval 60 day) > CREATION_DATE))";
+    private static final String DELETE_OLD_DELIVERIES = "delete DELIVERY from DELIVERY"
+            + " JOIN NOTIFICATION on NOTIFICATION_ID=NOTIFICATION.ID"
+            + " JOIN EVENT on EVENT_ID=EVENT.ID where DATE_SUB(now(), interval 60 day) > CREATION_DATE";
 
     /** SQL for deleting all notifications of events older than 60 days. */
-    private static final String DELETE_OLD_NOTIFICATIONS = "delete from NOTIFICATION where EVENT_ID in ("
-            + "select ID from EVENT where DATE_SUB(now(), interval 60 day) > CREATION_DATE)";
-
+    private static final String DELETE_OLD_NOTIFICATIONS = "delete NOTIFICATION from NOTIFICATION"
+            + " join EVENT on EVENT_ID=EVENT.ID where DATE_SUB(now(), interval 60 day) > CREATION_DATE";
     /*
      * (non-Javadoc)
      *
