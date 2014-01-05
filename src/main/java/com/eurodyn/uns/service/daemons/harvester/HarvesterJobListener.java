@@ -17,7 +17,7 @@ public class HarvesterJobListener implements JobListener {
     public String getName() {
         return this.getClass().getSimpleName();
     }
-    
+
     /*
      * (non-Javadoc)
      * @see org.quartz.JobListener#jobExecutionVetoed(org.quartz.JobExecutionContext)
@@ -40,11 +40,11 @@ public class HarvesterJobListener implements JobListener {
      * @see org.quartz.JobListener#jobWasExecuted(org.quartz.JobExecutionContext, org.quartz.JobExecutionException)
      */
     public void jobWasExecuted(JobExecutionContext context, JobExecutionException exception) {
-        
+
         //JobDataMap dataMap = context.getJobDetail().getJobDataMap();
         logger.info("HARVESTER PROCESS COMPLETED");
-        
-        if (exception!=null){
+
+        if (exception!=null) {
             logger.error("Exception thrown when executing job " + context.getJobDetail().getName() + ": " + exception.toString(), exception);
             return;
         }

@@ -27,6 +27,8 @@ public class PullerThread implements Runnable {
 
     public void run() {
 
+        String url = "";
+
         try {
             ChannelFacade channelFacade = new ChannelFacade();
             EventMetadataFacade emFacade = new EventMetadataFacade();
@@ -34,7 +36,7 @@ public class PullerThread implements Runnable {
             channel.setLastHarvestDate(new Date());
             channelFacade.updateChannel(channel);
 
-            String url = channel.getFeedUrl();
+            url = channel.getFeedUrl();
             if (url != null && url.length() > 0) {
                 if (exists(url)) {
 

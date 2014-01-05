@@ -22,8 +22,8 @@ public class Harvester {
     }
     
     public void start() throws Exception {
-        try{
-            long repeatInterval = (long)getIntervalSeconds().intValue()*(long)1000*(long)60;
+        try {
+            long repeatInterval = (long)getIntervalSeconds().intValue() * (long)1000 * (long)60;
             
             SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
             Scheduler sched = schedFact.getScheduler();
@@ -44,7 +44,7 @@ public class Harvester {
         } catch(Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
-            throw new Exception("Error occured when processing harvester: "+e.toString());
+            throw new Exception("Error occured when processing harvester: " + e.toString());
         }
     }
     
@@ -59,7 +59,7 @@ public class Harvester {
             start(interval);
             logger.debug(getClass().getSimpleName() + " scheduled with interval minutes " + getIntervalSeconds());
         }
-        catch (Exception e){
+        catch (Exception e) {
             logger.fatalError("Error when scheduling " + getClass().getSimpleName() + " with interval minutes " + getIntervalSeconds(), e);
         }
     }*/
@@ -68,12 +68,12 @@ public class Harvester {
      * @return the intervalSeconds
      */
     public Integer getIntervalSeconds() {
-        try{
-            if (intervalSeconds==null){
+        try {
+            if (intervalSeconds == null) {
                 Map configMap = ConfigManager.getInstance().getConfigMap();
                 intervalSeconds = (Integer)((ConfigElement) configMap.get("daemons/harvester/interval")).getValue();
             }
-        }catch(Exception e){
+        } catch(Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
         }
