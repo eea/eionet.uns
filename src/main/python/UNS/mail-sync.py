@@ -20,7 +20,7 @@
 import sys,os, ldap, MySQLdb
 
 INSTANCE_HOME=os.environ.get('INSTANCE_HOME')
-os.environ['UNS_HOME'] = '/var/local/uns2'
+os.environ['UNS_HOME'] = '@UNS_HOME@'
 
 ldapserver = 'ldap://ldap.eionet.europa.eu'
 branch = "ou=Users,o=EIONET,l=Europe"
