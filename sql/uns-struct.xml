@@ -607,7 +607,7 @@
 
     <changeSet id="rev-41" author="dmitrant">
         <addColumn tableName="CHANNEL">
-            <column name="inspectors" type="TEXT"/>
+            <column name="INSPECTORS" type="TEXT"/>
         </addColumn>
     </changeSet>
 
