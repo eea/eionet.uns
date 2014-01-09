@@ -70,18 +70,18 @@ public class HibernateSubscriptionDao extends BaseHibernateDao implements ISubsc
         Subscription subscription = null;
 
         try {
-            Session s = getSession();           
+            Session s = getSession();
             Query query = s.createQuery("from Subscription s where s.secondaryId = :secondaryId");
             query.setString("secondaryId",secondaryId);
             if (query.list().size() > 0) {
                 subscription = (Subscription) query.list().get(0);
-            }           
+            }
         } catch (HibernateException e) {
             throw new DAOException(e);
         } finally {
             closeSession();
         }
-        
+
         return subscription;
     }
 

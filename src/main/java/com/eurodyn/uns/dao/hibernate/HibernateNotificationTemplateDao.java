@@ -37,7 +37,7 @@ public class HibernateNotificationTemplateDao extends BaseHibernateDao implement
         return result;
     }
 
-    
+
     public List findNotificationTemplatesForAssigment() throws DAOException {
         List result = null;
         Session session = null;
@@ -53,7 +53,7 @@ public class HibernateNotificationTemplateDao extends BaseHibernateDao implement
         return result;
     }
 
-    
+
     public NotificationTemplate findByPK(Integer metadataElementId) throws DAOException {
         NotificationTemplate result = null;
         try {

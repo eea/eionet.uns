@@ -23,7 +23,7 @@ public class JdbcNotificationDao extends BaseJdbcDao implements INotificationDao
             "WHERE NOT EXISTS (SELECT * FROM DELIVERY WHERE N.ID=NOTIFICATION_ID) " +
             "AND N.EEA_USER_ID=S.EEA_USER_ID AND N.CHANNEL_ID=S.CHANNEL_ID AND S.ID=SDT.SUBSCRIPTION_ID " +
             "ORDER BY N.ID";
-    
+
     public List getNewNotifications() throws DAOException {
         List result = null;
         Connection conn = null;
@@ -59,15 +59,15 @@ public class JdbcNotificationDao extends BaseJdbcDao implements INotificationDao
         }
         return result;
     }
-    
+
     private static final String qFailedDeliveries = "SELECT N.ID, N.SUBJECT, N.CONTENT, N.HTML_CONTENT, S.CHANNEL_ID, " +
             "N.EVENT_ID, N.EEA_USER_ID, SDT.DELIVERY_TYPE_ID, " +
-            "(SELECT ADDRESS FROM DELIVERY_ADDRESS DA WHERE DA.EEA_USER_ID=N.EEA_USER_ID AND " + 
+            "(SELECT ADDRESS FROM DELIVERY_ADDRESS DA WHERE DA.EEA_USER_ID=N.EEA_USER_ID AND " +
             "DA.DELIVERY_TYPE_ID=SDT.DELIVERY_TYPE_ID) AS DELIVERY_ADDRESS, " +
             "1 AS FAILED FROM NOTIFICATION N, SUBSCRIPTION S, DELIVERY SDT WHERE " +
             "N.EEA_USER_ID=S.EEA_USER_ID AND N.CHANNEL_ID=S.CHANNEL_ID AND N.ID=SDT.NOTIFICATION_ID " +
             "AND SDT.DELIVERY_STATUS=0 ORDER BY N.ID";
-    
+
     public List getFailedDeliveries() throws DAOException {
         List result = null;
         Connection conn = null;

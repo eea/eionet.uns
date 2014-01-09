@@ -3,20 +3,20 @@
  * License Version 1.1 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of
  * the License at http://www.mozilla.org/MPL/
- * 
+ *
  * Software distributed under the License is distributed on an "AS
  * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
  * implied. See the License for the specific language governing
  * rights and limitations under the License.
- * 
+ *
  * The Original Code is Unified Notification System
- * 
+ *
  * The Initial Owner of the Original Code is European Environment
  * Agency (EEA).  Portions created by European Dynamics (ED) company are
  * Copyright (C) by European Environment Agency.  All Rights Reserved.
- * 
+ *
  * Contributors(s):
- *    Original code: Nedeljko Pavlovic (ED) 
+ *    Original code: Nedeljko Pavlovic (ED)
  */
 
 package com.eurodyn.uns.dao.hibernate;
@@ -89,7 +89,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
             closeSession(session);
         }
     }
-    
+
     public List findHarvestChannels() throws DAOException {
         Session session = null;
         try {
@@ -130,7 +130,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
             closeSession(session);
         }
     }
-    
+
     public List findUnprocessedEvents() throws DAOException {
         Session session = null;
         try {
@@ -173,14 +173,14 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
 
         return channel;
     }
-    
+
     public List getSubscriptions(String channelId) throws DAOException {
         List result = null;
         Session session = null;
         try {
             session = getSession();
             String query = null;
-            query = "select s from Subscription as s where s.channel.id = :channelId"; 
+            query = "select s from Subscription as s where s.channel.id = :channelId";
             Query q = session.createQuery(query);
             q.setString("channelId", channelId);
             result = q.list();
@@ -244,7 +244,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
             throw new DAOException(e);
         }
     }
-    
+
     public void updateEvent(Event event) throws DAOException {
         try {
             saveOrUpdate(event);
@@ -308,7 +308,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
                     EventMetadata em = (EventMetadata) iterator.next();
                     String property = em.getProperty();
                     String value = em.getValue();
-                    
+
                     ArrayList vals=(ArrayList) thing.getMetadata().get(property);
                     if (vals != null) {
                         vals.add(value);
@@ -317,7 +317,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
                         nar.add(value);
                         thing.getMetadata().put(property, nar);
                     }
-                    
+
                     //thing.getMetadata().put(property, value);
                     if (!hasTitle && property.endsWith("/title")) {
                         if (value != null) {
@@ -336,11 +336,11 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
             closeSession(session);
         }
     }
-    
+
     public Date getLastHarvestedDate(Channel channel) throws DAOException {return null;}
-    
+
     public void unsetVacations() throws DAOException {}
-    
+
     public void setProcessed() throws DAOException {}
 
 }

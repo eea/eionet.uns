@@ -39,7 +39,7 @@ public class JdbcDaoFactory extends DAOFactory {
     public IDeliveryTypeDao getDeliveryTypeDao() {
         return null;
     }
-    
+
     public IDeliveryDao getDeliveryDao() {
         return null;
     }

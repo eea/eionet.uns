@@ -36,17 +36,17 @@ public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
 
     private final static String subscriptionEventsQuery = "select E.ID,  E.EXT_ID, E.RTYPE, EM.PROPERTY, EM.VALUE , E.CREATION_DATE" + " from NOTIFICATION N, EVENT E, EVENT_METADATA EM " + " where N.EEA_USER_ID=? " + "  and DATE_SUB(UTC_TIMESTAMP(),INTERVAL ? DAY) <= E.CREATION_DATE " + " and E.ID=N.EVENT_ID  and E.ID=EM.EVENT_ID " + " and E.CHANNEL_ID = ? ORDER BY E.CREATION_DATE DESC";
 
-    private final static String userEventsQuery = "select E.ID,  E.EXT_ID, E.RTYPE, EM.PROPERTY, EM.VALUE , E.CREATION_DATE" + 
-    " from NOTIFICATION N, EVENT E, EVENT_METADATA EM " + 
-    " where N.EEA_USER_ID=? " + " and DATE_SUB(UTC_TIMESTAMP(),INTERVAL ? DAY) <= E.CREATION_DATE " + 
+    private final static String userEventsQuery = "select E.ID,  E.EXT_ID, E.RTYPE, EM.PROPERTY, EM.VALUE , E.CREATION_DATE" +
+    " from NOTIFICATION N, EVENT E, EVENT_METADATA EM " +
+    " where N.EEA_USER_ID=? " + " and DATE_SUB(UTC_TIMESTAMP(),INTERVAL ? DAY) <= E.CREATION_DATE " +
     " and E.ID=N.EVENT_ID  and E.ID=EM.EVENT_ID and N.CHANNEL_ID in" +
     " (select S.CHANNEL_ID from SUBSCRIPTION S, SUBSCRIPTION_DT SD where S.ID=SD.SUBSCRIPTION_ID and S.EEA_USER_ID=? and SD.DELIVERY_TYPE_ID=4)" +
     " ORDER BY E.CREATION_DATE DESC";
 
     private final static String channelEvents = "select E.ID,  E.EXT_ID, E.RTYPE, EM.PROPERTY, EM.VALUE , E.CREATION_DATE" + " from EVENT E, EVENT_METADATA EM " + " where E.CHANNEL_ID = ? and E.ID=EM.EVENT_ID " + " and DATE_SUB(UTC_TIMESTAMP(),INTERVAL ? DAY) <= E.CREATION_DATE "  + " ORDER BY E.CREATION_DATE DESC";
-    
-    
-    
+
+
+
     public Map findUserEvents(Subscription subscription) throws DAOException {
 
         Map things = new HashMap();
@@ -99,7 +99,7 @@ public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
 
     }
 
-    
+
     public Map findChannelsEvents(Channel channel) throws DAOException {
 
         Map things = new HashMap();
@@ -124,9 +124,9 @@ public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
 
     }
 
-    
-    
-    
+
+
+
     private void populateThing(Map things, ResultSet rs) throws Exception {
         boolean hasTitle = false;
         String ext_id = rs.getString("EXT_ID");
@@ -140,9 +140,9 @@ public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
         }
         String property = rs.getString("PROPERTY");
         String value = rs.getString("VALUE");
-        
+
         ArrayList vals=(ArrayList) thing.getMetadata().get(property);
-        
+
         if (vals != null) {
             vals.add(value);
         } else {
@@ -150,7 +150,7 @@ public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
             nar.add(value);
             thing.getMetadata().put(property, nar);
         }
-        
+
         if (!hasTitle && property.endsWith("/title")) {
             if (value != null) {
                 thing.setTitle(value);

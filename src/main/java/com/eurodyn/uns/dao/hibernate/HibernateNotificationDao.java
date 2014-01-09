@@ -98,7 +98,7 @@ public class HibernateNotificationDao extends BaseHibernateDao implements INotif
 
         return result;
     }
-    
+
     public void createNotification(Notification notification) throws DAOException {
         try {
             save(notification);
@@ -106,11 +106,11 @@ public class HibernateNotificationDao extends BaseHibernateDao implements INotif
             throw new DAOException(e);
         }
     }
-    
+
     public List getNewNotifications() throws DAOException {
         return null;
     }
-    
+
     public List getFailedDeliveries() throws DAOException {
         return null;
     }

@@ -21,7 +21,7 @@ public class JdbcChannelDao extends BaseJdbcDao implements IChannelDao {
     private static final String q_set_processed = "update EVENT E set E.PROCESSED=1 " +
             "where E.PROCESSED=0 and not exists (select * from SUBSCRIPTION S where S.CHANNEL_ID=E.CHANNEL_ID)";
 
-    
+
     public Date getLastHarvestedDate(Channel channel) throws DAOException {
         Date result = null;
         Connection conn = null;
@@ -41,7 +41,7 @@ public class JdbcChannelDao extends BaseJdbcDao implements IChannelDao {
         }
         return result;
     }
-    
+
     public void unsetVacations() throws DAOException {
         Connection conn = null;
         ResultSet rs = null;
@@ -56,7 +56,7 @@ public class JdbcChannelDao extends BaseJdbcDao implements IChannelDao {
             closeAllResources(rs, ps, conn);
         }
     }
-    
+
     public void setProcessed() throws DAOException {
         Connection conn = null;
         ResultSet rs = null;
@@ -71,11 +71,11 @@ public class JdbcChannelDao extends BaseJdbcDao implements IChannelDao {
             closeAllResources(rs, ps, conn);
         }
     }
-    
+
     public List findAllChannels() throws DAOException {return null;}
 
     public List findAllChannels(String orderProperty, String order) throws DAOException { return null;}
-    
+
     public List findHarvestChannels() throws DAOException {return null;}
 
     public List findAllChannelsByMode(String mode, String orderProperty, String order) throws DAOException { return null;}
@@ -93,7 +93,7 @@ public class JdbcChannelDao extends BaseJdbcDao implements IChannelDao {
     public void createChannel(Channel channel) throws DAOException {}
 
     public void updateChannel(Channel channel) throws DAOException {}
-    
+
     public void updateEvent(Event event) throws DAOException {}
 
     public List findRpcUserChannels(User user, String orderProperty, String order) throws DAOException { return null;}
@@ -101,9 +101,9 @@ public class JdbcChannelDao extends BaseJdbcDao implements IChannelDao {
     public List findOneEventForChannel() throws DAOException { return null;}
 
     public Map findTestEventsForChannel(Channel channel) throws DAOException { return null;}
-    
+
     public List getSubscriptions(String channelId) throws DAOException { return null;}
-    
+
     public List findUnprocessedEvents() throws DAOException { return null; }
 
 }

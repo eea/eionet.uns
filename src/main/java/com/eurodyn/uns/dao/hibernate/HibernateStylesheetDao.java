@@ -34,7 +34,7 @@ public class HibernateStylesheetDao extends BaseHibernateDao implements IStylesh
         }
         return result;
     }
-    
+
     public Stylesheet findByPK(Integer stylesheetId) throws DAOException {
         Stylesheet result=null;
         try {
@@ -51,29 +51,29 @@ public class HibernateStylesheetDao extends BaseHibernateDao implements IStylesh
 
     public void updateStylesheet(Stylesheet xsl) throws DAOException {
         try {
-            saveOrUpdate(xsl);            
+            saveOrUpdate(xsl);
         } catch (HibernateException e) {
             throw new DAOException(e);
         }
-        
+
     }
 
     public void createStylesheet(Stylesheet xsl) throws DAOException {
         try {
-            save(xsl);            
+            save(xsl);
         } catch (HibernateException e) {
             throw new DAOException(e);
         }
-        
+
     }
 
     public void deleteStylesheetl(Stylesheet xsl) throws DAOException {
         try {
-            delete(xsl);            
+            delete(xsl);
         } catch (HibernateException e) {
             throw new DAOException(e);
         }
-        
+
     }
 
 }

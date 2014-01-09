@@ -44,7 +44,7 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
 
         return event;
     }
-    
+
     public boolean eventExists(String extId) throws DAOException {
         Session session = null;
         try {
@@ -68,7 +68,7 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
         }
 
     }
-    
+
     public void createEvent(Event event) throws DAOException {
         try {
             save(event);
@@ -86,7 +86,7 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
         }
 
     }
-    
+
     public void deleteOldEvents() throws DAOException {
     }
 
