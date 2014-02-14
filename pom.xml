@@ -32,11 +32,19 @@
             </snapshots>
         </repository>
         <repository>
-            <id>eea</id>
-            <name>EAA Release Repository</name>
-            <url>http://archiva.eionet.europa.eu/repository/internal</url>
+            <id>archiva.internal</id>
+            <name>Internal Release Repository</name>
+            <url>http://archiva.eionet.europa.eu/repository/internal/</url>
             <snapshots>
                 <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>archiva.snapshots</id>
+            <name>Internal Snapshot Repository</name>
+            <url>http://archiva.eionet.europa.eu/repository/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
             </snapshots>
         </repository>
         <repository>
@@ -452,9 +460,9 @@
             -->
 
         <dependency>
-            <groupId>eionet</groupId>
-            <artifactId>uit-security</artifactId>
-            <version>unknown-version</version>
+            <groupId>eionet.acl</groupId>
+            <artifactId>acl</artifactId>
+            <version>1.2</version>
         </dependency>
         <dependency>
             <groupId>eionet</groupId>
