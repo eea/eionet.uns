@@ -32,18 +32,18 @@ public class JabberThread implements Runnable {
     @Override
     public void run() {
 
-        try{
+        try {
             XMPPConnection conn = null;
 
             Map configMap = ConfigManager.getInstance().getConfigMap();
-            String jabberServer = (String)((ConfigElement) configMap.get("jabberserver/host")).getValue();
+            String jabberServer = (String) ((ConfigElement) configMap.get("jabberserver/host")).getValue();
             Integer jabberPort = new Integer((String) ((ConfigElement) configMap.get("jabberserver/port")).getValue());
-            String jabberUsername = (String)((ConfigElement) configMap.get("jabberserver/username")).getValue();
-            String jabberPassword = (String)((ConfigElement) configMap.get("jabberserver/password")).getValue();
+            String jabberUsername = (String) ((ConfigElement) configMap.get("jabberserver/username")).getValue();
+            String jabberPassword = (String) ((ConfigElement) configMap.get("jabberserver/password")).getValue();
             Boolean usessl = (Boolean) ((ConfigElement) configMap.get("jabberserver/usessl")).getValue();
-            String msg_type = (String)((ConfigElement) configMap.get("jabberserver/jabber_message_type")).getValue();
+            String msg_type = (String) ((ConfigElement) configMap.get("jabberserver/jabber_message_type")).getValue();
 
-            // Do not connect of the server host is blank!
+            // Do not connect of the server if host is blank!
             if (StringUtils.isNotBlank(jabberServer)) {
                 if (usessl.booleanValue()) {
                     conn = new SSLXMPPConnection(jabberServer, jabberPort.intValue());
@@ -51,14 +51,18 @@ public class JabberThread implements Runnable {
                     conn = new XMPPConnection(jabberServer, jabberPort.intValue());
                 }
                 conn.login(jabberUsername, jabberPassword);
+            } else {
+                logger.info("Jabber server URL is blank, no notifications will be sent!");
             }
 
-            if (notifications != null){
+            boolean debugEnabled = logger.isDebugEnabled();
+
+            if (notifications != null) {
 
                 DeliveryFacade deliveryFacade = new DeliveryFacade();
 
-                for(Iterator it = notifications.iterator(); it.hasNext(); ){
-                    Notification notif = (Notification)it.next();
+                for (Iterator it = notifications.iterator(); it.hasNext();) {
+                    Notification notif = (Notification) it.next();
 
                     DeliveryType dt = new DeliveryType();
                     dt.setId(new Integer(notif.getDeliveryTypeId()));
@@ -75,7 +79,7 @@ public class JabberThread implements Runnable {
 
                     delivery.setId(dtnotif);
 
-                    if(notif.getFailed() == 0){
+                    if (notif.getFailed() == 0) {
                         deliveryFacade.createDelivery(delivery);
                     }
 
@@ -83,7 +87,7 @@ public class JabberThread implements Runnable {
                     String subj = notif.getSubject();
                     String body = notif.getContent();
 
-                    if(to != null && to.length() > 0){
+                    if (to != null && to.length() > 0) {
                         Message message = new Message();
                         message.setTo(to);
                         message.setSubject(subj);
@@ -93,16 +97,17 @@ public class JabberThread implements Runnable {
                             // If connection is not null then send, otherwise log message about emulation.
                             if (conn != null) {
                                 conn.sendPacket(message);
-                            } else {
-                                logger.debug("Eumlating Jabber message to <" + to + ">, subject: " + subj);
+                            } else if (debugEnabled) {
+                                logger.debug("Skipping this message because no Jabber host specified: TO <" + to + ">, SUBJECT: "
+                                        + subj);
                             }
-                        }catch(Exception e){
+                        } catch (Exception e) {
                             logger.error(e.getMessage());
                             e.printStackTrace();
                             continue;
                         }
                     } else {
-                        logger.error("Not valid jabber address: "+to);
+                        logger.error("Not valid jabber address: " + to);
                     }
 
                     delivery.setDeliveryStatus(1);
@@ -113,7 +118,7 @@ public class JabberThread implements Runnable {
             if (conn != null) {
                 conn.close();
             }
-        } catch(Exception e){
+        } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
         }
