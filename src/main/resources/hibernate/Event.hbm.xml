@@ -25,6 +25,10 @@
 			<column name="PROCESSED" not-null="true" />
 		</property>
 
+		<property name="lastSeen" type="timestamp">
+            <column name="LAST_SEEN"/>
+        </property>
+
 		<many-to-one name="channel" class="com.eurodyn.uns.model.Channel" fetch="select">
 			<column name="CHANNEL_ID" not-null="true" />
 		</many-to-one>
@@ -36,13 +40,13 @@
 			<index column="id" type="string" />
 			<one-to-many class="com.eurodyn.uns.model.EventMetadata" />
 		</map>
-		
+
 		<set name="eventMetadataSet" inverse="true" lazy="true" cascade="all-delete-orphan">
 			<key><column name="EVENT_ID" not-null="true" /></key>
 			<one-to-many class="com.eurodyn.uns.model.EventMetadata" />
 		</set>
 
-		
+
 		<set name="notifications" lazy="true" cascade="all-delete-orphan">
 			<key>
 				<column name="EVENT_ID" not-null="true" />

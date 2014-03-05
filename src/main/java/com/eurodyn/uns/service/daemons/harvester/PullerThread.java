@@ -17,7 +17,7 @@ import com.hp.hpl.jena.vocabulary.RSS;
 
 public class PullerThread implements Runnable {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(PullerThread.class);
+    private static final WDSLogger LOGGER = WDSLogger.getLogger(PullerThread.class);
 
     Channel channel;
 
@@ -25,13 +25,14 @@ public class PullerThread implements Runnable {
         this.channel = channel;
     }
 
+    @Override
     public void run() {
 
         String url = "";
 
         try {
             ChannelFacade channelFacade = new ChannelFacade();
-            EventMetadataFacade emFacade = new EventMetadataFacade();
+            EventMetadataFacade eventMetadataFacade = new EventMetadataFacade();
 
             channel.setLastHarvestDate(new Date());
             channelFacade.updateChannel(channel);
@@ -41,45 +42,58 @@ public class PullerThread implements Runnable {
                 if (exists(url)) {
 
                     RdfContext rdfctx = new RdfContext(channel);
-                    Map things = rdfctx.getData(new ResourcesProcessor());
+                    Map pulledEvents = rdfctx.getData(new ResourcesProcessor());
+                    Date lastSeen = new Date();
 
-                    for (Iterator it = things.keySet().iterator(); it.hasNext();) {
-                        String key = (String) it.next();
-                        if (key != null && key.length() > 0) {
-                            Event event = new Event();
-                            event.setChannel(channel);
-                            event.setExtId(key);
-                            event.setCreationDate(new Date());
-                            event.setProcessed(new Byte("0").byteValue());
-                            String rtype = RSS.item.toString();
-                            event.setRtype(rtype);
+                    for (Iterator eventIdentifiers = pulledEvents.keySet().iterator(); eventIdentifiers.hasNext();) {
 
-                            if (!emFacade.eventExists(key)) {
-                                emFacade.createEvent(event);
+                        String eventIdentifier = (String) eventIdentifiers.next();
+                        if (eventIdentifier != null && eventIdentifier.length() > 0) {
+
+                            Event event = eventMetadataFacade.findEventByExtId(eventIdentifier);
+                            boolean eventExists = event != null;
+
+                            // If event already exists in UNS, just update its "last seen" date. Otherwise create it.
+                            if (eventExists) {
+                                event.setLastSeen(lastSeen);
+                                channelFacade.updateEvent(event);
+                            } else {
+                                event = new Event();
+                                event.setChannel(channel);
+                                event.setExtId(eventIdentifier);
+                                event.setCreationDate(lastSeen);
+                                event.setProcessed(new Byte("0").byteValue());
+                                event.setRtype(RSS.item.toString());
+                                event.setLastSeen(lastSeen);
+
+                                eventMetadataFacade.createEvent(event);
 
                                 if (event.getId() != 0) {
-                                    Map elements = (Map) things.get(key);
-                                    for (Iterator it2 = elements.keySet().iterator(); it2.hasNext();) {
-                                        String property = (String) it2.next();
-                                        String val = (String) elements.get(property);
+
+                                    Map eventMetadata = (Map) pulledEvents.get(eventIdentifier);
+                                    for (Iterator eventProperties = eventMetadata.keySet().iterator(); eventProperties.hasNext();) {
+
+                                        String property = (String) eventProperties.next();
+                                        String value = (String) eventMetadata.get(property);
+
                                         EventMetadata em = new EventMetadata();
                                         em.setEvent(event);
                                         em.setProperty(property);
-                                        em.setValue(val);
+                                        em.setValue(value);
 
-                                        emFacade.createEventMetadata(em);
+                                        eventMetadataFacade.createEventMetadata(em);
                                     }
                                 }
                             }
                         }
                     }
                 } else {
-                    logger.error("Harvester warning! Following URL does not exist: " + url);
+                    LOGGER.error("Harvester warning! Following URL does not exist: " + url);
                 }
             }
 
         } catch (Exception e) {
-            logger.error("Harvesting " + url + "gave: " + e.getMessage());
+            LOGGER.error("Harvesting " + url + "gave: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -96,11 +110,10 @@ public class PullerThread implements Runnable {
             ret = (con.getResponseCode() == HttpURLConnection.HTTP_OK);
             con.disconnect();
         } catch (Exception e) {
-           e.printStackTrace();
-           return false;
+            e.printStackTrace();
+            return false;
         }
 
         return ret;
     }
-
 }

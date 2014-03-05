@@ -40,7 +40,6 @@ import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.RDFThing;
-import com.eurodyn.uns.model.Role;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.DateUtil;
 import com.eurodyn.uns.util.common.WDSLogger;
@@ -48,10 +47,12 @@ import com.eurodyn.uns.util.common.WDSLogger;
 public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao {
     private static final WDSLogger logger = WDSLogger.getLogger(HibernateChannelDao.class);
 
+    @Override
     protected Class getReferenceClass() {
         return com.eurodyn.uns.model.Channel.class;
     }
 
+    @Override
     public List findAllChannels() throws DAOException {
         List result = null;
         try {
@@ -62,6 +63,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         return result;
     }
 
+    @Override
     public List findAllChannels(String orderProperty, String order) throws DAOException {
         List result = null;
         Session session = null;
@@ -76,6 +78,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         return result;
     }
 
+    @Override
     public List findAllChannelsByMode(String mode, String orderProperty, String order) throws DAOException {
         Session session = null;
         try {
@@ -90,6 +93,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         }
     }
 
+    @Override
     public List findHarvestChannels() throws DAOException {
         Session session = null;
         try {
@@ -103,6 +107,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         }
     }
 
+    @Override
     public List findAllChannelsByModeAndCreator(String mode, User creator, String orderProperty, String order) throws DAOException {
         Session session = null;
         try {
@@ -131,6 +136,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         }
     }
 
+    @Override
     public List findUnprocessedEvents() throws DAOException {
         Session session = null;
         try {
@@ -151,11 +157,13 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         }
     }
 
+    @Override
     public Channel findChannel(Channel channel) throws DAOException {
         return findChannel(channel.getId());
 
     }
 
+    @Override
     public Channel findChannel(Integer id) throws DAOException {
         Channel channel = null;
         try {
@@ -174,6 +182,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         return channel;
     }
 
+    @Override
     public List getSubscriptions(String channelId) throws DAOException {
         List result = null;
         Session session = null;
@@ -192,6 +201,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         return result;
     }
 
+    @Override
     public Channel findChannel(String secondaryId) throws DAOException {
         Session session = null;
         Channel channel = null;
@@ -215,6 +225,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         return channel;
     }
 
+    @Override
     public void deleteChannel(Channel channel) throws DAOException {
         try {
             delete(channel);
@@ -223,6 +234,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         }
     }
 
+    @Override
     public void createChannel(Channel channel) throws DAOException {
         try {
             channel.setCreationDate(DateUtil.getCurrentUTCDate());
@@ -237,6 +249,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         }
     }
 
+    @Override
     public void updateChannel(Channel channel) throws DAOException {
         try {
             saveOrUpdate(channel);
@@ -245,6 +258,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         }
     }
 
+    @Override
     public void updateEvent(Event event) throws DAOException {
         try {
             saveOrUpdate(event);
@@ -253,6 +267,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         }
     }
 
+    @Override
     public List findRpcUserChannels(User user, String orderProperty, String order) throws DAOException {
         Session session = null;
         try {
@@ -267,6 +282,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         }
     }
 
+    @Override
     public List findOneEventForChannel() throws DAOException {
         Session session = null;
         try {
@@ -282,6 +298,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         }
     }
 
+    @Override
     public Map findTestEventsForChannel(Channel channel) throws DAOException {
         Session session = null;
         try {
@@ -337,10 +354,13 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         }
     }
 
+    @Override
     public Date getLastHarvestedDate(Channel channel) throws DAOException {return null;}
 
+    @Override
     public void unsetVacations() throws DAOException {}
 
+    @Override
     public void setProcessed() throws DAOException {}
 
 }

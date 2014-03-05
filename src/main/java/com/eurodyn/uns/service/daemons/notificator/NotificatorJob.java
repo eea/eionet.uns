@@ -28,19 +28,20 @@ import java.util.Map;
 import java.util.Set;
 
 public class NotificatorJob implements Job {
-    
+
     private static final WDSLogger logger = WDSLogger.getLogger(NotificatorJob.class);
-    
+
     private static ChannelFacade channelFacade = null;
     private static SubscriptionFacade subscriptionFacade = null;
     private static NotificationFacade notificationFacade = null;
-    
+
     public NotificatorJob() {
         channelFacade = new ChannelFacade();
         subscriptionFacade = new SubscriptionFacade();
         notificationFacade = new NotificationFacade();
     }
-    
+
+    @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         try {
             channelFacade.unsetVacations();
@@ -52,7 +53,7 @@ public class NotificatorJob implements Job {
             throw new JobExecutionException("Error occured when executing notification job: "+e.toString());
         }
     }
-    
+
     private void scan() throws Exception {
         try {
             logger.info("Start generating notifications");
@@ -73,7 +74,7 @@ public class NotificatorJob implements Job {
                         Subscription subscription = (Subscription)it3.next();
                         User user = subscription.getUser();
                         Date subdate = subscription.getCreationDate();
-                        if(subdate.before(eventdate) && !user.getVacationFlag().booleanValue() && checkFilters(event, subscription)){ //TODO add checkFilters
+                        if(subdate.before(eventdate) && !user.getVacationFlag().booleanValue() && checkFilters(event, subscription)){
                             boolean success = generateNotification(event, subscription, template);
                             if(success){
                                 i = i + 1;
@@ -85,16 +86,16 @@ public class NotificatorJob implements Job {
                 }
             }
             logger.info("Generated " +i+ " notifications");
-            
+
         } catch(Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
             throw new Exception("Error occured when scanning notifications: "+e.toString());
         }
     }
-    
+
     private boolean checkFilters(Event event, Subscription subscription) throws Exception {
-        
+
         boolean ret = true;
         try{
             Map event_md = event.getEventMetadata();
@@ -126,7 +127,7 @@ public class NotificatorJob implements Job {
         }
         return ret;
     }
-    
+
     private boolean generateNotification(Event event, Subscription subscription, NotificationTemplate template) throws Exception {
         boolean ret = true;
         try {
@@ -134,7 +135,7 @@ public class NotificatorJob implements Job {
             NotificationFacade notificationFacade = new NotificationFacade();
             String homeUrl = AppConfigurator.getInstance().getBoundle("uns").getString("home.url");
             HashMap map = PrepareText.prepare(template, event, subscription, homeUrl);
-            
+
             notification.seteventId(event.getId());
             notification.setEvent(event);
             notification.setChannelId(event.getChannel().getId().intValue());
@@ -143,9 +144,9 @@ public class NotificatorJob implements Job {
             notification.setSubject((String)map.get("subj"));
             notification.setContent((String)map.get("plain"));
             notification.setHtmlContent((String)map.get("html"));
-            
+
             ret = notificationFacade.createNotification(notification);
-            
+
         } catch(Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
@@ -154,27 +155,30 @@ public class NotificatorJob implements Job {
         }
         return ret;
     }
-    
+
     private void deliver() throws Exception {
         try{
             List email_messages = new ArrayList();
             List jabber_messages = new ArrayList();
-            
+
             List new_items = notificationFacade.getNewNotifications();
             List failed_items = notificationFacade.getFailedDeliveries();
             List for_deliver = new ArrayList();
-            if(new_items != null)
+            if(new_items != null) {
                 for_deliver.addAll(new_items);
-            if(failed_items != null)
+            }
+            if(failed_items != null) {
                 for_deliver.addAll(failed_items);
-            
+            }
+
             for(Iterator it = for_deliver.iterator(); it.hasNext(); ){
                 Notification notif = (Notification)it.next();
                 int dtid = notif.getDeliveryTypeId();
-                if(dtid == 1)
+                if(dtid == 1) {
                     email_messages.add(notif);
-                else if(dtid == 2)
+                } else if(dtid == 2) {
                     jabber_messages.add(notif);
+                }
             }
             logger.info("Notifications prepared. " +
                     "e-mails=" + email_messages.size() + ", jabber=" + jabber_messages.size());
@@ -202,6 +206,6 @@ public class NotificatorJob implements Job {
             throw new Exception("Error occurred when delivering notifications: "+e.toString());
         }
     }
-    
+
 
 }

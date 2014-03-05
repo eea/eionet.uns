@@ -17,7 +17,7 @@ import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
 
 public class HarvesterJob implements Job {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(HarvesterJob.class);
+    private static final WDSLogger LOGGER = WDSLogger.getLogger(HarvesterJob.class);
 
     private static ChannelFacade channelFacade = null;
 
@@ -34,7 +34,7 @@ public class HarvesterJob implements Job {
             int channels_size = channels.size();
             int counter = 0;
             if (channels_size > 0) {
-                logger.info("Harvesting "+channels_size+" channels");
+                LOGGER.info("Harvesting "+channels_size+" channels");
                 int steps = channels_size / parallelPulls;
                 int remained = channels_size % parallelPulls;
                 if (steps == 0) {
@@ -71,7 +71,7 @@ public class HarvesterJob implements Job {
 
         } catch(Exception e) {
             e.printStackTrace();
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
             throw new JobExecutionException("Error occured when executing harvester job: " + e.toString());
         }
     }

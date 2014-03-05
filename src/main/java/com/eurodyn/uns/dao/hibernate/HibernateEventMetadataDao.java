@@ -26,10 +26,12 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
 
     private static final int searchLimit = 150;
 
+    @Override
     protected Class getReferenceClass() {
         return com.eurodyn.uns.model.EventMetadata.class;
     }
 
+    @Override
     public Event findEvent(Integer event_id) throws DAOException {
         Event event = null;
         try {
@@ -45,6 +47,11 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
         return event;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.eurodyn.uns.dao.IEventMetadataDao#eventExists(java.lang.String)
+     */
+    @Override
     public boolean eventExists(String extId) throws DAOException {
         Session session = null;
         try {
@@ -60,6 +67,28 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.eurodyn.uns.dao.IEventMetadataDao#findEventByExtId(java.lang.String)
+     */
+    @Override
+    public Event findEventByExtId(String extId) throws DAOException {
+
+        Session session = null;
+        try {
+            session = getSession();
+            Query query = session.createQuery("select e from Event as e where e.extId=:extId");
+            query.setString("extId", extId);
+            List list = query.list();
+            return (Event) (list != null && !list.isEmpty() ? list.iterator().next() : null);
+        } catch (HibernateException e) {
+            throw new DAOException(e);
+        } finally {
+            closeSession(session);
+        }
+    }
+
+    @Override
     public void createEventMetadata(EventMetadata em) throws DAOException {
         try {
             save(em);
@@ -69,6 +98,7 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
 
     }
 
+    @Override
     public void createEvent(Event event) throws DAOException {
         try {
             save(event);
@@ -78,6 +108,7 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
 
     }
 
+    @Override
     public void deleteEventMetadata(EventMetadata em) throws DAOException {
         try {
             delete(em);
@@ -87,9 +118,11 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
 
     }
 
+    @Override
     public void deleteOldEvents() throws DAOException {
     }
 
+    @Override
     public void deleteEventMetadataByValue(Channel channel, String value) throws DAOException {
         Session session = null;
         try {
@@ -111,6 +144,7 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
         }
     }
 
+    @Override
     public void deleteEventMetadataByProperty(Channel channel, String property) throws DAOException {
         Session session = null;
         try {
@@ -133,6 +167,7 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
         }
     }
 
+    @Override
     public ResultDto findEventMetadataWithValue(Channel channel, String property, String value) throws DAOException {
         ResultDto rDto = new ResultDto();
         Session session = null;
@@ -165,12 +200,14 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
         return null;
     }
 
+    @Override
     public Map findChoosableStatements(Channel channel) throws DAOException {
         return null;
     }
 
     private static final String q_all_channels_properties = "" + " select em.property  " + " from EventMetadata em , Event e " + " where e.channel = :channel " + " and em.event = e " + " group by em.property ";
 
+    @Override
     public Set findChannelProperties(Channel channel) throws DAOException {
         Set result = new HashSet();
         Session session = null;
@@ -188,6 +225,7 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
 
     }
 
+    @Override
     public void deleteFilterStatement(Channel channel, Statement st) throws DAOException {
         Session session = null;
         try {
@@ -214,10 +252,11 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
                         }
                     }
 
-                    if (filter.getStatements().isEmpty())
+                    if (filter.getStatements().isEmpty()) {
                         session.delete(filter);
-                    else
+                    } else {
                         session.update(filter);
+                    }
                 }
             }
 
@@ -228,5 +267,4 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
             closeSession(session);
         }
     }
-
 }

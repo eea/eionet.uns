@@ -147,8 +147,9 @@ public class JdbcEventMetadataDao extends BaseJdbcDao implements IEventMetadataD
             ps.setInt(2, channel.getId().intValue());
             rs = ps.executeQuery();
 
-            if (rs.isBeforeFirst())
+            if (rs.isBeforeFirst()) {
                 result = new HashMap();
+            }
 
             MetadataElement me;
             while (rs.next()) {
@@ -251,5 +252,14 @@ public class JdbcEventMetadataDao extends BaseJdbcDao implements IEventMetadataD
     @Override
     public void createEvent(Event event) throws DAOException {
         // TODO implement this method or find out if implementation not necessary, but then write proper comment about that
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see com.eurodyn.uns.dao.IEventMetadataDao#findEventByExtId(java.lang.String)
+     */
+    @Override
+    public Event findEventByExtId(String extId) throws DAOException {
+        throw new UnsupportedOperationException("Method not implemented!");
     }
 }
