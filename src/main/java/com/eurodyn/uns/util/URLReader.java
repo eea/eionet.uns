@@ -3,20 +3,20 @@
  * License Version 1.1 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of
  * the License at http://www.mozilla.org/MPL/
- * 
+ *
  * Software distributed under the License is distributed on an "AS
  * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
  * implied. See the License for the specific language governing
  * rights and limitations under the License.
- * 
+ *
  * The Original Code is Unified Notification System
- * 
+ *
  * The Initial Owner of the Original Code is European Environment
  * Agency (EEA).  Portions created by European Dynamics (ED) company are
  * Copyright (C) by European Environment Agency.  All Rights Reserved.
- * 
+ *
  * Contributors(s):
- *    Original code: Nedeljko Pavlovic (ED) 
+ *    Original code: Nedeljko Pavlovic (ED)
  */
 
 package com.eurodyn.uns.util;
@@ -43,15 +43,17 @@ import com.eurodyn.uns.util.common.WDSLogger;
  */
 public class URLReader {
     private static final WDSLogger logger = WDSLogger.getLogger(URLReader.class);
+    private static final int DEFAULT_SOCKET_TIMEOUT = 1000*10;
     private org.apache.commons.httpclient.HttpClient client;
     private static int socketTimeout;
-    
+
     static {
         try {
             socketTimeout=1000*Integer.parseInt(AppConfigurator.getInstance().getBoundle("uns").getString("channel.socket_timeout"));
         } catch (Exception e) {
-            logger.fatalError(e);
-        } 
+            socketTimeout = DEFAULT_SOCKET_TIMEOUT;
+            logger.info("Could not load socket timeout from configuration, assuming default: " + DEFAULT_SOCKET_TIMEOUT);
+        }
     }
 
 
@@ -81,7 +83,9 @@ public class URLReader {
         } catch (IOException ioe) {
             throw ioe;
         } finally {
-            if (method != null) method.releaseConnection();
+            if (method != null) {
+                method.releaseConnection();
+            }
         }
         return result;
     }
@@ -95,14 +99,14 @@ public class URLReader {
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             Streams.drain(fis, bytes);
             content = bytes.toByteArray();
-        }
-        else
+        } else {
             content = getContentAsBytes(url);
-        
+        }
+
         return new ByteArrayInputStream(content);
     }
-    
-    
+
+
     public byte[] getContentAsBytes(String url) throws Exception {
         HttpMethod method = getMethod(url);
         byte[] responseBody;
@@ -114,7 +118,9 @@ public class URLReader {
         } catch (IOException ioe) {
             throw ioe;
         } finally {
-            if (method != null) method.releaseConnection();
+            if (method != null) {
+                method.releaseConnection();
+            }
         }
         return responseBody;
     }

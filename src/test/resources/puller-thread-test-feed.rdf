@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rdf:RDF
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns="http://purl.org/rss/1.0/"
+>
+
+  <channel rdf:about="http://localhost:8999/testResources/puller-thread-test-feed.rdf">
+    <title>EEA Highlights</title>
+    <link>http://localhost:8999/testResources/puller-thread-test-feed.rdf</link>
+    <items>
+      <rdf:Seq>
+        <rdf:li rdf:resource="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=830" />
+        <rdf:li rdf:resource="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=831" />
+        <rdf:li rdf:resource="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=832" />
+      </rdf:Seq>
+    </items>
+
+  </channel>
+
+  <item rdf:about="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=830">
+    <link>http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=830</link>
+    <title>Population density disaggregated with CLC2000</title>
+    <description>Distribution of population using Corine land cover 2000 (CLC2000)</description>
+  </item>
+
+  <item rdf:about="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=831">
+    <link>http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=831</link>
+    <title>Test title 2</title>
+  </item>
+
+  <item rdf:about="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=832">
+    <link>http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=832</link>
+    <title>Test title 2</title>
+  </item>
+
+</rdf:RDF>

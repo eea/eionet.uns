@@ -36,7 +36,7 @@ public abstract class UnsDatabaseTestCase extends TestCase {
      */
     @Override
     public void setUp() throws Exception {
-        System.setProperty("hibernate-config-file", "/hibernate-test.cfg.xml");
+        System.setProperty("hibernate-config-file", "hibernate-test.cfg.xml");
         InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream("hibernate-test.cfg.xml");
         DOMParser parser = new DOMParser();
 

@@ -1,0 +1,771 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <ACLS/>
+  <ACL_ROWS/>
+
+
+  <EEA_USER ID="3" EXT_USER_ID="roug" CN="Soren Roug" VACATION_FLAG="false" PAGE_REFRESH_DELAY="60" NUMCOLUMNS="2" PREFER_HTML="true" PREFER_DASHBOARD="false"/>
+
+
+  <NOTIFICATION_TEMPLATE ID="1" NAME="Default template" SUBJECT="&quot;$EVENT.CHANNEL&quot; channel: $EVENT.TITLE" TEXT_PLAIN="$EVENT
+You may unsubscribe yourself from the &quot;$EVENT.CHANNEL&quot; channel by using the following link: $UNSUSCRIBE_LINK
+
+Best Regards,
+European Environment Agency" TEXT_HTML="&lt;p&gt;$EVENT &lt;/p&gt;&lt;hr /&gt;You may unsubscribe yourself from the &amp;quot;$EVENT.CHANNEL&amp;quot; channel by using the following link: $UNSUSCRIBE_LINK&lt;br /&gt;&lt;br /&gt;Best Regards,&lt;br /&gt;European Environment Agency" EDIT_ONLY="true"/>
+  <NOTIFICATION_TEMPLATE ID="2" NAME="Unsubscribed - channel access rights changed notification" SUBJECT="Unsubscribed from &quot;$EVENT.CHANNEL&quot; channel" TEXT_PLAIN="You have been unsubscribed form the channel &quot;$EVENT.CHANNEL&quot; due to access rigths changes.
+
+Sorry for the inconvenience,
+European Environment Agency" TEXT_HTML="You have been unsubscribed form the channel &amp;quot;$EVENT.CHANNEL&amp;quot; due to access rigths changes.&lt;br /&gt;&amp;nbsp;&lt;br /&gt;Sorry for the inconvenience,&lt;br /&gt;European Environment Agency" EDIT_ONLY="true"/>
+  <NOTIFICATION_TEMPLATE ID="3" NAME="Unsubscribed - channel removed notification" SUBJECT="Unsubscribed from &quot;$EVENT.CHANNEL&quot; channel" TEXT_PLAIN="Channel &quot;$EVENT.CHANNEL&quot; does not exist anymore.
+You will not be receving notification for this channel anymore.
+
+Sorry for the inconvenience,
+European Environment Agency" TEXT_HTML="Channel &amp;quot;$EVENT.CHANNEL&amp;quot; does not exist anymore.&lt;br /&gt; You will not be receving notification for this channel anymore.&lt;br /&gt; &amp;nbsp;&lt;br /&gt; Sorry for the inconvenience,&lt;br /&gt; European Environment Agency&lt;br /&gt;" EDIT_ONLY="true"/>
+  <NOTIFICATION_TEMPLATE ID="4" NAME="CDRTest template" SUBJECT="ROD notification for &quot;$EVENT.TITLE&quot;" TEXT_PLAIN="&lt;%
+if event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#event_type&apos;] == &apos;Envelope revoke&apos;:
+    print &apos;The obligation %s has been updated by %s.&apos; % (event[&apos;metadata&apos;][&apos;http://purl.org/dc/elements/1.1/title&apos;], event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#actor&apos;])
+else:
+    print &apos;The obligation %s has been added by %s.&apos; % (event[&apos;metadata&apos;][&apos;http://purl.org/dc/elements/1.1/title&apos;], event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#actor&apos;])
+%&gt;
+This notification is relevant for: &lt;# str(event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#locality&apos;])[1:-1] #&gt;.
+&lt;%
+if event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#event_type&apos;] == &apos;Envelope revoke&apos;:
+    print &apos;The following changes have been operated:&apos;
+%&gt;
+Further details can be found online at &lt;# event[&apos;metadata&apos;][&apos;http://purl.org/dc/elements/1.1/identifier&apos;] #&gt;
+
+
+---
+To unsubscribe follow the link $UNSUSCRIBE_LINK
+[You are currently subscribed as &lt;# subscription[&apos;user&apos;][&apos;fullName&apos;] #&gt;]
+---
+
+This is an automatic message. Replies to this message will not be read or responded to.
+
+Best Regards,
+European Environment Agency" TEXT_HTML="" EDIT_ONLY="false"/>
+  <NOTIFICATION_TEMPLATE ID="5" NAME="EEA Planner template" SUBJECT="&quot;$EVENT.CHANNEL&quot; project: $EVENT.TITLE" TEXT_PLAIN="Dear  &lt;# subscription[&apos;user&apos;][&apos;fullName&apos;] #&gt;,
+
+This message is to inform you that the project &quot;$EVENT.TITLE&quot; has been &lt;# event[&apos;metadata&apos;][&apos;http://planner.eionet.europa.eu/xml/ns/1.0/action&apos;] #&gt; on &lt;# event[&apos;metadata&apos;][&apos;http://planner.eionet.europa.eu/xml/ns/1.0/last_updated&apos;] #&gt;.
+Visit the project page at &lt;# event[&apos;metadata&apos;][&apos;http://purl.org/rss/1.0/link&apos;] #&gt;. This project is &lt;# event[&apos;metadata&apos;][&apos;http://planner.eionet.europa.eu/xml/ns/1.0/status&apos;] #&gt;.
+
+
+Further details for this project are listed below:
+
+Description:    &lt;# event[&apos;metadata&apos;][&apos;http://purl.org/rss/1.0/description&apos;] #&gt;
+Project type: &lt;# event[&apos;metadata&apos;][&apos;http://planner.eionet.europa.eu/xml/ns/1.0/type&apos;] #&gt;
+
+Project manager(s): &lt;# event[&apos;metadata&apos;][&apos;http://planner.eionet.europa.eu/xml/ns/1.0/managers&apos;] #&gt;
+Corresponding EEA project: &lt;# event[&apos;metadata&apos;][&apos;http://planner.eionet.europa.eu/xml/ns/1.0/eea_project&apos;] #&gt;
+Project theme(s): &lt;# event[&apos;metadata&apos;][&apos;http://planner.eionet.europa.eu/xml/ns/1.0/themes&apos;] #&gt;
+
+Start date: &lt;# event[&apos;metadata&apos;][&apos;http://planner.eionet.europa.eu/xml/ns/1.0/startdate&apos;] #&gt;
+End date:   &lt;# event[&apos;metadata&apos;][&apos;http://planner.eionet.europa.eu/xml/ns/1.0/enddate&apos;] #&gt;
+Deadline:   &lt;# event[&apos;metadata&apos;][&apos;http://planner.eionet.europa.eu/xml/ns/1.0/deadline&apos;] #&gt;
+
+
+---
+You may unsubscribe yourself from the &quot;$EVENT.CHANNEL&quot; channel by using the following link: $UNSUSCRIBE_LINK
+
+This is an automatic message. Replies to this message will not be read or responded to.
+
+
+
+Best regards,
+European Environment Agency
+" TEXT_HTML="" EDIT_ONLY="false"/>
+  <NOTIFICATION_TEMPLATE ID="6" NAME="ROD template" SUBJECT="ROD notification for &quot;$EVENT.TITLE&quot;" TEXT_PLAIN="&lt;%
+if event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#event_type&apos;] == &apos;Obligation change&apos;:
+    print &apos;The obligation %s has been changed by %s.&apos; % (event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#obligation&apos;], event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#actor&apos;])
+    if type(event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#locality&apos;]) == type([]):
+        print &apos;This notification is relevant for: %s.&apos; % str(event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#locality&apos;])[1:-1]
+    else:
+        print &apos;This notification is relevant for: %s.&apos; % event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#locality&apos;]
+    print &apos;The following changes have been operated:&apos;
+    if type(event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#change&apos;]) == type([]):
+        for change in event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#change&apos;]:
+            print &apos;* %s&apos; % change
+    else:
+        print &apos;* %s&apos; % event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#change&apos;]
+
+elif event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#event_type&apos;] == &apos;New obligation&apos;:
+    print &apos;The obligation %s has been added by %s.&apos; % (event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#obligation&apos;], event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#actor&apos;])
+    if type(event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#locality&apos;]) == type([]):
+        print &apos;This notification is relevant for: %s.&apos; % str(event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#locality&apos;])[1:-1]
+    else:
+        print &apos;This notification is relevant for: %s.&apos; % event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#locality&apos;]
+
+elif event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#event_type&apos;] == &apos;Instrument change&apos;:
+    print &apos;The instrument %s has been changed by %s.&apos; % (event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#obligation&apos;], event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#actor&apos;])
+    print &apos;The following changes have been operated:&apos;
+    if type(change in event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#change&apos;]) == type([]):
+        for change in event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#change&apos;]:
+            print &apos;* %s&apos; % change
+    else:
+        print &apos;* %s&apos; % event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#change&apos;]
+
+elif event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#event_type&apos;] == &apos;New instrument&apos;:
+    print &apos;The instrument %s has been added by %s.&apos; % (event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#obligation&apos;], event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#actor&apos;])
+
+%&gt;
+Further details can be found online at &lt;# event[&apos;metadata&apos;][&apos;http://purl.org/dc/elements/1.1/identifier&apos;] #&gt;
+
+
+---
+To unsubscribe follow the link $UNSUSCRIBE_LINK
+[You are currently subscribed as &lt;# subscription[&apos;user&apos;][&apos;fullName&apos;] #&gt;]
+---
+
+This is an automatic message. Replies to this message will not be read or responded to.
+
+Best Regards,
+European Environment Agency" TEXT_HTML="" EDIT_ONLY="false"/>
+
+
+  <DELIVERY_TYPE ID="1" NAME="EMAIL"/>
+  <DELIVERY_TYPE ID="2" NAME="JABBER"/>
+  <DELIVERY_TYPE ID="3" NAME="WDB"/>
+  <DELIVERY_TYPE ID="4" NAME="RSS"/>
+
+  <DELIVERY_ADDRESS EEA_USER_ID="3" DELIVERY_TYPE_ID="1" ADDRESS="soren.roug@eea.europa.eu"/>
+  <DELIVERY_ADDRESS EEA_USER_ID="3" DELIVERY_TYPE_ID="2" ADDRESS="roug@jabber.eea.europa.eu"/>
+
+  <EEA_ROLE ID="70" EXT_ID="cn=eionet"/>
+  <EEA_ROLE ID="1286" EXT_ID="cn=eionet"/>
+
+
+  <CHANNEL ID="4" STYLESHEET_ID="1" NOTIFICATION_TEMPLATE_ID="1" CREATOR="3" TITLE="EEA Highlights" DESCRIPTION="All environmental news by EEA" LAST_HARVEST="2008-01-28 12:36:55.0" MODE="PULL" FEED_URL="http://localhost:8999/testResources/puller-thread-test-feed.rdf" REFRESH_DELAY="180" CREATION_DATE="2006-01-25 16:07:48.0" CSTATUS="true" SECONDARY_ID="91138205268" LANGUAGE_ID="en"/>
+
+  <CHANNEL_DELIVERY_TYPE CHANNEL_ID="4" DELIVERY_TYPE_ID="1"/>
+  <CHANNEL_DELIVERY_TYPE CHANNEL_ID="4" DELIVERY_TYPE_ID="2"/>
+  <CHANNEL_DELIVERY_TYPE CHANNEL_ID="4" DELIVERY_TYPE_ID="3"/>
+  <CHANNEL_DELIVERY_TYPE CHANNEL_ID="4" DELIVERY_TYPE_ID="4"/>
+
+  <CHANNEL_ROLE/>
+
+  <SUBSCRIPTION ID="1" EEA_USER_ID="3" CHANNEL_ID="4" CREATION_DATE="2006-01-25 16:12:14.0" SECONDARY_ID="f1be51348037855d2bfa59f890cdc5f9" DASH_CORD_X="-1" DASH_CORD_Y="-1"/>
+
+  <EVENT ID="1" CHANNEL_ID="4" EXT_ID="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=830" CREATION_DATE="2006-01-26 09:45:21.0" RTYPE="http://purl.org/rss/1.0/item" PROCESSED="1" LAST_SEEN="2006-01-26 09:45:21.0"/>
+  <EVENT ID="2" CHANNEL_ID="4" EXT_ID="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=831" CREATION_DATE="2999-01-26 09:45:21.0" RTYPE="http://purl.org/rss/1.0/item" PROCESSED="1" LAST_SEEN="2999-01-26 09:45:21.0"/>
+
+  <EVENT_METADATA EVENT_ID="1" PROPERTY="http://purl.org/dc/elements/1.1/date" VALUE="2005-12-16T00:00:00Z" ID="1"/>
+  <EVENT_METADATA EVENT_ID="1" PROPERTY="http://purl.org/rss/1.0/title" VALUE="Population density disaggregated with CLC2000" ID="2"/>
+  <EVENT_METADATA EVENT_ID="1" PROPERTY="http://purl.org/rss/1.0/link" VALUE="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=830" ID="3"/>
+  <EVENT_METADATA EVENT_ID="1" PROPERTY="http://purl.org/rss/1.0/description" VALUE="Distribution of population using Corine land cover 2000 (CLC2000)" ID="4"/>
+  <EVENT_METADATA EVENT_ID="1" PROPERTY="http://rod.eionet.eu.int/schema.rdf#locality" VALUE="United Kingdom" ID="5"/>
+
+  <EVENT_METADATA EVENT_ID="2" PROPERTY="http://purl.org/dc/elements/1.1/date" VALUE="2005-12-16T01:01:00Z" ID="6"/>
+  <EVENT_METADATA EVENT_ID="2" PROPERTY="http://purl.org/rss/1.0/title" VALUE="Test title 2" ID="7"/>
+  <EVENT_METADATA EVENT_ID="2" PROPERTY="http://purl.org/rss/1.0/link" VALUE="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=831" ID="8"/>
+
+  <NOTIFICATION ID="1" EEA_USER_ID="3" EVENT_ID="1" CONTENT="
+
+TITLE: Population density disaggregated with CLC2000
+DESCRIPTION: Distribution of population using Corine land cover 2000 (CLC2000).
+This version is improved by including more countries.&lt;br /&gt;
+
+
+DATE: 2005-12-16T00:00:00Z
+LINK: http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=830
+
+You may unsubscribe yourself from the &quot;EEA Hightlights&quot; channel by using the follwing link: http://uns.eionet.eu.int/subsc/unsubscribe?subsc=f1be51348037855d2bfa59f890cdc5f9
+
+Best Regards,
+European Environment Agency" CHANNEL_ID="4" SUBJECT="&quot;EEA Hightlights&quot; channel: Population density disaggregated with CLC2000"/>
+
+  <NOTIFICATION ID="2" EEA_USER_ID="3" EVENT_ID="2" CONTENT="test notification content" CHANNEL_ID="4" SUBJECT="test notification subject"/>
+
+  <DELIVERY NOTIFICATION_ID="1" DELIVERY_TYPE_ID="2" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:52.0"/>
+  <DELIVERY NOTIFICATION_ID="1" DELIVERY_TYPE_ID="3" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:51.0"/>
+  <DELIVERY NOTIFICATION_ID="1" DELIVERY_TYPE_ID="4" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:50.0"/>
+
+  <DELIVERY NOTIFICATION_ID="2" DELIVERY_TYPE_ID="2" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:52.0"/>
+  <DELIVERY NOTIFICATION_ID="2" DELIVERY_TYPE_ID="3" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:51.0"/>
+  <DELIVERY NOTIFICATION_ID="2" DELIVERY_TYPE_ID="4" DELIVERY_STATUS="1" DELIVERY_TIME="2006-01-26 09:47:50.0"/>
+
+  <FILTER ID="123" SUBSCRIPTION_ID="1"/>
+  <FILTER ID="124" SUBSCRIPTION_ID="1"/>
+  <FILTER ID="125" SUBSCRIPTION_ID="1"/>
+
+
+
+
+  <METADATA_ELEMENTS ID="1" NAME="http://purl.org/dc/elements/1.1/date"/>
+  <METADATA_ELEMENTS ID="2" NAME="http://purl.org/rss/1.0/title"/>
+  <METADATA_ELEMENTS ID="3" NAME="http://purl.org/rss/1.0/link"/>
+  <METADATA_ELEMENTS ID="4" NAME="http://purl.org/rss/1.0/description"/>
+  <METADATA_ELEMENTS ID="5" NAME="http://purl.org/dc/elements/1.1/publisher"/>
+  <METADATA_ELEMENTS ID="6" NAME="http://purl.org/dc/elements/1.1/identifier"/>
+  <METADATA_ELEMENTS ID="7" NAME="http://purl.org/dc/elements/1.1/creator"/>
+  <METADATA_ELEMENTS ID="8" NAME="http://purl.org/dc/elements/1.1/type"/>
+  <METADATA_ELEMENTS ID="9" NAME="http://purl.org/dc/elements/1.1/rights"/>
+  <METADATA_ELEMENTS ID="10" NAME="http://purl.org/dc/elements/1.1/title"/>
+  <METADATA_ELEMENTS ID="11" NAME="http://purl.org/dc/elements/1.1/format"/>
+  <METADATA_ELEMENTS ID="12" NAME="http://purl.org/dc/elements/1.1/contributor"/>
+  <METADATA_ELEMENTS ID="13" NAME="http://purl.org/dc/elements/1.1/source"/>
+  <METADATA_ELEMENTS ID="14" NAME="http://purl.org/dc/elements/1.1/language"/>
+  <METADATA_ELEMENTS ID="15" NAME="http://purl.org/dc/elements/1.1/description"/>
+  <METADATA_ELEMENTS ID="16" NAME="http://purl.org/dc/elements/1.1/coverage"/>
+  <METADATA_ELEMENTS ID="17" NAME="http://purl.org/dc/elements/1.1/subject"/>
+  <METADATA_ELEMENTS ID="18" NAME="http://rod.eionet.eu.int/schema.rdf#label"/>
+  <METADATA_ELEMENTS ID="19" NAME="http://rod.eionet.eu.int/schema.rdf#nextdeadline"/>
+  <METADATA_ELEMENTS ID="20" NAME="http://rod.eionet.eu.int/schema.rdf#nextdeadline2"/>
+  <METADATA_ELEMENTS ID="21" NAME="http://rod.eionet.eu.int/schema.rdf#obligation"/>
+  <METADATA_ELEMENTS ID="22" NAME="http://rod.eionet.eu.int/schema.rdf#locality"/>
+  <METADATA_ELEMENTS ID="23" NAME="http://rod.eionet.eu.int/schema.rdf#responsiblerole"/>
+  <METADATA_ELEMENTS ID="24" NAME="http://rod.eionet.eu.int/schema.rdf#event_type"/>
+  <METADATA_ELEMENTS ID="25" NAME="http://www.w3.org/1999/02/22-rdf-syntax-ns#obligation"/>
+  <METADATA_ELEMENTS ID="26" NAME="http://www.w3.org/1999/02/22-rdf-syntax-ns#event_type"/>
+  <METADATA_ELEMENTS ID="27" NAME="http://www.w3.org/1999/02/22-rdf-syntax-ns#label"/>
+  <METADATA_ELEMENTS ID="28" NAME="http://www.w3.org/1999/02/22-rdf-syntax-ns#title"/>
+  <METADATA_ELEMENTS ID="29" NAME="http://www.w3.org/1999/02/22-rdf-syntax-ns#actor"/>
+  <METADATA_ELEMENTS ID="30" NAME="http://www.w3.org/1999/02/22-rdf-syntax-ns#loccode"/>
+  <METADATA_ELEMENTS ID="31" NAME="http://rod.eionet.eu.int/schema.rdf#title"/>
+  <METADATA_ELEMENTS ID="32" NAME="http://rod.eionet.eu.int/schema.rdf#loccode"/>
+  <METADATA_ELEMENTS ID="33" NAME="http://rod.eionet.eu.int/schema.rdf#actor"/>
+  <METADATA_ELEMENTS ID="34" NAME="http://www.roug.org/soren/rdf/metamail.rdf#subject"/>
+  <METADATA_ELEMENTS ID="35" NAME="http://www.roug.org/soren/rdf/metamail.rdf#to"/>
+  <METADATA_ELEMENTS ID="36" NAME="http://www.roug.org/soren/rdf/metamail.rdf#from"/>
+  <METADATA_ELEMENTS ID="37" NAME="http://www.w3.org/2000/01/rdf-schema#label"/>
+  <METADATA_ELEMENTS ID="38" NAME="http://dd.eionet.eu.int/schema.rdf#event_type"/>
+  <METADATA_ELEMENTS ID="39" NAME="http://dd.eionet.eu.int/schema.rdf#commonelem"/>
+  <METADATA_ELEMENTS ID="40" NAME="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"/>
+  <METADATA_ELEMENTS ID="41" NAME="http://dd.eionet.eu.int/schema.rdf#test_predicate"/>
+  <METADATA_ELEMENTS ID="42" NAME="http://dd.eionet.eu.int/schema.rdf#table"/>
+  <METADATA_ELEMENTS ID="43" NAME="http://dd.eionet.eu.int/schema.rdf#dataset"/>
+  <METADATA_ELEMENTS ID="44" NAME="http://dd.eionet.eu.int/schema.rdf#user"/>
+  <METADATA_ELEMENTS ID="45" NAME="http://dd.eionet.eu.int/schema.rdf#definition_url"/>
+  <METADATA_ELEMENTS ID="46" NAME="http://dd.eionet.europa.eu/schema.rdf#user"/>
+  <METADATA_ELEMENTS ID="47" NAME="http://dd.eionet.europa.eu/schema.rdf#definition_url"/>
+  <METADATA_ELEMENTS ID="48" NAME="http://dd.eionet.europa.eu/schema.rdf#event_type"/>
+  <METADATA_ELEMENTS ID="49" NAME="http://dd.eionet.europa.eu/schema.rdf#table"/>
+  <METADATA_ELEMENTS ID="50" NAME="http://dd.eionet.europa.eu/schema.rdf#dataset"/>
+  <METADATA_ELEMENTS ID="51" NAME="http://dd.eionet.europa.eu/schema.rdf#commonelem"/>
+  <METADATA_ELEMENTS ID="52" NAME="http://rod.eionet.eu.int/schema.rdf#client"/>
+  <METADATA_ELEMENTS ID="53" NAME="http://rod.eionet.eu.int/schema.rdf#issue"/>
+  <METADATA_ELEMENTS ID="54" NAME="http://dd.eionet.eu.int/schema.rdf#definition_status"/>
+  <METADATA_ELEMENTS ID="55" NAME="http://purl.org/rss/1.0/comments"/>
+  <METADATA_ELEMENTS ID="56" NAME="http://purl.org/rss/1.0/category"/>
+  <METADATA_ELEMENTS ID="57" NAME="http://purl.org/rss/1.0/modules/slash/comments"/>
+  <METADATA_ELEMENTS ID="58" NAME="http://planner.eionet.europa.eu/xml/ns/1.0enddate"/>
+  <METADATA_ELEMENTS ID="59" NAME="http://planner.eionet.europa.eu/xml/ns/1.0managers"/>
+  <METADATA_ELEMENTS ID="60" NAME="http://planner.eionet.europa.eu/xml/ns/1.0themes"/>
+  <METADATA_ELEMENTS ID="61" NAME="http://planner.eionet.europa.eu/xml/ns/1.0last_updated"/>
+  <METADATA_ELEMENTS ID="62" NAME="http://planner.eionet.europa.eu/xml/ns/1.0startdate"/>
+  <METADATA_ELEMENTS ID="63" NAME="http://planner.eionet.europa.eu/xml/ns/1.0action"/>
+  <METADATA_ELEMENTS ID="64" NAME="http://planner.eionet.europa.eu/xml/ns/1.0status"/>
+  <METADATA_ELEMENTS ID="65" NAME="http://planner.eionet.europa.eu/xml/ns/1.0eea_project"/>
+  <METADATA_ELEMENTS ID="66" NAME="http://planner.eionet.europa.eu/xml/ns/1.0type"/>
+  <METADATA_ELEMENTS ID="67" NAME="http://planner.eionet.europa.eu/xml/ns/1.0updated_by"/>
+  <METADATA_ELEMENTS ID="68" NAME="http://planner.eionet.europa.eu/xml/ns/1.0deadline"/>
+  <METADATA_ELEMENTS ID="69" NAME="http://planner.eionet.europa.eu/xml/ns/1.0/updated_by"/>
+  <METADATA_ELEMENTS ID="70" NAME="http://planner.eionet.europa.eu/xml/ns/1.0/startdate"/>
+  <METADATA_ELEMENTS ID="71" NAME="http://planner.eionet.europa.eu/xml/ns/1.0/managers"/>
+  <METADATA_ELEMENTS ID="72" NAME="http://planner.eionet.europa.eu/xml/ns/1.0/type"/>
+  <METADATA_ELEMENTS ID="73" NAME="http://planner.eionet.europa.eu/xml/ns/1.0/deadline"/>
+  <METADATA_ELEMENTS ID="74" NAME="http://planner.eionet.europa.eu/xml/ns/1.0/last_updated"/>
+  <METADATA_ELEMENTS ID="75" NAME="http://planner.eionet.europa.eu/xml/ns/1.0/themes"/>
+  <METADATA_ELEMENTS ID="76" NAME="http://planner.eionet.europa.eu/xml/ns/1.0/eea_project"/>
+  <METADATA_ELEMENTS ID="77" NAME="http://planner.eionet.europa.eu/xml/ns/1.0/status"/>
+  <METADATA_ELEMENTS ID="78" NAME="http://planner.eionet.europa.eu/xml/ns/1.0/action"/>
+  <METADATA_ELEMENTS ID="79" NAME="http://planner.eionet.europa.eu/xml/ns/1.0/enddate"/>
+  <METADATA_ELEMENTS ID="80" NAME="http://rod.eionet.eu.int/schema.rdf#instrument"/>
+  <METADATA_ELEMENTS ID="81" NAME="http://rod.eionet.eu.int/schema.rdf#change"/>
+
+
+  <CHANNEL_METADATA_ELEMENTS CHANNEL_ID="4" METADATA_ELEMENT_ID="1" VISIBLE="0" APPEARANCE_ORDER="0" FILTERED="false" OBSOLETE="false"/>
+  <CHANNEL_METADATA_ELEMENTS CHANNEL_ID="4" METADATA_ELEMENT_ID="2" VISIBLE="0" APPEARANCE_ORDER="0" FILTERED="false" OBSOLETE="false"/>
+  <CHANNEL_METADATA_ELEMENTS CHANNEL_ID="4" METADATA_ELEMENT_ID="3" VISIBLE="0" APPEARANCE_ORDER="0" FILTERED="false" OBSOLETE="false"/>
+  <CHANNEL_METADATA_ELEMENTS CHANNEL_ID="4" METADATA_ELEMENT_ID="4" VISIBLE="0" APPEARANCE_ORDER="0" FILTERED="false" OBSOLETE="false"/>
+  <CHANNEL_METADATA_ELEMENTS CHANNEL_ID="4" METADATA_ELEMENT_ID="5" VISIBLE="0" APPEARANCE_ORDER="0" FILTERED="false" OBSOLETE="false"/>
+  <CHANNEL_METADATA_ELEMENTS CHANNEL_ID="4" METADATA_ELEMENT_ID="7" VISIBLE="0" APPEARANCE_ORDER="0" FILTERED="false" OBSOLETE="false"/>
+  <CHANNEL_METADATA_ELEMENTS CHANNEL_ID="4" METADATA_ELEMENT_ID="8" VISIBLE="0" APPEARANCE_ORDER="0" FILTERED="false" OBSOLETE="false"/>
+  <CHANNEL_METADATA_ELEMENTS CHANNEL_ID="4" METADATA_ELEMENT_ID="9" VISIBLE="0" APPEARANCE_ORDER="0" FILTERED="false" OBSOLETE="false"/>
+  <CHANNEL_METADATA_ELEMENTS CHANNEL_ID="4" METADATA_ELEMENT_ID="22" VISIBLE="1" APPEARANCE_ORDER="1" FILTERED="true" OBSOLETE="false"/>
+
+
+
+  <STATEMENT FILTER_ID="123" PROPERTY="http://rod.eionet.eu.int/schema.rdf#locality" VALUE="United Kingdom" METADATA_ELEMENT_ID="22"
+/>
+  <STATEMENT FILTER_ID="124" PROPERTY="http://rod.eionet.eu.int/schema.rdf#locality" VALUE="United Kingdom" METADATA_ELEMENT_ID="22"
+/>
+  <STATEMENT FILTER_ID="125" PROPERTY="http://rod.eionet.eu.int/schema.rdf#locality" VALUE="United Kingdom" METADATA_ELEMENT_ID="22"
+/>
+
+  <STYLESHEET ID="1" NAME="default.xsl" DESCRIPTION="This stylesheet is able to transform any RSS(0.9x, 1.0 and 2.0) feed to simple HTML" CONTENT="&lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot;?&gt;
+&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+    xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+    xmlns:ev=&quot;http://purl.org/rss/1.0/modules/event/&quot; xmlns:rss=&quot;http://purl.org/rss/1.0/&quot;
+    xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; exclude-result-prefixes=&quot;ev rdf rss dc&quot;
+    version=&quot;1.0&quot;&gt;
+    &lt;xsl:output indent=&quot;yes&quot; method=&quot;html&quot; omit-xml-declaration=&quot;yes&quot;/&gt;
+    &lt;xsl:param name=&quot;openinpopup&quot; select=&quot;&apos;true&apos;&quot;/&gt;
+    &lt;xsl:param name=&quot;showdescription&quot; select=&quot;&apos;true&apos;&quot;/&gt;
+    &lt;xsl:param name=&quot;showtitle&quot; select=&quot;&apos;true&apos;&quot;/&gt;
+    &lt;xsl:template match=&quot;/rss&quot;&gt;
+        &lt;xsl:apply-templates select=&quot;channel&quot;/&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;/rdf:RDF&quot;&gt;
+        &lt;ul&gt;
+            &lt;xsl:apply-templates select=&quot;rss:item&quot;/&gt;
+        &lt;/ul&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;channel&quot;&gt;
+        &lt;ul&gt;
+            &lt;xsl:apply-templates select=&quot;item&quot;/&gt;
+        &lt;/ul&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;rss:item&quot;&gt;
+        &lt;xsl:variable name=&quot;description&quot; select=&quot;rss:description|dc:description&quot;/&gt;
+        &lt;li&gt;
+            &lt;a&gt;
+                &lt;xsl:attribute name=&quot;href&quot;&gt;
+                    &lt;xsl:value-of select=&quot;rss:link|dc:identifier&quot;/&gt;
+                &lt;/xsl:attribute&gt;
+                &lt;xsl:if test=&quot;$openinpopup = &apos;true&apos;&quot;&gt;
+                    &lt;xsl:attribute name=&quot;target&quot;&gt;_blank&lt;/xsl:attribute&gt;
+                &lt;/xsl:if&gt;
+                &lt;xsl:value-of select=&quot;rss:title|dc:title&quot;/&gt;
+            &lt;/a&gt;
+            &lt;xsl:if test=&quot;$showdescription = &apos;true&apos; and $description&quot;&gt;
+                &lt;p&gt;
+                    &lt;xsl:value-of select=&quot;$description&quot;/&gt;
+                &lt;/p&gt;
+            &lt;/xsl:if&gt;
+        &lt;/li&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;item&quot;&gt;
+        &lt;xsl:variable name=&quot;description&quot; select=&quot;description&quot;/&gt;
+        &lt;li&gt;
+            &lt;a&gt;
+                &lt;xsl:attribute name=&quot;href&quot;&gt;
+                    &lt;xsl:value-of select=&quot;link&quot;/&gt;
+                &lt;/xsl:attribute&gt;
+                &lt;xsl:if test=&quot;$openinpopup = &apos;true&apos;&quot;&gt;
+                    &lt;xsl:attribute name=&quot;target&quot;&gt;_blank&lt;/xsl:attribute&gt;
+                &lt;/xsl:if&gt;
+                &lt;xsl:value-of select=&quot;title&quot;/&gt;
+            &lt;/a&gt;
+            &lt;xsl:if test=&quot;$showdescription = &apos;true&apos; and $description&quot;&gt;
+                &lt;p&gt;
+                    &lt;xsl:value-of select=&quot;$description&quot;/&gt;
+                &lt;/p&gt;
+            &lt;/xsl:if&gt;
+        &lt;/li&gt;
+    &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+"/>
+  <STYLESHEET ID="2" NAME="tograph.xsl" DESCRIPTION="Transforms &quot;All obligations&quot; ROD feed to the SVG representing statistic of obligations per year" CONTENT="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;xsl:stylesheet exclude-result-prefixes=&quot;ev rdf rss&quot; version=&quot;1.0&quot;
+    xmlns:ev=&quot;http://purl.org/rss/1.0/modules/event/&quot;
+    xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+    xmlns:rss=&quot;http://purl.org/rss/1.0/&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;&gt;
+    &lt;xsl:output indent=&quot;yes&quot; method=&quot;html&quot; omit-xml-declaration=&quot;yes&quot;/&gt;
+    &lt;xsl:variable name=&quot;totalObligations&quot;&gt;
+        &lt;xsl:value-of select=&quot;count(//*[name()=&apos;item&apos;])&quot;/&gt;
+    &lt;/xsl:variable&gt;
+    &lt;xsl:variable name=&quot;year2001&quot;&gt;
+        &lt;xsl:value-of select=&quot;count(//*[substring(ev:startdate,1,4)=&apos;2001&apos;])&quot;/&gt;
+    &lt;/xsl:variable&gt;
+    &lt;xsl:variable name=&quot;year2002&quot;&gt;
+        &lt;xsl:value-of select=&quot;count(//*[substring(ev:startdate,1,4)=&apos;2002&apos;])&quot;/&gt;
+    &lt;/xsl:variable&gt;
+    &lt;xsl:variable name=&quot;year2003&quot;&gt;
+        &lt;xsl:value-of select=&quot;count(//*[substring(ev:startdate,1,4)=&apos;2003&apos;])&quot;/&gt;
+    &lt;/xsl:variable&gt;
+    &lt;xsl:variable name=&quot;year2004&quot;&gt;
+        &lt;xsl:value-of select=&quot;count(//*[substring(ev:startdate,1,4)=&apos;2004&apos;])&quot;/&gt;
+    &lt;/xsl:variable&gt;
+    &lt;xsl:variable name=&quot;year2005&quot;&gt;
+        &lt;xsl:value-of select=&quot;count(//*[substring(ev:startdate,1,4)=&apos;2005&apos;])&quot;/&gt;
+    &lt;/xsl:variable&gt;
+    &lt;xsl:variable name=&quot;year2006&quot;&gt;
+        &lt;xsl:value-of select=&quot;count(//*[substring(ev:startdate,1,4)=&apos;2006&apos;])&quot;/&gt;
+    &lt;/xsl:variable&gt;
+    &lt;xsl:variable name=&quot;year2007&quot;&gt;
+        &lt;xsl:value-of select=&quot;count(//*[substring(ev:startdate,1,4)=&apos;2007&apos;])&quot;/&gt;
+    &lt;/xsl:variable&gt;
+    &lt;xsl:variable name=&quot;year2008&quot;&gt;
+        &lt;xsl:value-of select=&quot;count(//*[substring(ev:startdate,1,4)=&apos;2008&apos;])&quot;/&gt;
+    &lt;/xsl:variable&gt;
+    &lt;xsl:variable name=&quot;year2009&quot;&gt;
+        &lt;xsl:value-of select=&quot;count(//*[substring(ev:startdate,1,4)=&apos;2009&apos;])&quot;/&gt;
+    &lt;/xsl:variable&gt;
+    &lt;xsl:template match=&quot;/&quot;&gt;
+        &lt;svg height=&quot;160&quot; version=&quot;1.1&quot; width=&quot;550&quot;
+            xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;&gt;
+            &lt;path d=&quot;M0 0 L0 420 L800 420 L800 0 Z&quot; style=&quot;fill:#F0F0F0;stroke:none;&quot;/&gt;
+            &lt;text fill=&quot;black&quot; font-size=&quot;12&quot; x=&quot;180&quot; y=&quot;0&quot;&gt;
+                &lt;tspan dy=&quot;10&quot; x=&quot;120&quot;&gt;OBLIGATIONS NUMBER PER YEAR 2001-2009&lt;/tspan&gt;
+            &lt;/text&gt;
+            &lt;!-- Draw the x and y axes  --&gt;
+            &lt;line stroke=&quot;black&quot; x1=&quot;30&quot; x2=&quot;500&quot; y1=&quot;150&quot; y2=&quot;150&quot;/&gt;
+            &lt;line stroke=&quot;black&quot; x1=&quot;30&quot; x2=&quot;30&quot; y1=&quot;150&quot; y2=&quot;0&quot;/&gt;
+            &lt;path d=&quot;M26 10 L30 0 L34 10 Z&quot;/&gt;
+            &lt;path d=&quot;M495 145 L500 150 L495 155 Z&quot;/&gt;
+            &lt;!-- y-axis labels --&gt;
+            &lt;g style=&quot;font-size:10&quot;&gt;
+                &lt;text x=&quot;3&quot; y=&quot;130&quot;&gt;30&lt;/text&gt;
+                &lt;text x=&quot;3&quot; y=&quot;110&quot;&gt;60&lt;/text&gt;
+                &lt;text x=&quot;3&quot; y=&quot;90&quot;&gt;90&lt;/text&gt;
+                &lt;text x=&quot;3&quot; y=&quot;70&quot;&gt;120&lt;/text&gt;
+                &lt;text x=&quot;3&quot; y=&quot;50&quot;&gt;150&lt;/text&gt;
+                &lt;text x=&quot;3&quot; y=&quot;30&quot;&gt;180&lt;/text&gt;
+            &lt;/g&gt;
+            &lt;!-- x-axis labels --&gt;
+            &lt;g style=&quot;font-size:10&quot;&gt;
+                &lt;text x=&quot;50&quot; y=&quot;160&quot;&gt;2001&lt;/text&gt;
+                &lt;text x=&quot;90&quot; y=&quot;160&quot;&gt;2002&lt;/text&gt;
+                &lt;text x=&quot;130&quot; y=&quot;160&quot;&gt;2003&lt;/text&gt;
+                &lt;text x=&quot;170&quot; y=&quot;160&quot;&gt;2004&lt;/text&gt;
+                &lt;text x=&quot;210&quot; y=&quot;160&quot;&gt;2005&lt;/text&gt;
+                &lt;text x=&quot;250&quot; y=&quot;160&quot;&gt;2006&lt;/text&gt;
+                &lt;text x=&quot;290&quot; y=&quot;160&quot;&gt;2007&lt;/text&gt;
+                &lt;text x=&quot;330&quot; y=&quot;160&quot;&gt;2008&lt;/text&gt;
+                &lt;text x=&quot;370&quot; y=&quot;160&quot;&gt;2009&lt;/text&gt;
+            &lt;/g&gt;
+            &lt;!-- Draw data --&gt;
+            &lt;circle cx=&quot;50&quot; cy=&quot;{150-$year2001*0.65}&quot; fill=&quot;red&quot; r=&quot;4&quot;
+                stroke=&quot;black&quot; stroke-width=&quot;2&quot;/&gt;
+            &lt;circle cx=&quot;90&quot; cy=&quot;{150-$year2002*0.65}&quot; fill=&quot;red&quot; r=&quot;4&quot;
+                stroke=&quot;black&quot; stroke-width=&quot;2&quot;/&gt;
+            &lt;circle cx=&quot;130&quot; cy=&quot;{150-$year2003*0.65}&quot; fill=&quot;red&quot; r=&quot;4&quot;
+                stroke=&quot;black&quot; stroke-width=&quot;2&quot;/&gt;
+            &lt;circle cx=&quot;170&quot; cy=&quot;{150-$year2004*0.65}&quot; fill=&quot;red&quot; r=&quot;4&quot;
+                stroke=&quot;black&quot; stroke-width=&quot;2&quot;/&gt;
+            &lt;circle cx=&quot;210&quot; cy=&quot;{150-$year2005*0.65}&quot; fill=&quot;red&quot; r=&quot;4&quot;
+                stroke=&quot;black&quot; stroke-width=&quot;2&quot;/&gt;
+            &lt;circle cx=&quot;250&quot; cy=&quot;{150-$year2006*0.65}&quot; fill=&quot;red&quot; r=&quot;4&quot;
+                stroke=&quot;black&quot; stroke-width=&quot;2&quot;/&gt;
+            &lt;circle cx=&quot;290&quot; cy=&quot;{150-$year2007*0.65}&quot; fill=&quot;red&quot; r=&quot;4&quot;
+                stroke=&quot;black&quot; stroke-width=&quot;2&quot;/&gt;
+            &lt;circle cx=&quot;330&quot; cy=&quot;{150-$year2008*0.65}&quot; fill=&quot;red&quot; r=&quot;4&quot;
+                stroke=&quot;black&quot; stroke-width=&quot;2&quot;/&gt;
+            &lt;circle cx=&quot;370&quot; cy=&quot;{150-$year2009*0.65}&quot; fill=&quot;red&quot; r=&quot;4&quot;
+                stroke=&quot;black&quot; stroke-width=&quot;2&quot;/&gt;
+            &lt;line stroke=&quot;black&quot; x1=&quot;50&quot; x2=&quot;90&quot;
+                y1=&quot;{150-$year2001*0.65}&quot; y2=&quot;{150-$year2002*0.65}&quot;/&gt;
+            &lt;line stroke=&quot;black&quot; x1=&quot;90&quot; x2=&quot;130&quot;
+                y1=&quot;{150-$year2002*0.65}&quot; y2=&quot;{150-$year2003*0.65}&quot;/&gt;
+            &lt;line stroke=&quot;black&quot; x1=&quot;130&quot; x2=&quot;170&quot;
+                y1=&quot;{150-$year2003*0.65}&quot; y2=&quot;{150-$year2004*0.65}&quot;/&gt;
+            &lt;line stroke=&quot;black&quot; x1=&quot;170&quot; x2=&quot;210&quot;
+                y1=&quot;{150-$year2004*0.65}&quot; y2=&quot;{150-$year2005*0.65}&quot;/&gt;
+            &lt;line stroke=&quot;black&quot; x1=&quot;210&quot; x2=&quot;250&quot;
+                y1=&quot;{150-$year2005*0.65}&quot; y2=&quot;{150-$year2006*0.65}&quot;/&gt;
+            &lt;line stroke=&quot;black&quot; x1=&quot;250&quot; x2=&quot;290&quot;
+                y1=&quot;{150-$year2006*0.65}&quot; y2=&quot;{150-$year2007*0.65}&quot;/&gt;
+            &lt;line stroke=&quot;black&quot; x1=&quot;290&quot; x2=&quot;330&quot;
+                y1=&quot;{150-$year2007*0.65}&quot; y2=&quot;{150-$year2008*0.65}&quot;/&gt;
+            &lt;line stroke=&quot;black&quot; x1=&quot;330&quot; x2=&quot;370&quot;
+                y1=&quot;{150-$year2008*0.65}&quot; y2=&quot;{150-$year2009*0.65}&quot;/&gt;
+        &lt;/svg&gt;
+    &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+"/>
+  <STYLESHEET ID="3" NAME="push.xsl" DESCRIPTION="Stylsheet used by push channels" CONTENT="&lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot;?&gt;
+&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+    xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+    xmlns:ev=&quot;http://purl.org/rss/1.0/modules/event/&quot; xmlns:rss=&quot;http://purl.org/rss/1.0/&quot;
+    xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; exclude-result-prefixes=&quot;ev rdf rss dc&quot;
+    xmlns:wdb=&quot;http://wdb.eionet.eu.int/elements#&quot;
+    version=&quot;1.0&quot;&gt;
+    &lt;xsl:output indent=&quot;yes&quot; method=&quot;html&quot; omit-xml-declaration=&quot;yes&quot;/&gt;
+    &lt;xsl:param name=&quot;openinpopup&quot; select=&quot;&apos;false&apos;&quot;/&gt;
+    &lt;xsl:param name=&quot;showdescription&quot; select=&quot;&apos;true&apos;&quot;/&gt;
+    &lt;xsl:param name=&quot;showtitle&quot; select=&quot;&apos;true&apos;&quot;/&gt;
+    &lt;xsl:template match=&quot;/rss&quot;&gt;
+        &lt;xsl:apply-templates select=&quot;channel&quot;&gt;
+            &lt;xsl:sort select=&quot;wdb:created&quot; order=&quot;descending&quot;/&gt;
+        &lt;/xsl:apply-templates&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;/rdf:RDF&quot;&gt;
+        &lt;ul&gt;
+            &lt;xsl:apply-templates select=&quot;rss:item&quot;&gt;
+               &lt;xsl:sort select=&quot;wdb:created&quot; order=&quot;descending&quot;/&gt;
+            &lt;/xsl:apply-templates&gt;
+        &lt;/ul&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;channel&quot;&gt;
+        &lt;ul&gt;
+            &lt;xsl:apply-templates select=&quot;item&quot;/&gt;
+        &lt;/ul&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;rss:item&quot;&gt;
+        &lt;xsl:variable name=&quot;description&quot; select=&quot;rss:description|dc:description&quot;/&gt;
+        &lt;li&gt;
+            &lt;a&gt;
+                &lt;xsl:attribute name=&quot;href&quot;&gt;
+                    &lt;xsl:value-of select=&quot;rss:link|dc:identifier&quot;/&gt;
+                &lt;/xsl:attribute&gt;
+                &lt;xsl:if test=&quot;$openinpopup = &apos;true&apos;&quot;&gt;
+                    &lt;xsl:attribute name=&quot;target&quot;&gt;_blank&lt;/xsl:attribute&gt;
+                &lt;/xsl:if&gt;
+                &lt;xsl:value-of select=&quot;rss:title|dc:title&quot;/&gt;
+            &lt;/a&gt;
+            &lt;xsl:if test=&quot;$showdescription = &apos;true&apos; and $description&quot;&gt;
+                &lt;p&gt;
+                    &lt;xsl:value-of select=&quot;$description&quot;/&gt;
+                &lt;/p&gt;
+            &lt;/xsl:if&gt;
+        &lt;/li&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;item&quot;&gt;
+        &lt;xsl:variable name=&quot;description&quot; select=&quot;description&quot;/&gt;
+        &lt;li&gt;
+            &lt;a&gt;
+                &lt;xsl:attribute name=&quot;href&quot;&gt;
+                    &lt;xsl:value-of select=&quot;link&quot;/&gt;
+                &lt;/xsl:attribute&gt;
+                &lt;xsl:if test=&quot;$openinpopup = &apos;true&apos;&quot;&gt;
+                    &lt;xsl:attribute name=&quot;target&quot;&gt;_blank&lt;/xsl:attribute&gt;
+                &lt;/xsl:if&gt;
+                &lt;xsl:value-of select=&quot;title&quot;/&gt;
+            &lt;/a&gt;
+            &lt;xsl:if test=&quot;$showdescription = &apos;true&apos; and $description&quot;&gt;
+                &lt;p&gt;
+                    &lt;xsl:value-of select=&quot;$description&quot;/&gt;
+                &lt;/p&gt;
+            &lt;/xsl:if&gt;
+        &lt;/li&gt;
+    &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+"/>
+  <STYLESHEET ID="4" NAME="peifer_obligations.xsl" DESCRIPTION="Obligation dealines with Peifer example dashboard images" CONTENT="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;xsl:stylesheet exclude-result-prefixes=&quot;ev rdf rss dc&quot; version=&quot;1.0&quot;
+    xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;
+    xmlns:ev=&quot;http://purl.org/rss/1.0/modules/event/&quot;
+    xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+    xmlns:rss=&quot;http://purl.org/rss/1.0/&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;&gt;
+    &lt;xsl:output indent=&quot;yes&quot; method=&quot;xhtml&quot; omit-xml-declaration=&quot;yes&quot;/&gt;
+    &lt;xsl:variable name=&quot;currentMonth&quot; select=&quot;month-from-date(current-date())&quot;/&gt;
+    &lt;xsl:variable name=&quot;currentYear&quot; select=&quot;year-from-date(current-date())&quot;/&gt;
+    &lt;xsl:template match=&quot;/rdf:RDF&quot;&gt;
+        &lt;table style=&quot;table-layout: fixed;&quot;&gt;
+            &lt;xsl:apply-templates&gt;
+                &lt;xsl:sort select=&quot;ev:startdate&quot;/&gt;
+            &lt;/xsl:apply-templates&gt;
+        &lt;/table&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;rss:item&quot;&gt;
+        &lt;xsl:variable name=&quot;description&quot; select=&quot;rss:description|dc:description&quot;/&gt;
+        &lt;xsl:variable name=&quot;oblYear&quot; select=&quot;substring(ev:startdate,1,4)&quot;/&gt;
+        &lt;xsl:variable name=&quot;oblMonth&quot; select=&quot;substring(substring(ev:startdate,6,7),1,2)&quot;/&gt;
+        &lt;xsl:if test=&quot;$oblYear = $currentYear&quot;&gt;
+            &lt;tr&gt;
+                &lt;td style=&quot;width: 25px;&quot; valign=&quot;top&quot;&gt;
+                    &lt;xsl:element name=&quot;img&quot;&gt;
+                        &lt;xsl:attribute name=&quot;alt&quot;&gt;clck&lt;/xsl:attribute&gt;
+                        &lt;xsl:attribute name=&quot;title&quot;&gt;clock&lt;/xsl:attribute&gt;
+                        &lt;xsl:choose&gt;
+                            &lt;xsl:when test=&quot;$oblMonth &amp;lt; $currentMonth&quot;&gt;
+                                &lt;xsl:attribute name=&quot;src&quot;&gt;../../images/gallery/peifer/pclock.png&lt;/xsl:attribute&gt;
+                            &lt;/xsl:when&gt;
+                            &lt;xsl:when test=&quot;$currentMonth=$oblMonth&quot;&gt;
+                                &lt;xsl:attribute name=&quot;src&quot;&gt;../../images/gallery/peifer/nclock.png&lt;/xsl:attribute&gt;
+                            &lt;/xsl:when&gt;
+                            &lt;xsl:otherwise&gt;
+                                &lt;xsl:attribute name=&quot;src&quot;&gt;../../images/gallery/peifer/fclock.png&lt;/xsl:attribute&gt;
+                            &lt;/xsl:otherwise&gt;
+                        &lt;/xsl:choose&gt;
+                    &lt;/xsl:element&gt;
+                &lt;/td&gt;
+                &lt;td nowrap=&quot;nowrap&quot; style=&quot;width: 70px;&quot; valign=&quot;top&quot;&gt;
+                    &lt;xsl:value-of select=&quot;ev:startdate&quot;/&gt;
+                &lt;/td&gt;
+                &lt;td valign=&quot;top&quot;&gt;
+                    &lt;a&gt;
+                        &lt;xsl:attribute name=&quot;href&quot;&gt;
+                            &lt;xsl:value-of select=&quot;rss:link|dc:identifier&quot;/&gt;
+                        &lt;/xsl:attribute&gt;
+                        &lt;xsl:attribute name=&quot;target&quot;&gt;_blank&lt;/xsl:attribute&gt;
+                        &lt;xsl:value-of select=&quot;rss:title|dc:title&quot;/&gt;
+                    &lt;/a&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/xsl:if&gt;
+    &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+"/>
+  <STYLESHEET ID="5" NAME="peifer_roles.xsl" DESCRIPTION="Directory roles with Peifer example dashboard images" CONTENT="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;xsl:stylesheet exclude-result-prefixes=&quot;ev rdf rss dc&quot; version=&quot;1.0&quot;
+    xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;
+    xmlns:ev=&quot;http://purl.org/rss/1.0/modules/event/&quot;
+    xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+    xmlns:rss=&quot;http://purl.org/rss/1.0/&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;&gt;
+    &lt;xsl:output indent=&quot;yes&quot; method=&quot;xhtml&quot; omit-xml-declaration=&quot;yes&quot;/&gt;
+    &lt;xsl:param name=&quot;openinpopup&quot; select=&quot;&apos;false&apos;&quot;/&gt;
+    &lt;xsl:param name=&quot;showdescription&quot; select=&quot;&apos;true&apos;&quot;/&gt;
+    &lt;xsl:param name=&quot;showtitle&quot; select=&quot;&apos;true&apos;&quot;/&gt;
+    &lt;xsl:template match=&quot;/rss&quot;&gt;
+        &lt;xsl:apply-templates select=&quot;channel&quot;/&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;channel&quot;&gt;
+        &lt;table&gt;
+            &lt;xsl:apply-templates select=&quot;item&quot;/&gt;
+        &lt;/table&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;item&quot;&gt;
+        &lt;xsl:variable name=&quot;description&quot; select=&quot;description&quot;/&gt;
+        &lt;tr&gt;
+            &lt;td rowspan=&quot;3&quot; valign=&quot;top&quot;&gt;
+                &lt;img alt=&quot;o&quot; src=&quot;../../images/gallery/peifer/b_role-userdetails-on.gif&quot;/&gt;
+            &lt;/td&gt;
+            &lt;td/&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td valign=&quot;top&quot;&gt;
+                &lt;a&gt;
+                    &lt;xsl:attribute name=&quot;href&quot;&gt;
+                        &lt;xsl:value-of select=&quot;link&quot;/&gt;
+                    &lt;/xsl:attribute&gt;
+                    &lt;xsl:attribute name=&quot;target&quot;&gt;_blank&lt;/xsl:attribute&gt;
+                    &lt;xsl:value-of select=&quot;title&quot;/&gt;
+                &lt;/a&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;
+                &lt;xsl:if test=&quot;$description&quot;&gt;
+                    &lt;xsl:value-of select=&quot;$description&quot;/&gt;
+                &lt;/xsl:if&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+"/>
+  <STYLESHEET ID="6" NAME="peifer_users.xsl" DESCRIPTION="Directory users with Peifer example dashbaord images" CONTENT="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;xsl:stylesheet exclude-result-prefixes=&quot;ev rdf rss dc&quot; version=&quot;1.0&quot;
+    xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;
+    xmlns:ev=&quot;http://purl.org/rss/1.0/modules/event/&quot;
+    xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+    xmlns:rss=&quot;http://purl.org/rss/1.0/&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;&gt;
+    &lt;xsl:output indent=&quot;yes&quot; method=&quot;xhtml&quot; omit-xml-declaration=&quot;yes&quot;/&gt;
+    &lt;xsl:template match=&quot;/rss&quot;&gt;
+        &lt;xsl:apply-templates select=&quot;channel&quot;/&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;channel&quot;&gt;
+        &lt;table&gt;
+            &lt;xsl:apply-templates select=&quot;item&quot;/&gt;
+        &lt;/table&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;item&quot;&gt;
+        &lt;xsl:variable name=&quot;description&quot; select=&quot;description&quot;/&gt;
+        &lt;tr&gt;
+            &lt;td rowspan=&quot;3&quot; valign=&quot;top&quot;&gt;
+                &lt;xsl:choose&gt;
+                    &lt;xsl:when test=&quot;contains(title,&apos;addition&apos;)&quot;&gt;
+                        &lt;img alt=&quot;o&quot; src=&quot;../../images/gallery/peifer/add-member.gif&quot;/&gt;
+                    &lt;/xsl:when&gt;
+                    &lt;xsl:otherwise&gt;
+                        &lt;img alt=&quot;o&quot; src=&quot;../../images/gallery/peifer/del-member.gif&quot;/&gt;
+                    &lt;/xsl:otherwise&gt;
+                &lt;/xsl:choose&gt;
+            &lt;/td&gt;
+            &lt;td/&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td valign=&quot;top&quot;&gt;
+                &lt;a&gt;
+                    &lt;xsl:attribute name=&quot;href&quot;&gt;
+                        &lt;xsl:value-of select=&quot;link&quot;/&gt;
+                    &lt;/xsl:attribute&gt;
+                    &lt;xsl:attribute name=&quot;target&quot;&gt;_blank&lt;/xsl:attribute&gt;
+                    &lt;xsl:value-of select=&quot;title&quot;/&gt;
+                &lt;/a&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;
+                &lt;xsl:if test=&quot;$description&quot;&gt;
+                    &lt;xsl:value-of select=&quot;$description&quot;/&gt;
+                &lt;/xsl:if&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;"/>
+  <STYLESHEET ID="7" NAME="ROD Push" DESCRIPTION="Used to render events arriving form the Reporting Obligation Database" CONTENT="&lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot;?&gt;
+&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+    xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+    xmlns:ev=&quot;http://purl.org/rss/1.0/modules/event/&quot; xmlns:rss=&quot;http://purl.org/rss/1.0/&quot;
+    xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; exclude-result-prefixes=&quot;ev rdf rss dc&quot;
+    xmlns:wdb=&quot;http://wdb.eionet.eu.int/elements#&quot;
+    xmlns:j.0=&quot;http://rod.eionet.eu.int/schema.rdf#&quot;
+    version=&quot;1.0&quot;&gt;
+    &lt;xsl:output indent=&quot;yes&quot; method=&quot;html&quot; omit-xml-declaration=&quot;yes&quot;/&gt;
+    &lt;xsl:param name=&quot;openinpopup&quot; select=&quot;&apos;false&apos;&quot;/&gt;
+    &lt;xsl:param name=&quot;showdescription&quot; select=&quot;&apos;true&apos;&quot;/&gt;
+    &lt;xsl:param name=&quot;showtitle&quot; select=&quot;&apos;true&apos;&quot;/&gt;
+
+    &lt;xsl:template match=&quot;/rdf:RDF&quot;&gt;
+        &lt;ul&gt;
+            &lt;xsl:apply-templates select=&quot;j.0:ObligationChange&quot;&gt;
+            &lt;/xsl:apply-templates&gt;
+        &lt;/ul&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;j.0:ObligationChange&quot;&gt;
+        &lt;li&gt;
+            &lt;a&gt;
+                &lt;xsl:attribute name=&quot;href&quot;&gt;
+                    &lt;xsl:value-of select=&quot;dc:identifier&quot;/&gt;
+                &lt;/xsl:attribute&gt;
+                &lt;xsl:if test=&quot;$openinpopup = &apos;true&apos;&quot;&gt;
+                    &lt;xsl:attribute name=&quot;target&quot;&gt;_blank&lt;/xsl:attribute&gt;
+                &lt;/xsl:if&gt;
+                &lt;xsl:value-of select=&quot;j.0:obligation&quot;/&gt;
+            &lt;/a&gt;
+            &lt;p&gt;&lt;strong&gt;Event type: &lt;/strong&gt; &lt;xsl:value-of select=&quot;j.0:event_type&quot;/&gt;&lt;/p&gt;
+            &lt;p&gt;&lt;strong&gt;Actor: &lt;/strong&gt; &lt;xsl:value-of select=&quot;j.0:actor&quot;/&gt;&lt;/p&gt;
+            &lt;p&gt;&lt;strong&gt;Localities: &lt;/strong&gt;
+              &lt;xsl:apply-templates select=&quot;j.0:locality&quot; /&gt;
+            &lt;/p&gt;
+        &lt;/li&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;j.0:locality&quot;&gt;
+        &lt;xsl:value-of select=&quot;text()&quot;/&gt;,
+    &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;
+"/>
+  <STYLESHEET ID="8" NAME="CDR Push" DESCRIPTION="Used to render events arriving form the Central Data Repository" CONTENT="&lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot;?&gt;
+&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+    xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+    xmlns:ev=&quot;http://purl.org/rss/1.0/modules/event/&quot; xmlns:rss=&quot;http://purl.org/rss/1.0/&quot;
+    xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; exclude-result-prefixes=&quot;ev rdf rss dc&quot;
+    xmlns:wdb=&quot;http://wdb.eionet.eu.int/elements#&quot;
+    xmlns:j.0=&quot;http://rod.eionet.eu.int/schema.rdf#&quot;
+    version=&quot;1.0&quot;&gt;
+    &lt;xsl:output indent=&quot;yes&quot; method=&quot;html&quot; omit-xml-declaration=&quot;yes&quot;/&gt;
+    &lt;xsl:param name=&quot;openinpopup&quot; select=&quot;&apos;false&apos;&quot;/&gt;
+    &lt;xsl:param name=&quot;showdescription&quot; select=&quot;&apos;true&apos;&quot;/&gt;
+    &lt;xsl:param name=&quot;showtitle&quot; select=&quot;&apos;true&apos;&quot;/&gt;
+
+    &lt;xsl:template match=&quot;/rdf:RDF&quot;&gt;
+        &lt;ul&gt;
+            &lt;xsl:apply-templates select=&quot;j.0:Workflowevent&quot;&gt;
+                &lt;xsl:sort select=&quot;dc:date&quot; order=&quot;descending&quot;/&gt;
+            &lt;/xsl:apply-templates&gt;
+        &lt;/ul&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;j.0:Workflowevent&quot;&gt;
+        &lt;li&gt;
+            &lt;a&gt;
+                &lt;xsl:attribute name=&quot;href&quot;&gt;
+                    &lt;xsl:value-of select=&quot;dc:identifier&quot;/&gt;
+                &lt;/xsl:attribute&gt;
+                &lt;xsl:if test=&quot;$openinpopup = &apos;true&apos;&quot;&gt;
+                    &lt;xsl:attribute name=&quot;target&quot;&gt;_blank&lt;/xsl:attribute&gt;
+                &lt;/xsl:if&gt;
+                &lt;xsl:value-of select=&quot;dc:title&quot;/&gt;
+            &lt;/a&gt;
+            &lt;p&gt;&lt;strong&gt;Obligation: &lt;/strong&gt; &lt;xsl:value-of select=&quot;j.0:obligation&quot;/&gt;&lt;/p&gt;
+            &lt;p&gt;&lt;strong&gt;Event type: &lt;/strong&gt; &lt;xsl:value-of select=&quot;j.0:event_type&quot;/&gt;&lt;/p&gt;
+            &lt;p&gt;&lt;strong&gt;Locality: &lt;/strong&gt; &lt;xsl:value-of select=&quot;j.0:locality&quot;/&gt;&lt;/p&gt;
+            &lt;p&gt;&lt;strong&gt;Actor: &lt;/strong&gt; &lt;xsl:value-of select=&quot;j.0:actor&quot;/&gt;&lt;/p&gt;
+        &lt;/li&gt;
+    &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+"/>
+
+  <SUBSCRIPTION_DT SUBSCRIPTION_ID="1" DELIVERY_TYPE_ID="1"/>
+</dataset>

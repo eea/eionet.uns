@@ -15,26 +15,52 @@ import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.util.rdf.RdfContext;
 import com.hp.hpl.jena.vocabulary.RSS;
 
+/**
+ * Pulls events from a PULL channel (e.g. an RSS feed).
+ *
+ * @author EuroDynamics
+ * @author Jaanus
+ */
 public class PullerThread implements Runnable {
 
+    /** Static logger for this class. */
     private static final WDSLogger LOGGER = WDSLogger.getLogger(PullerThread.class);
 
+    /** The channel to pull from. */
     Channel channel;
 
+    /** The date-time this thread was executed. */
+    private Date harvestDate;
+
+    /** Exception caught by the {@link #run()} method. */
+    private Exception exception;
+
+    /**
+     * Default constructor.
+     *
+     * @param channel
+     *            The channel to pull from.
+     */
     public PullerThread(Channel channel) {
         this.channel = channel;
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Runnable#run()
+     */
     @Override
     public void run() {
 
+        harvestDate = new Date();
         String url = "";
 
         try {
             ChannelFacade channelFacade = new ChannelFacade();
             EventMetadataFacade eventMetadataFacade = new EventMetadataFacade();
 
-            channel.setLastHarvestDate(new Date());
+            channel.setLastHarvestDate(harvestDate);
             channelFacade.updateChannel(channel);
 
             url = channel.getFeedUrl();
@@ -43,7 +69,7 @@ public class PullerThread implements Runnable {
 
                     RdfContext rdfctx = new RdfContext(channel);
                     Map pulledEvents = rdfctx.getData(new ResourcesProcessor());
-                    Date lastSeen = new Date();
+                    harvestDate = new Date();
 
                     for (Iterator eventIdentifiers = pulledEvents.keySet().iterator(); eventIdentifiers.hasNext();) {
 
@@ -55,16 +81,16 @@ public class PullerThread implements Runnable {
 
                             // If event already exists in UNS, just update its "last seen" date. Otherwise create it.
                             if (eventExists) {
-                                event.setLastSeen(lastSeen);
+                                event.setLastSeen(harvestDate);
                                 channelFacade.updateEvent(event);
                             } else {
                                 event = new Event();
                                 event.setChannel(channel);
                                 event.setExtId(eventIdentifier);
-                                event.setCreationDate(lastSeen);
+                                event.setCreationDate(harvestDate);
                                 event.setProcessed(new Byte("0").byteValue());
                                 event.setRtype(RSS.item.toString());
-                                event.setLastSeen(lastSeen);
+                                event.setLastSeen(harvestDate);
 
                                 eventMetadataFacade.createEvent(event);
 
@@ -93,18 +119,25 @@ public class PullerThread implements Runnable {
             }
 
         } catch (Exception e) {
+            exception = e;
             LOGGER.error("Harvesting " + url + "gave: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public static boolean exists(String URLName) {
+    /**
+     * Checks if the given URL actually exists and responds with HTTP 200 (follows redirects!).
+     *
+     * @param url The URL to check.
+     * @return True/false.
+     */
+    public static boolean exists(String url) {
 
         boolean ret = false;
 
         try {
             HttpURLConnection.setFollowRedirects(true);
-            HttpURLConnection con = (HttpURLConnection) new URL(URLName).openConnection();
+            HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
             con.setRequestMethod("HEAD");
 
             ret = (con.getResponseCode() == HttpURLConnection.HTTP_OK);
@@ -115,5 +148,19 @@ public class PullerThread implements Runnable {
         }
 
         return ret;
+    }
+
+    /**
+     * @return the harvestDate
+     */
+    protected Date getHarvestDate() {
+        return harvestDate;
+    }
+
+    /**
+     * @return the exception
+     */
+    public Exception getException() {
+        return exception;
     }
 }
