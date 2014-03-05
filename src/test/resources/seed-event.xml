@@ -145,8 +145,8 @@ European Environment Agency" TEXT_HTML="" EDIT_ONLY="false"/>
 
   <SUBSCRIPTION ID="1" EEA_USER_ID="3" CHANNEL_ID="4" CREATION_DATE="2006-01-25 16:12:14.0" SECONDARY_ID="f1be51348037855d2bfa59f890cdc5f9" DASH_CORD_X="-1" DASH_CORD_Y="-1"/>
 
-  <EVENT ID="1" CHANNEL_ID="4" EXT_ID="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=830" CREATION_DATE="2006-01-26 09:45:21.0" RTYPE="http://purl.org/rss/1.0/item" PROCESSED="1"/>
-  <EVENT ID="2" CHANNEL_ID="4" EXT_ID="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=831" CREATION_DATE="2999-01-26 09:45:21.0" RTYPE="http://purl.org/rss/1.0/item" PROCESSED="1"/>
+  <EVENT ID="1" CHANNEL_ID="4" EXT_ID="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=830" CREATION_DATE="2006-01-26 09:45:21.0" RTYPE="http://purl.org/rss/1.0/item" PROCESSED="1" LAST_SEEN="2006-01-26 09:45:21.0"/>
+  <EVENT ID="2" CHANNEL_ID="4" EXT_ID="http://dataservice.eea.eu.int/dataservice/metadetails.asp?id=831" CREATION_DATE="2999-01-26 09:45:21.0" RTYPE="http://purl.org/rss/1.0/item" PROCESSED="1" LAST_SEEN="2999-01-26 09:45:21.0"/>
 
   <EVENT_METADATA EVENT_ID="1" PROPERTY="http://purl.org/dc/elements/1.1/date" VALUE="2005-12-16T00:00:00Z" ID="1"/>
   <EVENT_METADATA EVENT_ID="1" PROPERTY="http://purl.org/rss/1.0/title" VALUE="Population density disaggregated with CLC2000 " ID="2"/>

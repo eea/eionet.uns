@@ -41,20 +41,20 @@ public class JdbcEventMetadataDao extends BaseJdbcDao implements IEventMetadataD
             + " and SUBSCRIPTION.CHANNEL_ID = ?  " + ") order by PROPERTY, VALUE ";
 
     /** SQL for deleting all events older than 60 days. */
-    private static final String DELETE_OLD_EVENTS = " delete from EVENT where DATE_SUB(now(), interval 60 day) > creation_date";
+    private static final String DELETE_OLD_EVENTS = " delete from EVENT where LAST_SEEN is not null and DATE_SUB(now(), interval 60 day) > LAST_SEEN";
 
     /** SQL for deleting all metadata of events older than 60 days. */
     private static final String DELETE_OLD_EVENTS_METADATA = "delete EVENT_METADATA from EVENT_METADATA"
-            + " JOIN EVENT on EVENT_ID=EVENT.ID where DATE_SUB(now(), interval 60 day) > CREATION_DATE";
+            + " JOIN EVENT on EVENT_ID=EVENT.ID where LAST_SEEN is not null and DATE_SUB(now(), interval 60 day) > LAST_SEEN";
 
     /** SQL for deleting all deliveries of notifications of events older than 60 days. */
     private static final String DELETE_OLD_DELIVERIES = "delete DELIVERY from DELIVERY"
             + " JOIN NOTIFICATION on NOTIFICATION_ID=NOTIFICATION.ID"
-            + " JOIN EVENT on EVENT_ID=EVENT.ID where DATE_SUB(now(), interval 60 day) > CREATION_DATE";
+            + " JOIN EVENT on EVENT_ID=EVENT.ID where LAST_SEEN is not null and DATE_SUB(now(), interval 60 day) > LAST_SEEN";
 
     /** SQL for deleting all notifications of events older than 60 days. */
     private static final String DELETE_OLD_NOTIFICATIONS = "delete NOTIFICATION from NOTIFICATION"
-            + " join EVENT on EVENT_ID=EVENT.ID where DATE_SUB(now(), interval 60 day) > CREATION_DATE";
+            + " join EVENT on EVENT_ID=EVENT.ID where LAST_SEEN is not null and DATE_SUB(now(), interval 60 day) > LAST_SEEN";
     /*
      * (non-Javadoc)
      *
