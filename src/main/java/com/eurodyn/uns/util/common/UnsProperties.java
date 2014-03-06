@@ -6,12 +6,30 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
+import org.apache.commons.lang.math.NumberUtils;
+
+/**
+ * Utility class for working with UNS's configured properties.
+ *
+ * @author Jaanus
+ */
 public class UnsProperties {
 
+    /** Events that UNS hasn't seen this much days in any feed shall be purged. So it's a number and the unit is days. */
+    public static final int OLD_EVENTS_THRESHOLD = getOldEventsThreshold();
+
+    /**
+     * Sets LDAP properties in "eionetdir.properties", based on the given inputs.
+     *
+     * @param url LDAP host URL.
+     * @param context LDAP context.
+     * @param userDir LDAP user directory.
+     * @param attrUid LDAP attribute UUID.
+     * @throws Exception If any sort of error happens.
+     */
     public void setLdapParams(String url, String context, String userDir, String attrUid) throws Exception {
 
         String filePath = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar + "eionetdir.properties";
-        //String filePath = "C:/work/eclipse-workspaces/UNS2/src/main/resources" + File.separatorChar + "eionetdir.properties";
 
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line = null;
@@ -32,6 +50,14 @@ public class UnsProperties {
         out.close();
     }
 
+    /**
+     * Utility method for finding and overwriting a property in a given line.
+     *
+     * @param line The line.
+     * @param key The property key.
+     * @param value The property value.
+     * @return Processed line.
+     */
     private String findSetProp(String line, String key, String value) {
         if (line.startsWith(key + "=")) {
             line = key + "=" + value;
@@ -39,4 +65,24 @@ public class UnsProperties {
         return line;
     }
 
+    /**
+     * Gets the value of OLD_EVENTS_THRESHOLD from configuration. Resolves to default (60 days) if not found.
+     *
+     * @return The value.
+     */
+    private static int getOldEventsThreshold() {
+
+        int defaultValue = 60;
+
+        try {
+            String strValue = AppConfigurator.getInstance().getBoundle("uns").getString("oldEventsThreshold");
+            System.out.println("strValue = " + strValue);
+            return NumberUtils.toInt(strValue, defaultValue);
+        } catch (ConfiguratorException e) {
+            System.out.println("****************************************************");
+            e.printStackTrace(System.out);
+            System.out.println("****************************************************");
+            return defaultValue;
+        }
+    }
 }

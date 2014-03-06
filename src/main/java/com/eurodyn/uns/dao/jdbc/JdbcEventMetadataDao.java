@@ -17,6 +17,7 @@ import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.MetadataElement;
 import com.eurodyn.uns.model.ResultDto;
 import com.eurodyn.uns.model.Statement;
+import com.eurodyn.uns.util.common.UnsProperties;
 import com.eurodyn.uns.util.common.WDSLogger;
 
 /**
@@ -41,20 +42,25 @@ public class JdbcEventMetadataDao extends BaseJdbcDao implements IEventMetadataD
             + " and SUBSCRIPTION.CHANNEL_ID = ?  " + ") order by PROPERTY, VALUE ";
 
     /** SQL for deleting all events older than 60 days. */
-    private static final String DELETE_OLD_EVENTS = " delete from EVENT where LAST_SEEN is not null and DATE_SUB(now(), interval 60 day) > LAST_SEEN";
+    private static final String DELETE_OLD_EVENTS = " delete from EVENT where LAST_SEEN is not null and DATE_SUB(now(), interval "
+            + UnsProperties.OLD_EVENTS_THRESHOLD + " day) > LAST_SEEN";
 
     /** SQL for deleting all metadata of events older than 60 days. */
     private static final String DELETE_OLD_EVENTS_METADATA = "delete EVENT_METADATA from EVENT_METADATA"
-            + " JOIN EVENT on EVENT_ID=EVENT.ID where LAST_SEEN is not null and DATE_SUB(now(), interval 60 day) > LAST_SEEN";
+            + " JOIN EVENT on EVENT_ID=EVENT.ID where LAST_SEEN is not null and DATE_SUB(now(), interval "
+            + UnsProperties.OLD_EVENTS_THRESHOLD + " day) > LAST_SEEN";
 
     /** SQL for deleting all deliveries of notifications of events older than 60 days. */
     private static final String DELETE_OLD_DELIVERIES = "delete DELIVERY from DELIVERY"
             + " JOIN NOTIFICATION on NOTIFICATION_ID=NOTIFICATION.ID"
-            + " JOIN EVENT on EVENT_ID=EVENT.ID where LAST_SEEN is not null and DATE_SUB(now(), interval 60 day) > LAST_SEEN";
+            + " JOIN EVENT on EVENT_ID=EVENT.ID where LAST_SEEN is not null and DATE_SUB(now(), interval "
+            + UnsProperties.OLD_EVENTS_THRESHOLD + " day) > LAST_SEEN";
 
     /** SQL for deleting all notifications of events older than 60 days. */
     private static final String DELETE_OLD_NOTIFICATIONS = "delete NOTIFICATION from NOTIFICATION"
-            + " join EVENT on EVENT_ID=EVENT.ID where LAST_SEEN is not null and DATE_SUB(now(), interval 60 day) > LAST_SEEN";
+            + " join EVENT on EVENT_ID=EVENT.ID where LAST_SEEN is not null and DATE_SUB(now(), interval "
+            + UnsProperties.OLD_EVENTS_THRESHOLD + " day) > LAST_SEEN";
+
     /*
      * (non-Javadoc)
      *
@@ -95,31 +101,34 @@ public class JdbcEventMetadataDao extends BaseJdbcDao implements IEventMetadataD
             conn = getDatasource().getConnection();
             conn.setAutoCommit(false);
 
+            int days = UnsProperties.OLD_EVENTS_THRESHOLD;
+
             // Delete all related deliveries as the most distantly related table.
-            LOGGER.debug("Deleting all deliveries of notifications of events older than 60 days...");
+            LOGGER.debug("Deleting all deliveries of notifications of events that haven't been seen for " + days + " days");
             ps = conn.prepareStatement(DELETE_OLD_DELIVERIES);
             ps.executeUpdate();
             closeAllResources(null, ps, null);
 
             // Delete all related notifications.
-            LOGGER.debug("Deleting all notifications of events older than 60 days...");
+            LOGGER.debug("Deleting all notifications of events that haven't been seen for " + days + " days");
             ps = conn.prepareStatement(DELETE_OLD_NOTIFICATIONS);
             ps.executeUpdate();
             closeAllResources(null, ps, null);
 
             // Delete all related event metadata.
-            LOGGER.debug("Deleting metadata of all events older than 60 days...");
+            LOGGER.debug("Deleting metadata of all events that haven't been seen for " + days + " days");
             ps = conn.prepareStatement(DELETE_OLD_EVENTS_METADATA);
             ps.executeUpdate();
             closeAllResources(null, ps, null);
 
             // Finally, delete all events themselves.
-            LOGGER.debug("Deleting all events older than 60 days...");
+            LOGGER.debug("Deleting all events that haven't been seen for " + days + " days");
             ps = conn.prepareStatement(DELETE_OLD_EVENTS);
             ps.executeUpdate();
 
             // Now do the commit.
-            LOGGER.debug("Committing the deletions of metadata, notifications and deliveries of events older than 60 days...");
+            LOGGER.debug("Committing the deletions of metadata, notifications and deliveries of events that haven't been seen for "
+                    + days + " days");
             conn.commit();
         } catch (Exception e) {
             rollback(conn);
@@ -256,6 +265,7 @@ public class JdbcEventMetadataDao extends BaseJdbcDao implements IEventMetadataD
 
     /*
      * (non-Javadoc)
+     *
      * @see com.eurodyn.uns.dao.IEventMetadataDao#findEventByExtId(java.lang.String)
      */
     @Override
