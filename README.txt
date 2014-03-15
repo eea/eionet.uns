@@ -25,7 +25,7 @@ shell>cp default.properties local.properties
    appropriate for your environment. You will find meanings of every property
    from inside the file as comments.
 
-4. Create UNS database and database user in MySql matching the values in local.properties
+4. Create UNS database and database user in MySql matching the values in local.properties.
 
 mysql>create database uns;
 mysql>CREATE USER 'unsuser'@'localhost' IDENTIFIED BY 'password-here';
