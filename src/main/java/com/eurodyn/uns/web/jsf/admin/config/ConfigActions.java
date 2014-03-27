@@ -25,23 +25,40 @@ import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.web.jsf.BaseBean;
 import com.sun.mail.smtp.SMTPTransport;
 
+/**
+ * Action bean for taking actions from admin interface's configuration pages like general.jsp, database.jsp, etc.
+ * The below update*() methods are invoked by submit buttons in those configuration pages.
+ *
+ */
 public class ConfigActions extends BaseBean {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(ConfigActions.class);
+    /** Static logger for this class. */
+    private static final WDSLogger LOGGER = WDSLogger.getLogger(ConfigActions.class);
 
-    ConfigManager configManager = null;
+    /** Instance of {@link ConfigManager} to which the configuration updating calls are delegated. */
+    private ConfigManager configManager = null;
 
+    /** Configuration map that is updated with reflection, using input coming from user input submits. */
+    @SuppressWarnings("rawtypes")
     private Map configMap = null;
 
+    /**
+     * Default constructor.
+     */
     public ConfigActions() {
         try {
             configManager = ConfigManager.getInstance();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
     }
 
+    /**
+     * Updates configuration from the General configuration tab.
+     *
+     * @return Always null (maybe some convention of JSF that does not allow void methods for submit handlers).
+     */
     public String updateGeneral() {
         try {
             configManager.updateConfiguration(configMap);
@@ -49,7 +66,7 @@ public class ConfigActions extends BaseBean {
         } catch (XMPPException e) {
             addErrorMessagePlain(null, e.getMessage());
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
@@ -57,6 +74,11 @@ public class ConfigActions extends BaseBean {
 
     }
 
+    /**
+     * Updates LDAP configuration.
+     *
+     * @return Always null (maybe some convention of JSF that does not allow void methods for submit handlers).
+     */
     public String updateLdap() {
 
         String ldapUrl = null;
@@ -89,6 +111,11 @@ public class ConfigActions extends BaseBean {
         return null;
     }
 
+    /**
+     * Updates database connection configuration.
+     *
+     * @return Always null (maybe some convention of JSF that does not allow void methods for submit handlers).
+     */
     public String updateDatabase() {
         try {
 
@@ -109,27 +136,32 @@ public class ConfigActions extends BaseBean {
             addInfoMessage(null, "msg.updateSuccess", null);
         } catch (SQLException se) {
             switch (se.getErrorCode()) {
-            case 0:
-                addErrorMessagePlain(null, "Bad host or port ");
-                break;
-            case 1044:
-                addErrorMessagePlain(null, "Unknown database ");
-                break;
-            case 1045:
-                addErrorMessagePlain(null, "Bad username or password  ");
-                break;
-            default:
-                addErrorMessagePlain(null, "Unable to connect ");
-                break;
+                case 0:
+                    addErrorMessagePlain(null, "Bad host or port ");
+                    break;
+                case 1044:
+                    addErrorMessagePlain(null, "Unknown database ");
+                    break;
+                case 1045:
+                    addErrorMessagePlain(null, "Bad username or password  ");
+                    break;
+                default:
+                    addErrorMessagePlain(null, "Unable to connect ");
+                    break;
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
         return null;
     }
 
+    /**
+     * Updates SMTP configuration.
+     *
+     * @return Always null (maybe some convention of JSF that does not allow void methods for submit handlers).
+     */
     public String updateSmtp() {
         try {
             String host = (String) ((ConfigElement) configMap.get("smtpserver/smtp_host")).getTempValue();
@@ -169,7 +201,7 @@ public class ConfigActions extends BaseBean {
         } catch (javax.mail.MessagingException e) {
             addErrorMessagePlain(null, e.getMessage());
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
@@ -177,6 +209,11 @@ public class ConfigActions extends BaseBean {
 
     }
 
+    /**
+     * Updates POP3 configuration.
+     *
+     * @return Always null (maybe some convention of JSF that does not allow void methods for submit handlers).
+     */
     public String updatePop3() {
         try {
 
@@ -203,7 +240,7 @@ public class ConfigActions extends BaseBean {
         } catch (javax.mail.MessagingException e) {
             addErrorMessagePlain(null, e.getMessage());
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
@@ -211,6 +248,11 @@ public class ConfigActions extends BaseBean {
 
     }
 
+    /**
+     * Updates Jabber configuration.
+     *
+     * @return Always null (maybe some convention of JSF that does not allow void methods for submit handlers).
+     */
     public String updateJabber() {
 
         try {
@@ -243,13 +285,19 @@ public class ConfigActions extends BaseBean {
         } catch (XMPPException e) {
             addErrorMessagePlain(null, e.getMessage());
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
         return null;
     }
 
+    /**
+     * Gets the config map.
+     *
+     * @return the config map
+     */
+    @SuppressWarnings("rawtypes")
     public Map getConfigMap() {
         if (configMap == null) {
             configMap = configManager.getConfigMap();
@@ -257,20 +305,22 @@ public class ConfigActions extends BaseBean {
         return configMap;
     }
 
-    public void setConfigMap(Map configMap) {
-        this.configMap = configMap;
-    }
+    /**
+     * Convenience method for setting configuration element's temporary value to its current value.
+     *
+     * @param firstKeyPart The element's key.
+     */
+    @SuppressWarnings("rawtypes")
+    private void returnToOriginal(String firstKeyPart) {
 
-    private void returnToOriginal(String firstKayPart) {
         Set configMapKeys = configMap.keySet();
         for (Iterator iter = configMapKeys.iterator(); iter.hasNext();) {
             String key = (String) iter.next();
-            if (key.startsWith(firstKayPart)) {
+            if (key.startsWith(firstKeyPart)) {
                 ConfigElement configElement = (ConfigElement) configMap.get(key);
                 configElement.setTempValue(configElement.getValue());
             }
 
         }
     }
-
 }
