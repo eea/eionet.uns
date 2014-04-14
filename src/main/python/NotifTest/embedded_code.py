@@ -1,7 +1,7 @@
 import re
 import StringIO
 import sys
-import traceback
+#import traceback
 import string
 
 re_code_exec = re.compile("\<%.*?%\>", re.MULTILINE|re.DOTALL)
@@ -13,7 +13,7 @@ htmlCodes = [
     ['<', '&lt;'],
     ['>', '&gt;'],
     ['"', '&quot;'],
-    [' ', '&nbsp;']    
+    [' ', '&nbsp;']
 ]
 
 
@@ -33,7 +33,7 @@ def executeTestTemplate(template, namespace, isHtml = False):
 def executeTemplate(template, namespace, isHtml = False):
     if isHtml:
         template = htmlDecode(template)
-        
+
     occs = re.findall(re_code_eval, template)
     for occ in occs:
         value = render_value_eval(occ, namespace)
@@ -62,7 +62,7 @@ def render_value_exec(code, namespace):
     StringIO, so anything written to (the fake) sys.stdout, or printed, is
     caught by it and placed in HTML instead. Name 'doc' is available as a
     shorthand for sys.stdout.
-    
+
     Note that multi-line code should start on a separate line:
     <#
        print this
@@ -82,7 +82,7 @@ def render_value_exec(code, namespace):
     # XXXX could raise SyntaxError
     codeobj = compile(code, '<string>', 'exec')
     #
-    namespace["doc"] = sys.stdout 
+    namespace["doc"] = sys.stdout
     # for printing tracebacks etc
     namespace['stdout'] = oldstdout
     try:
@@ -90,7 +90,7 @@ def render_value_exec(code, namespace):
             exec codeobj in namespace
         except Exception, e:
 #            print >> sys.stderr, "-----An error occurred:-----"
-#            traceback.print_exc() 
+#            traceback.print_exc()
 #            print >> sys.stderr, "code:", `code`
 #            print >> sys.stderr, "----------------------------"
             e.namespace = namespace
