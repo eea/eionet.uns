@@ -55,26 +55,6 @@ public class ConfigActions extends BaseBean {
     }
 
     /**
-     * Updates configuration from the General configuration tab.
-     *
-     * @return Always null (maybe some convention of JSF that does not allow void methods for submit handlers).
-     */
-    public String updateGeneral() {
-        try {
-            configManager.updateConfiguration(configMap);
-            addInfoMessage(null, "msg.updateSuccess", null);
-        } catch (XMPPException e) {
-            addErrorMessagePlain(null, e.getMessage());
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
-            addSystemErrorMessage();
-        }
-
-        return null;
-
-    }
-
-    /**
      * Updates LDAP configuration.
      *
      * @return Always null (maybe some convention of JSF that does not allow void methods for submit handlers).
