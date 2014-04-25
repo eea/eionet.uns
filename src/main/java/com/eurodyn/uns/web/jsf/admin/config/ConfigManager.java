@@ -1,186 +1,211 @@
 package com.eurodyn.uns.web.jsf.admin.config;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.dom4j.Document;
-import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
-import org.dom4j.io.XMLWriter;
 
 import com.eurodyn.uns.util.common.AppConfigurator;
-import com.eurodyn.uns.util.common.UnsProperties;
 import com.eurodyn.uns.util.common.WDSLogger;
 
+/**
+ * Singleton class for loading and serving the application's configuration.
+ *
+ * @author Jaanus
+ */
 public class ConfigManager {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(ConfigManager.class);
+    /** Static logger for this class. */
+    private static final WDSLogger LOGGER = WDSLogger.getLogger(ConfigManager.class);
 
-    private Document doc;
+    /** Indicates string-type config element. */
+    private static final int STRING_TYPE = 1;
 
-    private Map configMap;
+    /** Indicates integer-type config element. */
+    private static final int INTEGER_TYPE = 2;
 
+    /** Indicates boolean-type config element. */
+    private static final int BOOLEAN_TYPE = 3;
+
+    /** The name of the application's configuration file. */
+    private static final String CONFIG_FILE_NAME = "uns-config.xml";
+
+    /** The full path of the application's configuration file. */
+    private static final String CONFIG_FILE_PATH = buildConfigFilePath();
+
+    /** The class's singleton instance. */
+    private static ConfigManager instance = null;
+
+    /** The map where the configuration is loaded into. Classic key-value pairs. */
+    private Map<String, ConfigElement> configMap = new HashMap<String, ConfigElement>();
+
+    /** DOM document where the configuration is loaded into and read from. */
+    private Document configDomDocument;
+
+    /**
+     * Hide singleton constructor.
+     *
+     * @throws Exception when problems with loading the configuration from file.
+     */
     private ConfigManager() throws Exception {
         loadConfigElements();
     }
 
-    private static ConfigManager instance = null;
-
-    public static ConfigManager getInstance() throws Exception {
-        if (null == instance) {
-            synchronized (ConfigManager.class) {
-                if (null == instance) {
-                    try {
-                        instance = new ConfigManager();
-                    } catch (Exception ce) {
-                        throw ce;
-                    }
-                }
-            }
+    /**
+     * Returns the singleton instance, creating it on first-time call.
+     *
+     * @return the singleton instance.
+     * @throws Exception if any sort of errors happen at the singleton creation and configuration loading from file
+     */
+    public static synchronized ConfigManager getInstance() throws Exception {
+        if (instance == null) {
+            instance = new ConfigManager();
         }
         return instance;
     }
 
-    private static String configFilePath = null;
-
-    static {
-        try {
-            configFilePath = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar + "uns-config.xml";
-        } catch (Exception e) {
-            logger.error(e);
-        }
-    }
-
+    /**
+     * Helper method for initializing the confiuration's DOM document.
+     *
+     * @throws Exception If any sort of error happens in the process.
+     */
     private void initDoc() throws Exception {
+
         SAXReader xmlReader = new SAXReader();
-        // String filePath = "C:/work/eclipse-workspaces/UNS2/src/main/resources" + File.separatorChar + "uns-config.xml";
-        // String filePath = "C:/work/eclipse-workspaces/UNS2/src/main/resources" + File.separatorChar + "eionetdir.properties";
-        this.doc = xmlReader.read(configFilePath);
+        this.configDomDocument = xmlReader.read(CONFIG_FILE_PATH);
 
     }
 
-    public void loadConfigElements() throws Exception {
+    /**
+     * Loads configuration from the XML file and places it into {@link #configMap}.
+     *
+     * @throws Exception if any sort of error happens in the process
+     */
+    private void loadConfigElements() throws Exception {
 
+        // Initialize the configuration's DOM document.
         initDoc();
-        configMap = new HashMap();
-        // general elements
-        String generalPath = "//uns/daemons/notificator/";
-        configMap.put(createKey(generalPath, "interval"), createValue(generalPath, "interval", integerType));
-        generalPath = "//uns/daemons/harvester/";
-        configMap.put(createKey(generalPath, "interval"), createValue(generalPath, "interval", integerType));
-        configMap.put(createKey(generalPath, "pull_threads"), createValue(generalPath, "pull_threads", integerType));
-        generalPath = "//uns/feed/";
-        configMap.put(createKey(generalPath, "events_feed_age"), createValue(generalPath, "events_feed_age", integerType));
 
-        // ldap Elements
+        // Load general configuration elements.
+        String generalPath = "//uns/daemons/notificator/";
+        configMap.put(createKey(generalPath, "interval"), createValue(generalPath, "interval", INTEGER_TYPE));
+        generalPath = "//uns/daemons/harvester/";
+        configMap.put(createKey(generalPath, "interval"), createValue(generalPath, "interval", INTEGER_TYPE));
+        configMap.put(createKey(generalPath, "pull_threads"), createValue(generalPath, "pull_threads", INTEGER_TYPE));
+        generalPath = "//uns/feed/";
+        configMap.put(createKey(generalPath, "events_feed_age"), createValue(generalPath, "events_feed_age", INTEGER_TYPE));
+
+        // Load LDAP configuration elements.
         ResourceBundle ldapProps = ResourceBundle.getBundle("eionetdir");
         configMap.put("ldap.url", new ConfigElement("ldap.url", ldapProps.getString("ldap.url")));
         configMap.put("ldap.context", new ConfigElement("ldap.context", ldapProps.getString("ldap.context")));
         configMap.put("ldap.user.dir", new ConfigElement("ldap.user.dir", ldapProps.getString("ldap.user.dir")));
         configMap.put("ldap.attr.uid", new ConfigElement("ldap.attr.uid", ldapProps.getString("ldap.attr.uid")));
 
-        // database Elements
+        // Load database elements.
         String databasePath = "//uns/dbserver/";
-        configMap.put(createKey(databasePath, "host"), createValue(databasePath, "host", stringType));
-        configMap.put(createKey(databasePath, "port"), createValue(databasePath, "port", integerType));
-        configMap.put(createKey(databasePath, "username"), createValue(databasePath, "username", stringType));
-        configMap.put(createKey(databasePath, "password"), createValue(databasePath, "password", stringType));
-        configMap.put(createKey(databasePath, "database"), createValue(databasePath, "database", stringType));
-        configMap.put(createKey(databasePath, "connect_timeout"), createValue(databasePath, "connect_timeout", integerType));
+        configMap.put(createKey(databasePath, "host"), createValue(databasePath, "host", STRING_TYPE));
+        configMap.put(createKey(databasePath, "port"), createValue(databasePath, "port", INTEGER_TYPE));
+        configMap.put(createKey(databasePath, "username"), createValue(databasePath, "username", STRING_TYPE));
+        configMap.put(createKey(databasePath, "password"), createValue(databasePath, "password", STRING_TYPE));
+        configMap.put(createKey(databasePath, "database"), createValue(databasePath, "database", STRING_TYPE));
+        configMap.put(createKey(databasePath, "connect_timeout"), createValue(databasePath, "connect_timeout", INTEGER_TYPE));
 
-        // smtp Elements
+        // Load SMTP configuration elements.
         String smtpPath = "//uns/smtpserver/";
-        configMap.put(createKey(smtpPath, "smtp_host"), createValue(smtpPath, "smtp_host", stringType));
-        configMap.put(createKey(smtpPath, "smtp_port"), createValue(smtpPath, "smtp_port", integerType));
-        configMap.put(createKey(smtpPath, "smtp_username"), createValue(smtpPath, "smtp_username", stringType));
-        configMap.put(createKey(smtpPath, "smtp_password"), createValue(smtpPath, "smtp_password", stringType));
-        configMap.put(createKey(smtpPath, "smtp_useauth"), createValue(smtpPath, "smtp_useauth", booleanType));
+        configMap.put(createKey(smtpPath, "smtp_host"), createValue(smtpPath, "smtp_host", STRING_TYPE));
+        configMap.put(createKey(smtpPath, "smtp_port"), createValue(smtpPath, "smtp_port", INTEGER_TYPE));
+        configMap.put(createKey(smtpPath, "smtp_username"), createValue(smtpPath, "smtp_username", STRING_TYPE));
+        configMap.put(createKey(smtpPath, "smtp_password"), createValue(smtpPath, "smtp_password", STRING_TYPE));
+        configMap.put(createKey(smtpPath, "smtp_useauth"), createValue(smtpPath, "smtp_useauth", BOOLEAN_TYPE));
 
-        // pop3 Elements
+        // Load POP3 configuration elements.
         String pop3Path = "//uns/pop3server/";
-        configMap.put(createKey(pop3Path, "pop3_host"), createValue(pop3Path, "pop3_host", stringType));
-        configMap.put(createKey(pop3Path, "pop3_port"), createValue(pop3Path, "pop3_port", integerType));
-        configMap.put(createKey(pop3Path, "pop3_username"), createValue(pop3Path, "pop3_username", stringType));
-        configMap.put(createKey(pop3Path, "pop3_password"), createValue(pop3Path, "pop3_password", stringType));
-        configMap.put(createKey(pop3Path, "adminmail"), createValue(pop3Path, "adminmail", stringType));
+        configMap.put(createKey(pop3Path, "pop3_host"), createValue(pop3Path, "pop3_host", STRING_TYPE));
+        configMap.put(createKey(pop3Path, "pop3_port"), createValue(pop3Path, "pop3_port", INTEGER_TYPE));
+        configMap.put(createKey(pop3Path, "pop3_username"), createValue(pop3Path, "pop3_username", STRING_TYPE));
+        configMap.put(createKey(pop3Path, "pop3_password"), createValue(pop3Path, "pop3_password", STRING_TYPE));
+        configMap.put(createKey(pop3Path, "adminmail"), createValue(pop3Path, "adminmail", STRING_TYPE));
 
+        // Load JABBER configuration elements.
         String jabberPath = "//uns/jabberserver/";
-        configMap.put(createKey(jabberPath, "host"), createValue(jabberPath, "host", stringType));
-        configMap.put(createKey(jabberPath, "port"), createValue(jabberPath, "port", stringType));
-        configMap.put(createKey(jabberPath, "username"), createValue(jabberPath, "username", stringType));
-        configMap.put(createKey(jabberPath, "password"), createValue(jabberPath, "password", stringType));
-        configMap.put(createKey(jabberPath, "usessl"), createValue(jabberPath, "usessl", booleanType));
-        configMap.put(createKey(jabberPath, "jabber_message_type"), createValue(jabberPath, "jabber_message_type", stringType));
-
-
+        configMap.put(createKey(jabberPath, "host"), createValue(jabberPath, "host", STRING_TYPE));
+        configMap.put(createKey(jabberPath, "port"), createValue(jabberPath, "port", STRING_TYPE));
+        configMap.put(createKey(jabberPath, "username"), createValue(jabberPath, "username", STRING_TYPE));
+        configMap.put(createKey(jabberPath, "password"), createValue(jabberPath, "password", STRING_TYPE));
+        configMap.put(createKey(jabberPath, "usessl"), createValue(jabberPath, "usessl", BOOLEAN_TYPE));
+        configMap.put(createKey(jabberPath, "jabber_message_type"), createValue(jabberPath, "jabber_message_type", STRING_TYPE));
     }
 
-    private static final int stringType = 1;
-
-    private static final int integerType = 2;
-
-    private static final int booleanType = 3;
-
-    private String createKey(String path, String extension) {
-        return path.substring(6) + extension;
+    /**
+     * Utility method for creating full key path from given DOM path and config element name.
+     *
+     * @param domPath The DOM path.
+     * @param elemName The element name.
+     * @return The key's full path.
+     */
+    private String createKey(String domPath, String elemName) {
+        return domPath.substring(6) + elemName;
     }
 
-    private ConfigElement createValue(String path, String extension, int type) {
-        ConfigElement element = null;
-        switch (type) {
-        case stringType:
-            element = new ConfigElement(path + extension, doc.selectSingleNode(path + extension).getStringValue());
-            break;
-        case integerType:
-            element = new ConfigElement(path + extension, new Integer(doc.selectSingleNode(path + extension).getStringValue()));
-            break;
-        case booleanType:
-            String value = doc.selectSingleNode(path + extension).getStringValue();
-            element = new ConfigElement(path + extension, new Boolean(value.equalsIgnoreCase("on")));
-            break;
-        default:
-            break;
+    /**
+     * Utility method for creating config element value for the given domPath+elementName, expecting the given value type.
+     *
+     * @param domPath The DOM path.
+     * @param elemName The element name.
+     * @param valueType Expected value type (one of {@link #STRING_TYPE}, {@link #INTEGER_TYPE}, {@link #BOOLEAN_TYPE}).
+     * @return The config element value.
+     */
+    private ConfigElement createValue(String domPath, String elemName, int valueType) {
+
+        ConfigElement result = null;
+        switch (valueType) {
+            case STRING_TYPE:
+                result =
+                        new ConfigElement(domPath + elemName, configDomDocument.selectSingleNode(domPath + elemName)
+                                .getStringValue());
+                break;
+            case INTEGER_TYPE:
+                result =
+                        new ConfigElement(domPath + elemName, new Integer(configDomDocument.selectSingleNode(domPath + elemName)
+                                .getStringValue()));
+                break;
+            case BOOLEAN_TYPE:
+                String value = configDomDocument.selectSingleNode(domPath + elemName).getStringValue();
+                result = new ConfigElement(domPath + elemName, new Boolean(value.equalsIgnoreCase("on")));
+                break;
+            default:
+                break;
         }
 
-        return element;
+        return result;
     }
 
-    public void updateConfiguration(Map newConfigMap) throws Exception {
-        initDoc();
-        Iterator it = newConfigMap.values().iterator();
-        Map ldapMap = new HashMap();
-        while (it.hasNext()) {
-            ConfigElement configElement = (ConfigElement) it.next();
-            configElement.setValue(configElement.getTempValue());
-            Object value = configElement.getValue();
-            if (value instanceof Boolean) {
-                value = configElement.getValue().toString().equals("true") ? "on" : "off";
-            }
-            if (configElement.getPath().startsWith("ldap.")) {
-                ldapMap.put(configElement.getPath(), configElement.getValue().toString());
-            } else
-                doc.selectSingleNode(configElement.getPath()).setText(value.toString());
-        }
-
-        OutputFormat outformat = OutputFormat.createPrettyPrint();
-        outformat.setEncoding("UTF-8");
-        XMLWriter writer = new XMLWriter(new FileOutputStream(configFilePath), outformat);
-        writer.write(this.doc);
-        writer.flush();
-
-        UnsProperties unsProperties = new UnsProperties();
-        unsProperties.setLdapParams(ldapMap.get("ldap.url").toString(), ldapMap.get("ldap.context").toString(), ldapMap.get("ldap.user.dir").toString(), ldapMap.get("ldap.attr.uid").toString());
-
-        this.configMap = newConfigMap;
-
-    }
-
-    public Map getConfigMap() {
+    /**
+     * Returns the loaded configuration map of this instance.
+     *
+     * @return The map.
+     */
+    public Map<String, ConfigElement> getConfigMap() {
         return this.configMap;
     }
 
+    /**
+     * Construct and return configuration file full path.
+     *
+     * @return The result.
+     */
+    private static String buildConfigFilePath() {
+
+        String result = null;
+        try {
+            result = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar + CONFIG_FILE_NAME;
+        } catch (Exception e) {
+            LOGGER.error("Unable to construct config file path", e);
+        }
+        return result;
+    }
 }

@@ -60,22 +60,6 @@ public class TestConfigUpdater {
     /**
      *
      */
-    public static void testChangeValue() {
-
-        try {
-            // ConfigManager configUpdater = new ConfigManager();
-            // File unsConfig = new File("c:/work/eclipse-workspaces/UNS2/src/main/resources/uns-config.xml");
-            // configUpdater.parseWithSAX(unsConfig);
-
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     *
-     */
     public static void testJabberConnection() {
 
         try {
