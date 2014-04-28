@@ -1,29 +1,11 @@
 package com.eurodyn.uns.web.jsf.admin.config;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
-import javax.mail.Session;
-import javax.mail.Store;
-import javax.naming.Context;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.InitialDirContext;
-
-import org.apache.commons.lang.StringUtils;
-import org.jivesoftware.smack.SSLXMPPConnection;
-import org.jivesoftware.smack.XMPPConnection;
-import org.jivesoftware.smack.XMPPException;
-
-import com.eurodyn.uns.util.MailAuthenticator;
 import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.web.jsf.BaseBean;
-import com.sun.mail.smtp.SMTPTransport;
 
 /**
  * Action bean for providing configuration values to relevant configuration pages in UI, i.e. general.jsp, database.jsp, etc.

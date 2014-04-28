@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.io.SAXReader;
 
@@ -33,8 +35,11 @@ public class ConfigManager {
     /** The name of the application's configuration file. */
     private static final String CONFIG_FILE_NAME = "uns-config.xml";
 
-    /** The full path of the application's configuration file. */
+    /** The full path of the application's configuration file. This constant is used if no such path is fed in via constructor. */
     private static final String CONFIG_FILE_PATH = buildConfigFilePath();
+
+    /** The map of properties default values. Classic key-value pairs. */
+    private static final Map<String, Object> DEFAULTS = createDefaultsMap();;
 
     /** The class's singleton instance. */
     private static ConfigManager instance = null;
@@ -45,12 +50,30 @@ public class ConfigManager {
     /** DOM document where the configuration is loaded into and read from. */
     private Document configDomDocument;
 
+    /** Application's configuration file full path. Comes from {@link #CONFIG_FILE_PATH} or via constructor. */
+    private String configFilePath;
+
     /**
      * Hide singleton constructor.
      *
-     * @throws Exception when problems with loading the configuration from file.
+     * @throws Exception
      */
     private ConfigManager() throws Exception {
+        this(CONFIG_FILE_PATH);
+    }
+
+    /**
+     * Singleton constructor, taking the config file path dynamically.
+     *
+     * @throws Exception when problems with loading the configuration from file.
+     */
+    protected ConfigManager(String configFilePath) throws Exception {
+
+        if (StringUtils.isBlank(configFilePath)) {
+            throw new IllegalArgumentException("Config file path must not blank!");
+        }
+
+        this.configFilePath = configFilePath;
         loadConfigElements();
     }
 
@@ -75,7 +98,7 @@ public class ConfigManager {
     private void initDoc() throws Exception {
 
         SAXReader xmlReader = new SAXReader();
-        this.configDomDocument = xmlReader.read(CONFIG_FILE_PATH);
+        this.configDomDocument = xmlReader.read(configFilePath);
 
     }
 
@@ -161,27 +184,33 @@ public class ConfigManager {
      */
     private ConfigElement createValue(String domPath, String elemName, int valueType) {
 
-        ConfigElement result = null;
+        String fullKeyPath = domPath + elemName;
+        String strValue = configDomDocument.selectSingleNode(fullKeyPath).getStringValue();
+        Object objValue = null;
+
         switch (valueType) {
             case STRING_TYPE:
-                result =
-                        new ConfigElement(domPath + elemName, configDomDocument.selectSingleNode(domPath + elemName)
-                                .getStringValue());
+                objValue = strValue == null ? DEFAULTS.get(fullKeyPath) : strValue;
                 break;
             case INTEGER_TYPE:
-                result =
-                        new ConfigElement(domPath + elemName, new Integer(configDomDocument.selectSingleNode(domPath + elemName)
-                                .getStringValue()));
+                try {
+                    objValue = Integer.valueOf(strValue);
+                } catch (NumberFormatException e) {
+                    objValue = DEFAULTS.get(fullKeyPath);
+                }
                 break;
             case BOOLEAN_TYPE:
-                String value = configDomDocument.selectSingleNode(domPath + elemName).getStringValue();
-                result = new ConfigElement(domPath + elemName, new Boolean(value.equalsIgnoreCase("on")));
+                objValue = BooleanUtils.toBoolean(strValue);
                 break;
             default:
                 break;
         }
 
-        return result;
+        if (objValue == null) {
+            throw new RuntimeException("Found no value for this configuration property: " + fullKeyPath);
+        }
+
+        return new ConfigElement(fullKeyPath, objValue);
     }
 
     /**
@@ -202,10 +231,23 @@ public class ConfigManager {
 
         String result = null;
         try {
-            result = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar + CONFIG_FILE_NAME;
+            String appHome = AppConfigurator.getInstance().getApplicationHome();
+            result = appHome + File.separatorChar + CONFIG_FILE_NAME;
         } catch (Exception e) {
             LOGGER.error("Unable to construct config file path", e);
         }
         return result;
+    }
+
+    /**
+     * Creates the map of properties default values. There may be none, but if so then returns at least an empty map.
+     *
+     * @return The map.
+     */
+    private static Map<String, Object> createDefaultsMap() {
+
+        // NB! Make sure you add the default value in proper type. i.e. for integer property use Integer, etc.
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        return map;
     }
 }
