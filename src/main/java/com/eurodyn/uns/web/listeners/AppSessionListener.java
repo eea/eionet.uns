@@ -7,38 +7,52 @@ import javax.servlet.http.HttpSessionListener;
 
 import com.eurodyn.uns.util.common.WDSLogger;
 
-
+/**
+ * A simple {@link HttpSessionListener} for recording the number of created sessions, logging memory usage, etc.
+ *
+ * @author EuroDynamics
+ * @author jaanus
+ */
 public class AppSessionListener implements HttpSessionListener {
 
-   private static final WDSLogger logger = WDSLogger.getLogger(AppServletContextListener.class);
-   private int sessionCount = 0;
+    /** Static logger for this class. */
+    private static final WDSLogger LOGGER = WDSLogger.getLogger(AppSessionListener.class);
 
-   /**
-    * Method called on event: session created
-    * @param se HttpSessionEvent
-    */
-   public void sessionCreated(HttpSessionEvent se) {
-      sessionCount++;
-      logger.debug("New HTTP Session has been created. Sessions count = " + sessionCount);
-      logMemory();
-   }
+    /** Number of active sessions. */
+    private int sessionCount = 0;
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see javax.servlet.http.HttpSessionListener#sessionCreated(javax.servlet.http.HttpSessionEvent)
+     */
+    @Override
+    public void sessionCreated(HttpSessionEvent se) {
+        sessionCount++;
+        LOGGER.debug("New HTTP Session has been created. Sessions count = " + sessionCount);
+        logMemory();
+    }
 
-   /**
-    * Method called on event: session destroyed
-    * @param se HttpSessionEvent
-    */
-   public void sessionDestroyed(HttpSessionEvent se) {
-      sessionCount--;
-      logger.debug("Existing HTTP Session has been destroyed. Sessions count = " + sessionCount);
-      logMemory();
-   }
+    /*
+     * (non-Javadoc)
+     *
+     * @see javax.servlet.http.HttpSessionListener#sessionDestroyed(javax.servlet.http.HttpSessionEvent)
+     */
+    @Override
+    public void sessionDestroyed(HttpSessionEvent se) {
+        sessionCount--;
+        LOGGER.debug("Existing HTTP Session has been destroyed. Sessions count = " + sessionCount);
+        logMemory();
+    }
 
-   private void logMemory(){
-      Runtime run = Runtime.getRuntime();
-      long free = run.freeMemory();
-      long total = run.totalMemory();
-      String perc = new DecimalFormat("###.##").format(100.0*free/total);
-      logger.debug("Free memory " + (free>>10) + "KB (" + perc + "%) of " + (total>>10) + "KB");      
-   }
+    /**
+     * Utility method for logging memory usage.
+     */
+    private void logMemory() {
+        Runtime run = Runtime.getRuntime();
+        long free = run.freeMemory();
+        long total = run.totalMemory();
+        String perc = new DecimalFormat("###.##").format(100.0 * free / total);
+        LOGGER.debug("Free memory " + (free >> 10) + "KB (" + perc + "%) of " + (total >> 10) + "KB");
+    }
 }

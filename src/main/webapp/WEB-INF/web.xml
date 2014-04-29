@@ -188,7 +188,7 @@
 		<listener-class>com.eurodyn.uns.web.listeners.AppSessionListener</listener-class>
 	</listener>
 	<listener>
-		<listener-class>com.eurodyn.uns.web.listeners.AppServletContextListener</listener-class>
+		<listener-class>com.eurodyn.uns.web.listeners.GeneralPurposeServletContextListener</listener-class>
 	</listener>
 	<listener>
 		<listener-class>com.eurodyn.uns.service.daemons.notificator.Notificator</listener-class>
