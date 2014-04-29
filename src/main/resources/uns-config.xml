@@ -24,7 +24,7 @@
     <username>${jabber.username}</username>
     <password>${jabber.password}</password>
     <usessl>${jabber.useSSL}</usessl>
-    <jabber_message_type>${jabber.messageType}</jabber_message_type>
+    <jabber_message_type>headline</jabber_message_type>
   </jabberserver>
   <!-- SMTP server for sending e-mail notifications.
 	       If server requires authentication set 'smtp_useauth' to on and provide 'smtp_username' and 'smtp_password' parameters
