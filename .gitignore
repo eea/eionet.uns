@@ -1,5 +1,9 @@
+/.classpath
+/.project
+/.settings
+/target
+/rebuild.bat
 /deploy.bat
 /local.properties
 /uns.iml
 /.idea
-/target
