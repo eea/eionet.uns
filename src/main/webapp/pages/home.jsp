@@ -74,10 +74,7 @@
 					<div class="boxcontent" style="height:200px;">
 						<p style="font-size: 100%">
 						If you experience any problem using Unified Notification System, please let the Eionet Helpdesk know immediately. 
-						The Helpdesk can be reached by phone on +37 2 508 4992 from Monday through Friday 9:00 to 17:00 CET.
-						</p>
-						<p style="font-size: 100%">
-						You can also email the helpdesk at any time:
+						You can email the helpdesk at any time:
 						<a href="mailto:helpdesk@eionet.europa.eu">helpdesk@eionet.europa.eu</a>.
 						</p>
 						<p style="font-size: 100%">
