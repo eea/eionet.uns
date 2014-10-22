@@ -1,8 +1,7 @@
-
-<!-- Last updated: 2013-02-26T07:55:25Z
+<!-- Last updated: 2014-10-22T07:11:32Z
      To update download http://www.eionet.europa.eu/dropdownmenus.txt -->
         <ul id="dropdowns">
-         <li><a href="http://www.eionet.europa.eu/services">Services</a>
+         <li><a href="http://www.eionet.europa.eu/menuservices">Services</a>
           <ul>
            <li><a href="http://www.eionet.europa.eu/helpdesk">Helpdesk</a></li>
            <li><a href="http://forum.eionet.europa.eu/">Forum</a></li>
@@ -12,12 +11,11 @@
            <li><a href="http://uns.eionet.europa.eu/">Subscriptions</a></li>
            <li><a href="http://www.eionet.europa.eu/networknews">News</a></li>
            <li><a href="http://www.eionet.europa.eu/calendar">Calendar</a></li>
-           <li><a href="http://www.eionet.europa.eu/training">Training</a></li>
            <li><a href="http://www.eionet.europa.eu/rolemails">NFP mails</a></li>
            <li><a href="http://archives.eionet.europa.eu/">Archived IGs</a></li>
           </ul>
          </li>
-         <li><a href="http://www.eionet.europa.eu/reportnet">Reportnet</a>
+         <li><a href="http://www.eionet.europa.eu/menureportnet">Reportnet</a>
           <ul>
            <li><a href="http://cdr.eionet.europa.eu/">CDR Repository</a></li>
            <li><a href="http://rod.eionet.europa.eu/">ROD Obligations</a></li>
@@ -32,7 +30,7 @@
            <li><a href="http://www.eionet.europa.eu/reportnet">Reportnet Documents</a></li>
           </ul>
          </li>
-         <li><a href="http://www.eionet.europa.eu/tools">Tools</a>
+         <li><a href="http://www.eionet.europa.eu/menutools">Tools</a>
           <ul>
            <li><a href="http://www.eionet.europa.eu/gis/">GIS</a></li>
            <li><a href="http://www.eionet.europa.eu/seis/">SEIS</a></li>
@@ -47,15 +45,13 @@
            <li><a href="http://sparqlclient.eionet.europa.eu/">SPARQL client</a></li>
           </ul>
          </li>
-         <li><a href="http://www.eionet.europa.eu/topics">Topics (ETCs)</a>
+         <li><a href="http://www.eionet.europa.eu/menutopics">Topics (ETCs)</a>
           <ul>
            <li><a href="http://acm.eionet.europa.eu/">Air pollution and Climate Change mitigation</a></li>
            <li><a href="http://bd.eionet.europa.eu/">Biological Diversity</a></li>
            <li><a href="http://cca.eionet.europa.eu/">Climate Change impacts, vulnerability and Adaptation</a></li>
            <li><a href="http://icm.eionet.europa.eu/">Inland, Coastal and Marine waters</a></li>
            <li><a href="http://sia.eionet.europa.eu/">Spatial Information and Analysis</a></li>
-           <li><a href="http://scp.eionet.europa.eu/">Sustainable Consumption and Production</a></li>
           </ul>
          </li>
 </ul>
-
