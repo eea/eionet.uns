@@ -50,7 +50,7 @@ import com.eurodyn.uns.util.DateUtil;
 import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.util.uid.UidGenerator;
 import com.hp.hpl.jena.vocabulary.RDF;
-import com.tee.uit.security.AppUser;
+import eionet.acl.AppUser;
 
 public class ServiceDispatcher {
     private static final WDSLogger logger = WDSLogger.getLogger(XslFacade.class);

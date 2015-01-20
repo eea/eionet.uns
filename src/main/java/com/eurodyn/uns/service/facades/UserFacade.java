@@ -29,10 +29,10 @@ import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.common.WDSLogger;
-import com.tee.uit.security.AccessControlListIF;
-import com.tee.uit.security.AccessController;
-import com.tee.uit.security.AuthMechanism;
-import com.tee.uit.security.SignOnException;
+import eionet.acl.AccessControlListIF;
+import eionet.acl.AccessController;
+import eionet.acl.AuthMechanism;
+import eionet.acl.SignOnException;
 
 public class UserFacade {
 
