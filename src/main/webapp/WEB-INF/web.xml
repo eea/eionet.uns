@@ -217,7 +217,7 @@
 
 	<servlet>
 		<servlet-name>RpcRouter</servlet-name>
-		<servlet-class>com.tee.uit.servlets.XmlRpcRouter</servlet-class>
+		<servlet-class>eionet.rpcserver.servlets.XmlRpcRouter</servlet-class>
 		<load-on-startup>10</load-on-startup>
 	</servlet>
 
