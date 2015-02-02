@@ -279,7 +279,11 @@
     <!-- dependencies -->
 
     <dependencies>
-
+		<!--
+			=======================
+				Apache  Commons
+			=======================
+		-->
         <dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
@@ -457,16 +461,15 @@
             <artifactId>batik-xml</artifactId>
             <version>1.6</version>
         </dependency>
-        <!-- unknown version stored -->
         <dependency>
             <groupId>batik</groupId>
-            <artifactId>js</artifactId>
-            <version>unknown-version</version>
+            <artifactId>batik-js</artifactId>
+            <version>1.6</version>
         </dependency>
 
         <!--
             ======================
-                   Eiopnet packages
+                   Eionet packages
             ======================
             -->
 
@@ -519,11 +522,10 @@
             <artifactId>antlr</artifactId>
             <version>2.7.5</version>
         </dependency>
-        <!-- unknown version stored -->
         <dependency>
-            <groupId>jta</groupId>
+            <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
-            <version>unknown-version</version>
+            <version>1.0.1B</version>
         </dependency>
         <!--
             =======================
@@ -571,7 +573,7 @@
             <artifactId>dom4j</artifactId>
             <version>1.6</version>
         </dependency>
-        <!--Version 8 cannot be found-->
+        <!--Version 8 cannot be found in maven central repo -->
         <dependency>
             <groupId>saxon</groupId>
             <artifactId>saxon</artifactId>
@@ -592,7 +594,7 @@
                    RDF/OWL API
             ==========================
             -->
-        <!-- com.hp.hpl.jena 2.2 cannot be found -->
+        <!-- com.hp.hpl.jena 2.2 cannot be found in maven central repo -->
         <dependency>
             <groupId>jena</groupId>
             <artifactId>jena</artifactId>
@@ -626,13 +628,13 @@
             <artifactId>myfaces-impl</artifactId>
             <version>1.1.4</version>
         </dependency>
-        <!-- 1.6.4 version cannot be found -->
+        <!-- 1.6.4 version cannot be found in maven central repo -->
         <dependency>
             <groupId>quartz</groupId>
             <artifactId>quartz</artifactId>
             <version>1.6.4</version>
         </dependency>
-        <!-- Version 1.1.2 tomahawk cannot be found in maven central -->
+        <!-- Version 1.1.2 tomahawk cannot be found in maven central repo -->
         <dependency>
             <groupId>tomahawk</groupId>
             <artifactId>tomahawk</artifactId>
