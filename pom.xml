@@ -783,7 +783,18 @@
             <version>6.1.25</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-catalina</artifactId>
+            <version>7.0.57</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+            <scope>test</scope>
+        </dependency>
 <!--    <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

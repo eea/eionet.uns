@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+  <comment>Examples of templates for testing</comment>
+
+  <!-- Plain notification template -->
+  <entry key="template1.plain"><![CDATA[
+Dear  <# subscription['user']['fullName'] #> 
+
+ $EVENT 
+
+<% for key,value in event['metadata'].items(): print ('%s %s')% (key,value) %>You may unsubscribe yourself from the <# subscription['channel']['title'] #> channel 
+by using the following link: $UNSUSCRIBE_LINK 
+
+Best Regards, <% print ' Soren roug' %> 
+<% print 'European Environment Agency' %>
+]]></entry>
+
+  <entry key="template2.plain"><![CDATA[
+<%
+known_predicates = ('http://purl.org/dc/elements/1.1/title',
+     'http://purl.org/rss/1.0/title',
+     'http://purl.org/dc/elements/1.1/description'
+     'http://purl.org/rss/1.0/description',
+     'http://purl.org/dc/elements/1.1/date',
+     'http://purl.org/dc/elements/1.1/identifier',
+     'http://purl.org/rss/1.0/link',
+     'http://rod.eionet.europa.eu/schema.rdf#obligation',
+     'http://rod.eionet.europa.eu/schema.rdf#locality' )
+
+for key in known_predicates:
+    label = key[max(key.rfind('/'),key.rfind('#'))+1:].capitalize()
+    if metadata_dict.has_key(key):
+        value = metadata_dict.get(key, '')
+        if type(value) == type([]): value = ", ".join(value)
+        print '%-20s: %s' % (label, value)
+
+for key, value in metadata_dict.items():
+    if key in known_predicates:
+        continue
+    label = key[max(key.rfind('/'),key.rfind('#'))+1:].capitalize()
+    if type(value) == type([]): value = ", ".join(value)
+    print '%-20s: %s' % (label, value)
+%>
+
+You may unsubscribe yourself from the "$EVENT.CHANNEL" channel by using the following link: $UNSUBSCRIBE_LINK
+
+Best Regards,
+European Environment Agency
+]]></entry>
+
+  <entry key="template2.html"><![CDATA[
+<html>
+<head><title>$EVENT.TITLE</title></head>
+<body>
+<table>
+<%
+known_predicates = ('http://purl.org/dc/elements/1.1/title',
+     'http://purl.org/rss/1.0/title',
+     'http://purl.org/dc/elements/1.1/description'
+     'http://purl.org/rss/1.0/description',
+     'http://purl.org/dc/elements/1.1/date',
+     'http://purl.org/dc/elements/1.1/identifier',
+     'http://purl.org/rss/1.0/link',
+     'http://rod.eionet.europa.eu/schema.rdf#obligation',
+     'http://rod.eionet.europa.eu/schema.rdf#locality' )
+
+for key in known_predicates:
+    label = key[max(key.rfind('/'),key.rfind('#'))+1:].capitalize()
+    if metadata_dict.has_key(key):
+        value = metadata_dict.get(key, '')
+        if type(value) == type([]): value = "<br/>".join(value)
+        print '<tr><th style="vertical-align:top; text-align:right">%s</th><td>%s</td></tr>' % (label, value)
+
+for key, value in metadata_dict.items():
+    if key in known_predicates:
+        continue
+    label = key[max(key.rfind('/'),key.rfind('#'))+1:].capitalize()
+    if type(value) == type([]): value = "<br/>".join(value)
+    print '<tr><th style="vertical-align:top; text-align:right">%s</th><td>%s</td></tr>' % (label, value)
+%>
+</table>
+<hr />
+<p>
+You may unsubscribe yourself from the &quot;$EVENT.CHANNEL&quot; channel by using the following link: $UNSUBSCRIBE_LINK
+</p>
+<p>
+Best Regards,<br />
+<em>European Environment Agency</em>
+</p>
+</body>
+</html>
+]]></entry>
+
+</properties>
