@@ -7,7 +7,7 @@
   <entry key="template1.plain"><![CDATA[
 Dear  <# subscription['user']['fullName'] #> 
 
- $EVENT 
+$EVENT 
 
 <% for key,value in event['metadata'].items(): print ('%s %s')% (key,value) %>You may unsubscribe yourself from the <# subscription['channel']['title'] #> channel 
 by using the following link: $UNSUSCRIBE_LINK 

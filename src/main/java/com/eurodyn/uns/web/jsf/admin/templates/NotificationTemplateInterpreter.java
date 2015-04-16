@@ -33,7 +33,7 @@ public class NotificationTemplateInterpreter {
               "creator = EEAUser()",
               "templ_namespace = {}",
               "metadata_list = []",
-              "metadata_dict = []",
+              "metadata_dict = {}",
               "errorMessage = ''" };
 
     protected static String jython_home;
