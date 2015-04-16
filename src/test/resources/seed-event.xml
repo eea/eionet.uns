@@ -7,21 +7,30 @@
   <EEA_USER ID="3" EXT_USER_ID="roug" CN="Soren Roug" VACATION_FLAG="false" PAGE_REFRESH_DELAY="60" NUMCOLUMNS="2" PREFER_HTML="true" PREFER_DASHBOARD="false"/>
 
 
-  <NOTIFICATION_TEMPLATE ID="1" NAME="Default template" SUBJECT="&quot;$EVENT.CHANNEL&quot; channel: $EVENT.TITLE" TEXT_PLAIN="$EVENT
+  <NOTIFICATION_TEMPLATE ID="1" NAME="Default template" SUBJECT="&quot;$EVENT.CHANNEL&quot; channel: $EVENT.TITLE"
+      TEXT_PLAIN="$EVENT
 You may unsubscribe yourself from the &quot;$EVENT.CHANNEL&quot; channel by using the following link: $UNSUSCRIBE_LINK
 
 Best Regards,
-European Environment Agency" TEXT_HTML="&lt;p&gt;$EVENT &lt;/p&gt;&lt;hr /&gt;You may unsubscribe yourself from the &amp;quot;$EVENT.CHANNEL&amp;quot; channel by using the following link: $UNSUSCRIBE_LINK&lt;br /&gt;&lt;br /&gt;Best Regards,&lt;br /&gt;European Environment Agency" EDIT_ONLY="true"/>
+European Environment Agency"
+      TEXT_HTML="&lt;p&gt;$EVENT &lt;/p&gt;&lt;hr /&gt;You may unsubscribe yourself from the &amp;quot;$EVENT.CHANNEL&amp;quot; channel by using the following link: $UNSUSCRIBE_LINK&lt;br /&gt;&lt;br /&gt;Best Regards,&lt;br /&gt;European Environment Agency" EDIT_ONLY="true"/>
+
   <NOTIFICATION_TEMPLATE ID="2" NAME="Unsubscribed - channel access rights changed notification" SUBJECT="Unsubscribed from &quot;$EVENT.CHANNEL&quot; channel" TEXT_PLAIN="You have been unsubscribed form the channel &quot;$EVENT.CHANNEL&quot; due to access rigths changes.
 
 Sorry for the inconvenience,
-European Environment Agency" TEXT_HTML="You have been unsubscribed form the channel &amp;quot;$EVENT.CHANNEL&amp;quot; due to access rigths changes.&lt;br /&gt;&amp;nbsp;&lt;br /&gt;Sorry for the inconvenience,&lt;br /&gt;European Environment Agency" EDIT_ONLY="true"/>
-  <NOTIFICATION_TEMPLATE ID="3" NAME="Unsubscribed - channel removed notification" SUBJECT="Unsubscribed from &quot;$EVENT.CHANNEL&quot; channel" TEXT_PLAIN="Channel &quot;$EVENT.CHANNEL&quot; does not exist anymore.
+European Environment Agency"
+      TEXT_HTML="You have been unsubscribed form the channel &amp;quot;$EVENT.CHANNEL&amp;quot; due to access rigths changes.&lt;br /&gt;&amp;nbsp;&lt;br /&gt;Sorry for the inconvenience,&lt;br /&gt;European Environment Agency" EDIT_ONLY="true"/>
+
+  <NOTIFICATION_TEMPLATE ID="3" NAME="Unsubscribed - channel removed notification" SUBJECT="Unsubscribed from &quot;$EVENT.CHANNEL&quot; channel"
+      TEXT_PLAIN="Channel &quot;$EVENT.CHANNEL&quot; does not exist anymore.
 You will not be receving notification for this channel anymore.
 
 Sorry for the inconvenience,
-European Environment Agency" TEXT_HTML="Channel &amp;quot;$EVENT.CHANNEL&amp;quot; does not exist anymore.&lt;br /&gt; You will not be receving notification for this channel anymore.&lt;br /&gt; &amp;nbsp;&lt;br /&gt; Sorry for the inconvenience,&lt;br /&gt; European Environment Agency&lt;br /&gt;" EDIT_ONLY="true"/>
-  <NOTIFICATION_TEMPLATE ID="4" NAME="CDRTest template" SUBJECT="ROD notification for &quot;$EVENT.TITLE&quot;" TEXT_PLAIN="&lt;%
+European Environment Agency"
+     TEXT_HTML="Channel &amp;quot;$EVENT.CHANNEL&amp;quot; does not exist anymore.&lt;br /&gt; You will not be receving notification for this channel anymore.&lt;br /&gt; &amp;nbsp;&lt;br /&gt; Sorry for the inconvenience,&lt;br /&gt; European Environment Agency&lt;br /&gt;" EDIT_ONLY="true"/>
+
+  <NOTIFICATION_TEMPLATE ID="4" NAME="CDRTest template" SUBJECT="ROD notification for &quot;$EVENT.TITLE&quot;"
+      TEXT_PLAIN="&lt;%
 if event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#event_type&apos;] == &apos;Envelope revoke&apos;:
     print &apos;The obligation %s has been updated by %s.&apos; % (event[&apos;metadata&apos;][&apos;http://purl.org/dc/elements/1.1/title&apos;], event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#actor&apos;])
 else:
@@ -43,8 +52,10 @@ To unsubscribe follow the link $UNSUSCRIBE_LINK
 This is an automatic message. Replies to this message will not be read or responded to.
 
 Best Regards,
-European Environment Agency" TEXT_HTML="" EDIT_ONLY="false"/>
-  <NOTIFICATION_TEMPLATE ID="5" NAME="EEA Planner template" SUBJECT="&quot;$EVENT.CHANNEL&quot; project: $EVENT.TITLE" TEXT_PLAIN="Dear  &lt;# subscription[&apos;user&apos;][&apos;fullName&apos;] #&gt;,
+European Environment Agency"
+      TEXT_HTML="x" EDIT_ONLY="false"/>
+  <NOTIFICATION_TEMPLATE ID="5" NAME="EEA Planner template" SUBJECT="&quot;$EVENT.CHANNEL&quot; project: $EVENT.TITLE"
+      TEXT_PLAIN="Dear  &lt;# subscription[&apos;user&apos;][&apos;fullName&apos;] #&gt;,
 
 This message is to inform you that the project &quot;$EVENT.TITLE&quot; has been &lt;# event[&apos;metadata&apos;][&apos;http://planner.eionet.europa.eu/xml/ns/1.0/action&apos;] #&gt; on &lt;# event[&apos;metadata&apos;][&apos;http://planner.eionet.europa.eu/xml/ns/1.0/last_updated&apos;] #&gt;.
 Visit the project page at &lt;# event[&apos;metadata&apos;][&apos;http://purl.org/rss/1.0/link&apos;] #&gt;. This project is &lt;# event[&apos;metadata&apos;][&apos;http://planner.eionet.europa.eu/xml/ns/1.0/status&apos;] #&gt;.
@@ -73,8 +84,10 @@ This is an automatic message. Replies to this message will not be read or respon
 
 Best regards,
 European Environment Agency
-" TEXT_HTML="" EDIT_ONLY="false"/>
-  <NOTIFICATION_TEMPLATE ID="6" NAME="ROD template" SUBJECT="ROD notification for &quot;$EVENT.TITLE&quot;" TEXT_PLAIN="&lt;%
+"
+      TEXT_HTML="x" EDIT_ONLY="false"/>
+  <NOTIFICATION_TEMPLATE ID="6" NAME="ROD template" SUBJECT="ROD notification for &quot;$EVENT.TITLE&quot;"
+      TEXT_PLAIN="&lt;%
 if event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#event_type&apos;] == &apos;Obligation change&apos;:
     print &apos;The obligation %s has been changed by %s.&apos; % (event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#obligation&apos;], event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#actor&apos;])
     if type(event[&apos;metadata&apos;][&apos;http://rod.eionet.eu.int/schema.rdf#locality&apos;]) == type([]):
@@ -119,7 +132,8 @@ To unsubscribe follow the link $UNSUSCRIBE_LINK
 This is an automatic message. Replies to this message will not be read or responded to.
 
 Best Regards,
-European Environment Agency" TEXT_HTML="" EDIT_ONLY="false"/>
+European Environment Agency"
+      TEXT_HTML="x" EDIT_ONLY="false"/>
 
 
   <DELIVERY_TYPE ID="1" NAME="EMAIL"/>
