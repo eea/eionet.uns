@@ -101,7 +101,7 @@ public class PythonTemplatesTest {
                         containsString("yourself from the \"Channel title\" channel")));
         assertThat(resultHtml, allOf(
                         containsString("yourself from the \"Channel title\" channel"),
-                        containsString("<p>TITLE : Event title as DC title<br/>"),
+                        containsString("TITLE : Event title as DC title<br/>"),
                         containsString("OBLIGATION : Obligation HERE<br/>")));
     }
 
