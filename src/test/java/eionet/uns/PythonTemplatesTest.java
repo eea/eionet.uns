@@ -26,6 +26,12 @@ import com.eurodyn.uns.service.facades.NotificationTemplateFacade;
 import com.eurodyn.uns.web.jsf.admin.templates.NotificationTemplateInterpreter;
 import com.hp.hpl.jena.vocabulary.RSS;
 
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.dbunit.operation.DatabaseOperation;
+
 /**
  * Tests for the Python templates.
  */
@@ -42,6 +48,13 @@ public class PythonTemplatesTest {
         InputStream inStream = PythonTemplatesTest.class.getResourceAsStream("/templates.xml");
         templateMap.loadFromXML(inStream);
         inStream.close();
+        loadData("/seed-event.xml");
+    }
+
+    private static void loadData(String seedFileName) throws Exception {
+        IDatabaseConnection dbConn = new DatabaseConnection(ds.getConnection());
+        IDataSet dataSet = new FlatXmlDataSet(PythonTemplatesTest.class.getResourceAsStream(seedFileName));
+        DatabaseOperation.CLEAN_INSERT.execute(dbConn, dataSet);
     }
 
     @Before
@@ -119,6 +132,11 @@ public class PythonTemplatesTest {
         return executePlainTemplate(plainTemplateName, null);
     }
 
+    /**
+     * Set up a template and execute Python on it.
+     * NOTE that it also loads a notification template with ID=1 from the database, but
+     * doesn't use it for anything.
+     */
     private Map executePlainTemplate(String plainTemplateName, String htmlTemplateName) {
         NotificationTemplateFacade notificationTemplateFacade = new NotificationTemplateFacade();
         NotificationTemplate notificationTemplate = notificationTemplateFacade.getNotificationTemplate(new Integer(1));
