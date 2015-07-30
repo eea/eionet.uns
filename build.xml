@@ -35,7 +35,7 @@
                 <filter token="UNS_URL" value="${uns.url}"/>
             </filterset>
         </copy>
-        <chmod file="${uns_python_source.home}/UNS/unsd.sh" perm="+x"/>
+        <!--<chmod file="${uns_python_source.home}/UNS/unsd.sh" perm="+x"/>-->
 
         <!-- Prepare "xsl" directory in app-home. -->
         <copy  todir="${uns.home}/xsl" overwrite="true">
@@ -47,7 +47,7 @@
             <filterset begintoken="$${" endtoken="}">
                 <filter token="uns_python_source.home" value="${uns_python_source.home}"/>
                 <filter token="jython.home" value="${jython.home}"/>
-            	<filter token="uns.url" value="${uns.url}"/>
+                <filter token="uns.url" value="${uns.url}"/>
             </filterset>
         </copy>
 
@@ -61,7 +61,7 @@
         </copy>
 
         <copy file="${basedir}/src/main/resources/uns-config.xml" todir="${uns.home}" overwrite="true">
-        	<filterset begintoken="$${" endtoken="}">
+        	  <filterset begintoken="$${" endtoken="}">
                 <filtersfile file="${propertiesFile}"/>
             </filterset>
         </copy>
