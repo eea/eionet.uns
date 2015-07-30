@@ -16,50 +16,51 @@ import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
 
 public class EMailThread implements Runnable {
-    
+
     private static final WDSLogger logger = WDSLogger.getLogger(EMailThread.class);
-    
+
     List notifications;
-    
+
     public EMailThread(List notifications) {
         this.notifications = notifications;
     }
-    
+
     public void run() {
-        
+
         try{
             Map configMap = ConfigManager.getInstance().getConfigMap();
             String smtpServer = (String)((ConfigElement) configMap.get("smtpserver/smtp_host")).getValue();
+            Integer smtpPort = (Integer)((ConfigElement) configMap.get("smtpserver/smtp_port")).getValue();
             String smtpUsername = (String)((ConfigElement) configMap.get("smtpserver/smtp_username")).getValue();
             String smtpPassword = (String)((ConfigElement) configMap.get("smtpserver/smtp_password")).getValue();
             String smtpSender = (String)((ConfigElement) configMap.get("pop3server/adminmail")).getValue();
-            
+
             if(notifications != null){
-                
+
                 DeliveryFacade deliveryFacade = new DeliveryFacade();
-                
+
                 for(Iterator it = notifications.iterator(); it.hasNext(); ){
                     Notification notif = (Notification)it.next();
-                    
+
                     DeliveryType dt = new DeliveryType();
                     dt.setId(new Integer(notif.getDeliveryTypeId()));
-                    
+
                     Delivery delivery = new Delivery();
                     delivery.setNotification(notif);
-                    delivery.setDeliveryStatus(0);              
+                    delivery.setDeliveryStatus(0);
                     delivery.setDeliveryType(dt);
                     delivery.setDeliveryTime(new Date());
-                    
+
                     DeliveryNotification dtnotif = new DeliveryNotification();
                     dtnotif.setDeliveryType(dt);
                     dtnotif.setNotification(notif);
-                    
+
                     delivery.setId(dtnotif);
-                    
+
                     if(notif.getFailed() == 0){
                         deliveryFacade.createDelivery(delivery);
                     }
-                    
+
                     String to = notif.getDeliveryAddress();
                     String subj = notif.getSubject();
                     String body = notif.getContent();
@@ -67,7 +68,7 @@ public class EMailThread implements Runnable {
                     String id = new Integer(notif.getId()).toString();
                     try{
                         if(to != null && to.length() > 0){
-                            SendMail.sendMail(to, subj, body, html, id, smtpServer, smtpUsername, smtpPassword, smtpSender);
+                            SendMail.sendMail(to, subj, body, html, id, smtpServer, smtpPort, smtpUsername, smtpPassword, smtpSender);
                         } else {
                             logger.error("Not valid e-mail address: "+to);
                         }
@@ -76,7 +77,7 @@ public class EMailThread implements Runnable {
                         e.printStackTrace();
                         continue;
                     }
-                    
+
                     delivery.setDeliveryStatus(1);
                     delivery.setDeliveryTime(new Date());
                     deliveryFacade.updateDelivery(delivery);
@@ -87,5 +88,5 @@ public class EMailThread implements Runnable {
             e.printStackTrace();
         }
     }
-    
+
 }

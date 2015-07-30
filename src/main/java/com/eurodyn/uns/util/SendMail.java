@@ -45,6 +45,7 @@ public class SendMail implements java.io.Serializable {
           final String html,
           final String id,
           final String SMTP_SERVER,
+          final Integer smtp_port,
           final String smtp_username,
           final String smtp_password,
           final String smtp_accountFrom) throws Exception
@@ -58,6 +59,7 @@ public class SendMail implements java.io.Serializable {
     // JavaMail API
     Properties sysProps = System.getProperties();
     sysProps.put( "mail.smtp.host", SMTP_SERVER );
+    sysProps.put("mail.smtp.port", smtp_port);
 
     MailAuthenticator auth = null;
     if ( smtp_username != null && smtp_password != null ){
