@@ -41,10 +41,10 @@ public class NotificationTemplateActions extends NotificationTemplateForm {
             if (notificationTemplate.getId() == null) {
                 notificationTemplate.setEditOnly(Boolean.FALSE);
                 notificationTemplateFacade.createNotificationTemplate(notificationTemplate);
-                addInfoMessage(null, "messages.template.success.create", new Object[] { notificationTemplate.getName() });
+                addInfoMessage(null, "messages.template.success.create", new Object[] {notificationTemplate.getName()});
             } else {
                 notificationTemplateFacade.updateNotificationTemplate(notificationTemplate);
-                addInfoMessage(null, "messages.template.success.update", new Object[] { notificationTemplate.getName() });
+                addInfoMessage(null, "messages.template.success.update", new Object[] {notificationTemplate.getName()});
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -57,10 +57,10 @@ public class NotificationTemplateActions extends NotificationTemplateForm {
     public String remove() {
 
         try {
-            if (!notificationTemplateFacade.deleteNotificationTemplate(notificationTemplate)){
-                addErrorMessage(null,"msg.restrictTemplateDeletion",new Object[] { notificationTemplate.getName()});
-            }else
-                addInfoMessage(null, "messages.template.success.delete", new Object[] { notificationTemplate.getName() });
+            if (!notificationTemplateFacade.deleteNotificationTemplate(notificationTemplate)) {
+                addErrorMessage(null, "msg.restrictTemplateDeletion", new Object[] {notificationTemplate.getName()});
+            } else
+                addInfoMessage(null, "messages.template.success.delete", new Object[] {notificationTemplate.getName() });
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             addSystemErrorMessage();
@@ -96,11 +96,10 @@ public class NotificationTemplateActions extends NotificationTemplateForm {
 
             if (resultText != null)
                 resultText = resultText.trim().replaceAll("\n", "<br />");
-            if (resultHtml != null){
+            if (resultHtml != null) {
                 resultHtml = resultHtml.replaceAll("<br />", "\n");
                 resultHtml = resultHtml.trim().replaceAll("\n", "<br />");
             }
-            
 
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -114,6 +113,6 @@ public class NotificationTemplateActions extends NotificationTemplateForm {
         afterTest = "notificationTemplate";
     }
 
-    
+
 
 }
