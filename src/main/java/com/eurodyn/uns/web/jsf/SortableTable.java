@@ -69,7 +69,7 @@ public class SortableTable {
 
 
     public List sort(List list) {
-        if(list == null)
+        if (list == null)
             return null;
         try {
             Collections.sort(list, new Comparator() {
@@ -84,11 +84,11 @@ public class SortableTable {
                     }
 
                     if (aValue instanceof String)
-                        return ((String) aValue).compareTo((String)bValue);
+                        return ((String) aValue).compareTo((String) bValue);
                     if (aValue instanceof Integer)
-                        return ((Integer) aValue).compareTo((Integer)bValue);
+                        return ((Integer) aValue).compareTo((Integer) bValue);
                     if (aValue instanceof Date)
-                        return ((Date) aValue).compareTo((Date)bValue);
+                        return ((Date) aValue).compareTo((Date) bValue);
                     return -1;
                 }
             });

@@ -66,13 +66,26 @@ public class ReportActions extends ReportForm {
         return true;
     }
 
-    public boolean isPreparedNotificationsReport() {
-        setSearchFieldsFromRequest(getExternalContext().getRequestParameterMap());
-        loadAndSortNotifications();
-        return true;
+    public String createNotificationsReport() {
+        return "notificationsReport";
     }
 
-    public String createNotificationsReport() {
+    public String generateNotificationsReport() {
+        if (channel.getId().intValue() == -1)
+            channel = null;
+        else
+            channel = channelFacade.getChannel(channel.getId());
+        if (user.getId().intValue() == -1)
+            user = null;
+        else
+            user = userFacade.findUser(user.getId());
+        try {
+            notificationsRecords = notificationFacade.getNotifications(fromDate, toDate, channel, user, notification);
+            notificationsSortTable.sort(notificationsRecords);
+        } catch (Exception e) {
+            logger.error(e);
+            addSystemErrorMessage();
+        }
         return "notificationsReport";
     }
 
@@ -132,51 +145,19 @@ public class ReportActions extends ReportForm {
         return "notificationsThroughput";
     }
 
-    
+
     public String unsubscribeUser() {
         try {
             User user = userFacade.findUser(subscription.getUser().getExternalId());
             user.getSubscriptions().remove(subscription.getChannel().getId());
             userFacade.updateUser(user);
-            addInfoMessage(null, "messages.subscription.success.delete", new Object[] { subscription.getChannel().getTitle() });
+            addInfoMessage(null, "messages.subscription.success.delete", new Object[] {subscription.getChannel().getTitle()});
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
-        
+
         return null;
     }
 
-    private void setSearchFieldsFromRequest(Map request) {
-        Object userId = request.get("user");
-        if (userId != null) {
-            user.setExternalId(userId.toString());
-        }
-        Object subject = request.get("subject");
-        if (subject != null) {
-            notification.setSubject(subject.toString());
-        }
-        Object notificationDate = request.get("notificationDate");
-        if (notificationDate != null) {
-            SimpleDateFormat dateFormat = getDateFormat();
-            try {
-                Date date = dateFormat.parse(notificationDate.toString());
-                fromDate = date;
-                toDate = date;
-            } catch (ParseException e) {
-                logger.error("Unable to parse date from string=" + notificationDate
-                        + ", expected date format=" + dateFormat.toPattern());
-            }
-        }
-    }
-
-    private void loadAndSortNotifications() {
-        try {
-            notificationsRecords = notificationFacade.getNotifications(fromDate, toDate, user, notification);
-            notificationsSortTable.sort(notificationsRecords);
-        } catch (Exception e) {
-            logger.error(e);
-            addSystemErrorMessage();
-        }
-    }
 }

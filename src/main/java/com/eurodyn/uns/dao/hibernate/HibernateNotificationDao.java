@@ -38,6 +38,7 @@ public class HibernateNotificationDao extends BaseHibernateDao implements INotif
         return Notification.class;
     }
 
+    @Override
     public List getNotificationsThroughput(Date fromDate, Date toDate, Channel channel, User user) throws DAOException {
         List result = new ArrayList();
         Session session = null;
@@ -55,8 +56,8 @@ public class HibernateNotificationDao extends BaseHibernateDao implements INotif
             sb.append("group by date_format(delivery.deliveryTime,'%d-%m-%Y'), delivery.deliveryStatus , delivery.deliveryType ");
 
             Query query = session.createQuery(sb.toString());
-            query.setTimestamp("fromDate", fromDate);
-            query.setTimestamp("toDate", toDate);
+            query.setTimestamp("fromDate", DateUtil.startOfADay(fromDate));
+            query.setTimestamp("toDate", DateUtil.secondBeforeMidnight(toDate));
             if (channel != null)
                 query.setEntity("channel", channel);
             if (user != null)
@@ -117,23 +118,29 @@ public class HibernateNotificationDao extends BaseHibernateDao implements INotif
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Notification> getNotifications(Date fromDate, Date toDate, User user, Notification example) throws DAOException {
+    public List<Notification> getNotifications(Date fromDate, Date toDate, Channel channel, User user, Notification example) throws DAOException {
         Session session = null;
+        List result = new ArrayList();
         try {
-            session = createSession();
-            return session.createQuery("FROM Notification n inner join fetch n.deliveries d " +
-                    "WHERE n.user.externalId like lower(:userId) " +
-                    "AND n.subject like lower(:subject) " +
-                    "AND d.deliveryTime BETWEEN :start AND :end ")
-                    .setString("userId", "%" + user.getExternalId() + "%")
-                    .setString("subject", "%" + example.getSubject() + "%")
-                    .setTimestamp("start", DateUtil.startOfADay(fromDate))
-                    .setTimestamp("end", DateUtil.secondBeforeMidnight(toDate))
-                    .list();
+            session = getSession();
+            StringBuffer sb = new StringBuffer();
+            sb.append("FROM Notification n inner join fetch n.deliveries d ");
+            sb.append("WHERE n.user = :user ");
+            if (example.getSubject() != null && !example.getSubject().isEmpty()) {
+                sb.append("AND n.subject like lower(:subject) ");
+            }
+            sb.append("AND d.deliveryTime BETWEEN :start AND :end ");
+            Query q = session.createQuery(sb.toString());
+            q.setEntity("user", user);
+            q.setString("subject", "%" + example.getSubject() + "%");
+            q.setTimestamp("start", DateUtil.startOfADay(fromDate));
+            q.setTimestamp("end", DateUtil.secondBeforeMidnight(toDate));
+           result = q.list();
         } catch (HibernateException e) {
             throw new DAOException(e);
         } finally {
             closeSession(session);
         }
+        return result;
     }
 }

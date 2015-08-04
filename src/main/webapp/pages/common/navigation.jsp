@@ -42,7 +42,7 @@
 					<li class="${selectedMenu == 'config'?'selected':''}"><a href="<c:url value="/admin/config/general.jsf"/>" title="Configuration"><fmt:message key="label.menu.config"/> </a></li>
 					<li class="${selectedMenu == 'channels'?'selected':''}"><a href="<c:url value="/admin/channels/pullChannels.jsf"/>" title="Channels"><fmt:message key="label.menu.channels"/> </a></li>
 					<li class="${selectedMenu == 'templates'?'selected':''}"><a href="<c:url value="/admin/templates/notificationTemplates.jsf"/>" title="Templates"><fmt:message key="label.menu.templates"/> </a></li>
-					<li class="${selectedMenu == 'reports'?'selected':''}"><a href="<c:url value="/admin/reports/report_criteria.jsf"/>" title="Reports"><fmt:message key="label.menu.reports"/> </a></li>
+					<li class="${selectedMenu == 'reports'?'selected':''}"><a href="<c:url value="/admin/reports/throughput_criteria.jsf"/>" title="Reports"><fmt:message key="label.menu.reports"/> </a></li>
 					<li class="${selectedMenu == 'subscriptions'?'selected':''}"><a href="<c:url value="/subscriptions/subscriptions.jsf"/>" title="Subscriptions"><fmt:message key="label.menu.subscriptions"/> </a></li>
 					<li class="${selectedMenu == 'cleandb'?'selected':''}"><a href="<c:url value="/admin/cleandb.jsf"/>" title="Clean database">Clean database </a></li>
 			  </c:when>

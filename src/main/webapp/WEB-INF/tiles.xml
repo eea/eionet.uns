@@ -10,8 +10,8 @@
         <put name="footer" value="/pages/common/footer.jsp" />
         <put name="actionReport" value="/pages/common/actionReport.jsp" />
     	<put name="submenu" value="" type="string" />
-    	<put name="selectedMenu" value="" type="string" />  
-        <put name="selectedSubMenu" value="" type="string" />    	  	
+    	<put name="selectedMenu" value="" type="string" />
+        <put name="selectedSubMenu" value="" type="string" />
     </definition>
 
 
@@ -21,7 +21,7 @@
 
 
 
-    <!-- dashboard start  -->    
+    <!-- dashboard start  -->
     <definition name="dashboard.tiles" extends="uns.layout" >
     	<put name="selectedMenu" value="dashboard" type="string" />
         <put name="body" value="/pages/rss/dashboard.jsp" />
@@ -30,19 +30,19 @@
     	<put name="selectedMenu" value="dashboard" type="string" />
         <put name="body" value="/pages/rss/rssReader.jsp" />
     </definition>
-    <!-- dashboard end  -->    
+    <!-- dashboard end  -->
 
     <definition name="/login.tiles" extends="uns.layout" >
         <put name="body" value="/pages/login.jsp" />
     </definition>
 
 
-    
+
     <!-- config start  -->
     <definition name="layout.config" extends="uns.layout">
     	<put name="selectedMenu" value="config" type="string" />
     	<put name="submenu" value="/pages/admin/config/config_submenu.jsp" />
-    </definition> 
+    </definition>
     <definition name="/admin/config/general.tiles" extends="layout.config" >
         <put name="selectedSubMenu" value="general" type="string" />
         <put name="body" value="/pages/admin/config/general.jsp" />
@@ -66,11 +66,11 @@
     <!-- config end  -->
 
 
-    <!-- channels start  -->    
+    <!-- channels start  -->
     <definition name="layout.channels" extends="uns.layout">
     	<put name="selectedMenu" value="channels" type="string" />
     	<put name="submenu" value="/pages/admin/channels/channels_submenu.jsp" />
-    </definition> 
+    </definition>
     <definition name="/admin/channels/pullChannels.tiles" extends="layout.channels" >
         <put name="selectedSubMenu" value="pullChannels" type="string" />
         <put name="body" value="/pages/admin/channels/pullChannels.jsp" />
@@ -97,26 +97,26 @@
     <definition name="/admin/channels/pushChannels.tiles" extends="layout.channels" >
         <put name="selectedSubMenu" value="pushChannels" type="string"  />
         <put name="body" value="/pages/admin/channels/pushChannels.jsp" />
-    </definition>    
+    </definition>
     <definition name="/admin/channels/metadataElements.tiles" extends="layout.channels" >
         <put name="body" value="/pages/admin/channels/metadataElements.jsp" />
-    </definition>    
+    </definition>
     <!-- channels end  -->
 
 
-    
-    
-    
 
 
-    
-    
-    
+
+
+
+
+
+
     <!-- templates start  -->
     <definition name="layout.templates" extends="uns.layout">
-    	<put name="submenu" value="/pages/admin/templates/templates_submenu.jsp"/>    	    
+    	<put name="submenu" value="/pages/admin/templates/templates_submenu.jsp"/>
     	<put name="selectedMenu" value="templates" type="string" />
-    </definition>    
+    </definition>
 
     <definition name="/admin/templates/dashTemplates.tiles" extends="layout.templates" >
         <put name="selectedSubMenu" value="dashTemplates" type="string" />
@@ -136,21 +136,21 @@
     </definition>
 
 
-    
+
     <definition name="/admin/templates/notificationTemplates.tiles" extends="layout.templates" >
 		<put name="selectedSubMenu" value="notificationTemplates" type="string" />
         <put name="body" value="/pages/admin/templates/notificationTemplates.jsp" />
     </definition>
     <definition name="/admin/templates/notificationTemplate.tiles" extends="layout.templates" >
-		<put name="selectedSubMenu" value="notificationTemplates" type="string" />    
+		<put name="selectedSubMenu" value="notificationTemplates" type="string" />
         <put name="body" value="/pages/admin/templates/notificationTemplate.jsp" />
     </definition>
     <definition name="/admin/templates/notificationTemplateTestResult.tiles" extends="layout.templates" >
-		<put name="selectedSubMenu" value="notificationTemplates" type="string" />    
+		<put name="selectedSubMenu" value="notificationTemplates" type="string" />
         <put name="body" value="/pages/admin/templates/notificationTemplateTestResult.jsp" />
     </definition>
     <definition name="/admin/templates/testNotifChannelsList.tiles" extends="layout.templates" >
-		<put name="selectedSubMenu" value="notificationTemplates" type="string" />    
+		<put name="selectedSubMenu" value="notificationTemplates" type="string" />
         <put name="body" value="/pages/admin/templates/testNotifChannelsList.jsp" />
     </definition>
     <!-- templates end  -->
@@ -162,12 +162,16 @@
 
     <!-- reports start  -->
     <definition name="layout.reports" extends="uns.layout">
-    	<put name="submenu" value="/pages/admin/reports/reports_submenu.jsp"/>    	    
+    	<put name="submenu" value="/pages/admin/reports/reports_submenu.jsp"/>
     	<put name="selectedMenu" value="reports" type="string" />
-    </definition>    
+    </definition>
 
-    <definition name="/admin/reports/report_criteria.tiles" extends="layout.reports" >
+    <definition name="/admin/reports/throughput_criteria.tiles" extends="layout.reports" >
         <put name="selectedSubMenu" value="throughput" type="string" />
+        <put name="body" value="/pages/admin/reports/throughput_criteria.jsp" />
+    </definition>
+    <definition name="/admin/reports/report_criteria.tiles" extends="layout.reports" >
+        <put name="selectedSubMenu" value="notifications" type="string" />
         <put name="body" value="/pages/admin/reports/report_criteria.jsp" />
     </definition>
     <definition name="/admin/reports/notification_throughput.tiles" extends="layout.reports" >
@@ -195,8 +199,8 @@
 	<!-- subscriptons start  -->
     <definition name="layout.subscriptions" extends="uns.layout">
     	<put name="selectedMenu" value="subscriptions" type="string" />
-    	<put name="submenu" value="/pages/subscriptions/subscriptions_submenu.jsp"/>    	
-    </definition>    	      
+    	<put name="submenu" value="/pages/subscriptions/subscriptions_submenu.jsp"/>
+    </definition>
     <definition name="subscriptions/availableChannels.tiles" extends="layout.subscriptions" >
     	<put name="selectedSubMenu" value="avChannels" type="string" />
         <put name="body" value="/pages/subscriptions/availableChannels.jsp" />
@@ -211,28 +215,28 @@
     <definition name="subscriptions/userPreferences.tiles" extends="layout.subscriptions" >
         <put name="selectedSubMenu" value="preferences" type="string" />
         <put name="body" value="/pages/subscriptions/userPreferences.jsp" />
-    </definition>    
+    </definition>
     <definition name="subscriptions/unsubscribe.tiles" extends="layout.subscriptions" >
         <put name="selectedSubMenu" value="subscriptions" type="string" />
         <put name="body" value="/pages/subscriptions/unsubscribe.jsp" />
-    </definition>    
-    <!-- subscriptons end  -->       
+    </definition>
+    <!-- subscriptons end  -->
 
 
 
 	<!-- rpc start  -->
     <definition name="layout.xmlrpc" extends="uns.layout">
     	<put name="selectedMenu" value="channels" type="string" />
-    	<put name="submenu" value="/pages/xmlrpc/xmlrpc_submenu.jsp"/>    	
-    </definition>    	      
+    	<put name="submenu" value="/pages/xmlrpc/xmlrpc_submenu.jsp"/>
+    </definition>
     <definition name="xmlrpc/rpcUserChannels.tiles" extends="layout.xmlrpc" >
         <put name="body" value="/pages/xmlrpc/rpcUserChannels.jsp" />
     </definition>
     <definition name="xmlrpc/rpcChannel.tiles" extends="layout.xmlrpc" >
         <put name="body" value="/pages/xmlrpc/rpcChannel.jsp" />
     </definition>
-    <!--    rpc end  -->       
-    
+    <!--    rpc end  -->
+
     <!-- dbclean start  -->
     <definition name="layout.cleandb" extends="uns.layout">
     	<put name="selectedMenu" value="cleandb" type="string" />
@@ -240,6 +244,6 @@
     <definition name="/admin/cleandb.tiles" extends="layout.cleandb" >
 	<put name="body" value="/pages/admin/cleandb.jsp" />
     </definition>
-    <!-- dbclean end  -->      
+    <!-- dbclean end  -->
 
 </tiles-definitions>

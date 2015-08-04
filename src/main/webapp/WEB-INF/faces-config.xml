@@ -53,7 +53,7 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<!-- Channels beans end -->
-	
+
 	<!-- Cleandb beans begin -->
 	<managed-bean>
 		<managed-bean-name>cleandbBean</managed-bean-name>
@@ -284,10 +284,14 @@
 			<to-view-id>/admin/reports/failed_notifications.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>throughputCriteria</from-outcome>
+			<to-view-id>/admin/reports/throughput_criteria.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>reportCriteria</from-outcome>
 			<to-view-id>/admin/reports/report_criteria.jsp</to-view-id>
 		</navigation-case>
-        <navigation-case>
+		<navigation-case>
 			<from-outcome>notificationsReport</from-outcome>
 			<to-view-id>/admin/reports/notifications_report.jsp</to-view-id>
 		</navigation-case>

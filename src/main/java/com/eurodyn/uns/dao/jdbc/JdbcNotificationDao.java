@@ -111,14 +111,14 @@ public class JdbcNotificationDao extends BaseJdbcDao implements INotificationDao
     public List getFailedNotifications() throws DAOException {
         return null;
     }
-
+    @Override
     public List getNotificationsThroughput(Date fromDate, Date toDate,
             Channel channel, User user) throws DAOException {
         return null;
     }
 
     @Override
-    public List<Notification> getNotifications(Date fromDate, Date toDate, User user, Notification example) {
+    public List<Notification> getNotifications(Date fromDate, Date toDate, Channel channel, User user, Notification example) {
         return null;
     }
 }

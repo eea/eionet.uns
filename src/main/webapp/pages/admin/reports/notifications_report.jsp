@@ -1,29 +1,8 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 
-<t:div rendered="#{reportBean.preparedNotificationsReport}"/>
-<h:form>
-    <htm:h1><h:outputText value="Notifications report" /></htm:h1>
-    <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
-        <h:outputLabel value="Notification subject" for="notificationSubject" />
-        <h:inputText id="notificationSubject" value="#{reportBean.notification.subject}" size="100"/>
-        <h:outputLabel value="Delivery period" for="period" />
-        <h:panelGroup id="period">
-            <t:inputDate value="#{reportBean.fromDate}" />
-            <h:outputText value=" -- " />
-            <t:inputDate id="toDate" value="#{reportBean.toDate}" />
-        </h:panelGroup>
-        <h:outputLabel value="User id" for="user" />
-        <h:inputText id="user" value="#{reportBean.user.externalId}"/>
-    </h:panelGrid>
-    <htm:br />
-    <h:commandButton action="#{reportBean.createNotificationsReport}" value="Generate Report" />
-
-    <t:saveState value="#{reportBean.notification.subject}" />
-    <t:saveState value="#{reportBean.fromDate}" />
-    <t:saveState value="#{reportBean.toDate}" />
-    <t:saveState value="#{reportBean.user.externalId}" />
-</h:form>
-
+<t:div rendered="#{empty reportBean.notificationsRecords}">
+    <h:outputText value="There are no notifications in the system that matched your search criteria" />
+</t:div>
 <t:div rendered="#{not empty reportBean.notificationsRecords}">
     <t:dataTable id="notifications" style="width:99%" styleClass="sortable"
                  rowClasses="zebraeven," rows="20"
