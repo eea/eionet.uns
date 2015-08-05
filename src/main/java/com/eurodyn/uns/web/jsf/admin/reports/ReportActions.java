@@ -66,10 +66,6 @@ public class ReportActions extends ReportForm {
         return true;
     }
 
-    public String createNotificationsReport() {
-        return "notificationsReport";
-    }
-
     public String generateNotificationsReport() {
         if (channel.getId().intValue() == -1)
             channel = null;

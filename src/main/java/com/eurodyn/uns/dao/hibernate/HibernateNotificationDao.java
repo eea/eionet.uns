@@ -125,13 +125,21 @@ public class HibernateNotificationDao extends BaseHibernateDao implements INotif
             session = getSession();
             StringBuffer sb = new StringBuffer();
             sb.append("FROM Notification n inner join fetch n.deliveries d ");
-            sb.append("WHERE n.user = :user ");
-            if (example.getSubject() != null && !example.getSubject().isEmpty()) {
-                sb.append("AND n.subject like lower(:subject) ");
+            sb.append("WHERE n.subject like lower(:subject) ");
+            if (user != null) {
+                sb.append("AND n.user = :user ");
+            }
+            if (channel != null) {
+                sb.append("AND n.channelId = :channelId ");
             }
             sb.append("AND d.deliveryTime BETWEEN :start AND :end ");
             Query q = session.createQuery(sb.toString());
-            q.setEntity("user", user);
+            if (user != null) {
+                q.setEntity("user", user);
+            }
+            if (channel != null) {
+                q.setInteger("channelId", channel.getId());
+            }
             q.setString("subject", "%" + example.getSubject() + "%");
             q.setTimestamp("start", DateUtil.startOfADay(fromDate));
             q.setTimestamp("end", DateUtil.secondBeforeMidnight(toDate));

@@ -47,7 +47,7 @@ public class Event implements java.io.Serializable {
 
     private Set notifications = new HashSet(0);
 
-    private Set eventMetadataSet =new HashSet(0);
+    private Set eventMetadataSet = new HashSet(0);
 
     private Date lastSeen;
 
