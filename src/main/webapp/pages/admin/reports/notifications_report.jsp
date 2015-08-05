@@ -59,7 +59,7 @@
         </h:column>
     </t:dataTable>
     <t:dataScroller for="notifications" fastStep="10"
-                    pageIndexVar="pageIndex" renderFacetsIfSinglePage="true"
+                    pageIndexVar="pageIndex" renderFacetsIfSinglePage="false"
                     pageCountVar="pageCount" paginator="true" paginatorMaxPages="9"
                     immediate="true">
         <f:facet name="first">
@@ -75,4 +75,11 @@
             <t:outputText value="Next"/>
         </f:facet>
     </t:dataScroller>
+    <t:saveState value="#{reportBean.notificationsRecords}" />
+    <t:saveState value="#{reportBean.totalSuccess}" />
+    <t:saveState value="#{reportBean.totalFailed}" />
+    <t:saveState value="#{reportBean.fromDate}" />
+    <t:saveState value="#{reportBean.toDate}" />
+    <t:saveState value="#{reportBean.channel}" />
+    <t:saveState value="#{reportBean.user}" />
 </t:div>
