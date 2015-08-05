@@ -65,7 +65,7 @@ public class JNDISupport {
     /**
      * Add a property to Tomcat's context.
      */
-    static void addPropToTomcat(String name, Object value) throws Exception {
+    public static void addPropToTomcat(String name, Object value) throws Exception {
         context.bind(tomcatContextLocation + name,  value);
         addedProps.add(tomcatContextLocation + name);
     }
@@ -73,12 +73,12 @@ public class JNDISupport {
     /**
      * Add a subContext to Tomcat's context.
      */
-    static void addSubCtxToTomcat(String name) throws Exception {
+    public static void addSubCtxToTomcat(String name) throws Exception {
         context.createSubcontext(tomcatContextLocation + name);
         addedSubCtxs.add(0, tomcatContextLocation + name);
     }
 
-    static void addSubcontext(String subCtx) throws Exception {
+    public static void addSubcontext(String subCtx) throws Exception {
         context.createSubcontext(subCtx);
         addedSubCtxs.add(0, subCtx);
     }
