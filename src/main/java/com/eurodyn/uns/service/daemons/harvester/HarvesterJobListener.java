@@ -23,7 +23,7 @@ public class HarvesterJobListener implements JobListener {
      * @see org.quartz.JobListener#jobExecutionVetoed(org.quartz.JobExecutionContext)
      */
     public void jobExecutionVetoed(JobExecutionContext context) {
-        logger.info("Execution vetoed for job " + context.getJobDetail().getName());
+        logger.info("Execution vetoed for job " + context.getJobDetail().getKey().getName());
     }
 
     /*
@@ -44,8 +44,8 @@ public class HarvesterJobListener implements JobListener {
         //JobDataMap dataMap = context.getJobDetail().getJobDataMap();
         logger.info("HARVESTER PROCESS COMPLETED");
 
-        if (exception!=null) {
-            logger.error("Exception thrown when executing job " + context.getJobDetail().getName() + ": " + exception.toString(), exception);
+        if (exception != null) {
+            logger.error("Exception thrown when executing job " + context.getJobDetail().getKey().getName() + ": " + exception.toString(), exception);
             return;
         }
     }

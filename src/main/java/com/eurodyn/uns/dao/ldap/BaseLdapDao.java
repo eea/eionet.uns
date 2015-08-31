@@ -21,6 +21,7 @@
 
 package com.eurodyn.uns.dao.ldap;
 
+import java.io.IOException;
 import java.util.Hashtable;
 import java.util.ResourceBundle;
 
@@ -28,6 +29,10 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
+import javax.naming.ldap.Control;
+import javax.naming.ldap.InitialLdapContext;
+import javax.naming.ldap.LdapContext;
+import javax.naming.ldap.PagedResultsControl;
 
 
 public abstract class BaseLdapDao {
@@ -37,8 +42,8 @@ public abstract class BaseLdapDao {
 
     static  {
         try {
-            conf=ResourceBundle.getBundle("eionetdir");
-            baseDn=conf.getString("ldap.context");
+            conf = ResourceBundle.getBundle("eionetdir");
+            baseDn = conf.getString("ldap.context");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,8 +60,23 @@ public abstract class BaseLdapDao {
         return ctx;
     }
 
+    protected LdapContext getPagedLdapContext() throws NamingException, IOException {
+        int pageSize = 50;
+        Hashtable env = new Hashtable();
+        env.put(LdapContext.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        env.put(LdapContext.PROVIDER_URL, conf.getString("ldap.url"));
+        env.put(LdapContext.SECURITY_AUTHENTICATION, "simple");
+        env.put(LdapContext.SECURITY_PRINCIPAL, conf.getString("ldap.principal"));
+        env.put(LdapContext.SECURITY_CREDENTIALS, conf.getString("ldap.password"));
+        LdapContext ctx = new InitialLdapContext(env, null);
+        ctx.setRequestControls(new Control[]{
+                new PagedResultsControl(pageSize, Control.CRITICAL)
+        });
+        return ctx;
+    }
+
     protected void closeContext(DirContext ctx) throws NamingException {
-        if(ctx!=null) {
+        if (ctx != null) {
             ctx.close();
         }
     }

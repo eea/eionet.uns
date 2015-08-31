@@ -615,7 +615,7 @@
         <dependency>
             <groupId>org.python</groupId>
             <artifactId>jython-standalone</artifactId>
-            <version>2.5.3</version>
+            <version>2.7.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.myfaces.core</groupId>
@@ -628,10 +628,15 @@
             <version>1.1.4</version>
         </dependency>
         <!-- 1.6.4 version cannot be found in maven central repo -->
-        <dependency>
+        <!--<dependency>
             <groupId>quartz</groupId>
             <artifactId>quartz</artifactId>
             <version>1.6.4</version>
+        </dependency>-->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.1</version>
         </dependency>
         <!-- Version 1.1.2 tomahawk cannot be found in maven central repo -->
         <dependency>
@@ -639,6 +644,11 @@
             <artifactId>tomahawk</artifactId>
             <version>1.1.2</version>
         </dependency>
+        <!--<dependency>
+            <groupId>org.apache.myfaces.tomahawk</groupId>
+            <artifactId>tomahawk</artifactId>
+            <version>1.1.14</version>
+        </dependency>-->
         <!-- unknown version stored -->
         <dependency>
             <groupId>smtp</groupId>

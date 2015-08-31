@@ -15,12 +15,17 @@ import com.eurodyn.uns.util.common.WDSLogger;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
 
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
+import static org.quartz.TriggerBuilder.newTrigger;
+
 /**
  * Job that periodically initiates the sending of notifications. Implements {@link ServletContextListener}, as it is started at
  * servlet context initialization and stopped at servlet context destroy.
  *
  * @author EuroDynamics
  * @author jaanus
+ * @author George Sofianos
  */
 public class Notificator implements ServletContextListener {
 
@@ -42,18 +47,23 @@ public class Notificator implements ServletContextListener {
     private void start(long repeatInterval) throws Exception {
         try {
             scheduler = StdSchedulerFactory.getDefaultScheduler();
-            scheduler.start();
-
-            JobDetail jobDetail = new JobDetail("notificatorJob", null, NotificatorJob.class);
+            if (!scheduler.isStarted()) {
+                scheduler.start();
+            }
+            JobDetail jobDetail = newJob(NotificatorJob.class)
+                    .withIdentity("notificatorJob")
+                    .build();
 
             NotificatorJobListener listener = new NotificatorJobListener();
-            jobDetail.addJobListener(listener.getName());
-            scheduler.addJobListener(listener);
+            //jobDetail. addJobListener(listener.getName());
+            scheduler.getListenerManager().addJobListener(listener);
 
-            SimpleTrigger trigger = new SimpleTrigger(jobDetail.getName(), null);
-            trigger.setRepeatInterval(repeatInterval);
-            trigger.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
-
+            SimpleTrigger trigger = newTrigger()
+                    .withIdentity("NotificationTrigger")
+                    .withSchedule(simpleSchedule()
+                        .withIntervalInMilliseconds(repeatInterval)
+                        .withRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY))
+                    .build();
             scheduler.scheduleJob(jobDetail, trigger);
 
         } catch (Exception e) {

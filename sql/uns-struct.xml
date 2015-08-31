@@ -1297,4 +1297,9 @@ INSERT INTO STYLESHEET (ID,NAME,DESCRIPTION,CONTENT) VALUES
         />
     </changeSet>
 -->
+    <changeSet id="rev-47" author="sofiageo">
+        <addColumn tableName="EEA_USER">
+            <column name="DISABLED_FLAG" type="BIT"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
