@@ -74,7 +74,7 @@ public class NotificatorJob implements Job {
                         Subscription subscription = (Subscription) it3.next();
                         User user = subscription.getUser();
                         Date subdate = subscription.getCreationDate();
-                        if (subdate.before(eventdate) && !user.getVacationFlag().booleanValue() && checkFilters(event, subscription)){
+                        if (subdate.before(eventdate) && !user.getVacationFlag().booleanValue() && !user.getDisabledFlag().booleanValue() && checkFilters(event, subscription)){
                             boolean success = generateNotification(event, subscription, template);
                             if (success){
                                 i = i + 1;
@@ -90,7 +90,7 @@ public class NotificatorJob implements Job {
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
-            throw new Exception("Error occured when scanning notifications: "+e.toString());
+            throw new Exception("Error occured when scanning notifications: " + e.toString());
         }
     }
 

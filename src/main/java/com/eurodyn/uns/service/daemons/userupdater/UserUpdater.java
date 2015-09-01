@@ -14,7 +14,7 @@ import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
 
 /**
- *
+ * Schedule a job for user updating from LDAP servers.
  * @author George Sofianos
  */
 public class UserUpdater implements ServletContextListener {
