@@ -12,7 +12,7 @@ import javax.naming.NamingException;
 import java.io.IOException;
 
 /**
- *
+ * A scheduled job to update users from LDAP Server
  * @author George Sofianos
  */
 public class UserUpdaterJob implements Job {
@@ -25,11 +25,12 @@ public class UserUpdaterJob implements Job {
     try {
       ldap.updateUsers();
     } catch (NamingException e) {
-      logger.error(e.getMessage());
+      logger.error("A naming Exception occured: " + e);
     } catch (IOException e) {
-      logger.error(e.getMessage());
+      logger.error("An IO Exception occured: " + e);
     } catch (DAOException e) {
-      logger.error(e.getMessage());
+      logger.error("A DAO Exception occured: " + e);
     }
   }
+
 }

@@ -7,7 +7,7 @@ import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 
 /**
- *
+ * Job Listener for users update from LDAP Server
  * @author George Sofianos
  */
 public class UserUpdaterJobListener implements JobListener {

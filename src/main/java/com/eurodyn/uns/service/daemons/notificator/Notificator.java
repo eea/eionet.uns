@@ -120,8 +120,11 @@ public class Notificator implements ServletContextListener {
         if (scheduler != null) {
             try {
                 scheduler.shutdown(false);
+                Thread.sleep(1000);
             } catch (SchedulerException e) {
                 LOGGER.error("Failed proper shutdown of " + scheduler.getClass().getSimpleName(), e);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

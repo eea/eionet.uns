@@ -60,7 +60,7 @@
         <param-value>production</param-value>
     </context-param>
 
-	<!-- Quartz Scheduler Configuration
+	<!-- Quartz Scheduler Configuration -->
 		<context-param>
 			<param-name>quartz:config-file</param-name>
 			<param-value>quartz.properties</param-value>
@@ -76,7 +76,7 @@
 		<context-param>
 			<param-name>quartz:start-scheduler-on-load</param-name>
 			<param-value>true</param-value>
-		</context-param>  -->
+		</context-param>
 
 	<!--  Filters. -->
 
