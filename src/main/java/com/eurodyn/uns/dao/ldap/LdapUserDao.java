@@ -85,7 +85,7 @@ public class LdapUserDao extends BaseLdapDao implements IUserDao {
             int total;
             if (ctx != null) {
                 do {
-                    NamingEnumeration results = ctx.search(usersDn, "(objectClass=*)", ctls);
+                    NamingEnumeration results = ctx.search(usersDn, "(objectClass=person)", ctls);
                     while (results != null && results.hasMore()) {
                         SearchResult result = (SearchResult) results.next();
                         // Get Attributes and add to user object
