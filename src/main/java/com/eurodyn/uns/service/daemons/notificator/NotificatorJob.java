@@ -74,7 +74,7 @@ public class NotificatorJob implements Job {
                         Subscription subscription = (Subscription) it3.next();
                         User user = subscription.getUser();
                         Date subdate = subscription.getCreationDate();
-                        if (subdate.before(eventdate) && !user.getVacationFlag().booleanValue() && !user.getDisabledFlag().booleanValue() && checkFilters(event, subscription)){
+                        if (subdate.before(eventdate) && !user.getVacationFlag().booleanValue() && !user.getDisabledFlag() && checkFilters(event, subscription)){
                             boolean success = generateNotification(event, subscription, template);
                             if (success){
                                 i = i + 1;

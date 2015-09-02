@@ -78,8 +78,8 @@ public class LdapUserDao extends BaseLdapDao implements IUserDao {
             int pageSize = 50;
             SearchControls ctls = new SearchControls();
             ctls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-            ctls.setCountLimit(1000);
-            ctls.setTimeLimit(10000);
+            ctls.setCountLimit(0);
+            ctls.setTimeLimit(0);
             ctls.setReturningObjFlag(true);
             byte[] cookie = null;
             int total;

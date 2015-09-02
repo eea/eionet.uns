@@ -21,16 +21,22 @@ public class UserUpdaterJobListener implements JobListener {
 
   @Override
   public void jobToBeExecuted(JobExecutionContext jobExecutionContext) {
-    logger.info("USERS UPDATING PROCESS STARTED");
+    if (jobExecutionContext.getJobDetail().getKey().getName().equals("userUpdaterJob")) {
+      logger.info("USERS UPDATING PROCESS STARTED");
+    }
   }
 
   @Override
   public void jobExecutionVetoed(JobExecutionContext jobExecutionContext) {
-    logger.info("Execution vetoed for job " + jobExecutionContext.getJobDetail().getKey().getName());
+    if (jobExecutionContext.getJobDetail().getKey().getName().equals("userUpdaterJob")) {
+      logger.info("Execution vetoed for job " + jobExecutionContext.getJobDetail().getKey().getName());
+    }
   }
 
   @Override
   public void jobWasExecuted(JobExecutionContext jobExecutionContext, JobExecutionException e) {
-    logger.info("USERS UPDATING PROCESS COMPLETED");
+    if (jobExecutionContext.getJobDetail().getKey().getName().equals("userUpdaterJob")) {
+      logger.info("USERS UPDATING PROCESS COMPLETED");
+    }
   }
 }

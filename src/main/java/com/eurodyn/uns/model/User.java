@@ -73,6 +73,7 @@ public class User implements Serializable {
         this.externalId = externalId;
         this.loggedIn = false;
         this.pageRefreshDelay = new Integer(60);
+        this.disabledFlag = false;
     }
 
     /**

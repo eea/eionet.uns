@@ -653,12 +653,12 @@ test 001
 Best Regards,
 European Environment Agency','<p>$EVENT<br />You may unsubscribe yourself from the \"$EVENT.CHANNEL\" channel by using the following link: $UNSUSCRIBE_LINK</p><p><br /></p><p>Best Regards,<br />European Environment Agency</p><p></p>',1),
  (2,'Unsubcribed - channel access rights changed notification','Unsubscribed from \"$EVENT.CHANNEL\" channel','You have been unsubscribed from the channel \"$EVENT.CHANNEL\" due to access rights changes.
- 
+
 Sorry for the inconvenience,
 European Environment Agency','You have been unsubscribed from the channel &quot;$EVENT.CHANNEL&quot; due to access rights changes.<br /> &nbsp;<br /> Sorry for the inconvenience,<br /> European Environment Agency<br />',1),
  (3,'Unsubscribed - channel removed notification','Unsubscribed from \"$EVENT.CHANNEL\" channel','Channel \"$EVENT.CHANNEL\" does not exist anymore.
 You will not be receiving notifications for this channel anymore.
- 
+
 Sorry for the inconvenience,
 European Environment Agency','Channel \"$EVENT.CHANNEL\" does not exist anymore.<br /> You will not be receiving notifications for this channel anymore.<br />  <br /> Sorry for the inconvenience,<br /> European Environment Agency',1)
 ]]></sql>
@@ -845,7 +845,7 @@ INSERT INTO STYLESHEET (ID,NAME,DESCRIPTION,CONTENT) VALUES
     </xsl:template>
 </xsl:stylesheet>
 ');
- INSERT INTO STYLESHEET (ID,NAME,DESCRIPTION,CONTENT) VALUES 
+ INSERT INTO STYLESHEET (ID,NAME,DESCRIPTION,CONTENT) VALUES
  (3,'push.xsl','Stylesheet used by push channels','<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\"
     xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"
@@ -914,7 +914,7 @@ INSERT INTO STYLESHEET (ID,NAME,DESCRIPTION,CONTENT) VALUES
     </xsl:template>
 </xsl:stylesheet>
 ');
-INSERT INTO STYLESHEET (ID,NAME,DESCRIPTION,CONTENT) VALUES 
+INSERT INTO STYLESHEET (ID,NAME,DESCRIPTION,CONTENT) VALUES
  (4,'peifer_obligations.xsl','Obligation deadlines with Peifer example dashboard images','<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <xsl:stylesheet exclude-result-prefixes=\"ev rdf rss dc\" version=\"1.0\"
     xmlns:dc=\"http://purl.org/dc/elements/1.1/\"
@@ -971,7 +971,7 @@ INSERT INTO STYLESHEET (ID,NAME,DESCRIPTION,CONTENT) VALUES
     </xsl:template>
 </xsl:stylesheet>
 ');
-INSERT INTO STYLESHEET (ID,NAME,DESCRIPTION,CONTENT) VALUES 
+INSERT INTO STYLESHEET (ID,NAME,DESCRIPTION,CONTENT) VALUES
  (5,'peifer_roles.xsl','Directory roles with Peifer example dashboard images','<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <xsl:stylesheet exclude-result-prefixes=\"ev rdf rss dc\" version=\"1.0\"
     xmlns:dc=\"http://purl.org/dc/elements/1.1/\"
@@ -1071,13 +1071,13 @@ INSERT INTO STYLESHEET (ID,NAME,DESCRIPTION,CONTENT) VALUES
 </xsl:stylesheet>');
 ]]></sql>
     </changeSet>
-    
+
     <changeSet id="rev-45" author="heinlja">
         <addColumn tableName="EVENT">
             <column name="LAST_SEEN" type="DATETIME"/>
         </addColumn>
     </changeSet>
-    
+
     <changeSet id="rev-46" author="heinlja">
         <comment>Set LAST_SEEN of events that don't have it yet.</comment>
         <sql>
@@ -1299,7 +1299,9 @@ INSERT INTO STYLESHEET (ID,NAME,DESCRIPTION,CONTENT) VALUES
 -->
     <changeSet id="rev-47" author="sofiageo">
         <addColumn tableName="EEA_USER">
-            <column name="DISABLED_FLAG" type="BIT"/>
+            <column defaultValueBoolean="false" name="DISABLED_FLAG" type="BIT">
+                <constraints nullable="false"/>
+            </column>
         </addColumn>
     </changeSet>
 </databaseChangeLog>

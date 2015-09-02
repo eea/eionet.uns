@@ -24,24 +24,24 @@ public final class UserUtil {
    */
   public static boolean equalUsers(User dbUser, User ldapUser) {
     boolean result = true;
-    if (!dbUser.getFullName().equals(ldapUser.getFullName())) result = false;
-    if (!dbUser.getDisabledFlag().equals(ldapUser.getDisabledFlag())) result = false;
+    if (dbUser.getFullName() == null || !dbUser.getFullName().equals(ldapUser.getFullName())) result = false;
+    if (dbUser.getDisabledFlag() == null || !dbUser.getDisabledFlag() == ldapUser.getDisabledFlag()) result = false;
     Collection<DeliveryAddress> dbAddresses = dbUser.getDeliveryAddresses().values();
     Collection<DeliveryAddress> ldapAddresses = ldapUser.getDeliveryAddresses().values();
     String dbMail = "";
     String ldapMail = "";
 
     for (DeliveryAddress address : dbAddresses) {
-      if (address.getDeliveryType().getId() == 1) {
+      if (address.getDeliveryType().getId() != null && address.getDeliveryType().getId() == 1) {
         dbMail = address.getAddress();
       }
     }
     for (DeliveryAddress address : ldapAddresses) {
-      if (address.getDeliveryType().getId() == 1) {
+      if (address.getDeliveryType().getId() != null && address.getDeliveryType().getId() == 1) {
         ldapMail = address.getAddress();
       }
     }
-    if (!dbMail.equals(ldapMail)) result = false;
+    if (dbMail == null || !dbMail.equals(ldapMail)) result = false;
     return result;
   }
 

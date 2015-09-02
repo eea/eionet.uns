@@ -25,7 +25,7 @@ public class UserUpdater implements ServletContextListener {
   public void contextInitialized(ServletContextEvent servletContextEvent) {
     try {
       scheduler = StdSchedulerFactory.getDefaultScheduler();
-      JobDetail job = newJob(UserUpdaterJob.class).withIdentity("userUpdater", "users").build();
+      JobDetail job = newJob(UserUpdaterJob.class).withIdentity("userUpdaterJob", "users").build();
 
       UserUpdaterJobListener listener = new UserUpdaterJobListener();
       scheduler.getListenerManager().addJobListener(listener);
