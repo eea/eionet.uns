@@ -30,9 +30,12 @@ public class UserUpdater implements ServletContextListener {
       UserUpdaterJobListener listener = new UserUpdaterJobListener();
       scheduler.getListenerManager().addJobListener(listener);
 
+      /*
+        Run updating job every night at 02:00AM
+       */
       CronTrigger trigger = newTrigger()
               .withIdentity("userTrigger", "users")
-              .withSchedule(cronSchedule("0 0/1 * 1/1 * ? *")).build();
+              .withSchedule(cronSchedule("0 0 2 1/1 * ? *")).build();
 
       scheduler.scheduleJob(job, trigger);
       if (!scheduler.isStarted()) {
