@@ -58,7 +58,7 @@ public class UserUpdaterServiceLdap implements UserUpdaterService {
     }
 
     if (UserUtil.equalUsers(user, ldapUser)) {
-      logger.info("User " + user.getFullName() + " has not been updated");
+      //logger.info("User " + user.getFullName() + " has not been updated");
       return;
     }
 
