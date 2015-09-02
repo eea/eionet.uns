@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <ACLS/>
+  <ACL_ROWS/>
+
+
+  <EEA_USER ID="1" EXT_USER_ID="sofiageo" CN="George Sofianos" DISABLED_FLAG="false" VACATION_FLAG="false" PAGE_REFRESH_DELAY="60" NUMCOLUMNS="2" PREFER_HTML="true" PREFER_DASHBOARD="false"/>
+  <EEA_USER ID="2" EXT_USER_ID="erviszyka" CN="Ervis Zyka" DISABLED_FLAG="true" VACATION_FLAG="false" PAGE_REFRESH_DELAY="60" NUMCOLUMNS="2" PREFER_HTML="true" PREFER_DASHBOARD="false"/>
+
+
+  <DELIVERY_TYPE ID="1" NAME="EMAIL"/>
+  <DELIVERY_TYPE ID="2" NAME="JABBER"/>
+  <DELIVERY_TYPE ID="3" NAME="WDB"/>
+  <DELIVERY_TYPE ID="4" NAME="RSS"/>
+
+  <DELIVERY_ADDRESS EEA_USER_ID="1" DELIVERY_TYPE_ID="1" ADDRESS="gsf@mockmail.com"/>
+  <DELIVERY_ADDRESS EEA_USER_ID="2" DELIVERY_TYPE_ID="1" ADDRESS="erviszyka@mockmail.com"/>
+
+  <EEA_ROLE ID="70" EXT_ID="cn=eionet"/>
+  <EEA_ROLE ID="1286" EXT_ID="cn=eionet"/>
+
+</dataset>

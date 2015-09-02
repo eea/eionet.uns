@@ -1,0 +1,44 @@
+dn: o=Eionet,l=EUROPE
+objectclass: extensibleObject
+objectclass: top
+objectclass: domain
+dc: Eionet
+
+dn: ou=Users,o=Eionet,l=EUROPE
+objectClass: top
+objectClass: organizationalUnit
+ou: Users
+
+dn: uid=testuser1,ou=Users,o=Eionet,l=EUROPE
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: organizationalPerson
+cn: Test User1
+sn: User1
+employeeType: disabled
+givenName: test
+mail: mock@mockmail.com
+o:: IA==
+title:: IA==
+uid: testuser1
+
+dn: uid=testuser2,ou=Users,o=Eionet,l=EUROPE
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: organizationalPerson
+cn: Test User2
+sn: User2
+employeeType: disabled
+givenName: test
+mail: mock@mockmail.com
+o:: IA==
+title:: IA==
+uid: testuser2
+
+dn: ou=Roles,o=Eionet,l=EUROPE
+objectClass: top
+objectClass: organizationalUnit
+ou: Roles
+
