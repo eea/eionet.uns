@@ -38,7 +38,7 @@ public class LdapUserDaoTest {
    */
   @Before
   public void setUp() throws Exception {
-    InMemoryListenerConfig listenerConfig = new InMemoryListenerConfig("test",InetAddress.getLocalHost() , 10389, null, null, null);
+    InMemoryListenerConfig listenerConfig = new InMemoryListenerConfig("test",InetAddress.getLocalHost(), 10389, null, null, null);
 
     InMemoryDirectoryServerConfig config = new InMemoryDirectoryServerConfig(baseDn);
     config.setSchema(null);
@@ -60,7 +60,7 @@ public class LdapUserDaoTest {
 
     Hashtable env = new Hashtable();
     env.put(LdapContext.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-    env.put(LdapContext.PROVIDER_URL, "ldap://localhost:10389");
+    env.put(LdapContext.PROVIDER_URL, "ldap://" + InetAddress.getLocalHost().getHostName() + ":10389");
     env.put(LdapContext.SECURITY_AUTHENTICATION, "simple");
     env.put(LdapContext.SECURITY_PRINCIPAL, "cn=Test User");
     env.put(LdapContext.SECURITY_CREDENTIALS, "pass");
