@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -35,6 +37,9 @@ import com.eurodyn.uns.util.Streams;
 
 
 public class TransformDTDEntityResolver implements EntityResolver {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransformDTDEntityResolver.class);
+
     private Map dtds;
 
     public TransformDTDEntityResolver(Map dtds) {
@@ -70,7 +75,7 @@ public class TransformDTDEntityResolver implements EntityResolver {
 
         } catch (Throwable t) // java.io.IOException x  
         {
-            t.printStackTrace();
+            LOGGER.error(t.getMessage(), t);
         }
 
         return null;

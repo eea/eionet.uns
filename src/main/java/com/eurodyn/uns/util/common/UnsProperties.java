@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 import org.apache.commons.lang.math.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility class for working with UNS's configured properties.
@@ -14,6 +16,8 @@ import org.apache.commons.lang.math.NumberUtils;
  * @author Jaanus
  */
 public class UnsProperties {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UnsProperties.class);
 
     /** Events that UNS hasn't seen this much days in any feed shall be purged. So it's a number and the unit is days. */
     public static final int OLD_EVENTS_THRESHOLD = getOldEventsThreshold();
@@ -80,7 +84,7 @@ public class UnsProperties {
             return NumberUtils.toInt(strValue, defaultValue);
         } catch (ConfiguratorException e) {
             System.out.println("****************************************************");
-            e.printStackTrace(System.out);
+            LOGGER.error(e.getMessage(), e);
             System.out.println("****************************************************");
             return defaultValue;
         }
