@@ -30,8 +30,9 @@ import javax.servlet.ServletContextListener;
 
 import com.eurodyn.uns.service.facades.RoleFacade;
 import com.eurodyn.uns.util.common.AppConfigurator;
-import com.eurodyn.uns.util.common.WDSLogger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * A general-purpose listener for servlet context startup and destroy. Does various things: checks app-home directories, starts
  * role synchronizer thread, etc.
@@ -45,7 +46,7 @@ public class GeneralPurposeServletContextListener implements ServletContextListe
     private static final String BUNDLE_FILE = "uns";
 
     /** Static logger for this class. */
-    private static final WDSLogger LOGGER = WDSLogger.getLogger(GeneralPurposeServletContextListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GeneralPurposeServletContextListener.class);
 
     /** Name of Java system property indicating if AWT headless mode should be used. */
     private static final String AWT_HEADLESS_PROPERTY = "java.awt.headless";

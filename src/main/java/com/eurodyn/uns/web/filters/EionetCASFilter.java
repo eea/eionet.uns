@@ -20,7 +20,8 @@ import javax.servlet.http.HttpSession;
 
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.UserFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import edu.yale.its.tp.cas.client.filter.CASFilter;
 
@@ -28,7 +29,7 @@ public class EionetCASFilter extends CASFilter {
 
     public static final String EIONET_LOGIN_COOKIE_NAME = "eionetCasLogin";
 
-    private static final WDSLogger logger = WDSLogger.getLogger(EionetCASFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EionetCASFilter.class);
 
     private static final String EIONET_COOKIE_LOGIN_PATH = "eionetCookieLogin";
 
@@ -49,19 +50,19 @@ public class EionetCASFilter extends CASFilter {
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain fc) throws ServletException, IOException {
-        logger.debug("Request hits the EionetCASFilter ");
+        LOGGER.debug("Request hits the EionetCASFilter ");
         CASFilterChain chain = new CASFilterChain();
         super.doFilter(request, response, chain);
 
         if (chain.isDoNext()) {
-            logger.debug("chain.isDoNext() is true");
+            LOGGER.debug("chain.isDoNext() is true");
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             HttpSession session = httpRequest.getSession();
             if (session != null && ( session.getAttribute("user") == null ||  !((User) session.getAttribute("user")).isLoggedIn() ) ) {
                 User user = (User) session.getAttribute("user");
-                logIn(httpRequest,httpResponse,user);               
-                logger.debug("Logged in user " + session.getAttribute(CAS_FILTER_USER));
+                logIn(httpRequest,httpResponse,user);
+                LOGGER.debug("Logged in user " + session.getAttribute(CAS_FILTER_USER));
                 String requestURI = httpRequest.getRequestURI();
                 if (requestURI.indexOf(EIONET_COOKIE_LOGIN_PATH) > -1) {
                     redirectAfterEionetCookieLogin(httpRequest, httpResponse);
@@ -75,7 +76,7 @@ public class EionetCASFilter extends CASFilter {
             fc.doFilter(httpRequest, response);
             return;
         }
-        logger.debug("chain.isDoNext() is false");
+        LOGGER.debug("chain.isDoNext() is false");
     }
 
     public static void attachEionetLoginCookie(HttpServletResponse response, boolean isLoggedIn){
@@ -123,7 +124,7 @@ public class EionetCASFilter extends CASFilter {
         try {
             serviceURL = URLEncoder.encode(serviceURL,"UTF-8");
         } catch (UnsupportedEncodingException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         }
         
         return CAS_LOGIN_URL + "?service=" +   serviceURL ;

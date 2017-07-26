@@ -1,3 +1,6 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -5,6 +8,7 @@ import java.io.InputStreamReader;
 
 public class Serializabler {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Serializabler.class);
     public static void main(String[] args) {
 
         try {
@@ -43,8 +47,7 @@ public class Serializabler {
 
             System.exit(0);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error("Error", e);
         }
     }
 

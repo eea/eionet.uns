@@ -1,14 +1,14 @@
 package com.eurodyn.uns.service.daemons.harvester;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HarvesterJobListener implements JobListener {
     /** */
-    private static Log logger = LogFactory.getLog(HarvesterJobListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HarvesterJobListener.class);
 
     /*
      * (non-Javadoc)
@@ -24,7 +24,7 @@ public class HarvesterJobListener implements JobListener {
      */
     public void jobExecutionVetoed(JobExecutionContext context) {
         if (context.getJobDetail().getKey().getName().equals("harvesterJob")) {
-            logger.info("Execution vetoed for job " + context.getJobDetail().getKey().getName());
+            LOGGER.info("Execution vetoed for job " + context.getJobDetail().getKey().getName());
         }
     }
 
@@ -34,7 +34,7 @@ public class HarvesterJobListener implements JobListener {
      */
     public void jobToBeExecuted(JobExecutionContext context) {
         if (context.getJobDetail().getKey().getName().equals("harvesterJob")) {
-            logger.info("HARVESTER PROCESS STARTED");
+            LOGGER.info("HARVESTER PROCESS STARTED");
         }
     }
 
@@ -45,10 +45,10 @@ public class HarvesterJobListener implements JobListener {
     public void jobWasExecuted(JobExecutionContext context, JobExecutionException exception) {
 
         if (context.getJobDetail().getKey().getName().equals("harvesterJob")) {
-            logger.info("HARVESTER PROCESS COMPLETED");
+            LOGGER.info("HARVESTER PROCESS COMPLETED");
         }
         if (exception != null) {
-            logger.error("Exception thrown when executing job " + context.getJobDetail().getKey().getName() + ": " + exception.toString(), exception);
+            LOGGER.error("Exception thrown when executing job " + context.getJobDetail().getKey().getName() + ": " + exception.toString(), exception);
             return;
         }
     }

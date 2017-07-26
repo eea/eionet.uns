@@ -24,7 +24,7 @@ package com.eurodyn.uns.util.rdf;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.hp.hpl.jena.mem.ModelMem;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -36,9 +36,11 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RSS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RssChannelsProcessor implements IRdfProcessStrategy {
-    private static final WDSLogger logger = WDSLogger.getLogger(RssChannelsProcessor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RssChannelsProcessor.class);
     
     
     public Map collect(ModelMem model, IChannel channel) throws Exception {
@@ -47,7 +49,7 @@ public class RssChannelsProcessor implements IRdfProcessStrategy {
             renderChannel(model, channel);
             result = getMetadataElements(model);
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }

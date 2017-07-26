@@ -6,7 +6,7 @@ import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.service.facades.NotificationFacade;
 import com.eurodyn.uns.service.facades.UserFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.web.jsf.SortableTable;
 
 import java.text.ParseException;
@@ -16,10 +16,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ReportActions extends ReportForm {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(ReportActions.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportActions.class);
 
     public ReportActions() {
         try {
@@ -33,7 +35,7 @@ public class ReportActions extends ReportForm {
             st1 = new SortableTable("subscription.user.externalId");
             notificationsSortTable = new SortableTable("user.fullName");
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
     }
@@ -41,12 +43,12 @@ public class ReportActions extends ReportForm {
     public boolean isPreparedForm() {
         try {
             if (isRenderPhase()) {
-                logger.debug("Reports initialisation ");
+                LOGGER.debug("Reports initialisation ");
                 channels = (new SortableTable("title")).sort((List) channelFacade.getChannels().get("list"));
                 users = (new SortableTable("externalId")).sort(userFacade.findAllUsers());
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return true;
@@ -60,7 +62,7 @@ public class ReportActions extends ReportForm {
                 st1.sort(notificationsRecords);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return true;
@@ -79,7 +81,7 @@ public class ReportActions extends ReportForm {
             notificationsRecords = notificationFacade.getNotifications(fromDate, toDate, channel, user, notification);
             notificationsSortTable.sort(notificationsRecords);
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
             addSystemErrorMessage();
         }
         return "notificationsReport";
@@ -134,7 +136,7 @@ public class ReportActions extends ReportForm {
             }
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
@@ -149,7 +151,7 @@ public class ReportActions extends ReportForm {
             userFacade.updateUser(user);
             addInfoMessage(null, "messages.subscription.success.delete", new Object[] {subscription.getChannel().getTitle()});
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 

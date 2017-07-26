@@ -28,11 +28,13 @@ import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.Dto;
 import com.eurodyn.uns.model.ResultDto;
 import com.eurodyn.uns.model.MetadataElement;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class MetadataElementFacade {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(MetadataElementFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MetadataElementFacade.class);
     private DAOFactory daoFactory;
 
     public MetadataElementFacade() {
@@ -58,9 +60,9 @@ public class MetadataElementFacade {
             stylesheets = daoFactory.getMetadataElementDao().findAllMetadataElements(orderProperty, order);
             result.put("list",stylesheets);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }
@@ -74,9 +76,9 @@ public class MetadataElementFacade {
             //x.checkFromInputStream(new ByteArrayInputStream(metadataElement.getContent().getBytes()));
             //metadataElement.setContent(x.serializeToString());
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return metadataElement;
     }
@@ -90,9 +92,9 @@ public class MetadataElementFacade {
             //x.checkFromInputStream(new ByteArrayInputStream(metadataElement.getContent().getBytes()));
             //metadataElement.setContent(x.serializeToString());
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return metadataElement;
     }
@@ -103,9 +105,9 @@ public class MetadataElementFacade {
             daoFactory.getMetadataElementDao().updateMetadataElement(metadataElement);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -116,9 +118,9 @@ public class MetadataElementFacade {
             daoFactory.getMetadataElementDao().createMetadataElement(metadataElement);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -130,10 +132,10 @@ public class MetadataElementFacade {
             daoFactory.getMetadataElementDao().deleteMetadataElement(metadataElement);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
             throw(e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
             throw(e);
         }
         return ret;

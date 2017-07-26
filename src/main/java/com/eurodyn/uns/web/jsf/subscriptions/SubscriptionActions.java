@@ -21,18 +21,20 @@ import com.eurodyn.uns.model.Statement;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.DateUtil;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.util.uid.UidGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SubscriptionActions extends SubscriptionForm {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(SubscriptionForm.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionForm.class);
 
     public SubscriptionActions() {
         try {           
             initForm();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -82,7 +84,7 @@ public class SubscriptionActions extends SubscriptionForm {
             userFacade.updateUser(user);
             checkOverlappedFilters();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
@@ -142,7 +144,7 @@ public class SubscriptionActions extends SubscriptionForm {
             addInfoMessage(null, "messages.preferences.success", null);
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return null;
@@ -167,7 +169,7 @@ public class SubscriptionActions extends SubscriptionForm {
             addInfoMessage(null, "msg.vacatationFlag." + (user.getVacationFlag().booleanValue()?"enabled":"disabled"), null);
             
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return null;
@@ -182,7 +184,7 @@ public class SubscriptionActions extends SubscriptionForm {
             allChoosableStatements = eventMetadataFacade.findChoosableStatements(subscription.getChannel());
             checkOverlappedFilters();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
         return "editSubscription";
     }
@@ -213,7 +215,7 @@ public class SubscriptionActions extends SubscriptionForm {
             userFacade.updateUser(getUser());
             addInfoMessage(null, "messages.subscription.success.delete", new Object[] { subscription.getChannel().getTitle() });
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return "subscriptions";
@@ -288,7 +290,7 @@ public class SubscriptionActions extends SubscriptionForm {
             }
             prepareStatements(true);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return null;
@@ -303,7 +305,7 @@ public class SubscriptionActions extends SubscriptionForm {
             filter.getStatements().add(statement);
             prepareStatements(true);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
         return null;
     }
@@ -313,7 +315,7 @@ public class SubscriptionActions extends SubscriptionForm {
             filter.getStatements().remove(statement);
             prepareStatements(true);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return null;
@@ -344,7 +346,7 @@ public class SubscriptionActions extends SubscriptionForm {
                 subscription.getFilters().add(filter);
             editFilterMode = false;
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return null;
@@ -354,7 +356,7 @@ public class SubscriptionActions extends SubscriptionForm {
         try {
             subscription.getFilters().remove(filter);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return null;
@@ -365,7 +367,7 @@ public class SubscriptionActions extends SubscriptionForm {
             property = ve.getNewValue().toString();
             prepareStatements(false);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
     }
@@ -378,7 +380,7 @@ public class SubscriptionActions extends SubscriptionForm {
                 subscription = subscriptionFacade.findBySecondaryId(subsSecondaryId);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return true;

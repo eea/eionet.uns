@@ -4,16 +4,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.quartz.*;
 
 import com.eurodyn.uns.service.daemons.harvester.Harvester;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NotificatorJobListener implements JobListener {
-    /** */
-    private static Log logger = LogFactory.getLog(NotificatorJobListener.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(NotificatorJobListener.class);
 
     /*
      * (non-Javadoc)
@@ -29,7 +29,7 @@ public class NotificatorJobListener implements JobListener {
      */
     public void jobExecutionVetoed(JobExecutionContext context) {
         if (context.getJobDetail().getKey().getName().equals("notificatorJob")) {
-            logger.info("Execution vetoed for job " + context.getJobDetail().getKey().getName());
+            LOGGER.info("Execution vetoed for job " + context.getJobDetail().getKey().getName());
         }
     }
 
@@ -39,7 +39,7 @@ public class NotificatorJobListener implements JobListener {
      */
     public void jobToBeExecuted(JobExecutionContext context) {
         if (context.getJobDetail().getKey().getName().equals("notificatorJob")) {
-            logger.info("NOTIFICATOR PROCESS STARTED");
+            LOGGER.info("NOTIFICATOR PROCESS STARTED");
         }
     }
 
@@ -50,7 +50,7 @@ public class NotificatorJobListener implements JobListener {
     public void jobWasExecuted(JobExecutionContext context, JobExecutionException exception) {
 
         if (context.getJobDetail().getKey().getName().equals("notificatorJob")) {
-            logger.info("NOTIFICATOR PROCESS COMPLETED");
+            LOGGER.info("NOTIFICATOR PROCESS COMPLETED");
         }
 
         try{
@@ -74,12 +74,11 @@ public class NotificatorJobListener implements JobListener {
             }
 
         } catch (Exception e){
-            e.printStackTrace();
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
 
         if (exception != null){
-            logger.error("Exception thrown when executing job " + context.getJobDetail().getKey().getName() + ": " + exception.toString(), exception);
+            LOGGER.error("Exception thrown when executing job " + context.getJobDetail().getKey().getName() + ": " + exception.toString(), exception);
             return;
         }
     }

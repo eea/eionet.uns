@@ -15,6 +15,9 @@
  */
 package com.eurodyn.uns.web.jsf;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.faces.FacesException;
 import javax.faces.application.Application;
 import javax.faces.application.NavigationHandler;
@@ -26,15 +29,9 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+public class UNSActionListener implements ActionListener {
 
-
-
-public class UNSActionListener
-    implements ActionListener
-{
-    private static final Log log = LogFactory.getLog(UNSActionListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UNSActionListener.class);
 
     public void processAction(ActionEvent actionEvent) throws AbortProcessingException
     {
@@ -59,7 +56,7 @@ public class UNSActionListener
         else
         {
             fromAction = methodBinding.getExpressionString();
-            log.debug("UNS web action called " + fromAction);
+            LOGGER.debug("UNS web action called " + fromAction);
             try
             {
                 outcome = (String) methodBinding.invoke(facesContext, null);

@@ -1,12 +1,17 @@
 package com.eurodyn.uns.util.uid;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.security.SecureRandom;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class UidGenerator {
-    
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UidGenerator.class);
+
     private static SecureRandom prng;
     private final static Object mutex = new Object();
     
@@ -16,7 +21,7 @@ public class UidGenerator {
                 prng = SecureRandom.getInstance("SHA1PRNG");
             }
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
         
@@ -32,7 +37,7 @@ public class UidGenerator {
           return hexEncode(result);
         }
         catch (NoSuchAlgorithmException e) {
-          e.printStackTrace();
+          LOGGER.error(e.getMessage(), e);
           throw new Exception(e);
         }
     }

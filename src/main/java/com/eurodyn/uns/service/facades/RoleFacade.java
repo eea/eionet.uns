@@ -31,11 +31,12 @@ import com.eurodyn.uns.dao.IRoleDao;
 import com.eurodyn.uns.model.Role;
 import com.eurodyn.uns.util.common.AppConfigurator;
 import com.eurodyn.uns.util.common.ConfiguratorException;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RoleFacade {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(RoleFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RoleFacade.class);
     private static RoleFacade instance = null;
     public static long SYNC_PERIOD = 2 * 60 * 60 * 1000;    //2 hours in ms
     private static Date lastSync = new Date(0); //January 1, 1970, 00:00:00 GMT.
@@ -46,7 +47,7 @@ public class RoleFacade {
         try {
             SYNC_PERIOD=60 * 1000 * Integer.parseInt(AppConfigurator.getInstance().getBoundle("uns").getString("ldap.sync_period"));
         } catch (ConfiguratorException e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
     }
 
@@ -59,9 +60,9 @@ public class RoleFacade {
         try {
             roles = daoFactory.getRoleDao().findAllRoles();
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return roles;
     }
@@ -71,9 +72,9 @@ public class RoleFacade {
         try {
             role = daoFactory.getRoleDao().findByPK(id);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return role;
     }
@@ -84,9 +85,9 @@ public class RoleFacade {
             daoFactory.getRoleDao().updateRoles(roles);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -104,11 +105,11 @@ public class RoleFacade {
             try {
                 long time = new Date().getTime();
                 DBRoles = getRoles();
-                logger.info("Roles LDAP syncronization started");
-                logger.info("DB=" + (new Date().getTime() - time) + "ms");
+                LOGGER.info("Roles LDAP syncronization started");
+                LOGGER.info("DB=" + (new Date().getTime() - time) + "ms");
                 time = new Date().getTime();
                 LDAPRoles = roleDao.findAllRoles();
-                logger.info("LDAP=" + (new Date().getTime() - time) + "ms");
+                LOGGER.info("LDAP=" + (new Date().getTime() - time) + "ms");
                 time = new Date().getTime();
                 for (int i = 0; i < LDAPRoles.size(); i++) {
                     Role role = (Role)LDAPRoles.get(i);
@@ -116,17 +117,17 @@ public class RoleFacade {
                         newDBRoles.add(role);
                     }
                 }
-                logger.info("Compare=" + (new Date().getTime() - time) + "ms");
+                LOGGER.info("Compare=" + (new Date().getTime() - time) + "ms");
                 time = new Date().getTime();
-                logger.info("Found " + newDBRoles.size() + " new roles");
+                LOGGER.info("Found " + newDBRoles.size() + " new roles");
                 ret = updateRoles(newDBRoles);
-                logger.info("UpdateDB=" + (new Date().getTime() - time) + "ms");
+                LOGGER.info("UpdateDB=" + (new Date().getTime() - time) + "ms");
                 if(ret)
                     lastSync = new Date();
             } catch (DAOException e) {
-                logger.error(e);
+                LOGGER.error("Error", e);
             } catch (Exception e) {
-                logger.fatalError(e);
+                LOGGER.error("Error", e);
             }
             return ret;
         }
@@ -138,9 +139,9 @@ public class RoleFacade {
         try {
             userroles = roleDao.findUserRoles(user);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return userroles;
     }

@@ -33,12 +33,14 @@ import com.eurodyn.uns.model.Dto;
 import com.eurodyn.uns.model.ResultDto;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.util.uid.UidGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SubscriptionFacade {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(SubscriptionFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionFacade.class);
 
     private DAOFactory daoFactory;
 
@@ -73,9 +75,9 @@ public class SubscriptionFacade {
             channels = daoFactory.getSubscriptionDao().findAvailableChannels(user, roles, orderProperty, order);
             result.put("list", channels);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }
@@ -87,9 +89,9 @@ public class SubscriptionFacade {
             subscriptions = daoFactory.getSubscriptionDao().findAllSubscriptions(orderProperty, order);
             result.put("list", subscriptions);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }
@@ -103,9 +105,9 @@ public class SubscriptionFacade {
             // x.checkFromInputStream(new ByteArrayInputStream(subscription.getContent().getBytes()));
             // subscription.setContent(x.serializeToString());
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return subscription;
     }
@@ -116,9 +118,9 @@ public class SubscriptionFacade {
             daoFactory.getSubscriptionDao().updateSubscription(subscription);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -132,9 +134,9 @@ public class SubscriptionFacade {
             daoFactory.getSubscriptionDao().createSubscription(subscription);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -145,10 +147,10 @@ public class SubscriptionFacade {
             daoFactory.getSubscriptionDao().deleteSubscription(subscription);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
             throw (e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
             throw (e);
         }
         return ret;
@@ -159,9 +161,9 @@ public class SubscriptionFacade {
         try {
             subscriptions = daoFactory.getSubscriptionDao().findSubscriptionsForChannel(channel);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return subscriptions;
     }
@@ -171,9 +173,9 @@ public class SubscriptionFacade {
         try {
             subscription = daoFactory.getSubscriptionDao().findBySecondaryId(secondaryId);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return subscription;
     }

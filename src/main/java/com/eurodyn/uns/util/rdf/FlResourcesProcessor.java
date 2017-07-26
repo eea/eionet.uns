@@ -26,7 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.hp.hpl.jena.mem.ModelMem;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -38,9 +38,11 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.rdf.model.impl.PropertyImpl;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RSS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FlResourcesProcessor implements IRdfProcessStrategy {
-    private static final WDSLogger logger = WDSLogger.getLogger(FlResourcesProcessor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlResourcesProcessor.class);
     
     
     private List properties;
@@ -87,7 +89,7 @@ public class FlResourcesProcessor implements IRdfProcessStrategy {
                     for (Iterator iterator = properties.iterator(); iterator.hasNext();) {
                         String element = (String) iterator.next();
                         elements.put(element,getValue(subject,element));
-                        logger.debug(getValue(subject,element));
+                        LOGGER.debug(getValue(subject,element));
                     }
                 }
             }

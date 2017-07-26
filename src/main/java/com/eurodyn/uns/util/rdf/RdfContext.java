@@ -34,12 +34,14 @@ import org.xml.sax.InputSource;
 
 import com.eurodyn.uns.util.URLReader;
 import com.eurodyn.uns.util.common.AppConfigurator;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.util.xml.XSLTransformer;
 import com.hp.hpl.jena.mem.ModelMem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RdfContext {
-    private static final WDSLogger logger = WDSLogger.getLogger(RdfContext.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RdfContext.class);
 
     private IChannel channel;
     ModelMem model;

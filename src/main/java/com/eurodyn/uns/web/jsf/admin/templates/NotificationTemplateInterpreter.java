@@ -14,11 +14,12 @@ import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.NotificationTemplate;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.common.AppConfigurator;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NotificationTemplateInterpreter {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(NotificationTemplateInterpreter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NotificationTemplateInterpreter.class);
 
     private static final String[] python_initialization = {
               "from NotifTest.ERA.Subscription import Subscription",
@@ -46,7 +47,7 @@ public class NotificationTemplateInterpreter {
             python_source = AppConfigurator.getInstance().getBoundle("uns").getString("python_source");
             System.setProperty("python.home", jython_home);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
 
         }
 

@@ -21,8 +21,12 @@ import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.Filter;
 import com.eurodyn.uns.model.ResultDto;
 import com.eurodyn.uns.model.Statement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HibernateEventMetadataDao extends BaseHibernateDao implements IEventMetadataDao {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(HibernateEventMetadataDao.class);
 
     private static final int searchLimit = 150;
 
@@ -160,7 +164,7 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
                 deleteEventMetadata(em);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
             throw new DAOException(e);
         } finally {
             closeSession(session);

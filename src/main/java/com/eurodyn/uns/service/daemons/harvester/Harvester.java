@@ -7,20 +7,21 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
 import org.quartz.SimpleTrigger;
 
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Harvester {
 
     private Integer intervalSeconds;
 
-    private static final WDSLogger logger = WDSLogger.getLogger(Harvester.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Harvester.class);
 
     public Harvester() {
     }
@@ -48,8 +49,7 @@ public class Harvester {
             sched.scheduleJob(jobDetail, trigger);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
             throw new Exception("Error occured when processing harvester: " + e.toString());
         }
     }
@@ -80,8 +80,7 @@ public class Harvester {
                 intervalSeconds = (Integer)((ConfigElement) configMap.get("daemons/harvester/interval")).getValue();
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
         return intervalSeconds;
     }

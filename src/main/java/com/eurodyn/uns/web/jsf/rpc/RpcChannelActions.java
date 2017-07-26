@@ -8,12 +8,14 @@ import com.eurodyn.uns.model.DeliveryType;
 import com.eurodyn.uns.model.NotificationTemplate;
 import com.eurodyn.uns.model.Stylesheet;
 import com.eurodyn.uns.service.facades.ChannelFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.web.jsf.BaseBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RpcChannelActions extends BaseBean {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(RpcChannelActions.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RpcChannelActions.class);
 
     private ChannelFacade channelFacade;
 
@@ -49,7 +51,7 @@ public class RpcChannelActions extends BaseBean {
             }
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return "rpcUserChannels";

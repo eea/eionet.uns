@@ -6,18 +6,19 @@ import javax.faces.event.PhaseId;
 
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.service.facades.UserFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DashboardActions extends DashboardForm {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(DashboardActions.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DashboardActions.class);
     private boolean moved = false;
     
     public DashboardActions() {
         try {
             userFacade = new UserFacade();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
     }
@@ -26,20 +27,20 @@ public class DashboardActions extends DashboardForm {
         try {
             if (getExternalContext() != null && getExternalContext().getRequestMap() != null){
             if (getExternalContext().getRequestMap().get(PhaseId.RENDER_RESPONSE) != null) {
-                logger.debug("Dashboard initialisation ");
+                LOGGER.debug("Dashboard initialisation ");
                 Integer[] columns = new Integer[getUser().getNumberOfColumns().intValue()];
                 for (int i = 0; i < columns.length; i++) {
                     columns[i] = new Integer(i);
                 }
                 if (channels == null || !moved){
-                    logger.debug(" ************* Reload dash channels ******************");
+                    LOGGER.debug(" ************* Reload dash channels ******************");
                     reloadDashChannels();
                 }
                     
             }
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return true;
@@ -75,7 +76,7 @@ public class DashboardActions extends DashboardForm {
             setUpVisibleButtons();
             moved = true;
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return null;
@@ -97,7 +98,7 @@ public class DashboardActions extends DashboardForm {
             userFacade.updateUser(getUser());
             reloadDashChannels();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return null;

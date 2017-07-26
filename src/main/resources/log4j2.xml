@@ -1,0 +1,14 @@
+<Configuration>
+  <Appenders>
+    <Console name="console">
+      <PatternLayout>
+        <Pattern>[%d] - [%p] [%c:%L] : %m%n</Pattern>
+      </PatternLayout>
+    </Console>
+  </Appenders>
+  <Loggers>
+    <Root level="INFO">
+      <AppenderRef ref="console" />
+    </Root>
+  </Loggers>
+</Configuration>

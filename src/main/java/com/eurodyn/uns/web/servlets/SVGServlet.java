@@ -22,13 +22,14 @@ import com.eurodyn.uns.service.channelserver.feed.DatabaseHandler;
 import com.eurodyn.uns.service.channelserver.feed.PullHandler;
 import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.service.facades.SubscriptionFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SVGServlet extends HttpServlet {
 
     private static final long serialVersionUID = 3017627366103614298L;
 
-    private static final WDSLogger logger = WDSLogger.getLogger(SVGServlet.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SVGServlet.class);
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         ByteArrayInputStream aaa = null;
@@ -51,7 +52,7 @@ public class SVGServlet extends HttpServlet {
                 } else {
                     Subscription subsc = subscriptionFacade.getSubscription(subscriptionId);
                     if (subsc == null) {
-                        logger.error("SVG2JPG: Invalid Subscription ID");
+                        LOGGER.error("SVG2JPG: Invalid Subscription ID");
                         return;
                     }
                     cc = cs.getChannelContent(subsc, true);
@@ -89,7 +90,7 @@ public class SVGServlet extends HttpServlet {
             ostream.close();
 
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         }
     }
 

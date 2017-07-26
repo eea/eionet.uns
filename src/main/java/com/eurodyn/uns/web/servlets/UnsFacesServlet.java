@@ -13,12 +13,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.eurodyn.uns.util.common.WDSLogger;
 
 public class UnsFacesServlet implements Servlet {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(UnsFacesServlet.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UnsFacesServlet.class);
 
     private final Servlet FACES_SERVLET = new FacesServlet();
 
@@ -49,7 +50,7 @@ public class UnsFacesServlet implements Servlet {
         try {
             FACES_SERVLET.service(servlet_request, servlet_response);
         } catch (Throwable t) {
-            logger.error(t.getMessage());
+            LOGGER.error(t.getMessage());
             // dampRequest(((HttpServletRequest) servlet_request));
         }
 
@@ -57,31 +58,31 @@ public class UnsFacesServlet implements Servlet {
 
     private void dampRequest(HttpServletRequest request) {
 
-        logger.info("");
-        logger.info("");
-        logger.info("*************       REQUEST START     *************************************************************************");
-        logger.info("Request Auth path is " + request.getAuthType());
-        logger.info("Request character encoding is " + request.getCharacterEncoding());
-        logger.info("Request content length is " + request.getContentLength());
-        logger.info("Request content type is " + request.getContentType());
-        logger.info("Request method is " + request.getMethod());
-        logger.info("Request path inof is " + request.getPathInfo());
-        logger.info("Request path translated is " + request.getPathTranslated());
-        logger.info("Request protocol is " + request.getProtocol());
-        logger.info("Request query string is " + request.getQueryString());
-        logger.info("Request remote addr is " + request.getRemoteAddr());
-        logger.info("Request remote host is " + request.getRemoteHost());
-        logger.info("Request user name is " + request.getRemoteUser());
-        logger.info("Request sessionId is " + request.getRequestedSessionId());
-        logger.info("Request URI is " + request.getRequestURI());
-        logger.info("Request URL is " + request.getRequestURL());
-        logger.info("Request Scheme is  " + request.getScheme());
-        // logger.info(request.getH;
-        logger.info("Request server name is " + request.getServerName());
-        logger.info("Request server port is " + request.getServerPort());
-        logger.info("Request servlet path is " + request.getServletPath());
-        logger.info("Request real path is " + request.getRealPath(request.getServletPath()));
-        // logger.info(re);
+        LOGGER.info("");
+        LOGGER.info("");
+        LOGGER.info("*************       REQUEST START     *************************************************************************");
+        LOGGER.info("Request Auth path is " + request.getAuthType());
+        LOGGER.info("Request character encoding is " + request.getCharacterEncoding());
+        LOGGER.info("Request content length is " + request.getContentLength());
+        LOGGER.info("Request content type is " + request.getContentType());
+        LOGGER.info("Request method is " + request.getMethod());
+        LOGGER.info("Request path inof is " + request.getPathInfo());
+        LOGGER.info("Request path translated is " + request.getPathTranslated());
+        LOGGER.info("Request protocol is " + request.getProtocol());
+        LOGGER.info("Request query string is " + request.getQueryString());
+        LOGGER.info("Request remote addr is " + request.getRemoteAddr());
+        LOGGER.info("Request remote host is " + request.getRemoteHost());
+        LOGGER.info("Request user name is " + request.getRemoteUser());
+        LOGGER.info("Request sessionId is " + request.getRequestedSessionId());
+        LOGGER.info("Request URI is " + request.getRequestURI());
+        LOGGER.info("Request URL is " + request.getRequestURL());
+        LOGGER.info("Request Scheme is  " + request.getScheme());
+        // LOGGER.info(request.getH;
+        LOGGER.info("Request server name is " + request.getServerName());
+        LOGGER.info("Request server port is " + request.getServerPort());
+        LOGGER.info("Request servlet path is " + request.getServletPath());
+        LOGGER.info("Request real path is " + request.getRealPath(request.getServletPath()));
+        // LOGGER.info(re);
 
         java.util.Enumeration enum011 = request.getHeaderNames();
         String headerName = "";
@@ -90,7 +91,7 @@ public class UnsFacesServlet implements Servlet {
         while (enum011.hasMoreElements()) {
             headerName = (String) enum011.nextElement();
             headerValue = request.getHeader(headerName);
-            logger.info("Header name " + headerName + " Header value " + headerValue);
+            LOGGER.info("Header name " + headerName + " Header value " + headerValue);
         }
 
         // Enumeration enum7 = request.getLocales();
@@ -101,15 +102,15 @@ public class UnsFacesServlet implements Servlet {
         // local = (Locale) enum7.nextElement();
         // if (local != null)
         // {
-        // logger.info("Local display country is " +
+        // LOGGER.info("Local display country is " +
         // local.getDisplayCountry());
-        // logger.info("Local display languages is " +
+        // LOGGER.info("Local display languages is " +
         // local.getDisplayLanguage());
         // }
         //
         // }
         //
-        logger.info("///////////////////////// PARAMETERS ////////////////////////////////////////");
+        LOGGER.info("///////////////////////// PARAMETERS ////////////////////////////////////////");
         Map map = request.getParameterMap();
 
         Iterator iter = map.entrySet().iterator();
@@ -117,11 +118,11 @@ public class UnsFacesServlet implements Servlet {
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
 
-            logger.info(entry.getKey().toString() + "  " + request.getParameter(entry.getKey().toString()));
+            LOGGER.info(entry.getKey().toString() + "  " + request.getParameter(entry.getKey().toString()));
 
         }
 
-        logger.info("///////////////////////// PARAMETERS ////////////////////////////////////////");
+        LOGGER.info("///////////////////////// PARAMETERS ////////////////////////////////////////");
 
         String attributeName = "";
         Object attributeValue = "";
@@ -137,14 +138,14 @@ public class UnsFacesServlet implements Servlet {
         // attributeValueS = attributeValue.toString();
         // else
         // attributeValueS = "null";
-        // logger.info("Request Attribute name " + attributeName + "
+        // LOGGER.info("Request Attribute name " + attributeName + "
         // Request Attribute value " + attributeValueS);
         // }
         //
         Cookie[] cookies = request.getCookies();
 
         for (int i = 0; i < cookies.length; i++) {
-            logger.info("Cookie name " + cookies[i].getName() + " value " + cookies[i].getValue() + " domain " + cookies[i].getDomain() + " path " + cookies[i].getPath());
+            LOGGER.info("Cookie name " + cookies[i].getName() + " value " + cookies[i].getValue() + " domain " + cookies[i].getDomain() + " path " + cookies[i].getPath());
             ;
         }
 
@@ -160,11 +161,11 @@ public class UnsFacesServlet implements Servlet {
             else
                 attributeValueS = "null";
 
-            logger.info("Session Attribute name " + attributeName + " Session Attribute value " + attributeValueS);
+            LOGGER.info("Session Attribute name " + attributeName + " Session Attribute value " + attributeValueS);
         }
 
-        logger.info("Sesion context (Aplication ) server info " + session.getServletContext().getServerInfo());
-        logger.info("Sesion context (Aplication ) context name " + session.getServletContext().getServletContextName());
+        LOGGER.info("Sesion context (Aplication ) server info " + session.getServletContext().getServerInfo());
+        LOGGER.info("Sesion context (Aplication ) context name " + session.getServletContext().getServletContextName());
 
         // Enumeration enum4 =
         // session.getServletContext().getAttributeNames();
@@ -179,11 +180,11 @@ public class UnsFacesServlet implements Servlet {
         // else
         // attributeValueS = "null";
         //
-        // logger.info("Application Attribute name " + attributeName
+        // LOGGER.info("Application Attribute name " + attributeName
         // + " Application Attribute value " + attributeValueS);
         // }
         //
-        // logger.info("///////////////////////// Application init
+        // LOGGER.info("///////////////////////// Application init
         // PARAMETERS ////////////////////////////////////////");
         //
         // Enumeration enum5 =
@@ -193,17 +194,17 @@ public class UnsFacesServlet implements Servlet {
         // attributeName = (String) enum5.nextElement();
         // attributeValue =
         // session.getServletContext().getInitParameter(attributeName);
-        // logger.info("Application parameter name " + attributeName
+        // LOGGER.info("Application parameter name " + attributeName
         // + " Application parameter value " + attributeValue);
         // }
         //
-        // logger.info("///////////////////////// Application init
+        // LOGGER.info("///////////////////////// Application init
         // PARAMETERS ////////////////////////////////////////");
         //
-        // logger.info("************* REQUEST END
+        // LOGGER.info("************* REQUEST END
         // *************************************************************************");
-        // logger.info("");
-        // logger.info("");
+        // LOGGER.info("");
+        // LOGGER.info("");
 
         // printSystemProperty();
 

@@ -31,11 +31,12 @@ import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.ResultDto;
 import com.eurodyn.uns.model.Statement;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EventMetadataFacade {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(EventMetadataFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EventMetadataFacade.class);
 
     private DAOFactory daoFactory;
     private DAOFactory jdbcDaoFactory;
@@ -52,9 +53,9 @@ public class EventMetadataFacade {
             daoFactory.getEventMetadataDao().createEvent(event);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -65,9 +66,9 @@ public class EventMetadataFacade {
             daoFactory.getEventMetadataDao().createEventMetadata(em);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -78,9 +79,9 @@ public class EventMetadataFacade {
         try {
             elements = jdbcDaoFactory.getEventMetadataDao().findChoosableStatements(channel);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return elements;
     }
@@ -92,9 +93,9 @@ public class EventMetadataFacade {
         try {
             properties = daoFactory.getEventMetadataDao().findChannelProperties(channel);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return properties;
     }
@@ -105,9 +106,9 @@ public class EventMetadataFacade {
         try {
             daoFactory.getEventMetadataDao().deleteEventMetadataByValue(channel,value);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
 
     }
@@ -117,9 +118,9 @@ public class EventMetadataFacade {
         try {
             daoFactory.getEventMetadataDao().deleteEventMetadataByProperty(channel,property);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
 
     }
@@ -131,9 +132,9 @@ public class EventMetadataFacade {
         try {
             rDto = daoFactory.getEventMetadataDao().findEventMetadataWithValue(channel,property,value);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return rDto;
     }
@@ -142,9 +143,9 @@ public class EventMetadataFacade {
         try {
             daoFactory.getEventMetadataDao().deleteFilterStatement(channel,statement);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
 
     }
@@ -165,9 +166,9 @@ public class EventMetadataFacade {
         try {
             jdbcDaoFactory.getEventMetadataDao().deleteOldEvents();
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
 
     }

@@ -33,10 +33,11 @@ import com.eurodyn.uns.service.channelserver.rendering.XslRenderer;
 import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.util.common.AppConfigurator;
 import com.eurodyn.uns.util.common.ConfiguratorException;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TestHandler extends BaseFeedHandler {
-    private static final WDSLogger logger = WDSLogger.getLogger(TestHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestHandler.class);
 
     private BaseFeedHandler successor;
 
@@ -45,7 +46,7 @@ public class TestHandler extends BaseFeedHandler {
         try {
             pathPrefix = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar + "rdf" + File.separatorChar;
         } catch (ConfiguratorException e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
     }
 

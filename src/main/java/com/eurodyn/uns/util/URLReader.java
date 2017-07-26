@@ -33,7 +33,8 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 
 import com.eurodyn.uns.util.common.AppConfigurator;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility responsible for reading data by using HTTP protocol.
@@ -42,7 +43,7 @@ import com.eurodyn.uns.util.common.WDSLogger;
  *
  */
 public class URLReader {
-    private static final WDSLogger logger = WDSLogger.getLogger(URLReader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(URLReader.class);
     private static final int DEFAULT_SOCKET_TIMEOUT = 1000*10;
     private org.apache.commons.httpclient.HttpClient client;
     private static int socketTimeout;
@@ -52,7 +53,7 @@ public class URLReader {
             socketTimeout=1000*Integer.parseInt(AppConfigurator.getInstance().getBoundle("uns").getString("channel.socket_timeout"));
         } catch (Exception e) {
             socketTimeout = DEFAULT_SOCKET_TIMEOUT;
-            logger.info("Could not load socket timeout from configuration, assuming default: " + DEFAULT_SOCKET_TIMEOUT);
+            LOGGER.info("Could not load socket timeout from configuration, assuming default: " + DEFAULT_SOCKET_TIMEOUT);
         }
     }
 

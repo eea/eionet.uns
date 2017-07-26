@@ -21,7 +21,7 @@ import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.dao.jdbc.JdbcFeedDao;
 import com.eurodyn.uns.model.RDFThing;
 import com.eurodyn.uns.model.User;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.web.jsf.LoginBean;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -33,12 +33,14 @@ import com.hp.hpl.jena.vocabulary.RSS;
 
 import eionet.directory.DirectoryServiceIF;
 import eionet.directory.modules.DirectoryService25Impl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RssFeedServlet extends HttpServlet {
 
     private static final long serialVersionUID = -5125237705976348016L;
 
-    private static final WDSLogger logger = WDSLogger.getLogger(RssFeedServlet.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RssFeedServlet.class);
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -120,7 +122,7 @@ public class RssFeedServlet extends HttpServlet {
                 response.setHeader("WWW-Authenticate", "BASIC realm=\"RSSfeed\"");
             }
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         }
     }
     
@@ -147,26 +149,26 @@ public class RssFeedServlet extends HttpServlet {
     
     
     protected String allowUser(String auth) throws IOException {
-        logger.debug("===================================");
+        LOGGER.debug("===================================");
         if (auth == null) return null;
         if (!auth.toUpperCase().startsWith("BASIC ")) return null;
         String userpassEncoded = auth.substring(6);
 
         String userpassDecoded = new String(Base64.decodeBase64(userpassEncoded.getBytes()));
-        logger.debug(userpassDecoded);
+        LOGGER.debug(userpassDecoded);
         
         StringTokenizer userAndPass=new StringTokenizer(userpassDecoded,":");
         String username=userAndPass.nextToken();
         String password=userAndPass.nextToken();
-        
-        logger.debug(username);
-        logger.debug(password);
+
+        LOGGER.debug(username);
+        LOGGER.debug(password);
         
         try {
             DirectoryServiceIF directoryService = new DirectoryService25Impl();
             directoryService.sessionLogin(username, password);
         } catch(Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
             username=null;
         }
         

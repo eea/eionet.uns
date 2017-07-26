@@ -4,8 +4,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.web.jsf.BaseBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Action bean for providing configuration values to relevant configuration pages in UI, i.e. general.jsp, database.jsp, etc.
@@ -13,7 +15,7 @@ import com.eurodyn.uns.web.jsf.BaseBean;
 public class ConfigActions extends BaseBean {
 
     /** Static logger for this class. */
-    private static final WDSLogger LOGGER = WDSLogger.getLogger(ConfigActions.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigActions.class);
 
     /** Instance of {@link ConfigManager} to which the configuration updating calls are delegated. */
     private ConfigManager configManager = null;

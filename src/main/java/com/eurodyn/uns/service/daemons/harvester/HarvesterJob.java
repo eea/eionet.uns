@@ -11,13 +11,15 @@ import org.quartz.JobExecutionException;
 
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.service.facades.ChannelFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HarvesterJob implements Job {
 
-    private static final WDSLogger LOGGER = WDSLogger.getLogger(HarvesterJob.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HarvesterJob.class);
 
     private static ChannelFacade channelFacade = null;
 
@@ -70,8 +72,7 @@ public class HarvesterJob implements Job {
             }
 
         } catch(Exception e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
             throw new JobExecutionException("Error occured when executing harvester job: " + e.toString());
         }
     }

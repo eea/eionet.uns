@@ -24,11 +24,12 @@ package com.eurodyn.uns.service.facades;
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.Delivery;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DeliveryFacade {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(DeliveryFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeliveryFacade.class);
     private DAOFactory daoFactory;
 
     public DeliveryFacade() {
@@ -41,9 +42,9 @@ public class DeliveryFacade {
             daoFactory.getDeliveryDao().updateDelivery(delivery);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -54,9 +55,9 @@ public class DeliveryFacade {
             daoFactory.getDeliveryDao().createDelivery(delivery);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }

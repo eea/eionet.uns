@@ -1,19 +1,19 @@
 package com.eurodyn.uns.service.daemons.userupdater;
 
 import com.eurodyn.uns.dao.DAOException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * A scheduled job to update users from LDAP Server
+ * A scheduled job to update users from LDAP Server.
  * @author George Sofianos
  */
 public class UserUpdaterJob implements Job {
 
-  private static Log logger = LogFactory.getLog(UserUpdaterJob.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(UserUpdaterJob.class);
 
   @Override
   public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -21,7 +21,7 @@ public class UserUpdaterJob implements Job {
     try {
       service.synchronizeUsers();
     } catch (DAOException e) {
-      logger.error("Error while updating users from LDAP Server: " + e);
+      LOGGER.error("Error while updating users from LDAP Server: " + e);
     }
   }
 

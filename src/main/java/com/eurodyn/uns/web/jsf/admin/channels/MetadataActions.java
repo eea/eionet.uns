@@ -5,18 +5,19 @@ import java.util.List;
 
 import com.eurodyn.uns.model.ResultDto;
 import com.eurodyn.uns.model.Statement;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MetadataActions extends MetadataForm {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(ChannelActions.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChannelActions.class);
 
     public MetadataActions() {
 
         try {
             initForm();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
@@ -29,7 +30,7 @@ public class MetadataActions extends MetadataForm {
             channelMetadataElements = channel.getMetadataElements();
             metadataElementValues = new ArrayList();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return "metadataElements";
@@ -45,7 +46,7 @@ public class MetadataActions extends MetadataForm {
             eventMetadataFacade.deleteFilterStatement(channel,new Statement(elementName,null));
             addInfoMessage(null, "messages.metadata.element.success.delete", new Object[] { elementName,channel.getTitle() });
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return "metadataElements";
@@ -60,7 +61,7 @@ public class MetadataActions extends MetadataForm {
                 metadataElementValues = (List) rDto.get("list");
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return "metadataElements";
@@ -74,7 +75,7 @@ public class MetadataActions extends MetadataForm {
             eventMetadataFacade.deleteFilterStatement(channel,new Statement(null,value));
             addInfoMessage(null, "messages.metadata.value.success.delete", new Object[] { value,channel.getTitle() });
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return "metadataElements";

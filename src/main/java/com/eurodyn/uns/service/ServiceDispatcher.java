@@ -47,13 +47,15 @@ import com.eurodyn.uns.service.facades.SubscriptionFacade;
 import com.eurodyn.uns.service.facades.UserFacade;
 import com.eurodyn.uns.service.facades.XslFacade;
 import com.eurodyn.uns.util.DateUtil;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.util.uid.UidGenerator;
 import com.hp.hpl.jena.vocabulary.RDF;
 import eionet.acl.AppUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ServiceDispatcher {
-    private static final WDSLogger logger = WDSLogger.getLogger(XslFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XslFacade.class);
     
     private ChannelFacade channelFacade=new ChannelFacade();
     private UserFacade userFacade=new UserFacade();
@@ -97,7 +99,7 @@ public class ServiceDispatcher {
             channel.setTransformation(new Stylesheet(1));           
             channelFacade.createChannel(channel);
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
             throw e;
         }
         return channel.getSecondaryId();
@@ -136,7 +138,7 @@ public class ServiceDispatcher {
             channelFacade.updateChannel(channel);
             
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
             throw e;
         }
         return "";
@@ -145,7 +147,7 @@ public class ServiceDispatcher {
     public String sendNotificationRDF(String channel_id, String rdf) {
         try {
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         }
         return "";
     }
@@ -157,7 +159,7 @@ public class ServiceDispatcher {
             User userForSubs=userFacade.getUser(username,true);
             result = canUserSubscribe(channel, userForSubs);
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
             throw e;
         }
         return result;
@@ -171,7 +173,7 @@ public class ServiceDispatcher {
                 result = result || subsFacade.canUserSubscribe(channel.getSecondaryId(), userForSubs);
             }
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
             throw e;
         }
         return result;
@@ -207,7 +209,7 @@ public class ServiceDispatcher {
                 throw new Exception("Subscription is not allowed to the user");
             }
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
             throw e;
         }
         return "";

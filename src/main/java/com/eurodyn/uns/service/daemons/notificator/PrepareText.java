@@ -18,10 +18,11 @@ import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.NotificationTemplate;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PrepareText {
-    private static final WDSLogger logger = WDSLogger.getLogger(PrepareText.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PrepareText.class);
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     public static final String UNSUBSCRIBE_LINK_PATH = "/subscriptions/unsubscribe.jsf?subsc=";
@@ -57,7 +58,7 @@ public class PrepareText {
             ret.put(NOTIFICATION_SUBJECT, subject);
             return ret;
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             throw new Exception("Error occurred when preparing notification text: " + e.toString(), e);
         }
     }
@@ -122,7 +123,7 @@ public class PrepareText {
             return isHtml ? createLink(link, INSPECTOR_LINK_TEXT) : INSPECTOR_LINK_TEXT + ": " + link;
 
         } catch (UnsupportedEncodingException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
 
         return link;

@@ -28,11 +28,12 @@ import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Subscription;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FeedFacade {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(DeliveryTypeFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeliveryTypeFacade.class);
 
     private DAOFactory daoFactory;
 
@@ -45,9 +46,9 @@ public class FeedFacade {
         try {
             result = daoFactory.getFeedDao().findUserEvents(subscription);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }
@@ -57,9 +58,9 @@ public class FeedFacade {
         try {
             result = daoFactory.getFeedDao().findChannelsEvents(channel);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }

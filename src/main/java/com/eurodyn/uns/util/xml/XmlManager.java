@@ -24,11 +24,15 @@ package com.eurodyn.uns.util.xml;
 import javax.xml.transform.TransformerException;
 
 import org.apache.xpath.XPathAPI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
 public class XmlManager implements IXUpdate {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(XmlManager.class);
 
     protected IXmlCtx ctx = null;
 
@@ -60,7 +64,7 @@ public class XmlManager implements IXUpdate {
                 parent.replaceChild(newElement, textNode);
             }
         } catch (TransformerException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
             throw new XmlException("Error while setting value to element " + name + ": " + e.getMessage());
         }
     }

@@ -1,17 +1,19 @@
 package com.eurodyn.uns.web.jsf;
 
-import com.eurodyn.uns.util.common.WDSLogger;
+
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BreadCrumbBean extends BaseBean {
 
     private static Map breadcrumbsMap = new HashMap();
 
-    private static final WDSLogger logger = WDSLogger.getLogger(BreadCrumbBean.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BreadCrumbBean.class);
 
     Stack breadCrumbStack = new Stack();
 
@@ -57,7 +59,7 @@ public class BreadCrumbBean extends BaseBean {
             }
 
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         }
 
         return breadcrumbs.toString();

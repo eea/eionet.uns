@@ -28,11 +28,12 @@ import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.Dto;
 import com.eurodyn.uns.model.ResultDto;
 import com.eurodyn.uns.model.Stylesheet;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class XslFacade {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(XslFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XslFacade.class);
     private static XslFacade instance = null;
     private DAOFactory daoFactory;
 
@@ -59,9 +60,9 @@ public class XslFacade {
             stylesheets = daoFactory.getStylesheetDao().findAllStylesheets(orderProperty, order);
             result.put("list",stylesheets);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }
@@ -75,9 +76,9 @@ public class XslFacade {
             //x.checkFromInputStream(new ByteArrayInputStream(xsl.getContent().getBytes()));
             //xsl.setContent(x.serializeToString());
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return xsl;
     }
@@ -88,9 +89,9 @@ public class XslFacade {
             daoFactory.getStylesheetDao().updateStylesheet(xsl);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -101,9 +102,9 @@ public class XslFacade {
             daoFactory.getStylesheetDao().createStylesheet(xsl);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -135,10 +136,10 @@ public class XslFacade {
             daoFactory.getStylesheetDao().deleteStylesheetl(xsl);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
             throw(e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
             throw(e);
         }
         return ret;

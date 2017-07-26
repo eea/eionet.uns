@@ -4,8 +4,9 @@ import java.text.DecimalFormat;
 
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.eurodyn.uns.util.common.WDSLogger;
 
 /**
  * A simple {@link HttpSessionListener} for recording the number of created sessions, logging memory usage, etc.
@@ -16,7 +17,7 @@ import com.eurodyn.uns.util.common.WDSLogger;
 public class AppSessionListener implements HttpSessionListener {
 
     /** Static logger for this class. */
-    private static final WDSLogger LOGGER = WDSLogger.getLogger(AppSessionListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AppSessionListener.class);
 
     /** Number of active sessions. */
     private int sessionCount = 0;

@@ -11,7 +11,8 @@ import org.dom4j.Document;
 import org.dom4j.io.SAXReader;
 
 import com.eurodyn.uns.util.common.AppConfigurator;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Singleton class for loading and serving the application's configuration.
@@ -21,7 +22,7 @@ import com.eurodyn.uns.util.common.WDSLogger;
 public class ConfigManager {
 
     /** Static logger for this class. */
-    private static final WDSLogger LOGGER = WDSLogger.getLogger(ConfigManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigManager.class);
 
     /** Indicates string-type config element. */
     private static final int STRING_TYPE = 1;

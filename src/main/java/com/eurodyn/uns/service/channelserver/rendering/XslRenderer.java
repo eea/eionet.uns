@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
 import com.eurodyn.uns.model.Channel;
@@ -47,6 +49,7 @@ import com.hp.hpl.jena.vocabulary.RSS;
 
 public class XslRenderer implements IRenderStrategy {
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(XslRenderer.class);
     public static XSLTransformer transform;
 
     static {
@@ -115,8 +118,7 @@ public class XslRenderer implements IRenderStrategy {
                 }
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
 
         StringWriter out = new StringWriter();

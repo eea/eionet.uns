@@ -13,7 +13,7 @@ import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.service.facades.NotificationFacade;
 import com.eurodyn.uns.service.facades.SubscriptionFacade;
 import com.eurodyn.uns.util.common.AppConfigurator;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -26,10 +26,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NotificatorJob implements Job {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(NotificatorJob.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NotificatorJob.class);
 
     private static ChannelFacade channelFacade = null;
     private static SubscriptionFacade subscriptionFacade = null;
@@ -48,15 +50,14 @@ public class NotificatorJob implements Job {
             scan();
             deliver();
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
             throw new JobExecutionException("Error occured when executing notification job: "+ e.toString());
         }
     }
 
     private void scan() throws Exception {
         try {
-            logger.info("Start generating notifications");
+            LOGGER.info("Start generating notifications");
             HashMap channels = channelFacade.findUnprocessedEvents();
             channelFacade.setProcessed();
             int i = 0;
@@ -85,11 +86,10 @@ public class NotificatorJob implements Job {
                     channelFacade.updateEvent(event);
                 }
             }
-            logger.info("Generated " + i + " notifications");
+            LOGGER.info("Generated " + i + " notifications");
 
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
             throw new Exception("Error occured when scanning notifications: " + e.toString());
         }
     }
@@ -122,7 +122,7 @@ public class NotificatorJob implements Job {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
             throw new Exception("Error occured when checking filters: " + e.toString());
         }
         return ret;
@@ -148,8 +148,7 @@ public class NotificatorJob implements Job {
             ret = notificationFacade.createNotification(notification);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
             ret = false;
             throw new Exception("Error occured when trying to generate notification: " + e.toString());
         }
@@ -180,29 +179,27 @@ public class NotificatorJob implements Job {
                     jabber_messages.add(notif);
                 }
             }
-            logger.info("Notifications prepared. " +
+            LOGGER.info("Notifications prepared. " +
                     "e-mails=" + email_messages.size() + ", jabber=" + jabber_messages.size());
             Thread emailThread = new Thread(new EMailThread(email_messages));
             Thread jabberThread = new Thread(new JabberThread(jabber_messages));
 
-            logger.info("Start sending notifications.");
+            LOGGER.info("Start sending notifications.");
             emailThread.start();
             jabberThread.start();
             try{
-                logger.info("Sending e-mails.");
+                LOGGER.info("Sending e-mails.");
                 emailThread.join();
-                logger.info("Done sending e-mails.");
+                LOGGER.info("Done sending e-mails.");
 
-                logger.info("Sending jabber messages.");
+                LOGGER.info("Sending jabber messages.");
                 jabberThread.join();
-                logger.info("Done sending jabber messages.");
+                LOGGER.info("Done sending jabber messages.");
             } catch (InterruptedException ie){
-                ie.printStackTrace();
-                logger.error(ie.getMessage());
+                LOGGER.error(ie.getMessage(), ie);
             }
         } catch (Exception e){
-            e.printStackTrace();
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
             throw new Exception("Error occurred when delivering notifications: " + e.toString());
         }
     }

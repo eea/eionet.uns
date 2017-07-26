@@ -11,13 +11,15 @@ import org.quartz.SchedulerException;
 import org.quartz.SimpleTrigger;
 import org.quartz.impl.StdSchedulerFactory;
 
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Job that periodically initiates the sending of notifications. Implements {@link ServletContextListener}, as it is started at
@@ -30,7 +32,7 @@ import static org.quartz.TriggerBuilder.newTrigger;
 public class Notificator implements ServletContextListener {
 
     /** Static logger for this class. */
-    private static final WDSLogger LOGGER = WDSLogger.getLogger(Notificator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Notificator.class);
 
     /** Job's running interval. Taken from configuration. */
     private Integer intervalSeconds;
@@ -67,8 +69,7 @@ public class Notificator implements ServletContextListener {
             scheduler.scheduleJob(jobDetail, trigger);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
             throw new Exception("Error occured when processing notifications: " + e.toString());
         }
     }
@@ -85,8 +86,7 @@ public class Notificator implements ServletContextListener {
                 intervalSeconds = (Integer) configMap.get("daemons/notificator/interval").getValue();
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
         return intervalSeconds;
     }
@@ -104,7 +104,7 @@ public class Notificator implements ServletContextListener {
             start(interval);
             LOGGER.debug(getClass().getSimpleName() + " scheduled with interval minutes " + getIntervalSeconds());
         } catch (Exception e) {
-            LOGGER.fatalError("Error when scheduling " + getClass().getSimpleName() + " with interval minutes "
+            LOGGER.error("Error when scheduling " + getClass().getSimpleName() + " with interval minutes "
                     + getIntervalSeconds(), e);
         }
     }
@@ -124,7 +124,7 @@ public class Notificator implements ServletContextListener {
             } catch (SchedulerException e) {
                 LOGGER.error("Failed proper shutdown of " + scheduler.getClass().getSimpleName(), e);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
         }
     }

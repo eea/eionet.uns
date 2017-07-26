@@ -309,11 +309,11 @@
             <artifactId>commons-codec</artifactId>
             <version>1.4</version>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.0.4</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
@@ -334,11 +334,11 @@
             <artifactId>commons-io</artifactId>
             <version>2.2</version>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>xmlrpc</groupId>
             <artifactId>xmlrpc</artifactId>
@@ -729,18 +729,37 @@
             <version>2.3.1</version>
         </dependency>
 
-        <!--
-            ===================
-                   Test-time dependencies.
-            ===================
-            -->
-
+        <!-- Logging dependencies -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.8.2</version>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.6.6</version>
-            <scope>test</scope>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
         </dependency>
+        <!-- Intercepts logging from log4j and redirects it to slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <!-- Intercepts logging from apache commons logging and redirects it to slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <!--The Log4j 2 SLF4J Binding allows applications coded to the SLF4J API to use Log4j 2 as the implementation.-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.8.2</version>
+        </dependency>
+
+        <!-- Test-time dependencies. -->
 
         <dependency>
             <groupId>junit</groupId>

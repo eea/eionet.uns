@@ -12,11 +12,15 @@ import java.util.TimeZone;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Testing the JDBC connection.
  */
 public class TestJDBC {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestJDBC.class);
 
     /**
      * First test method.
@@ -70,8 +74,7 @@ public class TestJDBC {
             // conn.commit();
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
 
     }

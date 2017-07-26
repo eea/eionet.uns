@@ -7,13 +7,15 @@ import java.util.List;
 import com.eurodyn.uns.model.Dto;
 import com.eurodyn.uns.service.facades.RoleFacade;
 import com.eurodyn.uns.service.facades.SubscriptionFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.web.jsf.BaseBean;
 import com.eurodyn.uns.web.jsf.SortableTable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SubscriptionListForm extends BaseBean {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(SubscriptionListForm.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionListForm.class);
 
     private SubscriptionFacade subscriptionFacade;
  
@@ -42,7 +44,7 @@ public class SubscriptionListForm extends BaseBean {
                 st.sort(subscriptions);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return true;
@@ -68,7 +70,7 @@ public class SubscriptionListForm extends BaseBean {
 
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return true;

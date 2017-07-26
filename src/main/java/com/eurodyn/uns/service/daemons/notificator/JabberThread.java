@@ -15,13 +15,15 @@ import com.eurodyn.uns.model.DeliveryNotification;
 import com.eurodyn.uns.model.DeliveryType;
 import com.eurodyn.uns.model.Notification;
 import com.eurodyn.uns.service.facades.DeliveryFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JabberThread implements Runnable {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(JabberThread.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JabberThread.class);
 
     List notifications;
 
@@ -52,10 +54,10 @@ public class JabberThread implements Runnable {
                 }
                 conn.login(jabberUsername, jabberPassword);
             } else {
-                logger.info("Jabber server URL is blank, no notifications will be sent!");
+                LOGGER.info("Jabber server URL is blank, no notifications will be sent!");
             }
 
-            boolean debugEnabled = logger.isDebugEnabled();
+            boolean debugEnabled = LOGGER.isDebugEnabled();
 
             if (notifications != null) {
 
@@ -98,16 +100,15 @@ public class JabberThread implements Runnable {
                             if (conn != null) {
                                 conn.sendPacket(message);
                             } else if (debugEnabled) {
-                                logger.debug("Skipping this message because no Jabber host specified: TO <" + to + ">, SUBJECT: "
+                                LOGGER.debug("Skipping this message because no Jabber host specified: TO <" + to + ">, SUBJECT: "
                                         + subj);
                             }
                         } catch (Exception e) {
-                            logger.error(e.getMessage());
-                            e.printStackTrace();
+                            LOGGER.error(e.getMessage());
                             continue;
                         }
                     } else {
-                        logger.error("Not valid jabber address: " + to);
+                        LOGGER.error("Not valid jabber address: " + to);
                     }
 
                     delivery.setDeliveryStatus(1);
@@ -119,8 +120,7 @@ public class JabberThread implements Runnable {
                 conn.close();
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 

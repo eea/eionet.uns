@@ -40,7 +40,7 @@ import com.eurodyn.uns.service.channelserver.NotFoundException;
 import com.eurodyn.uns.util.DateUtil;
 import com.eurodyn.uns.util.common.AppConfigurator;
 import com.eurodyn.uns.util.common.ConfiguratorException;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.util.rdf.IChannel;
 import com.hp.hpl.jena.mem.ModelMem;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -49,13 +49,15 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.util.FileManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represent tie responsible for handling of PUSH channels.
  * 
  */
 public class PushHandler extends BaseFeedHandler {
-    private static final WDSLogger logger = WDSLogger.getLogger(PushHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PushHandler.class);
     private BaseFeedHandler successor;
     private IChannelDao channelDao;
     private static String pathPrefix;
@@ -68,7 +70,7 @@ public class PushHandler extends BaseFeedHandler {
             pathPrefix = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar + "rdf" + File.separatorChar;
             DEFAULT_LIFETIME=Integer.parseInt(AppConfigurator.getInstance().getBoundle("uns").getString("pushchannel.default_lifetime"));
         } catch (ConfiguratorException e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
     }
 
@@ -100,16 +102,16 @@ public class PushHandler extends BaseFeedHandler {
     private void push(String secondaryId, User user, String rdf) throws DisabledException, NotFoundException, Exception {
         Channel c = channelDao.findChannel(secondaryId);
         if (c == null){
-            logger.debug("Channel not found:" + secondaryId);
+            LOGGER.debug("Channel not found:" + secondaryId);
             throw new NotFoundException();
         }
         if (c.getStatus() == null || c.getStatus().intValue() == 0){
-            logger.debug("Channel is disabled:" + secondaryId);
+            LOGGER.debug("Channel is disabled:" + secondaryId);
             throw new DisabledException();
         }
         String userpath = (user != null ? "_" + user.getExternalId() : "");
         String persistence = pathPrefix + secondaryId + userpath + "_" + "data.rdf";
-        logger.debug(persistence);
+        LOGGER.debug(persistence);
         Model main = ModelFactory.createDefaultModel();
         Model incoming = ModelFactory.createDefaultModel();
         InputStream in1 = FileManager.get().open(persistence);
@@ -142,7 +144,7 @@ public class PushHandler extends BaseFeedHandler {
         result.write(fos, "RDF/XML-ABBREV");
         fos.flush();
         fos.close();
-        logger.debug(c.getTitle());
+        LOGGER.debug(c.getTitle());
     }
 
     /**
@@ -157,7 +159,7 @@ public class PushHandler extends BaseFeedHandler {
             try {
                 current.removeAll(r, null, null);
             } catch (Exception e) {
-                logger.error(e);
+                LOGGER.error("Error", e);
             }
         }
     }
@@ -201,7 +203,7 @@ public class PushHandler extends BaseFeedHandler {
                 fos.close();
             } catch (FileNotFoundException e) {
             } catch (IOException e) {
-                logger.error(e);
+                LOGGER.error("Error", e);
             }
         }
     }

@@ -29,11 +29,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.eurodyn.uns.util.common.WDSLogger;
 
 public class MemoryCache implements Comparator {
-    private static final WDSLogger logger = WDSLogger.getLogger(MemoryCache.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MemoryCache.class);
 
     private int maxSize = 100;
 
@@ -78,7 +79,7 @@ public class MemoryCache implements Comparator {
         synchronized (lock) {
             cache.put(key, entry);
         }
-        logger.debug("Transformed content put in cache! Transform: " + key);
+        LOGGER.debug("Transformed content put in cache! Transform: " + key);
 
     }
 
@@ -91,7 +92,7 @@ public class MemoryCache implements Comparator {
      *
      */
     protected void evict() {
-        logger.debug("Calling evict... cacheSize: " + cache.size() + " maxSize: " + getMaxSize());
+        LOGGER.debug("Calling evict... cacheSize: " + cache.size() + " maxSize: " + getMaxSize());
         synchronized (lock) {
             if (this.getMaxSize() >= cache.size()) {
                 return;
@@ -111,7 +112,7 @@ public class MemoryCache implements Comparator {
                 }
 
                 CacheItem entry = (CacheItem) it.next();
-                logger.debug("Evicting: " + entry.getKey());
+                LOGGER.debug("Evicting: " + entry.getKey());
                 cache.remove(entry.getKey());
 
                 count++;
@@ -143,7 +144,7 @@ public class MemoryCache implements Comparator {
           return null;
         }
           
-        logger.debug("Transformed content found in cache! Transform: " + key);
+        LOGGER.debug("Transformed content found in cache! Transform: " + key);
         return entry;
     }
 

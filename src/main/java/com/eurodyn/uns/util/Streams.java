@@ -22,6 +22,9 @@
 
 package com.eurodyn.uns.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.IOException;
@@ -36,6 +39,9 @@ import java.io.InputStreamReader;
  *
  */
 public class Streams {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Streams.class);
+
     static final int BLOCK_SIZE = 4096;
 
 
@@ -117,7 +123,7 @@ public class Streams {
                 }
             }
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+            LOGGER.error(ioe.getMessage(), ioe);
         }
         if ((c == -1) && (offset == 0)) {
             return null;

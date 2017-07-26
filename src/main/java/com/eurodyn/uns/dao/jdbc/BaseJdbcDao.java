@@ -10,13 +10,15 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.eurodyn.uns.util.common.AppConfigurator;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class BaseJdbcDao {
 
     private static DataSource ds = null;
 
-    private static final WDSLogger logger = WDSLogger.getLogger(BaseJdbcDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseJdbcDao.class);
 
     public static void setDataSouce(DataSource dataSource){
         ds = dataSource;
@@ -31,7 +33,7 @@ public class BaseJdbcDao {
                 ds = (DataSource) envContext.lookup("jdbc/" + dataSource);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
         return ds;
     }
@@ -61,7 +63,7 @@ public class BaseJdbcDao {
                 conn = null;
             }
         } catch (SQLException sqle) {
-            sqle.printStackTrace();
+            LOGGER.error(sqle.getMessage(), sqle);
         }
     }
 
@@ -71,7 +73,7 @@ public class BaseJdbcDao {
                 conn.commit();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -81,7 +83,7 @@ public class BaseJdbcDao {
                 conn.rollback();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 

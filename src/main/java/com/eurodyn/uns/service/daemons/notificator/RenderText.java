@@ -7,11 +7,12 @@ import org.python.core.PyObject;
 import org.python.core.PyStringMap;
 import org.python.util.PythonInterpreter;
 
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RenderText {
     
-    private static final WDSLogger logger = WDSLogger.getLogger(RenderText.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RenderText.class);
     
     public static String executeTemplate(String template, PyStringMap namespace, boolean isHtml) {
         try{
@@ -23,8 +24,7 @@ public class RenderText {
             template = renderValueExec(template, interp);
             
         } catch(Exception e){
-            e.printStackTrace();
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
         return template;
     }
@@ -44,8 +44,7 @@ public class RenderText {
                 }
             }
         } catch(Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
         return code;
     }
@@ -76,16 +75,14 @@ public class RenderText {
                     out.close();
                     interp.cleanup();
                 } catch(Exception e) {
-                    e.printStackTrace();
-                    logger.error("parsing notification template: " +e.getMessage());
+                    LOGGER.error("parsing notification template: " +e.getMessage());
                     code = "ERROR occured while parsing notification template: "+e.getMessage()+"! \n \n" + code;
                     break;
                 }
             }
         }
         } catch(Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
         return code;
     }

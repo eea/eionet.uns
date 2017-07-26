@@ -11,13 +11,15 @@ import com.eurodyn.uns.model.DeliveryType;
 import com.eurodyn.uns.model.Notification;
 import com.eurodyn.uns.service.facades.DeliveryFacade;
 import com.eurodyn.uns.util.SendMail;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EMailThread implements Runnable {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(EMailThread.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EMailThread.class);
 
     List notifications;
 
@@ -70,11 +72,10 @@ public class EMailThread implements Runnable {
                         if(to != null && to.length() > 0){
                             SendMail.sendMail(to, subj, body, html, id, smtpServer, smtpPort, smtpUsername, smtpPassword, smtpSender);
                         } else {
-                            logger.error("Not valid e-mail address: "+to);
+                            LOGGER.error("Not valid e-mail address: "+to);
                         }
                     } catch(Exception e){
-                        logger.error("Failed to send notification ID: "+id+" to address "+to);
-                        e.printStackTrace();
+                        LOGGER.error("Failed to send notification ID: "+id+" to address "+to);
                         continue;
                     }
 
@@ -84,8 +85,7 @@ public class EMailThread implements Runnable {
                 }
             }
         } catch(Exception e){
-            logger.error(e.getMessage());
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 

@@ -34,7 +34,7 @@ import com.eurodyn.uns.util.rdf.FlResourcesProcessor;
 import com.eurodyn.uns.util.rdf.RdfContext;
 
 public class GenericRenderer implements IRenderStrategy {
-    //private static final WDSLogger logger = WDSLogger.getLogger(GenericRenderer.class);
+    //private static final Logger LOGGER = LoggerFactory.getLogger(GenericRenderer.class);
 
 
     public String render(Channel channel, Map things) throws Exception {

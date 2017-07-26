@@ -42,10 +42,11 @@ import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.RDFThing;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.DateUtil;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao {
-    private static final WDSLogger logger = WDSLogger.getLogger(HibernateChannelDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HibernateChannelDao.class);
 
     @Override
     protected Class getReferenceClass() {

@@ -18,7 +18,8 @@ import com.eurodyn.uns.model.MetadataElement;
 import com.eurodyn.uns.model.ResultDto;
 import com.eurodyn.uns.model.Statement;
 import com.eurodyn.uns.util.common.UnsProperties;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JDBC implementation of {@link IEventMetadataDao}.
@@ -26,7 +27,7 @@ import com.eurodyn.uns.util.common.WDSLogger;
 public class JdbcEventMetadataDao extends BaseJdbcDao implements IEventMetadataDao {
 
     /** Static logger for this class. */
-    private static final WDSLogger LOGGER = WDSLogger.getLogger(JdbcEventMetadataDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JdbcEventMetadataDao.class);
 
     /** SQL for selecting all choosable statements for a channel. */
     private static final String ALL_CHOOSABLE_STATEMENTS_FOR_CHANNEL = ""

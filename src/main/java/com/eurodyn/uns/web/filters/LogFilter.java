@@ -12,7 +12,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -21,7 +22,7 @@ import com.eurodyn.uns.util.common.WDSLogger;
  */
 public class LogFilter implements Filter {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(LogFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LogFilter.class);
 
     /**
      * The filter configuration object we are associated with.  If this value
@@ -40,7 +41,7 @@ public class LogFilter implements Filter {
         this.filterConfig = arg0;
         String stateValue= filterConfig.getInitParameter("state");
         String ignoreValue = filterConfig.getInitParameter("ignore");
-        logger.debug(ignoreValue);
+        LOGGER.debug(ignoreValue);
         if (stateValue == null)
             this.state = false;
         else if (stateValue.equalsIgnoreCase("ON"))
@@ -54,7 +55,7 @@ public class LogFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         chain.doFilter(request, response);
         if (state) {
-            if (logger.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 logAttributes((HttpServletRequest) request);
             }
         }
@@ -65,12 +66,12 @@ public class LogFilter implements Filter {
     }
 
     private void logAttributes(HttpServletRequest req) {
-        logger.debug("========== FILTER LOG START ===========");
+        LOGGER.debug("========== FILTER LOG START ===========");
         logMiscInfo(req);
         logParams(req);
         logRequestAttributes(req);
         logSessionAttributes(req);
-        logger.debug("========== FILTER LOG START ===========");
+        LOGGER.debug("========== FILTER LOG START ===========");
     }
 
     private void logMiscInfo(HttpServletRequest req) {
@@ -78,7 +79,7 @@ public class LogFilter implements Filter {
         sb.append("URI=" + req.getRequestURI());
         sb.append(", UserPrincipal=" + req.getUserPrincipal());
         sb.append(", Locale=" + req.getLocale());
-        logger.debug(String.valueOf(sb));
+        LOGGER.debug(String.valueOf(sb));
     }
 
     private void logRequestAttributes(final HttpServletRequest req) {
@@ -160,7 +161,7 @@ public class LogFilter implements Filter {
                 sb.append("\n");
             }
         }
-        logger.debug(sb.toString());
+        LOGGER.debug(sb.toString());
     }
 
     private interface LogSource {

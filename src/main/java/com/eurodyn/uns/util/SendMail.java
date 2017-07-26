@@ -14,8 +14,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.eurodyn.uns.util.common.WDSLogger;
 
 
 /**
@@ -23,7 +24,7 @@ import com.eurodyn.uns.util.common.WDSLogger;
 */
 public class SendMail implements java.io.Serializable {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(SendMail.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SendMail.class);
 
   /**
    * Creates a new instance of SendMail.
@@ -52,7 +53,7 @@ public class SendMail implements java.io.Serializable {
     {
 
     if (StringUtils.isBlank(SMTP_SERVER)) {
-        logger.debug("Emulating e-mail to <" + mailTo + ">, subject: " + subject);
+        LOGGER.debug("Emulating e-mail to <" + mailTo + ">, subject: " + subject);
         return;
     }
 
@@ -100,13 +101,13 @@ public class SendMail implements java.io.Serializable {
 
         msg.setSentDate( new Date() );
         msg.setContentID(id);
-        logger.info("Sending e-mail, id=" + id);
+        LOGGER.info("Sending e-mail, id=" + id);
         Transport.send( msg );
-        logger.info("E-mail sent, id=" + id);
+        LOGGER.info("E-mail sent, id=" + id);
     }
     catch ( Exception ex )
     {
-        logger.error(ex.getMessage());
+        LOGGER.error(ex.getMessage());
         ex.printStackTrace();
         throw new Exception("Error occured when trying to send an e-mail: "+ex.toString());
     }

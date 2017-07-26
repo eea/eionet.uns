@@ -28,11 +28,12 @@ import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.Dto;
 import com.eurodyn.uns.model.NotificationTemplate;
 import com.eurodyn.uns.model.ResultDto;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NotificationTemplateFacade {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(NotificationTemplateFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NotificationTemplateFacade.class);
     private DAOFactory daoFactory;
 
     public NotificationTemplateFacade() {
@@ -58,9 +59,9 @@ public class NotificationTemplateFacade {
             stylesheets = daoFactory.getNotificationTemplateDao().findAllNotificationTemplates(orderProperty, order);
             result.put("list",stylesheets);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }
@@ -70,9 +71,9 @@ public class NotificationTemplateFacade {
         try {
             notificationTemplate = daoFactory.getNotificationTemplateDao().findByPK(id);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return notificationTemplate;
     }
@@ -84,9 +85,9 @@ public class NotificationTemplateFacade {
             daoFactory.getNotificationTemplateDao().updateNotificationTemplate(notificationTemplate);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -97,9 +98,9 @@ public class NotificationTemplateFacade {
             daoFactory.getNotificationTemplateDao().createNotificationTemplate(notificationTemplate);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }

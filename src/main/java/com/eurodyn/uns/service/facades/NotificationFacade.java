@@ -25,14 +25,16 @@ import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Notification;
 import com.eurodyn.uns.model.User;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 
 import java.util.Date;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NotificationFacade {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(NotificationFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NotificationFacade.class);
 
     private DAOFactory daoFactory;
     private DAOFactory jdbcDaoFactory;
@@ -60,9 +62,9 @@ public class NotificationFacade {
             daoFactory.getNotificationDao().createNotification(notification);
             success = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return success;
     }

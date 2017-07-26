@@ -28,15 +28,17 @@ import org.apache.commons.lang.StringUtils;
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.User;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import eionet.acl.AccessControlListIF;
 import eionet.acl.AccessController;
 import eionet.acl.AuthMechanism;
 import eionet.acl.SignOnException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UserFacade {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(UserFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserFacade.class);
 
     private DAOFactory hibernateFactory;
 
@@ -53,9 +55,9 @@ public class UserFacade {
         try {
             users = hibernateFactory.getUserDao().findAllUsers();
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return users;
     }
@@ -69,9 +71,9 @@ public class UserFacade {
                 user.setUserRoles(rf.getUserRoles(username));
             }
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return user;
     }
@@ -83,9 +85,9 @@ public class UserFacade {
             // RoleFacade rf = new RoleFacade();
             // user.setUserRoles(rf.getUserRoles(user.username));
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return user;
     }
@@ -101,9 +103,9 @@ public class UserFacade {
                 // }
             }
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return user;
     }
@@ -114,9 +116,9 @@ public class UserFacade {
             hibernateFactory.getUserDao().updateUser(user);
             success = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return success;
     }
@@ -125,7 +127,7 @@ public class UserFacade {
         boolean authented = false;
         try {
 
-            logger.debug("Authenticating user '" + userName + "'");
+            LOGGER.debug("Authenticating user '" + userName + "'");
 
             AuthMechanism.sessionLogin(userName, userPws);
 
@@ -139,8 +141,7 @@ public class UserFacade {
             authented = true;
 
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.error("User '" + userName + "' not authenticated");
+            LOGGER.error("User '" + userName + "' not authenticated");
         }
 
         return authented;
@@ -179,9 +180,9 @@ public class UserFacade {
                     acl = AccessController.getAcl(aclPath);
                 } catch (Exception e) {
                     if (e instanceof SignOnException && StringUtils.containsIgnoreCase(e.getMessage(), "No ACL")) {
-                        logger.info("Found no ACL with such path: " + aclPath + "   (" + e.toString() + ")");
+                        LOGGER.info("Found no ACL with such path: " + aclPath + "   (" + e.toString() + ")");
                     } else {
-                        logger.error(e);
+                        LOGGER.error("Error", e);
                     }
                     acl = null;
                 }
@@ -216,9 +217,9 @@ public class UserFacade {
                 hibernateFactory.getUserDao().createUser(user);
             }
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return user;
     }

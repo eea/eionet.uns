@@ -35,11 +35,13 @@ import com.eurodyn.uns.service.channelserver.feed.QueryHandler;
 import com.eurodyn.uns.service.channelserver.feed.TestHandler;
 import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.util.cache.CacheItem;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.util.rdf.IChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EEAChannelServer extends BaseChannelServer {
-    private static final WDSLogger logger = WDSLogger.getLogger(EEAChannelServer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EEAChannelServer.class);
 
     private BaseFeedHandler handler;
     private ChannelFacade channelFacade = new ChannelFacade();
@@ -63,7 +65,7 @@ public class EEAChannelServer extends BaseChannelServer {
                 Channel channel = subs.getChannel();
                 CacheItem entry = MemCache.get(subs.getId(),channelFacade.getLastHarvestedDate(channel));
                 if (entry != null) {
-                    logger.debug("Found entry in cache for subscription on channel" + subs.getChannel().getTitle());
+                    LOGGER.debug("Found entry in cache for subscription on channel" + subs.getChannel().getTitle());
                     content = (String) entry.getContent();
                 } else {
                     Dto request = new Dto();
@@ -86,9 +88,9 @@ public class EEAChannelServer extends BaseChannelServer {
             }
             
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception ex) {
-            logger.fatalError(ex);
+            LOGGER.error("Error", ex);
         }
         return content;
     }
@@ -100,7 +102,7 @@ public class EEAChannelServer extends BaseChannelServer {
             parameters.put("channel", channel);
             handler.handleRequest(parameters, BaseChannelServer.QUERY);
         } catch (Exception ex) {
-            logger.fatalError(ex);
+            LOGGER.error("Error", ex);
         }
         return parameters;
     }
@@ -112,7 +114,7 @@ public class EEAChannelServer extends BaseChannelServer {
             parameters.put("channel", channel);
             handler.handleRequest(parameters, BaseChannelServer.TEST);
         } catch (Exception ex) {
-            logger.fatalError(ex);
+            LOGGER.error("Error", ex);
         }
         return (String) parameters.get("CONTENT");
 

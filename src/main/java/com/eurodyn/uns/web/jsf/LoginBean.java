@@ -13,11 +13,12 @@ import com.eurodyn.uns.model.DeliveryType;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.UserFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LoginBean  {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(LoginBean.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginBean.class);
 
     public static String getUserRole(HttpServletRequest request) {
         if (request.isUserInRole("admin"))
@@ -61,7 +62,7 @@ public class LoginBean  {
 
                 }
             } catch (Exception e) {
-                logger.error(e);
+                LOGGER.error("Error", e);
             }
         }
         return user;

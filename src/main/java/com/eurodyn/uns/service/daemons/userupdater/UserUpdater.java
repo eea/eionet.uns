@@ -5,6 +5,8 @@ import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -18,6 +20,8 @@ import static org.quartz.TriggerBuilder.newTrigger;
  * @author George Sofianos
  */
 public class UserUpdater implements ServletContextListener {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(UserUpdater.class);
 
   private Scheduler scheduler;
 
@@ -42,7 +46,7 @@ public class UserUpdater implements ServletContextListener {
         scheduler.start();
       }
     } catch (SchedulerException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage(), e);
     }
   }
 
@@ -54,9 +58,9 @@ public class UserUpdater implements ServletContextListener {
         Thread.sleep(1000);
       }
     } catch (SchedulerException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage(), e);
     } catch (InterruptedException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage(), e);
     }
   }
 }

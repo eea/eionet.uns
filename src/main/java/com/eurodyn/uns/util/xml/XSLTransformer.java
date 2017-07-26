@@ -48,6 +48,8 @@ import javax.xml.transform.sax.TemplatesHandler;
 import javax.xml.transform.sax.TransformerHandler;
 import javax.xml.transform.stream.StreamResult;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
@@ -55,6 +57,8 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import com.eurodyn.uns.util.Streams;
 
 public class XSLTransformer {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(XSLTransformer.class);
 
     public XSLTransformer() {
         synchronized (mutex) {
@@ -81,7 +85,7 @@ public class XSLTransformer {
                 }
 
             } catch (MissingResourceException mre) {
-                mre.printStackTrace();
+                LOGGER.error(mre.getMessage(), mre);
             }
 
         }

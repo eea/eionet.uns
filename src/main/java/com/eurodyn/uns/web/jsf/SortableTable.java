@@ -10,12 +10,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.eurodyn.uns.util.common.WDSLogger;
 
 public class SortableTable {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(SortableTable.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SortableTable.class);
 
     private String _sort;
 
@@ -96,7 +97,7 @@ public class SortableTable {
             if (!isAscending())
                 Collections.reverse(list);
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "System error", null));
             list = new ArrayList();
         }

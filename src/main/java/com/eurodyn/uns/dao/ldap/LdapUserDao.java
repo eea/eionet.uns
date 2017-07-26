@@ -45,12 +45,13 @@ import com.eurodyn.uns.dao.IUserDao;
 import com.eurodyn.uns.model.DeliveryAddress;
 import com.eurodyn.uns.model.DeliveryType;
 import com.eurodyn.uns.model.User;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class LdapUserDao extends BaseLdapDao implements IUserDao {
 
-    private static Log logger = LogFactory.getLog(LdapUserDao.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(LdapUserDao.class);
 
     protected String usersDn;
 

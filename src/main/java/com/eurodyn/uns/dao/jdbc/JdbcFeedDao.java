@@ -14,13 +14,15 @@ import com.eurodyn.uns.model.RDFThing;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.channelserver.EEAChannelServer;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(EEAChannelServer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EEAChannelServer.class);
 
     private static int feedInterval = 0;
 
@@ -30,7 +32,7 @@ public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
 
             feedInterval = Integer.parseInt(((ConfigElement) ConfigManager.getInstance().getConfigMap().get("feed/events_feed_age")).getValue().toString());
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         }
     }
 

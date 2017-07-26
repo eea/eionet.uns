@@ -30,10 +30,11 @@ import com.eurodyn.uns.service.channelserver.rendering.RenderingEngine;
 import com.eurodyn.uns.service.channelserver.rendering.XslRenderer;
 import com.eurodyn.uns.util.common.AppConfigurator;
 import com.eurodyn.uns.util.common.ConfiguratorException;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PullHandler extends BaseFeedHandler {
-    private static final WDSLogger logger = WDSLogger.getLogger(PullHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PullHandler.class);
 
     private BaseFeedHandler successor;
     private static String pathPrefix;
@@ -42,7 +43,7 @@ public class PullHandler extends BaseFeedHandler {
         try {
             pathPrefix = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar + "rdf" + File.separatorChar;
         } catch (ConfiguratorException e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
     }
     

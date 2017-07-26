@@ -35,10 +35,11 @@ import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.ResultDto;
 import com.eurodyn.uns.model.User;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ChannelFacade {
-    private static final WDSLogger logger = WDSLogger.getLogger(ChannelFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChannelFacade.class);
 
     private DAOFactory daoFactory;
     private DAOFactory jdbcDaoFactory;
@@ -67,9 +68,9 @@ public class ChannelFacade {
             channels = daoFactory.getChannelDao().findAllChannels(orderProperty, order);
             result.put("list", channels);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }
@@ -79,9 +80,9 @@ public class ChannelFacade {
         try {
             channels = daoFactory.getChannelDao().findHarvestChannels();
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return channels;
     }
@@ -103,9 +104,9 @@ public class ChannelFacade {
                 result.put(channel_id, list);
             }
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }
@@ -141,9 +142,9 @@ public class ChannelFacade {
             channels = daoFactory.getChannelDao().findAllChannelsByMode(mode, orderProperty, order);
             result.put("list", channels);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }
@@ -155,9 +156,9 @@ public class ChannelFacade {
             channels = daoFactory.getChannelDao().findAllChannelsByModeAndCreator(mode, creator, orderProperty, order);
             result.put("list", channels);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }
@@ -171,9 +172,9 @@ public class ChannelFacade {
         try {
             channel = daoFactory.getChannelDao().findChannel(id);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return channel;
     }
@@ -183,9 +184,9 @@ public class ChannelFacade {
         try {
             result = daoFactory.getChannelDao().getSubscriptions(channelId);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }
@@ -195,9 +196,9 @@ public class ChannelFacade {
         try {
             channel = daoFactory.getChannelDao().findChannel(secId);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return channel;
     }
@@ -208,9 +209,9 @@ public class ChannelFacade {
             daoFactory.getChannelDao().deleteChannel(channel);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -221,9 +222,9 @@ public class ChannelFacade {
             daoFactory.getChannelDao().createChannel(channel);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -236,9 +237,9 @@ public class ChannelFacade {
             daoFactory.getChannelDao().updateChannel(channel);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -249,9 +250,9 @@ public class ChannelFacade {
             daoFactory.getChannelDao().updateEvent(event);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -267,9 +268,9 @@ public class ChannelFacade {
             List channels = daoFactory.getChannelDao().findRpcUserChannels(user,orderProperty,order);
             result.put("list", channels);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }

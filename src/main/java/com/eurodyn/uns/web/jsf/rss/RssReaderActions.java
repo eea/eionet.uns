@@ -13,17 +13,18 @@ import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.RDFThing;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.service.facades.FeedFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RssReaderActions extends RssReaderForm {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(RssReaderActions.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RssReaderActions.class);
 
     public RssReaderActions() {
         try {
             feedFacade = new FeedFacade();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
@@ -33,7 +34,7 @@ public class RssReaderActions extends RssReaderForm {
         try {
 
             if (getExternalContext().getRequestMap().get(PhaseId.RENDER_RESPONSE) != null) {
-                logger.debug("RssReader initialisation ");
+                LOGGER.debug("RssReader initialisation ");
                 if (channels == null) {
                     channels = new ArrayList();
 
@@ -95,7 +96,7 @@ public class RssReaderActions extends RssReaderForm {
                 getSession().setAttribute("rrChanelId", channel.getId());
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 

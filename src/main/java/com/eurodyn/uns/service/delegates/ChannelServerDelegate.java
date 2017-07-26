@@ -30,11 +30,13 @@ import com.eurodyn.uns.service.channelserver.BaseChannelServer;
 import com.eurodyn.uns.service.channelserver.DisabledException;
 import com.eurodyn.uns.service.channelserver.EEAChannelServer;
 import com.eurodyn.uns.service.channelserver.NotFoundException;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.util.rdf.IChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ChannelServerDelegate {
-    private static final WDSLogger logger = WDSLogger.getLogger(ChannelServerDelegate.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChannelServerDelegate.class);
 
     private BaseChannelServer cs;
 
@@ -53,7 +55,7 @@ public class ChannelServerDelegate {
     }
 
     public String createPushChannel(Vector parameters) throws DisabledException, NotFoundException, Exception {
-        logger.debug("Invoking Create method...");
+        LOGGER.debug("Invoking Create method...");
         IChannel c = new Channel();
         c.setTitle((String) parameters.get(0));
         c.setDescription((String) parameters.get(1));
@@ -62,7 +64,7 @@ public class ChannelServerDelegate {
     }
 
     public void push(Vector parameters) throws DisabledException, NotFoundException, Exception {
-        logger.debug("Invoking PUSH method...");
+        LOGGER.debug("Invoking PUSH method...");
         User u = null;
         if (parameters.size() > 2)
             u = (User) parameters.get(2);

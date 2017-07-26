@@ -31,8 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.myfaces.shared_tomahawk.webapp.webxml.ServletMapping;
 import org.apache.myfaces.shared_tomahawk.webapp.webxml.WebXml;
 import org.apache.struts.tiles.ComponentContext;
@@ -42,14 +40,14 @@ import org.apache.struts.tiles.DefinitionsFactory;
 import org.apache.struts.tiles.DefinitionsFactoryConfig;
 import org.apache.struts.tiles.DefinitionsFactoryException;
 import org.apache.struts.tiles.TilesUtil;
-
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UnsViewHandler extends ViewHandler
 {
     private ViewHandler _viewHandler;
 
-    private static final Log log = LogFactory.getLog(UnsViewHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UnsViewHandler.class);
     private static final String TILES_DEF_EXT = ".tiles";
     private static final String TILES_DEF_ATTR = "tiles-definitions";
     private static final String TILES_EXT_ATTR = "tiles-extension";
@@ -66,12 +64,12 @@ public class UnsViewHandler extends ViewHandler
     {
         if (_definitionsFactory == null)
         {
-            if (log.isDebugEnabled()) log.debug("JspTilesViewHandlerImpl init");
+            if (LOGGER.isDebugEnabled()) LOGGER.debug("JspTilesViewHandlerImpl init");
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             String tilesDefinitions = context.getInitParameter(TILES_DEF_ATTR);
             if (tilesDefinitions == null)
             {
-                log.fatal("No Tiles definition found. Specify Definition files by adding "
+                LOGGER.error("No Tiles definition found. Specify Definition files by adding "
                           + TILES_DEF_ATTR + " param in your web.xml");
                 return null;
             }
@@ -80,9 +78,9 @@ public class UnsViewHandler extends ViewHandler
             if (tilezExtension != null)
             {
                 tilesExtension = tilezExtension;
-                if (log.isDebugEnabled())
+                if (LOGGER.isDebugEnabled())
                 {
-                log.debug("Using non-default tiles extension of: " + tilesExtension);
+                    LOGGER.debug("Using non-default tiles extension of: " + tilesExtension);
                 }
             } 
 
@@ -90,13 +88,13 @@ public class UnsViewHandler extends ViewHandler
             factoryConfig.setDefinitionConfigFiles(tilesDefinitions);
             try
             {
-                if (log.isDebugEnabled()) log.debug("Reading tiles definitions");
+                if (LOGGER.isDebugEnabled()) LOGGER.debug("Reading tiles definitions");
                 _definitionsFactory = TilesUtil.createDefinitionsFactory((ServletContext)context.getContext(),
                                                                         factoryConfig);
             }
             catch (DefinitionsFactoryException e)
             {
-                log.fatal("Error reading tiles definitions", e);
+                LOGGER.error("Error reading tiles definitions", e);
                 return null;
             }
         }
@@ -107,7 +105,7 @@ public class UnsViewHandler extends ViewHandler
     {
         if (viewToRender == null)
         {
-            log.fatal("viewToRender must not be null");
+            LOGGER.error("viewToRender must not be null");
             throw new NullPointerException("viewToRender must not be null");
         }
 
@@ -133,12 +131,12 @@ public class UnsViewHandler extends ViewHandler
                 int dot = viewId.lastIndexOf('.');
                 if (dot == -1)
                 {
-                    if (log.isTraceEnabled()) log.trace("Current viewId has no extension, appending default suffix " + suffix);
+                    if (LOGGER.isTraceEnabled()) LOGGER.trace("Current viewId has no extension, appending default suffix " + suffix);
                     viewId = viewId + suffix;
                 }
                 else
                 {
-                    if (log.isTraceEnabled()) log.trace("Replacing extension of current viewId by suffix " + suffix);
+                    if (LOGGER.isTraceEnabled()) LOGGER.trace("Replacing extension of current viewId by suffix " + suffix);
                     viewId = viewId.substring(0, dot) + suffix;
                 }
                 facesContext.getViewRoot().setViewId(viewId);
@@ -236,7 +234,7 @@ public class UnsViewHandler extends ViewHandler
     private void dispatch(ExternalContext externalContext, UIViewRoot viewToRender, String viewId)
         throws IOException
     {
-        if (log.isTraceEnabled()) log.trace("Dispatching to " + viewId);
+        if (LOGGER.isTraceEnabled()) LOGGER.trace("Dispatching to " + viewId);
 
         // handle character encoding as of section 2.5.2.2 of JSF 1.1
         if (externalContext.getResponse() instanceof ServletResponse) {
@@ -297,7 +295,7 @@ public class UnsViewHandler extends ViewHandler
                 }
             }
         }
-        log.error("could not find pathMapping for servletPath = " + servletPath +
+        LOGGER.error("could not find pathMapping for servletPath = " + servletPath +
                   " requestPathInfo = " + requestPathInfo);
         throw new IllegalArgumentException("could not find pathMapping for servletPath = " + servletPath +
                   " requestPathInfo = " + requestPathInfo);

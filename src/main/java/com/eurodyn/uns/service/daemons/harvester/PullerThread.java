@@ -11,9 +11,11 @@ import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.service.facades.EventMetadataFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.util.rdf.RdfContext;
 import com.hp.hpl.jena.vocabulary.RSS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Pulls events from a PULL channel (e.g. an RSS feed).
@@ -24,7 +26,7 @@ import com.hp.hpl.jena.vocabulary.RSS;
 public class PullerThread implements Runnable {
 
     /** Static logger for this class. */
-    private static final WDSLogger LOGGER = WDSLogger.getLogger(PullerThread.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PullerThread.class);
 
     /** The channel to pull from. */
     Channel channel;
@@ -121,7 +123,6 @@ public class PullerThread implements Runnable {
         } catch (Exception e) {
             exception = e;
             LOGGER.error("Harvesting " + url + "gave: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -143,7 +144,7 @@ public class PullerThread implements Runnable {
             ret = (con.getResponseCode() == HttpURLConnection.HTTP_OK);
             con.disconnect();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
             return false;
         }
 

@@ -18,10 +18,13 @@ import com.hp.hpl.jena.rdf.model.RDFWriter;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RSS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ShowEventMetadata {
 
-    
+    private static final Logger LOGGER = LoggerFactory.getLogger(ShowEventMetadata.class);
+
     public static void main(String[] args) {
 
         try {
@@ -38,8 +41,7 @@ public class ShowEventMetadata {
             testFilterDeletion();
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error("Error", e);
         }
 
     }
@@ -150,8 +152,7 @@ public class ShowEventMetadata {
 
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error("Error", e);
         }
 
         StringWriter out = new StringWriter();

@@ -20,6 +20,8 @@ import java.util.Map;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
 import com.eurodyn.uns.dao.DAOException;
@@ -29,7 +31,7 @@ import com.eurodyn.uns.model.RDFThing;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.UserFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.util.xml.XSLTransformer;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -44,7 +46,7 @@ import com.hp.hpl.jena.vocabulary.RSS;
 public class TestRssReader {
 
     /** Static logger for this class. */
-    private static final WDSLogger LOGGER = WDSLogger.getLogger(TestRssReader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestRssReader.class);
 
     /** User events retrieval query. */
     private final static String USER_EVENTS_QUERY = "select E.ID,  E.EXT_ID, E.RTYPE, EM.PROPERTY, EM.VALUE , E.CREATION_DATE"
@@ -137,8 +139,7 @@ public class TestRssReader {
             }
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
 
     }
@@ -243,8 +244,7 @@ public class TestRssReader {
                 result = out.toString();
                 LOGGER.info(result);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
 
         }

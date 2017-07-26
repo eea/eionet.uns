@@ -12,6 +12,8 @@ import java.util.Map;
 import junit.framework.TestCase;
 
 import org.apache.xerces.parsers.DOMParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -34,6 +36,8 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 
 public class EventMetadataTest extends TestCase {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(EventMetadataTest.class);
 
     @Override
     public void setUp() throws Exception {
@@ -222,8 +226,7 @@ public class EventMetadataTest extends TestCase {
 
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
 
         StringWriter out = new StringWriter();

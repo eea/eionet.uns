@@ -10,11 +10,12 @@ import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.service.facades.EventMetadataFacade;
 import com.eurodyn.uns.service.facades.NotificationTemplateFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NotificationTemplateActions extends NotificationTemplateForm {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(NotificationTemplateActions.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NotificationTemplateActions.class);
 
     public NotificationTemplateActions() {
         try {
@@ -22,7 +23,7 @@ public class NotificationTemplateActions extends NotificationTemplateForm {
             channelFacade = new ChannelFacade();
             eventMetadataFacade = new EventMetadataFacade();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
     }
@@ -47,7 +48,7 @@ public class NotificationTemplateActions extends NotificationTemplateForm {
                 addInfoMessage(null, "messages.template.success.update", new Object[] {notificationTemplate.getName()});
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
@@ -62,7 +63,7 @@ public class NotificationTemplateActions extends NotificationTemplateForm {
             } else
                 addInfoMessage(null, "messages.template.success.delete", new Object[] {notificationTemplate.getName() });
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return "successUpdate";
@@ -73,7 +74,7 @@ public class NotificationTemplateActions extends NotificationTemplateForm {
         try {
             testEventsList = channelFacade.findOneEventForChannel();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return "testNotifChannelsList";
@@ -102,7 +103,7 @@ public class NotificationTemplateActions extends NotificationTemplateForm {
             }
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
             return "notificationTemplates";
         }

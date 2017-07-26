@@ -34,7 +34,7 @@ import com.eurodyn.uns.service.delegates.ChannelServerDelegate;
 import com.eurodyn.uns.service.facades.UserFacade;
 import com.eurodyn.uns.util.DateUtil;
 import com.eurodyn.uns.util.MailAuthenticator;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.util.rdf.RdfContext;
 import com.eurodyn.uns.util.rdf.RssChannelsProcessor;
 import com.eurodyn.uns.util.uid.UidGenerator;
@@ -44,17 +44,19 @@ import com.eurodyn.uns.web.jsf.admin.templates.NotificationTemplateInterpreter;
 import com.eurodyn.uns.web.jsf.subscriptions.SubscriptionActions;
 import com.eurodyn.uns.web.jsf.util.Period;
 import com.sun.mail.smtp.SMTPTransport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ChannelActions extends ChannelForm {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(ChannelActions.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChannelActions.class);
 
     public ChannelActions() {
 
         try {
             initForm();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
@@ -122,7 +124,7 @@ public class ChannelActions extends ChannelForm {
             outcome = channel.getMode().equalsIgnoreCase("PUSH") ? "pushChannels" : "pullChannels";
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return outcome;
@@ -141,7 +143,7 @@ public class ChannelActions extends ChannelForm {
             }
             channelFacade.updateChannel(channel);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return "pushChannels";
@@ -170,9 +172,8 @@ public class ChannelActions extends ChannelForm {
             addInfoMessage(null, "label.channel.success.delete", new Object[] { channel.getTitle() });
             outcome = channel.getMode().equalsIgnoreCase("PUSH") ? "pushChannels" : "pullChannels";
         } catch (Throwable e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
-            e.printStackTrace();
         }
         return outcome;
     }
@@ -284,7 +285,7 @@ public class ChannelActions extends ChannelForm {
 
             getRequest().setAttribute("selectedSubMenu", channel.getMode().equals("PULL") ? "pullChannels" : "pushChannels");
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
@@ -307,7 +308,7 @@ public class ChannelActions extends ChannelForm {
             prepareRefreshDelay();
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return "channelUrl";
@@ -326,7 +327,7 @@ public class ChannelActions extends ChannelForm {
             if (!st.isAscending())
                 Collections.reverse(channelMetadataElements);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return "choosable";
@@ -352,7 +353,7 @@ public class ChannelActions extends ChannelForm {
             channelMetadataElements = new ArrayList(channel.getMetadataElements());
             Collections.sort(channelMetadataElements);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
@@ -382,7 +383,7 @@ public class ChannelActions extends ChannelForm {
             }
             transformedContent = result;
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
@@ -415,7 +416,7 @@ public class ChannelActions extends ChannelForm {
             newSubscriber = "";
             
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
         return "subscribers";
     }
@@ -446,7 +447,7 @@ public class ChannelActions extends ChannelForm {
             userFacade.updateUser(user);
             addInfoMessage(null, "messages.subscription.success.create", new Object[] { subscription.getChannel().getTitle() });
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         
@@ -515,7 +516,7 @@ public class ChannelActions extends ChannelForm {
             userFacade.updateUser(user);
             addInfoMessage(null, "messages.subscription.success.delete", new Object[] { subscription.getChannel().getTitle() });
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         subscribers();
@@ -541,8 +542,7 @@ public class ChannelActions extends ChannelForm {
             setUpChannelMetadataElements(availableElements.keySet());
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
             addErrorMessage(null, "messages.badUrl", new Object[] { channel.getFeedUrl() });
             return false;
         }

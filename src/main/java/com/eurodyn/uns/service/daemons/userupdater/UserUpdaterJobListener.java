@@ -1,18 +1,20 @@
 package com.eurodyn.uns.service.daemons.userupdater;
 
 import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Job Listener for users update from LDAP Server
+ * Job Listener for users update from LDAP Server.
  * @author George Sofianos
  */
 public class UserUpdaterJobListener implements JobListener {
 
-  private static Log logger = LogFactory.getLog(UserUpdaterJobListener.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(UserUpdaterJobListener.class);
 
   @Override
   public String getName() {
@@ -22,21 +24,21 @@ public class UserUpdaterJobListener implements JobListener {
   @Override
   public void jobToBeExecuted(JobExecutionContext jobExecutionContext) {
     if (jobExecutionContext.getJobDetail().getKey().getName().equals("userUpdaterJob")) {
-      logger.info("USERS UPDATING PROCESS STARTED");
+      LOGGER.info("USERS UPDATING PROCESS STARTED");
     }
   }
 
   @Override
   public void jobExecutionVetoed(JobExecutionContext jobExecutionContext) {
     if (jobExecutionContext.getJobDetail().getKey().getName().equals("userUpdaterJob")) {
-      logger.info("Execution vetoed for job " + jobExecutionContext.getJobDetail().getKey().getName());
+      LOGGER.info("Execution vetoed for job " + jobExecutionContext.getJobDetail().getKey().getName());
     }
   }
 
   @Override
   public void jobWasExecuted(JobExecutionContext jobExecutionContext, JobExecutionException e) {
     if (jobExecutionContext.getJobDetail().getKey().getName().equals("userUpdaterJob")) {
-      logger.info("USERS UPDATING PROCESS COMPLETED");
+      LOGGER.info("USERS UPDATING PROCESS COMPLETED");
     }
   }
 }

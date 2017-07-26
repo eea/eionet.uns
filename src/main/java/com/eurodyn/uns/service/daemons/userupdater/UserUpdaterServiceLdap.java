@@ -4,19 +4,18 @@ import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.dao.IUserDao;
 import com.eurodyn.uns.model.User;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 
 /**
- * User updating service for LDAP servers
+ * User updating service for LDAP servers.
  * @author George Sofianos
  */
 public class UserUpdaterServiceLdap implements UserUpdaterService {
 
-  private static Log logger = LogFactory.getLog(UserUpdaterServiceLdap.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(UserUpdaterServiceLdap.class);
 
   private IUserDao userSourceDao;
   private IUserDao userDestinationDao;
@@ -69,6 +68,6 @@ public class UserUpdaterServiceLdap implements UserUpdaterService {
     deliveryAddresses.put(new Integer(1), ldapUser.getDeliveryAddresses().get(1));
     user.setDeliveryAddresses(ldapUser.getDeliveryAddresses());
     this.userDestinationDao.updateUser(user);
-    logger.info("User " + user.getFullName() + " updated");
+    LOGGER.info("User " + user.getFullName() + " updated");
   }
 }

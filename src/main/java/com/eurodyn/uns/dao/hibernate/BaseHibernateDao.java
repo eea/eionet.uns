@@ -33,8 +33,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class BaseHibernateDao {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseHibernateDao.class);
 
     protected static Map sessionFactoryMap = new HashMap();
 
@@ -51,7 +55,7 @@ public abstract class BaseHibernateDao {
             sessionFactory = new Configuration().configure(configFileLocation).buildSessionFactory();
         }
         } catch (Throwable ex) {
-            ex.printStackTrace();
+            LOGGER.error(ex.getMessage(), ex);
         }
     }
 

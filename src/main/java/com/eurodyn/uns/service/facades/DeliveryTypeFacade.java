@@ -31,11 +31,12 @@ import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.model.Dto;
 import com.eurodyn.uns.model.ResultDto;
 import com.eurodyn.uns.model.DeliveryType;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DeliveryTypeFacade {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(DeliveryTypeFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeliveryTypeFacade.class);
     private DAOFactory daoFactory;
 
     public DeliveryTypeFacade() {
@@ -76,9 +77,9 @@ public class DeliveryTypeFacade {
             stylesheets = daoFactory.getDeliveryTypeDao().findAllDeliveryTypes(orderProperty, order);
             result.put("list",stylesheets);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return result;
     }
@@ -88,9 +89,9 @@ public class DeliveryTypeFacade {
         try {
             deliveryType = daoFactory.getDeliveryTypeDao().findByPK(id);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return deliveryType;
     }
@@ -100,9 +101,9 @@ public class DeliveryTypeFacade {
         try {
             deliveryType = daoFactory.getDeliveryTypeDao().findByName(name);
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return deliveryType;
     }
@@ -113,9 +114,9 @@ public class DeliveryTypeFacade {
             daoFactory.getDeliveryTypeDao().updateDeliveryType(deliveryType);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -126,9 +127,9 @@ public class DeliveryTypeFacade {
             daoFactory.getDeliveryTypeDao().createDeliveryType(deliveryType);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
         }
         return ret;
     }
@@ -140,10 +141,10 @@ public class DeliveryTypeFacade {
             daoFactory.getDeliveryTypeDao().deleteDeliveryType(deliveryType);
             ret = true;
         } catch (DAOException e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
             throw(e);
         } catch (Exception e) {
-            logger.fatalError(e);
+            LOGGER.error("Error", e);
             throw(e);
         }
         return ret;

@@ -16,22 +16,24 @@ import com.eurodyn.uns.model.Stylesheet;
 import com.eurodyn.uns.service.delegates.ChannelServerDelegate;
 import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.service.facades.XslFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.util.xml.IXmlCtx;
 import com.eurodyn.uns.util.xml.XmlContext;
 import com.eurodyn.uns.util.xml.XmlException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DashTemplateActions extends DashTemplateForm {
 
 
-    private static final WDSLogger logger = WDSLogger.getLogger(DashTemplateActions.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DashTemplateActions.class);
     
     public DashTemplateActions() {
         try {
             xslFacade = XslFacade.getInstance();
             channelFacade = new ChannelFacade();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
     }
@@ -53,7 +55,7 @@ public class DashTemplateActions extends DashTemplateForm {
             setId(null);
             testChannel = new Channel();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return "testChannelsList";
@@ -66,7 +68,7 @@ public class DashTemplateActions extends DashTemplateForm {
             if (checkXML(upFile))
                 stylesheet.setContent(new String(upFile.getBytes(), "UTF8"));
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return null;
@@ -84,7 +86,7 @@ public class DashTemplateActions extends DashTemplateForm {
                 addInfoMessage(null, "messages.stylesheet.success.update", new Object[] { stylesheet.getName() });
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         
@@ -97,7 +99,7 @@ public class DashTemplateActions extends DashTemplateForm {
             xslFacade.deleteStylesheetl(stylesheet);
             addInfoMessage(null, "messages.stylesheet.success.delete", new Object[] { stylesheet.getName() });
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 
@@ -121,7 +123,7 @@ public class DashTemplateActions extends DashTemplateForm {
             out.close();
             getFacesContext().responseComplete();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return null;
@@ -153,7 +155,7 @@ public class DashTemplateActions extends DashTemplateForm {
             }
             testChannel.setContent(result);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
 

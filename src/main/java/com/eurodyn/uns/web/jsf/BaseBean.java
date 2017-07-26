@@ -34,11 +34,12 @@ import org.apache.commons.codec.binary.Base64;
 import com.eurodyn.uns.model.DeliveryType;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.UserFacade;
-import com.eurodyn.uns.util.common.WDSLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class BaseBean {
 
-    private static final WDSLogger logger = WDSLogger.getLogger(BaseBean.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseBean.class);
 
     protected static final Integer EMAIL = new Integer(1);
 
@@ -66,8 +67,7 @@ public abstract class BaseBean {
             FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("WDB", WDB);
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-
+            LOGGER.error(e.getMessage(), e);
         }
 
     }
@@ -137,8 +137,7 @@ public abstract class BaseBean {
             response.sendRedirect(path);
             FacesContext.getCurrentInstance().responseComplete();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -158,8 +157,7 @@ public abstract class BaseBean {
             request.getRequestDispatcher(path).forward(request, response);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -247,7 +245,7 @@ public abstract class BaseBean {
             value = new String(bytes);
             value = URLEncoder.encode(value, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
             return null;
         }
         return value;
@@ -258,7 +256,7 @@ public abstract class BaseBean {
             value = URLDecoder.decode(value, "UTF-8");
             value = new String(Base64.decodeBase64(value.getBytes()));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
             return null;
         }
         return value;
@@ -271,7 +269,7 @@ public abstract class BaseBean {
             Collection list = (Collection) PropertyUtils.getProperty(object, collectionProperty);
             result = toSelectItems(list, fieldValue, fieldLabel, localize);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
             result = new ArrayList(0);
         }
@@ -302,14 +300,11 @@ public abstract class BaseBean {
                 if (fieldValue != null)
                     value = BeanUtils.getProperty(object, fieldValue);
             } catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             } catch (InvocationTargetException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             } catch (NoSuchMethodException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
 
             SelectItem selectItem = new SelectItem(fieldValue != null ? value : object, label);
@@ -326,7 +321,7 @@ public abstract class BaseBean {
             Collection list = (Collection) PropertyUtils.getProperty(object, collectionProperty);
             result = toSelectItems(list, null, fieldLabel, localize);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
             result = new ArrayList(0);
         }
@@ -371,8 +366,7 @@ public abstract class BaseBean {
                 value = BeanUtils.getProperty(object, fieldValue);
                 addItem = ((Boolean) PropertyUtils.getProperty(object, conditionField)).equals(condition);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
             if (addItem) {
                 SelectItem selectItem = new SelectItem();

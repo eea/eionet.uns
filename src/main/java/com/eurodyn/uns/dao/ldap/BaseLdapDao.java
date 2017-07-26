@@ -21,6 +21,9 @@
 
 package com.eurodyn.uns.dao.ldap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.ResourceBundle;
@@ -37,6 +40,8 @@ import javax.naming.ldap.PagedResultsControl;
 
 public abstract class BaseLdapDao {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseLdapDao.class);
+
     protected static ResourceBundle conf;
     protected static String baseDn;
 
@@ -45,7 +50,7 @@ public abstract class BaseLdapDao {
             conf = ResourceBundle.getBundle("eionetdir");
             baseDn = conf.getString("ldap.context");
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 

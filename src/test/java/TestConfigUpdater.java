@@ -21,11 +21,15 @@ import org.junit.Test;
 
 import com.eurodyn.uns.util.common.UnsProperties;
 import com.sun.mail.smtp.SMTPTransport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Unit tests for external interface connections.
  */
 public class TestConfigUpdater {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestConfigUpdater.class);
 
     /**
      * First test method.
@@ -51,8 +55,7 @@ public class TestConfigUpdater {
             // testDbConnection();
             testLdapConnection();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error("Error", e);
         }
 
     }
@@ -68,8 +71,7 @@ public class TestConfigUpdater {
             XMPPConnection connection = new SSLXMPPConnection("jabber.eionet.europa.eu", 5223);
             System.out.println("It works ");
         } catch (XMPPException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error("Error", e);
         }
         System.out.println("Exit");
     }
@@ -102,8 +104,7 @@ public class TestConfigUpdater {
 
             System.out.println("It works ");
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         System.out.println("Exit");
     }
@@ -138,8 +139,7 @@ public class TestConfigUpdater {
 
             System.out.println("It works ");
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         System.out.println("Exit");
     }
@@ -156,7 +156,7 @@ public class TestConfigUpdater {
             Connection con = DriverManager.getConnection(url, "uns_developer", "reportnet");
             // } catch (UnknownHostException uhe) {
             // // TODO Auto-generated catch block
-            // //e.printStackTrace();
+            // //LOGGER.error(e.getMessage(), e)
             // //System.out.println("se.getSQLState()" + se.getSQLState());;
             // //System.out.println("se.getErrorCode()" + se.getErrorCode());
             //
@@ -181,8 +181,7 @@ public class TestConfigUpdater {
             // System.out.println("se.getSQLState()" + se.getSQLState());;
             // System.out.println("se.getErrorCode()" + se.getErrorCode());
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error("Error", e);
         }
         System.out.println("Exit");
     }
@@ -220,7 +219,7 @@ public class TestConfigUpdater {
             unsProperties.setLdapParams(ldapUrl, ldapContext, ldapUserDir, ldapAttrUid);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         System.out.println("Exit");
     }

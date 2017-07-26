@@ -8,13 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.eurodyn.uns.model.User;
-import com.eurodyn.uns.util.common.WDSLogger;
+
 import com.eurodyn.uns.web.jsf.LoginBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HomeServlet extends HttpServlet {
     private static final long serialVersionUID = -8927395040934638998L;
 
-    private static final WDSLogger logger = WDSLogger.getLogger(HomeServlet.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HomeServlet.class);
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -36,7 +38,7 @@ public class HomeServlet extends HttpServlet {
             response.sendRedirect(redirectToPage);
 
         } catch (Exception e) {
-            logger.error(e);
+            LOGGER.error("Error", e);
         }
     }
 
