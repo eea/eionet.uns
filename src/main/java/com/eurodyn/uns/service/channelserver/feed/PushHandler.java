@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 
+import com.eurodyn.uns.Properties;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.dao.IChannelDao;
 import com.eurodyn.uns.model.Channel;
@@ -38,7 +39,7 @@ import com.eurodyn.uns.service.channelserver.BaseChannelServer;
 import com.eurodyn.uns.service.channelserver.DisabledException;
 import com.eurodyn.uns.service.channelserver.NotFoundException;
 import com.eurodyn.uns.util.DateUtil;
-import com.eurodyn.uns.util.common.AppConfigurator;
+
 import com.eurodyn.uns.util.common.ConfiguratorException;
 
 import com.eurodyn.uns.util.rdf.IChannel;
@@ -66,12 +67,8 @@ public class PushHandler extends BaseFeedHandler {
     public static int DEFAULT_LIFETIME = 60 * 24 * 60;
     
     static {
-        try {
-            pathPrefix = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar + "rdf" + File.separatorChar;
-            DEFAULT_LIFETIME=Integer.parseInt(AppConfigurator.getInstance().getBoundle("uns").getString("pushchannel.default_lifetime"));
-        } catch (ConfiguratorException e) {
-            LOGGER.error("Error", e);
-        }
+        pathPrefix = Properties.getStringProperty("APP_HOME") + File.separatorChar + "rdf" + File.separatorChar;
+        DEFAULT_LIFETIME=Integer.parseInt(Properties.getStringProperty("pushchannel.default_lifetime"));
     }
 
     public PushHandler() {

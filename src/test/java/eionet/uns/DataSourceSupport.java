@@ -6,7 +6,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
-import org.apache.commons.dbcp.BasicDataSource;
+
+import com.eurodyn.uns.SpringApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,9 +15,19 @@ import org.slf4j.LoggerFactory;
  * Support functions to set up MySQL data source
  */
 public class DataSourceSupport {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceSupport.class);
+    private static final DataSource DATASOURCE;
+
+    static {
+        DATASOURCE = (DataSource) SpringApplicationContext.getBean("datasource");
+    }
 
     public static DataSource getDataSource() {
+        return DATASOURCE;
+    }
+
+    /*public static DataSource getDataSource() {
         Properties props = new Properties();
         InputStream fis = null;
         BasicDataSource ds = new BasicDataSource();
@@ -31,6 +42,6 @@ public class DataSourceSupport {
             LOGGER.error(e.getMessage(), e);
         }
         return ds;
-    }
+    }*/
 
 }

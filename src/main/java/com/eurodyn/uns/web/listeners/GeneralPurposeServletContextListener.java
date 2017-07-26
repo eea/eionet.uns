@@ -23,13 +23,12 @@
 package com.eurodyn.uns.web.listeners;
 
 import java.io.File;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import com.eurodyn.uns.Properties;
 import com.eurodyn.uns.service.facades.RoleFacade;
-import com.eurodyn.uns.util.common.AppConfigurator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,12 +73,9 @@ public class GeneralPurposeServletContextListener implements ServletContextListe
 
         // Try to detect if AWT headless mode should be used.
         try {
-            ResourceBundle bundle = AppConfigurator.getInstance().getBoundle(BUNDLE_FILE);
-            if (bundle != null) {
-                String useAwtHeadless = bundle.getString(AWT_HEADLESS_PROPERTY);
-                if (useAwtHeadless != null && useAwtHeadless.trim().equalsIgnoreCase("true")) {
-                    System.setProperty(AWT_HEADLESS_PROPERTY, "true");
-                }
+            String useAwtHeadless = Properties.getStringProperty(AWT_HEADLESS_PROPERTY);
+            if (useAwtHeadless != null && useAwtHeadless.trim().equalsIgnoreCase("true")) {
+                System.setProperty(AWT_HEADLESS_PROPERTY, "true");
             }
         } catch (Exception e) {
             LOGGER.error("Failure when trying to detect \"" + AWT_HEADLESS_PROPERTY + "\" from " + BUNDLE_FILE + ".properties", e);
@@ -105,7 +101,7 @@ public class GeneralPurposeServletContextListener implements ServletContextListe
      */
     private void checkHomeDirectories() throws Exception {
 
-        String pathPrefix = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar;
+        String pathPrefix = Properties.getStringProperty("APP_HOME") + File.separatorChar;
         File log = new File(pathPrefix + "log");
         if (!log.exists()) {
             if (!log.mkdir()) {

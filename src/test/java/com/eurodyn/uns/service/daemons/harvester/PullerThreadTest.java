@@ -138,7 +138,7 @@ public class PullerThreadTest extends UnsDatabaseTestCase {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            conn = BaseJdbcDao.getDatasource().getConnection();
+            conn = BaseJdbcDao.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT COUNT(*) FROM " + table);
             return rs.next() ? rs.getInt(1) : 0;
@@ -161,7 +161,7 @@ public class PullerThreadTest extends UnsDatabaseTestCase {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            conn = BaseJdbcDao.getDatasource().getConnection();
+            conn = BaseJdbcDao.getConnection();
             stmt = conn.prepareStatement(FIND_EVENT_BY_EXT_ID_SQL);
             stmt.setString(1, extId);
             rs = stmt.executeQuery();

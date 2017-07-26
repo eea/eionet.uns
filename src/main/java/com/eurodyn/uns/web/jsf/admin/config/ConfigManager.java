@@ -5,12 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import com.eurodyn.uns.Properties;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.io.SAXReader;
 
-import com.eurodyn.uns.util.common.AppConfigurator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -232,7 +233,7 @@ public class ConfigManager {
 
         String result = null;
         try {
-            String appHome = AppConfigurator.getInstance().getApplicationHome();
+            String appHome = Properties.getStringProperty("APP_HOME");
             result = appHome + File.separatorChar + CONFIG_FILE_NAME;
         } catch (Exception e) {
             LOGGER.error("Unable to construct config file path", e);

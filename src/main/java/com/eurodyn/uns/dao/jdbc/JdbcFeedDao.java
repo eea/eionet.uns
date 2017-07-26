@@ -56,7 +56,7 @@ public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
         ResultSet rs = null;
         PreparedStatement ps = null;
         try {
-            conn = getDatasource().getConnection();
+            conn = getConnection();
             ps = conn.prepareStatement(subscriptionEventsQuery);
             ps.setInt(1, subscription.getUser().getId().intValue());
             ps.setInt(2, feedInterval);
@@ -82,7 +82,7 @@ public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
         ResultSet rs = null;
         PreparedStatement ps = null;
         try {
-            conn = getDatasource().getConnection();
+            conn = getConnection();
             ps = conn.prepareStatement(userEventsQuery);
             ps.setInt(1, user.getId().intValue());
             ps.setInt(2, feedInterval);
@@ -109,7 +109,7 @@ public class JdbcFeedDao extends BaseJdbcDao implements IFeedDao {
         ResultSet rs = null;
         PreparedStatement ps = null;
         try {
-            conn = getDatasource().getConnection();
+            conn = getConnection();
             ps = conn.prepareStatement(channelEvents);
             ps.setInt(1, channel.getId().intValue());
             ps.setInt(2, feedInterval);

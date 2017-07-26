@@ -28,7 +28,7 @@ public class JdbcChannelDao extends BaseJdbcDao implements IChannelDao {
         ResultSet rs = null;
         PreparedStatement ps = null;
         try {
-            conn = getDatasource().getConnection();
+            conn = getConnection();
             ps = conn.prepareStatement(q_last_harvest_date);
             ps.setInt(1, channel.getId().intValue());
             rs = ps.executeQuery();
@@ -47,7 +47,7 @@ public class JdbcChannelDao extends BaseJdbcDao implements IChannelDao {
         ResultSet rs = null;
         PreparedStatement ps = null;
         try {
-            conn = getDatasource().getConnection();
+            conn = getConnection();
             ps = conn.prepareStatement(q_unset_vacations);
             ps.executeUpdate();
         } catch (Exception e) {
@@ -62,7 +62,7 @@ public class JdbcChannelDao extends BaseJdbcDao implements IChannelDao {
         ResultSet rs = null;
         PreparedStatement ps = null;
         try {
-            conn = getDatasource().getConnection();
+            conn = getConnection();
             ps = conn.prepareStatement(q_set_processed);
             ps.executeUpdate();
         } catch (Exception e) {

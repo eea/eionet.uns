@@ -22,13 +22,14 @@ package com.eurodyn.uns.service.channelserver.feed;
 
 import java.io.File;
 
+import com.eurodyn.uns.Properties;
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Dto;
 import com.eurodyn.uns.service.channelserver.BaseChannelServer;
 import com.eurodyn.uns.service.channelserver.rendering.GenericRenderer;
 import com.eurodyn.uns.service.channelserver.rendering.RenderingEngine;
 import com.eurodyn.uns.service.channelserver.rendering.XslRenderer;
-import com.eurodyn.uns.util.common.AppConfigurator;
+
 import com.eurodyn.uns.util.common.ConfiguratorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,11 +41,7 @@ public class PullHandler extends BaseFeedHandler {
     private static String pathPrefix;
 
     static {
-        try {
-            pathPrefix = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar + "rdf" + File.separatorChar;
-        } catch (ConfiguratorException e) {
-            LOGGER.error("Error", e);
-        }
+        pathPrefix = Properties.getStringProperty("APP_HOME") + File.separatorChar + "rdf" + File.separatorChar;
     }
     
     public PullHandler(BaseFeedHandler successor) {

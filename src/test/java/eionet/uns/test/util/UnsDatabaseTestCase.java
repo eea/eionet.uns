@@ -112,7 +112,7 @@ public abstract class UnsDatabaseTestCase extends TestCase {
      * Provide a connection to the database.
      */
     protected IDatabaseConnection getConnection() throws Exception {
-        Connection conn = BaseJdbcDao.getDatasource().getConnection();
+        Connection conn = BaseJdbcDao.getConnection();
         return new DatabaseConnection(conn);
     }
 

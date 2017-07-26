@@ -1,5 +1,6 @@
 package com.eurodyn.uns.service.daemons.notificator;
 
+import com.eurodyn.uns.Properties;
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.EventMetadata;
@@ -12,7 +13,7 @@ import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.service.facades.NotificationFacade;
 import com.eurodyn.uns.service.facades.SubscriptionFacade;
-import com.eurodyn.uns.util.common.AppConfigurator;
+
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -133,7 +134,7 @@ public class NotificatorJob implements Job {
         try {
             Notification notification = new Notification();
             NotificationFacade notificationFacade = new NotificationFacade();
-            String homeUrl = AppConfigurator.getInstance().getBoundle("uns").getString("home.url");
+            String homeUrl = Properties.getStringProperty("home.url");
             HashMap map = PrepareText.prepare(template, event, subscription, homeUrl);
 
             notification.seteventId(event.getId());

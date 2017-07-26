@@ -99,7 +99,7 @@ public class JdbcEventMetadataDao extends BaseJdbcDao implements IEventMetadataD
             // NB! The following code assumes no referential integrity and cascade delete on the related tables, hence
             // doing it programmatically and in a transaction.
 
-            conn = getDatasource().getConnection();
+            conn = getConnection();
             conn.setAutoCommit(false);
 
             int days = UnsProperties.OLD_EVENTS_THRESHOLD;
@@ -151,7 +151,7 @@ public class JdbcEventMetadataDao extends BaseJdbcDao implements IEventMetadataD
         ResultSet rs = null;
         PreparedStatement ps = null;
         try {
-            conn = getDatasource().getConnection();
+            conn = getConnection();
             ps = conn.prepareStatement(ALL_CHOOSABLE_STATEMENTS_FOR_CHANNEL);
             ps.setInt(1, channel.getId().intValue());
             ps.setInt(2, channel.getId().intValue());

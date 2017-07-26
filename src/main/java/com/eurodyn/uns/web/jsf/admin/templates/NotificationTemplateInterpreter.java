@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.eurodyn.uns.Properties;
 import org.python.core.Py;
 import org.python.core.PyString;
 import org.python.core.PySystemState;
@@ -13,7 +14,7 @@ import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.NotificationTemplate;
 import com.eurodyn.uns.model.User;
-import com.eurodyn.uns.util.common.AppConfigurator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,12 +44,11 @@ public class NotificationTemplateInterpreter {
 
     static {
         try {
-            jython_home = AppConfigurator.getInstance().getBoundle("uns").getString("jython_home");
-            python_source = AppConfigurator.getInstance().getBoundle("uns").getString("python_source");
+            jython_home = Properties.getStringProperty("jython_home");
+            python_source = Properties.getStringProperty("python_source");
             System.setProperty("python.home", jython_home);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
-
         }
 
     }

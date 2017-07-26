@@ -39,7 +39,7 @@ public class UnicodeTest extends UnsDatabaseTestCase {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            conn = BaseJdbcDao.getDatasource().getConnection();
+            conn = BaseJdbcDao.getConnection();
 
             pstmt = conn.prepareStatement("insert into NOTIFICATION_TEMPLATE (NAME, SUBJECT, TEXT_PLAIN) values ('Name', ?, ?)");
             pstmt.setString(1, testStr);

@@ -30,7 +30,7 @@ public class JdbcNotificationDao extends BaseJdbcDao implements INotificationDao
         ResultSet rs = null;
         PreparedStatement ps = null;
         try {
-            conn = getDatasource().getConnection();
+            conn = getConnection();
             ps = conn.prepareStatement(qNewNotifications);
             rs = ps.executeQuery();
 
@@ -74,7 +74,7 @@ public class JdbcNotificationDao extends BaseJdbcDao implements INotificationDao
         ResultSet rs = null;
         PreparedStatement ps = null;
         try {
-            conn = getDatasource().getConnection();
+            conn = getConnection();
             ps = conn.prepareStatement(qFailedDeliveries);
             rs = ps.executeQuery();
 

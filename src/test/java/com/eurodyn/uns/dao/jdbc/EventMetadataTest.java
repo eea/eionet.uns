@@ -71,7 +71,7 @@ public class EventMetadataTest extends UnsDatabaseTestCase {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            conn = BaseJdbcDao.getDatasource().getConnection();
+            conn = BaseJdbcDao.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT COUNT(*) FROM " + table);
             return rs.next() ? rs.getInt(1) : 0;

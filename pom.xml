@@ -10,9 +10,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <env>local</env>
-        <javaVersion>1.6</javaVersion>
+        <javaVersion>1.8</javaVersion>
         <sesame.openrdf.version>2.6.9</sesame.openrdf.version>
         <checkstyle.config.location>${basedir}/doc/checkstyle.xml</checkstyle.config.location>
+        <spring.version>4.3.4.RELEASE</spring.version>
     </properties>
 
     <version>1.0-SNAPSHOT</version>
@@ -47,12 +48,6 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id>maven2-repository.dev.java.net</id>
-            <name>Java.net Repository for Maven</name>
-            <url>http://download.java.net/maven/2/</url>
-            <layout>default</layout>
-        </repository>
     </repositories>
 
     <distributionManagement>
@@ -77,7 +72,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.0.2</version>
+                <version>3.6.1</version>
                 <inherited>true</inherited>
                 <configuration>
                     <verbose>false</verbose>
@@ -89,24 +84,32 @@
                 </configuration>
             </plugin>
 
-            <!-- maven-eclipse-plugin -->
-
             <plugin>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <wtpversion>1.5</wtpversion>
-                    <downloadSources>true</downloadSources>
-                    <downloadJavadocs>true</downloadJavadocs>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.8</version>
+                    <executions>
+                    <execution>
+                        <id>copy-local-properties</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <copy file="${basedir}/${env}.properties"
+                                      toFile="${project.build.directory}/classes/env.properties" />
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- maven-surefire-plugin -->
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.4</version>
+                <version>2.19.1</version>
                 <configuration>
                 </configuration>
             </plugin>
@@ -115,7 +118,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
+                <version>3.1.0</version>
                 <configuration>
                     <filters>
                         <filter>${basedir}/${env}.properties</filter>
@@ -155,70 +158,11 @@
                     </webResources>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.3</version>
-                <executions>
-                    <!-- FIXME after updating Maven version from 2.0.4 the following lines can be removed -->
-                    <!-- The task renames uns.properties file in classes folder before executing unit tests. -->
-                    <execution>
-                        <id>pre-test</id>
-                        <phase>process-test-resources</phase>
-                        <configuration>
-                            <tasks>
-                                <move file="${project.build.directory}/classes/uns.properties" toFile="${project.build.directory}/classes/uns.properties.tmp" />
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                    <!-- FIXME after updating Maven version from 2.0.4 the following lines can be removed -->
-                    <execution>
-                        <id>post-test</id>
-                        <phase>test</phase>
-                        <configuration>
-                            <tasks>
-                                <move file="${project.build.directory}/classes/uns.properties.tmp" toFile="${project.build.directory}/classes/uns.properties" />
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Run Ant for various preparation tasks, declared in build.xml -->
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.3</version>
-                <executions>
-                    <execution>
-                        <id>Prepare application home directory</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <antcall target="prepare_apphome">
-                                    <param name="propertiesFile"
-                                        value="${env}.properties" />
-                                </antcall>
-                            </tasks>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
 
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>2.0.5</version>
+                <version>3.5.3</version>
                 <configuration>
                     <!-- Default configuration for application database. -->
                     <propertyFile>target/classes/liquibase.properties</propertyFile>
@@ -241,14 +185,7 @@
 
         </plugins>
 
-        <!-- filters for src/main/resources and src/test/resources -->
-
-        <filters>
-            <filter>${env}.properties</filter>
-        </filters>
-
-        <!-- resources for the main code -->
-
+<!--        &lt;!&ndash; resources for the main code &ndash;&gt;
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -259,7 +196,7 @@
             </resource>
         </resources>
 
-        <!-- resources for the test code -->
+        &lt;!&ndash; resources for the test code &ndash;&gt;
 
         <testResources>
             <testResource>
@@ -269,7 +206,7 @@
                     <include>**/*.*</include>
                 </includes>
             </testResource>
-        </testResources>
+        </testResources>-->
 
         <!-- name of the bundled project when it is finally built -->
         <finalName>uns</finalName>
@@ -340,11 +277,6 @@
             <version>1.2.17</version>
         </dependency>-->
         <dependency>
-            <groupId>xmlrpc</groupId>
-            <artifactId>xmlrpc</artifactId>
-            <version>2.0</version>
-        </dependency>
-        <dependency>
             <groupId>xerces</groupId>
             <artifactId>xmlParserAPIs</artifactId>
             <version>2.6.2</version>
@@ -374,6 +306,30 @@
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
             <version>1.0.1</version>
+        </dependency>
+
+
+        <!-- Spring framework dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>2.4.6</version>
         </dependency>
 
         <!--
@@ -467,26 +423,27 @@
             <version>1.6</version>
         </dependency>
 
-        <!--
-            ======================
-                   Eionet packages
-            ======================
-            -->
-
+        <!-- Eionet packages -->
         <dependency>
             <groupId>eionet</groupId>
             <artifactId>acl</artifactId>
-            <version>2.0</version>
+            <version>4.0-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>eionet</groupId>
             <artifactId>rpcserver</artifactId>
-            <version>2.0</version>
+            <version>3.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>eionet</groupId>
+            <artifactId>rpcclient</artifactId>
+            <version>3.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>eionet</groupId>
             <artifactId>definition</artifactId>
-            <version>2.0</version>
+            <version>3.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>eionet</groupId>
@@ -500,33 +457,41 @@
             <version>2.0</version>
         </dependency>
 
-        <!--
-            ======================
-                   J2EE API
-            ======================
-            -->
+        <!-- Servlet Dependency -->
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.4</version>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--            <dependency>
+                        <groupId>javax.servlet</groupId>
+                        <artifactId>jsp-api</artifactId>
+                        <version>2.0</version>
+                        <scope>provided</scope>
+                    </dependency>-->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-el-api</artifactId>
+            <version>8.0.43</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.0</version>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>8.0.43</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>antlr</groupId>
             <artifactId>antlr</artifactId>
             <version>2.7.5</version>
-        </dependency>
-        <dependency>
+        </dependency>-->
+<!--        <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
             <version>1.0.1B</version>
-        </dependency>
+        </dependency>-->
         <!--
             =======================
                     HIBERNATE
@@ -699,8 +664,8 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.24</version>
-            <scope>runtime</scope>
+            <version>5.1.42</version>
+            <!--<scope>runtime</scope>-->
         </dependency>
         <dependency>
             <groupId>portlet-api</groupId>
@@ -793,10 +758,10 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>2.0.5</version>
+            <version>3.5.3</version>
         </dependency>
 
-        <!--  MySQL MXJ -->
+<!--        &lt;!&ndash;  MySQL MXJ &ndash;&gt;
 
         <dependency>
             <groupId>mysql</groupId>
@@ -809,7 +774,7 @@
             <artifactId>mysql-connector-mxj-db-files</artifactId>
             <version>5.0.12</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
         <!-- Jetty -->
 
@@ -825,18 +790,18 @@
             <version>6.1.25</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-catalina</artifactId>
             <version>7.0.57</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
+        </dependency>-->
+        <!--<dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 <!--    <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
