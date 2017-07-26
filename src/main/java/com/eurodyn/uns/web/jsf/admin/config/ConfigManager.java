@@ -233,7 +233,7 @@ public class ConfigManager {
 
         String result = null;
         try {
-            String appHome = Properties.getStringProperty("APP_HOME");
+            String appHome = Properties.getStringProperty("uns.home");
             result = appHome + File.separatorChar + CONFIG_FILE_NAME;
         } catch (Exception e) {
             LOGGER.error("Unable to construct config file path", e);

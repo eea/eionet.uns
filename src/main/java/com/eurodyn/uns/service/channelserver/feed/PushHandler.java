@@ -67,7 +67,7 @@ public class PushHandler extends BaseFeedHandler {
     public static int DEFAULT_LIFETIME = 60 * 24 * 60;
     
     static {
-        pathPrefix = Properties.getStringProperty("APP_HOME") + File.separatorChar + "rdf" + File.separatorChar;
+        pathPrefix = Properties.getStringProperty("uns.home") + File.separatorChar + "rdf" + File.separatorChar;
         DEFAULT_LIFETIME=Integer.parseInt(Properties.getStringProperty("pushchannel.default_lifetime"));
     }
 

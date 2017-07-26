@@ -15,11 +15,12 @@
     <constructor-arg index="0">
       <array>
         <value>env.properties</value>
+        <value>acl.properties</value>
+        <value>uns.properties</value>
       </array>
     </constructor-arg>
   </bean>
 <!--
-  <value>acl.properties</value>
   <value>gdem.properties</value>
   <value>eionetdir.properties</value>
   <value>CatalogManager.properties</value>
@@ -73,7 +74,7 @@
       <props>
         <prop key="url">${db.url}</prop>
         <prop key="user">${db.user}</prop>
-        <prop key="password">${db.pwd}</prop>
+        <prop key="password">${db.password}</prop>
         <prop key="cachePrepStmts">true</prop>
         <prop key="prepStmtCacheSize">250</prop>
         <prop key="prepStmtCacheSqlLimit">2048</prop>
@@ -84,7 +85,36 @@
   <!-- Runs on Tomcat startup. -->
   <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
     <property name="dataSource" ref="dataSource" />
-    <property name="changeLog" value="classpath:db/xmlconv-struct.xml" />
+    <property name="changeLog" value="classpath:sql/uns-struct.xml" />
+  </bean>
+
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    <property name="hibernateProperties">
+      <props>
+        <prop key="hibernate.connection.url">${db.url}</prop>
+        <prop key="hibernate.connection.username">${db.user}</prop>
+        <prop key="hibernate.connection.password">${db.password}</prop>
+        <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+        <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+      </props>
+    </property>
+    <property name="mappingResources">
+      <list>
+        <value>hibernate/Channel.hbm.xml</value>
+        <value>hibernate/User.hbm.xml</value>
+        <value>hibernate/Stylesheet.hbm.xml</value>
+        <value>hibernate/Role.hbm.xml</value>
+        <value>hibernate/MetadataElement.hbm.xml</value>
+        <value>hibernate/DeliveryType.hbm.xml</value>
+        <value>hibernate/Delivery.hbm.xml</value>
+        <value>hibernate/NotificationTemplate.hbm.xml</value>
+        <value>hibernate/Subscription.hbm.xml</value>
+        <value>hibernate/Filter.hbm.xml</value>
+        <value>hibernate/EventMetadata.hbm.xml </value>
+        <value>hibernate/Event.hbm.xml </value>
+        <value>hibernate/Notification.hbm.xml </value>
+      </list>
+    </property>
   </bean>
 
 </beans>

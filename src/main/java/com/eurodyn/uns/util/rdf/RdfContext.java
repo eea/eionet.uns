@@ -120,7 +120,7 @@ public class RdfContext {
         XSLTransformer transform = new XSLTransformer();
         InputSource source = new InputSource(rssContent);
         //source.setEncoding("UTF-8");
-        String xslfilename = Properties.getStringProperty("APP_HOME") + "/xsl/rss2rdf.xsl";
+        String xslfilename = Properties.getStringProperty("uns.home") + "/xsl/rss2rdf.xsl";
         transform.transform(xslfilename, source, baos, null);
         return baos;
     }

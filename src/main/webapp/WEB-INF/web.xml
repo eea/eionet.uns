@@ -64,12 +64,12 @@
         <param-value>sql/uns-struct.xml</param-value>
     </context-param>
 
-    <context-param>
+<!--    <context-param>
         <param-name>liquibase.datasource</param-name>
         <param-value>java:comp/env/jdbc/UNS_DS</param-value>
-    </context-param>
+    </context-param>-->
 
-    <context-param>
+<!--    <context-param>
         <param-name>liquibase.onerror.fail</param-name>
         <param-value>true</param-value>
     </context-param>
@@ -77,7 +77,7 @@
     <context-param>
         <param-name>liquibase.contexts</param-name>
         <param-value>production</param-value>
-    </context-param>
+    </context-param>-->
 
 	<!-- Quartz Scheduler Configuration -->
 		<context-param>
@@ -215,9 +215,9 @@
 		<url-pattern>/eionetCookieLogin/*</url-pattern>
   	</filter-mapping>
 
-	<listener>
+	<!--<listener>
 		<listener-class>liquibase.integration.servlet.LiquibaseServletListener</listener-class>
-	</listener>
+	</listener>-->
 	<listener>
 		<listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
 	</listener>

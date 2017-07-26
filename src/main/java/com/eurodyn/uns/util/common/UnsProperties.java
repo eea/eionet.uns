@@ -34,7 +34,7 @@ public class UnsProperties {
      */
     public void setLdapParams(String url, String context, String userDir, String attrUid) throws Exception {
 
-        String filePath = Properties.getStringProperty("APP_HOME") + File.separatorChar + "eionetdir.properties";
+        String filePath = Properties.getStringProperty("uns.home") + File.separatorChar + "eionetdir.properties";
 
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line = null;

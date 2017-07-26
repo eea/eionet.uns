@@ -101,7 +101,7 @@ public class GeneralPurposeServletContextListener implements ServletContextListe
      */
     private void checkHomeDirectories() throws Exception {
 
-        String pathPrefix = Properties.getStringProperty("APP_HOME") + File.separatorChar;
+        String pathPrefix = Properties.getStringProperty("uns.home") + File.separatorChar;
         File log = new File(pathPrefix + "log");
         if (!log.exists()) {
             if (!log.mkdir()) {

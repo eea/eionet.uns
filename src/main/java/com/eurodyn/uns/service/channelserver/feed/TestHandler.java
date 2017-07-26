@@ -44,7 +44,7 @@ public class TestHandler extends BaseFeedHandler {
 
     private static String pathPrefix;
     static {
-        pathPrefix = Properties.getStringProperty("APP_HOME") + File.separatorChar + "rdf" + File.separatorChar;
+        pathPrefix = Properties.getStringProperty("uns.home") + File.separatorChar + "rdf" + File.separatorChar;
     }
 
     public TestHandler() {
