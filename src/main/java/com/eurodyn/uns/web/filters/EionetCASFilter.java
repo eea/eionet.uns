@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.eurodyn.uns.Properties;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.UserFacade;
 import org.slf4j.Logger;
@@ -42,10 +43,11 @@ public class EionetCASFilter extends CASFilter {
     private UserFacade userFacade = new UserFacade();
 
     public void init(FilterConfig config) throws ServletException {
-        CAS_LOGIN_URL = config.getInitParameter(LOGIN_INIT_PARAM);
-        SERVER_NAME = config.getInitParameter(SERVERNAME_INIT_PARAM);
-        EIONET_LOGIN_COOKIE_DOMAIN = config.getInitParameter("eionetLoginCookieDomain");
-        super.init(config);
+        CASFilterConfig casFilterConfig = CASFilterConfig.getInstance(config);
+        CAS_LOGIN_URL = casFilterConfig.getInitParameter(LOGIN_INIT_PARAM);
+        SERVER_NAME = casFilterConfig.getInitParameter(SERVERNAME_INIT_PARAM);
+        EIONET_LOGIN_COOKIE_DOMAIN = Properties.getStringProperty("eionetLoginCookieDomain");
+        super.init(casFilterConfig);
 
     }
 

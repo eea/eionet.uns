@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <local-users>
-	<user username="arvid" password="arvid" fullname="Ander Lillethun"/>
-	<user username="dusan" password="dusan" fullname="Dusan Popovic"/>
+	<user username="sofiageo" password="12345" fullname="George Sofianos"/>
 	<user username="uns" password="reportnet" fullname="Unified Notification Service"/>
-	<user username="sasam" password="sasacc" fullname="Sasha Milosavljevic" />
 </local-users>

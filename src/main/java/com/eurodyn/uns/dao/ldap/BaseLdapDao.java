@@ -21,6 +21,7 @@
 
 package com.eurodyn.uns.dao.ldap;
 
+import com.eurodyn.uns.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,25 +43,30 @@ public abstract class BaseLdapDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseLdapDao.class);
 
-    protected static ResourceBundle conf;
     protected static String baseDn;
 
-    static  {
+    static {
+        baseDn = Properties.getStringProperty("ldap.context");
+    }
+/*    protected static ResourceBundle conf;
+    protected static String baseDn;*/
+
+/*    static  {
         try {
             conf = ResourceBundle.getBundle("eionetdir");
             baseDn = conf.getString("ldap.context");
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         }
-    }
+    }*/
 
     protected DirContext getDirContext() throws NamingException {
         Hashtable env = new Hashtable();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, conf.getString("ldap.url"));
+        env.put(Context.PROVIDER_URL, Properties.getStringProperty("ldap.url"));
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
-        env.put(Context.SECURITY_PRINCIPAL, conf.getString("ldap.principal"));
-        env.put(Context.SECURITY_CREDENTIALS, conf.getString("ldap.password"));
+        env.put(Context.SECURITY_PRINCIPAL, Properties.getStringProperty("ldap.principal"));
+        env.put(Context.SECURITY_CREDENTIALS, Properties.getStringProperty("ldap.password"));
         DirContext ctx = new InitialDirContext(env);
         return ctx;
     }
@@ -69,10 +75,10 @@ public abstract class BaseLdapDao {
         int pageSize = 50;
         Hashtable env = new Hashtable();
         env.put(LdapContext.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(LdapContext.PROVIDER_URL, conf.getString("ldap.url"));
+        env.put(LdapContext.PROVIDER_URL, Properties.getStringProperty("ldap.url"));
         env.put(LdapContext.SECURITY_AUTHENTICATION, "simple");
-        env.put(LdapContext.SECURITY_PRINCIPAL, conf.getString("ldap.principal"));
-        env.put(LdapContext.SECURITY_CREDENTIALS, conf.getString("ldap.password"));
+        env.put(LdapContext.SECURITY_PRINCIPAL, Properties.getStringProperty("ldap.principal"));
+        env.put(LdapContext.SECURITY_CREDENTIALS, Properties.getStringProperty("ldap.password"));
         LdapContext ctx = new InitialLdapContext(env, null);
         ctx.setRequestControls(new Control[]{
                 new PagedResultsControl(pageSize, Control.CRITICAL)
