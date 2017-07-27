@@ -155,6 +155,16 @@
                                 <include>uns-struct.xml</include>
                             </includes>
                         </resource>
+                        <resource>
+                            <directory>${basedir}/acl</directory>
+                            <targetPath>WEB-INF/classes/acl</targetPath>
+                            <filtering>false</filtering>
+                        </resource>
+                        <resource>
+                            <directory>${basedir}/src/main/python</directory>
+                            <targetPath>WEB-INF/classes/python</targetPath>
+                            <filtering>false</filtering>
+                        </resource>
                     </webResources>
                 </configuration>
             </plugin>
@@ -607,7 +617,7 @@
             <artifactId>smtp</artifactId>
             <version>unknown-version</version>
         </dependency>
-        <!-- unknown version stored -->
+        <!--Central Authentication Service (CAS) Client-->
         <dependency>
             <groupId>casclient</groupId>
             <artifactId>casclient</artifactId>

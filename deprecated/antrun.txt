@@ -105,3 +105,46 @@
                                                                 </execution>
                                                             </executions>
                                                         </plugin>
+
+
+                                                        <init-param>
+                                                        	      <param-name>edu.yale.its.tp.cas.client.filter.loginUrl</param-name>
+                                                        	      <param-value>https://sso.eionet.europa.eu/login</param-value>
+                                                        	    </init-param>
+                                                        	    <init-param>
+                                                        	      <param-name>edu.yale.its.tp.cas.client.filter.validateUrl</param-name>
+                                                        	      <param-value>https://sso.eionet.europa.eu/serviceValidate</param-value>
+                                                        	    </init-param>
+                                                        	    <init-param>
+                                                        	      <param-name>edu.yale.its.tp.cas.client.filter.serverName</param-name>
+                                                        	      <param-value>${edu.yale.its.tp.cas.client.filter.serverName}</param-value>
+                                                        	    </init-param>
+                                                        	   <init-param>
+                                                        	      <param-name>edu.yale.its.tp.cas.client.filter.wrapRequest</param-name>
+                                                        	      <param-value>true</param-value>
+                                                        	    </init-param>
+                                                        	    <init-param>
+                                                        	      <param-name>eionetLoginCookieDomain</param-name>
+                                                        	      <param-value>.eionet.europa.eu</param-value>
+                                                        	    </init-param>
+
+                                                        	    <filter-mapping>
+                                                                  	<filter-name>CAS Filter</filter-name>
+                                                                  	<url-pattern>/admin/*</url-pattern>
+                                                                	</filter-mapping>
+                                                                	<filter-mapping>
+                                                                  	<filter-name>CAS Filter</filter-name>
+                                                                  	<url-pattern>/subscriptions/*</url-pattern>
+                                                                	</filter-mapping>
+                                                                	<filter-mapping>
+                                                                  	<filter-name>CAS Filter</filter-name>
+                                                                  	<url-pattern>/xmlrpc/*</url-pattern>
+                                                                	</filter-mapping>
+                                                                	<filter-mapping>
+                                                                  	<filter-name>CAS Filter</filter-name>
+                                                                  	<url-pattern>/login/*</url-pattern>
+                                                                	</filter-mapping>
+                                                                	<filter-mapping>
+                                                                  	<filter-name>CAS Filter</filter-name>
+                                                              		<url-pattern>/eionetCookieLogin/*</url-pattern>
+                                                                	</filter-mapping>
