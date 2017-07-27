@@ -9,7 +9,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <env>local</env>
+        <env>default</env>
         <javaVersion>1.8</javaVersion>
         <sesame.openrdf.version>2.6.9</sesame.openrdf.version>
         <checkstyle.config.location>${basedir}/doc/checkstyle.xml</checkstyle.config.location>
@@ -124,14 +124,14 @@
                         <filter>${basedir}/${env}.properties</filter>
                     </filters>
                     <webResources>
-                        <resource>
+ <!--                       <resource>
                             <directory>${basedir}/src/main/webapp/META-INF</directory>
                             <filtering>true</filtering>
                             <targetPath>META-INF</targetPath>
                             <includes>
                                 <include>context.xml</include>
                             </includes>
-                        </resource>
+                        </resource>-->
                         <resource>
                             <directory>${basedir}/src/main/webapp/WEB-INF</directory>
                             <filtering>true</filtering>
@@ -157,30 +157,6 @@
                         </resource>
                     </webResources>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.5.3</version>
-                <configuration>
-                    <!-- Default configuration for application database. -->
-                    <propertyFile>target/classes/liquibase.properties</propertyFile>
-                    <changeLogFile>sql/uns-struct.xml</changeLogFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>Update test database</id>
-                        <phase>process-test-resources</phase>
-                        <configuration>
-                            <skip>${maven.test.skip}</skip>
-                            <propertyFile>target/test-classes/liquibase.properties</propertyFile>
-                        </configuration>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
         </plugins>

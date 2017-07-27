@@ -80,3 +80,28 @@
                                                     <downloadJavadocs>true</downloadJavadocs>
                                                 </configuration>
                                             </plugin>
+
+
+                                            <plugin>
+                                                            <groupId>org.liquibase</groupId>
+                                                            <artifactId>liquibase-maven-plugin</artifactId>
+                                                            <version>3.5.3</version>
+                                                            <configuration>
+                                                                <!-- Default configuration for application database. -->
+                                                                <propertyFile>target/classes/liquibase.properties</propertyFile>
+                                                                <changeLogFile>sql/uns-struct.xml</changeLogFile>
+                                                            </configuration>
+                                                            <executions>
+                                                                <execution>
+                                                                    <id>Update test database</id>
+                                                                    <phase>process-test-resources</phase>
+                                                                    <configuration>
+                                                                        <skip>${maven.test.skip}</skip>
+                                                                        <propertyFile>target/test-classes/liquibase.properties</propertyFile>
+                                                                    </configuration>
+                                                                    <goals>
+                                                                        <goal>update</goal>
+                                                                    </goals>
+                                                                </execution>
+                                                            </executions>
+                                                        </plugin>
