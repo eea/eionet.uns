@@ -1,0 +1,22 @@
+##
+# @author George Sofianos
+##
+
+version: '2'
+services:
+
+  ## UNS Tomcat Service
+  uns-tomcat:
+    image: sofiageo/uns:2017-07-28T1736
+    env_file: docker.env
+    volumes:
+      - uns:/opt/uns
+    links:
+      - uns-database
+
+  ## Mysql Service
+  uns-database:
+    image: mysql:5.5
+    env: MYSQL_ROOT_PASSWORD=12345
+    #volumes:
+      
