@@ -10,9 +10,13 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import com.eurodyn.uns.ApplicationTestContext;
+import com.eurodyn.uns.util.TestUtils;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mortbay.jetty.Server;
 
 import com.eurodyn.uns.dao.jdbc.BaseJdbcDao;
@@ -22,26 +26,44 @@ import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.service.facades.ChannelFacade;
 
 import eionet.uns.test.util.JettyUtil;
-import eionet.uns.test.util.UnsDatabaseTestCase;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.sql.DataSource;
+
+import static com.eurodyn.uns.dao.jdbc.BaseJdbcDao.closeAllResources;
+import static org.junit.Assert.*;
 
 /**
  * Unit tests for the {@link PullerThread}.
  *
  * @author Jaanus
  */
-public class PullerThreadTest extends UnsDatabaseTestCase {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { ApplicationTestContext.class })
+public class PullerThreadTest {
 
     /** SQL for finding an event by its external ID. */
     private static final String FIND_EVENT_BY_EXT_ID_SQL = "SELECT * FROM EVENT WHERE EXT_ID=?";
+
+    @Autowired
+    private DataSource ds;
+
+    @Before
+    public void setUp() throws Exception {
+        TestUtils.setUpDatabase(ds, "seed-puller-thread.xml");
+    }
 
     /*
      * (non-Javadoc)
      * @see eionet.uns.test.util.UnsDatabaseTestCase#getDataSet()
      */
-    @Override
+/*
     protected IDataSet getDataSet() throws Exception {
         return new FlatXmlDataSet(getClass().getClassLoader().getResourceAsStream("seed-puller-thread.xml"));
     }
+*/
 
     /**
      * Test that new events will be created upon discovery from feed, and already existing events get their LAST_SEEN updated.

@@ -9,11 +9,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.eurodyn.uns.ApplicationTestContext;
 import junit.framework.TestCase;
 
 import org.apache.xerces.parsers.DOMParser;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -34,12 +40,12 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RSS;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
-
-public class EventMetadataTest extends TestCase {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { ApplicationTestContext.class })
+public class EventMetadataTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EventMetadataTest.class);
 
-    @Override
     public void setUp() throws Exception {
         System.setProperty("hibernate-config-file", "/hibernate-test.cfg.xml");
         InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(
@@ -106,6 +112,7 @@ public class EventMetadataTest extends TestCase {
         return result == null ? "" : result;
     }
 
+    @Test
     public void testChoosableElements() {
         // EventMetadataFacade eventMetadataFacade = new EventMetadataFacade();
         Channel channel = new Channel();
@@ -120,6 +127,7 @@ public class EventMetadataTest extends TestCase {
 
     }
 
+    @Test
     public void x_testValues() throws Exception {
         String value = "gas";
         HibernateEventMetadataDao hibernateEventMetadataDao = new HibernateEventMetadataDao();
@@ -138,6 +146,7 @@ public class EventMetadataTest extends TestCase {
 
     }
 
+    @Test
     public void x_testFilterDeletion() throws Exception {
         Channel channel = new Channel();
 
@@ -151,6 +160,7 @@ public class EventMetadataTest extends TestCase {
 
     }
 
+    @Test
     public void testEventDate() throws Exception {
         Channel channel = new Channel();
 
@@ -171,6 +181,7 @@ public class EventMetadataTest extends TestCase {
 
     }
 
+    @Test
     public void x_testDeliveryReports() throws Exception {
         // HibernateEventMetadataDao hibernateEventMetadataDao = new HibernateEventMetadataDao();
         // Channel channel = new Channel();
@@ -186,6 +197,7 @@ public class EventMetadataTest extends TestCase {
         // hibernateEventMetadataDao.testDeliveryReport(fromDate,toDate,null,null);
     }
 
+    @Test
     public void x_testRssFeed() {
         String result = "";
         Model rdf = ModelFactory.createDefaultModel();

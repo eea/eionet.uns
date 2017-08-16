@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.Properties;
 import javax.sql.DataSource;
 import static org.hamcrest.CoreMatchers.allOf;
+
+import com.eurodyn.uns.ApplicationTestContext;
+import com.eurodyn.uns.util.TestUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -28,43 +31,44 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * Tests for the Python templates.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { ApplicationTestContext.class })
 public class PythonTemplatesTest {
 
-    private static DataSource ds;
+    @Autowired
+    private DataSource ds;
 
     private static Properties templateMap;
 
     @BeforeClass
     public static void createDataSource() throws Exception {
-        ds = DataSourceSupport.getDataSource();
+        /*ds = DataSourceSupport.getDataSource();*/
         templateMap = new Properties();
         InputStream inStream = PythonTemplatesTest.class.getResourceAsStream("/templates.xml");
         templateMap.loadFromXML(inStream);
         inStream.close();
-        loadData("/seed-event.xml");
-    }
-
-    private static void loadData(String seedFileName) throws Exception {
-        IDatabaseConnection dbConn = new DatabaseConnection(ds.getConnection());
-        IDataSet dataSet = new FlatXmlDataSet(PythonTemplatesTest.class.getResourceAsStream(seedFileName));
-        DatabaseOperation.CLEAN_INSERT.execute(dbConn, dataSet);
     }
 
     @Before
     public void setUpIC() throws Exception {
-        JNDISupport.setUpCore();
+        TestUtils.setUpDatabase(ds, "seed-event.xml");
+        /*JNDISupport.setUpCore();
         JNDISupport.addSubCtxToTomcat("jdbc");
         JNDISupport.addPropToTomcat("jdbc/UNS_DS", ds);
-        JNDISupport.addPropToTomcat("APPLICATION_HOME", "target/test-classes");
+        JNDISupport.addPropToTomcat("APPLICATION_HOME", "target/test-classes");*/
     }
 
     @After
     public void cleanUpIC() throws Exception {
-        JNDISupport.cleanUp();
+        /*JNDISupport.cleanUp();*/
     }
 
 

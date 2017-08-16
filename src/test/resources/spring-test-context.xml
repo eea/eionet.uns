@@ -9,7 +9,9 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-  <context:component-scan base-package="com.eurodyn.uns" />
+  <context:component-scan base-package="com.eurodyn.uns">
+    <context:exclude-filter type="regex" expression="com\.eurodyn\.uns\.configuration\.FilesystemInitializationBean"/>
+  </context:component-scan>
 
   <bean id="appConfigDefinitionProvider" class="eionet.propertyplaceholderresolver.ConfigurationDefinitionProviderImpl">
     <constructor-arg index="0">
@@ -23,7 +25,6 @@
   </bean>
 <!--
   <value>gdem.properties</value>
-  <value>eionetdir.properties</value>
   <value>CatalogManager.properties</value>
   <value>fme.properties</value>
   <value>ApplicationResources.properties</value>
@@ -62,6 +63,14 @@
     <constructor-arg index="0" ref="aclProperties" />
   </bean>
 
+<!--  <bean name="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+    <property name="driverClassName" value="${db.driver}" />
+    <property name="username" value="${db.user}" />
+    <property name="password" value="${db.password}" />
+    <property name="url" value="${db.url}" />
+    <property name="suppressClose" value="true" />
+  </bean>-->
+
   <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
     <constructor-arg ref="hikariConfig" />
   </bean>
@@ -86,7 +95,7 @@
   <!-- Runs on Tomcat startup. -->
   <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
     <property name="dataSource" ref="dataSource" />
-    <property name="changeLog" value="classpath:sql/uns-struct.xml" />
+    <property name="changeLog" value="uns-struct.xml" />
   </bean>
 
   <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">

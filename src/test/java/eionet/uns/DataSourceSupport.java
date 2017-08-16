@@ -20,7 +20,7 @@ public class DataSourceSupport {
     private static final DataSource DATASOURCE;
 
     static {
-        DATASOURCE = (DataSource) SpringApplicationContext.getBean("datasource");
+        DATASOURCE = (DataSource) SpringApplicationContext.getBean("dataSource");
     }
 
     public static DataSource getDataSource() {

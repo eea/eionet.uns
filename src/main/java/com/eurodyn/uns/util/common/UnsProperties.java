@@ -79,7 +79,7 @@ public class UnsProperties {
 
         int defaultValue = 60;
 
-        String strValue = Properties.getStringProperty("oldEventsThreshold");
+        String strValue = Properties.getStringProperty("config.oldEventsThreshold");
         System.out.println("strValue = " + strValue);
         return NumberUtils.toInt(strValue, defaultValue);
     }

@@ -5,6 +5,9 @@
     <groupId>eionet.uns</groupId>
     <artifactId>uns</artifactId>
     <packaging>war</packaging>
+    <prerequisites>
+        <maven>3.3.9</maven>
+    </prerequisites>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -63,6 +66,25 @@
         </snapshotRepository>
     </distributionManagement>
 
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <valid.images>mysql, tomcat, httpd</valid.images>
+            </properties>
+        </profile>
+        <profile>
+            <id>local</id>
+            <properties>
+                <docker.host.address>localhost</docker.host.address>
+                <valid.images>none</valid.images>
+            </properties>
+        </profile>
+    </profiles>
+
     <!-- the build configuration -->
     <build>
         <plugins>
@@ -86,9 +108,9 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <version>1.8</version>
-                    <executions>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
                     <execution>
                         <id>copy-local-properties</id>
                         <phase>prepare-package</phase>
@@ -102,6 +124,21 @@
                             </tasks>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>pre-test</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <copy file="${basedir}/${env}.properties"
+                                      toFile="${project.build.directory}/test-classes/env.properties" />
+                                <copy file="${basedir}/sql/uns-struct.xml"
+                                      toFile="${project.build.directory}/test-classes/uns-struct.xml" />
+                            </tasks>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
 
@@ -111,7 +148,35 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
+                    <excludes>
+                        <exclude>**/*.java</exclude>
+                    </excludes>
                 </configuration>
+            </plugin>
+
+            <!-- maven-failsafe-plugin -->
+            <!-- This is used for Integration testing -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <docker.host.address>${docker.host.address}</docker.host.address>
+                    </systemPropertyVariables>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*IT.java</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- maven-war-plugin -->
@@ -167,6 +232,69 @@
                         </resource>
                     </webResources>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.21.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <filter>${valid.images}</filter>
+                    <images>
+                        <image>
+                            <alias>mysql</alias>
+                            <name>mysql:5.5</name>
+                            <run>
+                                <ports>
+                                    <port>53336:3306</port>
+                                </ports>
+                                <env>
+                                    <MYSQL_ROOT_PASSWORD>12345</MYSQL_ROOT_PASSWORD>
+                                    <MYSQL_DATABASE>uns_test</MYSQL_DATABASE>
+                                    <MYSQL_USER>testuser</MYSQL_USER>
+                                    <MYSQL_PASSWORD>testpassword</MYSQL_PASSWORD>
+                                </env>
+                                <wait>
+                                    <tcp>
+                                        <mode>direct</mode>
+                                        <ports>
+                                            <port>3306</port>
+                                        </ports>
+                                    </tcp>
+                                    <time>200000</time>
+                                </wait>
+                                <tmpfs>
+                                    <mount>/var/lib/mysql:size=1G</mount>
+                                </tmpfs>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <skip>${maven.test.skip}</skip>
+                        </configuration>
+                        <id>start</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                            <goal>build</goal>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <configuration>
+                            <skip>${maven.test.skip}</skip>
+                        </configuration>
+                        <id>stop</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
@@ -315,6 +443,18 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.2.0</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -732,16 +872,10 @@
         <dependency>
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>
-            <version>2.5.1</version>
+            <version>2.5.3</version>
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>1.10.19</version>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>com.unboundid</groupId>
@@ -757,21 +891,6 @@
             <artifactId>liquibase-core</artifactId>
             <version>3.5.3</version>
         </dependency>
-
-<!--        &lt;!&ndash;  MySQL MXJ &ndash;&gt;
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-mxj</artifactId>
-            <version>5.0.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-mxj-db-files</artifactId>
-            <version>5.0.12</version>
-            <scope>test</scope>
-        </dependency>-->
 
         <!-- Jetty -->
 

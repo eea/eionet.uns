@@ -14,6 +14,7 @@ import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
+import org.junit.Before;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -27,14 +28,14 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  *
  * @author Jaanus
  */
-public abstract class UnsDatabaseTestCase extends TestCase {
+public abstract class UnsDatabaseTestCase {
 
     /*
      * (non-Javadoc)
      *
      * @see junit.framework.TestCase#setUp()
      */
-    @Override
+    @Before
     public void setUp() throws Exception {
         System.setProperty("hibernate-config-file", "hibernate-test.cfg.xml");
         InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream("hibernate-test.cfg.xml");
