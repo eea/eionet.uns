@@ -43,6 +43,7 @@ import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
 import com.eurodyn.uns.web.jsf.admin.templates.NotificationTemplateInterpreter;
 import com.eurodyn.uns.web.jsf.subscriptions.SubscriptionActions;
 import com.eurodyn.uns.web.jsf.util.Period;
+
 import com.sun.mail.smtp.SMTPTransport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

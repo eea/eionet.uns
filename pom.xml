@@ -1,971 +1,720 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>eionet.uns</groupId>
-    <artifactId>uns</artifactId>
-    <packaging>war</packaging>
-    <prerequisites>
-        <maven>3.3.9</maven>
-    </prerequisites>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>eionet.uns</groupId>
+  <artifactId>uns</artifactId>
+  <packaging>war</packaging>
+  <prerequisites>
+    <maven>3.3.9</maven>
+  </prerequisites>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <env>default</env>
-        <javaVersion>1.8</javaVersion>
-        <sesame.openrdf.version>2.6.9</sesame.openrdf.version>
-        <checkstyle.config.location>${basedir}/doc/checkstyle.xml</checkstyle.config.location>
-        <spring.version>4.3.4.RELEASE</spring.version>
-    </properties>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <env>default</env>
+    <javaVersion>1.8</javaVersion>
+    <sesame.openrdf.version>2.6.9</sesame.openrdf.version>
+    <checkstyle.config.location>${basedir}/doc/checkstyle.xml</checkstyle.config.location>
+    <spring.version>4.3.4.RELEASE</spring.version>
+  </properties>
 
-    <version>1.0-SNAPSHOT</version>
-    <name>uns</name>
-    <url>http://maven.apache.org</url>
+  <version>1.0-SNAPSHOT</version>
+  <name>uns</name>
+  <url>http://maven.apache.org</url>
 
-    <!-- configuration of Maven repositories to be used -->
+  <!-- configuration of Maven repositories to be used -->
+  <repositories>
+    <repository>
+      <id>project-local</id>
+      <name>project-local repository</name>
+      <layout>default</layout>
+      <url>file:///${basedir}/lib</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>archiva.internal</id>
+      <name>Internal Release Repository</name>
+      <url>http://archiva.eionet.europa.eu/repository/internal/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>archiva.snapshots</id>
+      <name>Internal Snapshot Repository</name>
+      <url>http://archiva.eionet.europa.eu/repository/snapshots/</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 
-    <repositories>
-        <repository>
-            <id>project-local</id>
-            <name>project-local repository</name>
-            <layout>default</layout>
-            <url>file:///${basedir}/lib</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>archiva.internal</id>
-            <name>Internal Release Repository</name>
-            <url>http://archiva.eionet.europa.eu/repository/internal/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>archiva.snapshots</id>
-            <name>Internal Snapshot Repository</name>
-            <url>http://archiva.eionet.europa.eu/repository/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+  <distributionManagement>
+    <repository>
+      <id>archiva.internal</id>
+      <name>Internal Release Repository</name>
+      <url>http://archiva.eionet.europa.eu/repository/internal/</url>
+    </repository>
+    <snapshotRepository>
+      <id>archiva.snapshots</id>
+      <name>Internal Snapshot Repository</name>
+      <url>http://archiva.eionet.europa.eu/repository/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
 
-    <distributionManagement>
-        <repository>
-            <id>archiva.internal</id>
-            <name>Internal Release Repository</name>
-            <url>http://archiva.eionet.europa.eu/repository/internal/</url>
-        </repository>
-        <snapshotRepository>
-            <id>archiva.snapshots</id>
-            <name>Internal Snapshot Repository</name>
-            <url>http://archiva.eionet.europa.eu/repository/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+  <profiles>
+    <profile>
+      <id>docker</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <valid.images>mysql, tomcat, httpd</valid.images>
+      </properties>
+    </profile>
+    <profile>
+      <id>local</id>
+      <properties>
+        <docker.host.address>localhost</docker.host.address>
+        <valid.images>none</valid.images>
+      </properties>
+    </profile>
+  </profiles>
 
-    <profiles>
-        <profile>
-            <id>docker</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <valid.images>mysql, tomcat, httpd</valid.images>
-            </properties>
-        </profile>
-        <profile>
-            <id>local</id>
-            <properties>
-                <docker.host.address>localhost</docker.host.address>
-                <valid.images>none</valid.images>
-            </properties>
-        </profile>
-    </profiles>
+  <!-- the build configuration -->
+  <build>
+    <plugins>
+      <!-- maven-compiler-plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.6.1</version>
+        <inherited>true</inherited>
+        <configuration>
+          <verbose>false</verbose>
+          <fork>false</fork>
+          <compilerVersion>${javaVersion}</compilerVersion>
+          <source>${javaVersion}</source>
+          <target>${javaVersion}</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
 
-    <!-- the build configuration -->
-    <build>
-        <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <id>copy-local-properties</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <copy file="${basedir}/${env}.properties"
+                      toFile="${project.build.directory}/classes/env.properties"/>
+              </tasks>
+            </configuration>
+          </execution>
+          <execution>
+            <id>pre-test</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <copy file="${basedir}/${env}.properties"
+                      toFile="${project.build.directory}/test-classes/env.properties"/>
+                <copy file="${basedir}/sql/uns-struct.xml"
+                      toFile="${project.build.directory}/test-classes/uns-struct.xml"/>
+                <copy toDir="${project.build.directory}/test-classes/acl">
+                  <fileset dir="${basedir}/acl"/>
+                </copy>
+                <copy toDir="${project.build.directory}/test-classes/python">
+                  <fileset dir="${basedir}/src/main/python"/>
+                </copy>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
-            <!-- maven-compiler-plugin -->
+      <!-- maven-surefire-plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.19.1</version>
+        <configuration>
+          <excludes>
+            <exclude>**/*.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
-                <inherited>true</inherited>
-                <configuration>
-                    <verbose>false</verbose>
-                    <fork>false</fork>
-                    <compilerVersion>${javaVersion}</compilerVersion>
-                    <source>${javaVersion}</source>
-                    <target>${javaVersion}</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
+      <!-- maven-failsafe-plugin -->
+      <!-- This is used for Integration testing -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.19.1</version>
+        <configuration>
+          <systemPropertyVariables>
+            <docker.host.address>${docker.host.address}</docker.host.address>
+          </systemPropertyVariables>
+          <includes>
+            <include>**/*Test.java</include>
+            <include>**/*IT.java</include>
+          </includes>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
-                <executions>
-                    <execution>
-                        <id>copy-local-properties</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <copy file="${basedir}/${env}.properties"
-                                      toFile="${project.build.directory}/classes/env.properties" />
-                            </tasks>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>pre-test</id>
-                        <phase>process-test-resources</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <copy file="${basedir}/${env}.properties"
-                                      toFile="${project.build.directory}/test-classes/env.properties" />
-                                <copy file="${basedir}/sql/uns-struct.xml"
-                                      toFile="${project.build.directory}/test-classes/uns-struct.xml" />
-                                <copy toDir="${project.build.directory}/test-classes/acl">
-                                    <fileset dir="${basedir}/acl" />
-                                </copy>
-                                <copy toDir="${project.build.directory}/test-classes/python">
-                                    <fileset dir="${basedir}/src/main/python" />
-                                </copy>
-                            </tasks>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- maven-surefire-plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/*.java</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-
-            <!-- maven-failsafe-plugin -->
-            <!-- This is used for Integration testing -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.19.1</version>
-                <configuration>
-                    <systemPropertyVariables>
-                        <docker.host.address>${docker.host.address}</docker.host.address>
-                    </systemPropertyVariables>
-                    <includes>
-                        <include>**/*Test.java</include>
-                        <include>**/*IT.java</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- maven-war-plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <filters>
-                        <filter>${basedir}/${env}.properties</filter>
-                    </filters>
-                    <webResources>
- <!--                       <resource>
-                            <directory>${basedir}/src/main/webapp/META-INF</directory>
-                            <filtering>true</filtering>
-                            <targetPath>META-INF</targetPath>
-                            <includes>
-                                <include>context.xml</include>
-                            </includes>
-                        </resource>-->
-                        <resource>
-                            <directory>${basedir}/src/main/webapp/WEB-INF</directory>
-                            <filtering>true</filtering>
-                            <targetPath>WEB-INF</targetPath>
-                            <includes>
-                                <include>web.xml</include>
-                            </includes>
-                        </resource>
-                        <resource>
-                            <directory>${basedir}/src/main/webapp/pages/common</directory>
-                            <filtering>true</filtering>
-                            <targetPath>pages/common</targetPath>
-                            <includes>
-                                <include>dropdownmenus.txt</include>
-                            </includes>
-                        </resource>
-                        <resource>
-                            <directory>${basedir}/sql</directory>
-                            <targetPath>WEB-INF/classes/sql</targetPath>
-                            <includes>
-                                <include>uns-struct.xml</include>
-                            </includes>
-                        </resource>
-                        <resource>
-                            <directory>${basedir}/acl</directory>
-                            <targetPath>WEB-INF/classes/acl</targetPath>
-                            <filtering>false</filtering>
-                        </resource>
-                        <resource>
-                            <directory>${basedir}/src/main/python</directory>
-                            <targetPath>WEB-INF/classes/python</targetPath>
-                            <filtering>false</filtering>
-                        </resource>
-                    </webResources>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.21.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <filter>${valid.images}</filter>
-                    <images>
-                        <image>
-                            <alias>mysql</alias>
-                            <name>mysql:5.5</name>
-                            <run>
-                                <ports>
-                                    <port>53336:3306</port>
-                                </ports>
-                                <env>
-                                    <MYSQL_ROOT_PASSWORD>12345</MYSQL_ROOT_PASSWORD>
-                                    <MYSQL_DATABASE>uns_test</MYSQL_DATABASE>
-                                    <MYSQL_USER>testuser</MYSQL_USER>
-                                    <MYSQL_PASSWORD>testpassword</MYSQL_PASSWORD>
-                                </env>
-                                <wait>
-                                    <tcp>
-                                        <mode>direct</mode>
-                                        <ports>
-                                            <port>3306</port>
-                                        </ports>
-                                    </tcp>
-                                    <time>200000</time>
-                                </wait>
-                                <tmpfs>
-                                    <mount>/var/lib/mysql:size=1G</mount>
-                                </tmpfs>
-                            </run>
-                        </image>
-                    </images>
-                </configuration>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <skip>${maven.test.skip}</skip>
-                        </configuration>
-                        <id>start</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>stop</goal>
-                            <goal>build</goal>
-                            <goal>start</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <configuration>
-                            <skip>${maven.test.skip}</skip>
-                        </configuration>
-                        <id>stop</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-        </plugins>
-
-<!--        &lt;!&ndash; resources for the main code &ndash;&gt;
-        <resources>
+      <!-- maven-war-plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <filters>
+            <filter>${basedir}/${env}.properties</filter>
+          </filters>
+          <webResources>
+            <!--                       <resource>
+                                       <directory>${basedir}/src/main/webapp/META-INF</directory>
+                                       <filtering>true</filtering>
+                                       <targetPath>META-INF</targetPath>
+                                       <includes>
+                                           <include>context.xml</include>
+                                       </includes>
+                                   </resource>-->
             <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>**/*.*</include>
-                </includes>
+              <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+              <filtering>true</filtering>
+              <targetPath>WEB-INF</targetPath>
+              <includes>
+                <include>web.xml</include>
+              </includes>
             </resource>
-        </resources>
+            <resource>
+              <directory>${basedir}/src/main/webapp/pages/common</directory>
+              <filtering>true</filtering>
+              <targetPath>pages/common</targetPath>
+              <includes>
+                <include>dropdownmenus.txt</include>
+              </includes>
+            </resource>
+            <resource>
+              <directory>${basedir}/sql</directory>
+              <targetPath>WEB-INF/classes/sql</targetPath>
+              <includes>
+                <include>uns-struct.xml</include>
+              </includes>
+            </resource>
+            <resource>
+              <directory>${basedir}/acl</directory>
+              <targetPath>WEB-INF/classes/acl</targetPath>
+              <filtering>false</filtering>
+            </resource>
+            <resource>
+              <directory>${basedir}/src/main/python</directory>
+              <targetPath>WEB-INF/classes/python</targetPath>
+              <filtering>false</filtering>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
 
-        &lt;!&ndash; resources for the test code &ndash;&gt;
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>0.21.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <filter>${valid.images}</filter>
+          <images>
+            <image>
+              <alias>mysql</alias>
+              <name>mysql:5.5</name>
+              <run>
+                <ports>
+                  <port>53336:3306</port>
+                </ports>
+                <env>
+                  <MYSQL_ROOT_PASSWORD>12345</MYSQL_ROOT_PASSWORD>
+                  <MYSQL_DATABASE>uns_test</MYSQL_DATABASE>
+                  <MYSQL_USER>testuser</MYSQL_USER>
+                  <MYSQL_PASSWORD>testpassword</MYSQL_PASSWORD>
+                </env>
+                <wait>
+                  <tcp>
+                    <mode>direct</mode>
+                    <ports>
+                      <port>3306</port>
+                    </ports>
+                  </tcp>
+                  <time>200000</time>
+                </wait>
+                <tmpfs>
+                  <mount>/var/lib/mysql:size=1G</mount>
+                </tmpfs>
+              </run>
+            </image>
+          </images>
+        </configuration>
+        <executions>
+          <execution>
+            <configuration>
+              <skip>${maven.test.skip}</skip>
+            </configuration>
+            <id>start</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+              <goal>build</goal>
+              <goal>start</goal>
+            </goals>
+          </execution>
+          <execution>
+            <configuration>
+              <skip>${maven.test.skip}</skip>
+            </configuration>
+            <id>stop</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>**/*.*</include>
-                </includes>
-            </testResource>
-        </testResources>-->
+    </plugins>
+    <!-- name of the bundled project when it is finally built -->
+    <finalName>uns</finalName>
+  </build>
 
-        <!-- name of the bundled project when it is finally built -->
-        <finalName>uns</finalName>
+  <dependencies>
 
-    </build>
+    <!-- Apache  Commons -->
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>3.0-rc3</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.9.3</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.5</version>
+    </dependency>
 
-    <!-- dependencies -->
+    <!-- Apache struts -->
+    <dependency>
+      <groupId>struts</groupId>
+      <artifactId>struts</artifactId>
+      <version>1.2.9</version>
+    </dependency>
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>xalan</artifactId>
+      <version>2.7.2</version>
+    </dependency>
 
-    <dependencies>
-		<!--
-			=======================
-				Apache  Commons
-			=======================
-		-->
-        <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.0-rc3</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-digester</groupId>
-            <artifactId>commons-digester</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId> commons-fileupload</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.4</version>
-        </dependency>
-<!--        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.0.4</version>
-        </dependency>-->
-        <dependency>
-            <groupId>commons-validator</groupId>
-            <artifactId>commons-validator</artifactId>
-            <version>1.1.3</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.2</version>
-        </dependency>
-<!--        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency>-->
-        <dependency>
-            <groupId>xerces</groupId>
-            <artifactId>xmlParserAPIs</artifactId>
-            <version>2.6.2</version>
-        </dependency>
-        <!--
-            =======================
-                        Apache  Struts
-            =======================
-            -->
-        <dependency>
-            <groupId>struts</groupId>
-            <artifactId>struts</artifactId>
-            <version>1.2.9</version>
-        </dependency>
+    <!-- Spring framework dependencies -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>2.2.0</version>
+      <scope>test</scope>
+    </dependency>
 
-        <!--
-            =======================
-                    Standard tag library
-            =======================
-            -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>taglibs</groupId>
-            <artifactId>standard</artifactId>
-            <version>1.0.1</version>
-        </dependency>
+    <!-- Eionet packages -->
+    <dependency>
+      <groupId>eionet</groupId>
+      <artifactId>acl</artifactId>
+      <version>4.0-SNAPSHOT</version>
+    </dependency>
 
+    <dependency>
+      <groupId>eionet</groupId>
+      <artifactId>rpcserver</artifactId>
+      <version>3.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>eionet</groupId>
+      <artifactId>rpcclient</artifactId>
+      <version>3.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>eionet</groupId>
+      <artifactId>definition</artifactId>
+      <version>3.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>eionet</groupId>
+      <artifactId>eionet-dir</artifactId>
+      <version>2.5</version>
+    </dependency>
+    <!-- Used in uit.properties: componentservices.HelpService.provider=eionet.help.RemoteService -->
+    <dependency>
+      <groupId>eionet</groupId>
+      <artifactId>help</artifactId>
+      <version>2.0</version>
+    </dependency>
 
-        <!-- Spring framework dependencies -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>2.2.0</version>
-            <scope>test</scope>
-        </dependency>
+    <!-- Servlet Dependencies -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.0.1</version>
+    </dependency>
 
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>2.4.6</version>
-        </dependency>
-
-        <!--
-            ==========================
-                 Apache Batik
-            ==========================
-            -->
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-awt-util</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-bridge</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-css</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-dom</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-ext</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-extension</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-gui-util</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-gvt</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-parser</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-script</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-svggen</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-swing</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-svg-dom</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-transcoder</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-util</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-xml</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>batik</groupId>
-            <artifactId>batik-js</artifactId>
-            <version>1.6</version>
-        </dependency>
-
-        <!-- Eionet packages -->
-        <dependency>
-            <groupId>eionet</groupId>
-            <artifactId>acl</artifactId>
-            <version>4.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>eionet</groupId>
-            <artifactId>rpcserver</artifactId>
-            <version>3.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>eionet</groupId>
-            <artifactId>rpcclient</artifactId>
-            <version>3.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>eionet</groupId>
-            <artifactId>definition</artifactId>
-            <version>3.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>eionet</groupId>
-            <artifactId>eionet-dir</artifactId>
-            <version>2.5</version>
-        </dependency>
-        <!-- Used in uit.properties: componentservices.HelpService.provider=eionet.help.RemoteService -->
-        <dependency>
-            <groupId>eionet</groupId>
-            <artifactId>help</artifactId>
-            <version>2.0</version>
-        </dependency>
-
-        <!-- Servlet Dependency -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <!--            <dependency>
-                        <groupId>javax.servlet</groupId>
-                        <artifactId>jsp-api</artifactId>
-                        <version>2.0</version>
-                        <scope>provided</scope>
-                    </dependency>-->
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-el-api</artifactId>
-            <version>8.0.43</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-servlet-api</artifactId>
-            <version>8.0.43</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>antlr</groupId>
-            <artifactId>antlr</artifactId>
-            <version>2.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <!--
-            =======================
-                    HIBERNATE
-            =======================
-            -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-            <version>3.5.6-FINAL</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.5.6-Final</version>
-        </dependency>
-
-        <dependency>
-            <groupId>asm</groupId>
-            <artifactId>asm</artifactId>
-            <version>1.5.3</version>
-        </dependency>
-        <dependency>
-            <groupId>asm</groupId>
-            <artifactId>asm-attrs</artifactId>
-            <version>1.5.3</version>
-        </dependency>
-        <dependency>
-            <groupId>asm</groupId>
-            <artifactId>asm-util</artifactId>
-            <version>1.5.3</version>
-        </dependency>
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <version>2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-            <version>1.1</version>
-        </dependency>
-
-        <!--
-            =======================
-                  XML/XSLT API
-            =======================
-            -->
-        <dependency>
-            <groupId>dom4j</groupId>
-            <artifactId>dom4j</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <!--Version 8 cannot be found in maven central repo -->
-        <dependency>
-            <groupId>saxon</groupId>
-            <artifactId>saxon</artifactId>
-            <version>8</version>
-        </dependency>
-        <dependency>
-            <groupId>xalan</groupId>
-            <artifactId>xalan</artifactId>
-            <version>2.6.0</version>
-        </dependency>
-        <dependency>
-            <groupId>xml-apis</groupId>
-            <artifactId>xml-apis</artifactId>
-            <version>1.0.b2</version>
-        </dependency>
-        <!--
-            ==========================
-                   RDF/OWL API
-            ==========================
-            -->
-        <!-- com.hp.hpl.jena 2.2 cannot be found in maven central repo -->
-        <dependency>
-            <groupId>jena</groupId>
-            <artifactId>jena</artifactId>
-            <version>2.2</version>
-        </dependency>
-
-        <!--
-            ===================
-                   other
-            ===================
-            -->
-        <!-- unknown version stored -->
-        <dependency>
-            <groupId>mailapi</groupId>
-            <artifactId>mailapi</artifactId>
-            <version>unknown-version</version>
-        </dependency>
-        <!-- TODO Verify 2.7.1 works with dockerized jython -->
-        <dependency>
-            <groupId>org.python</groupId>
-            <artifactId>jython-standalone</artifactId>
-            <version>2.7.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.myfaces.core</groupId>
-            <artifactId>myfaces-api</artifactId>
-            <version>1.1.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.myfaces.core</groupId>
-            <artifactId>myfaces-impl</artifactId>
-            <version>1.1.4</version>
-        </dependency>
-        <!-- 1.6.4 version cannot be found in maven central repo -->
-        <!--<dependency>
-            <groupId>quartz</groupId>
-            <artifactId>quartz</artifactId>
-            <version>1.6.4</version>
-        </dependency>-->
-        <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-            <version>2.2.1</version>
-        </dependency>
-        <!-- Version 1.1.2 tomahawk cannot be found in maven central repo -->
-        <dependency>
-            <groupId>tomahawk</groupId>
-            <artifactId>tomahawk</artifactId>
-            <version>1.1.2</version>
-        </dependency>
-        <!--<dependency>
-            <groupId>org.apache.myfaces.tomahawk</groupId>
-            <artifactId>tomahawk</artifactId>
-            <version>1.1.14</version>
-        </dependency>-->
-        <!-- unknown version stored -->
-        <dependency>
-            <groupId>smtp</groupId>
-            <artifactId>smtp</artifactId>
-            <version>unknown-version</version>
-        </dependency>
-        <!--Central Authentication Service (CAS) Client-->
-        <dependency>
-            <groupId>casclient</groupId>
-            <artifactId>casclient</artifactId>
-            <version>unknown-version</version>
-        </dependency>
-        <!-- unknown version stored -->
-        <dependency>
-            <groupId>activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>unknown-version</version>
-        </dependency>
-        <!-- unknown version stored -->
-        <dependency>
-            <groupId>dsn</groupId>
-            <artifactId>dsn</artifactId>
-            <version>unknown-version</version>
-        </dependency>
-        <!-- unknown version stored -->
-        <dependency>
-            <groupId>htmLib</groupId>
-            <artifactId>htmLib</artifactId>
-            <version>unknown-version</version>
-        </dependency>
-        <!-- unknown version stored -->
-        <dependency>
-            <groupId>imap</groupId>
-            <artifactId>imap</artifactId>
-            <version>unknown-version</version>
-        </dependency>
-        <!-- unknown version stored -->
-        <dependency>
-            <groupId>pop3</groupId>
-            <artifactId>pop3</artifactId>
-            <version>unknown-version</version>
-        </dependency>
-        <dependency>
-            <groupId>jaxen</groupId>
-            <artifactId>jaxen</artifactId>
-            <version>1.1-beta-9</version>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.42</version>
-            <!--<scope>runtime</scope>-->
-        </dependency>
-        <dependency>
-            <groupId>portlet-api</groupId>
-            <artifactId>portlet-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>jivesoftware</groupId>
-            <artifactId>smackx</artifactId>
-            <version>2.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>jivesoftware</groupId>
-            <artifactId>smack</artifactId>
-            <version>2.2.1</version>
-        </dependency>
-        <!-- unknown version stored -->
-        <dependency>
-            <groupId>smackx-debug</groupId>
-            <artifactId>smackx-debug</artifactId>
-            <version>unknown-version</version>
-        </dependency>
-        <dependency>
-            <groupId>soap</groupId>
-            <artifactId>soap</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-
-        <!-- Logging dependencies -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.8.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
-        </dependency>
-        <!-- Intercepts logging from log4j and redirects it to slf4j -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-            <version>1.7.25</version>
-        </dependency>
-        <!-- Intercepts logging from apache commons logging and redirects it to slf4j -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.25</version>
-        </dependency>
-        <!--The Log4j 2 SLF4J Binding allows applications coded to the SLF4J API to use Log4j 2 as the implementation.-->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.8.2</version>
-        </dependency>
-
-        <!-- Test-time dependencies. -->
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.dbunit</groupId>
-            <artifactId>dbunit</artifactId>
-            <version>2.5.3</version>
-            <scope>test</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.unboundid</groupId>
-            <artifactId>unboundid-ldapsdk</artifactId>
-            <version>3.0.0</version>
-            <scope>test</scope>
-        </dependency>
-
-
-        <!-- Liquibase -->
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>3.5.3</version>
-        </dependency>
-
-        <!-- Jetty -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>9.4.6.v20170531</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-util</artifactId>
-            <version>9.4.6.v20170531</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>9.4.6.v20170531</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!--        <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-catalina</artifactId>
-                    <version>7.0.57</version>
-                    <scope>test</scope>
+    <!--            <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>jsp-api</artifactId>
+                    <version>2.0</version>
+                    <scope>provided</scope>
                 </dependency>-->
-        <!--<dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>1.4</version>
-            <scope>test</scope>
-        </dependency>-->
-<!--    <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.3.171</version>
-            <scope>test</scope>
-        </dependency> -->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-el-api</artifactId>
+      <version>8.0.43</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-servlet-api</artifactId>
+      <version>8.0.43</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>antlr</groupId>
+      <artifactId>antlr</artifactId>
+      <version>2.7.5</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.transaction</groupId>
+      <artifactId>jta</artifactId>
+      <version>1.1</version>
+    </dependency>
 
-    </dependencies>
+    <!-- XML Graphics -->
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-transcoder</artifactId>
+      <version>1.9.1</version>
+    </dependency>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <linkXref>false</linkXref>
-                    <sourceEncoding>utf-8</sourceEncoding>
-                    <minimumTokens>300</minimumTokens>
-                    <targetJdk>${javaVersion}</targetJdk>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <configLocation>${checkstyle.config.location}</configLocation>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.3</version>
-            </plugin>
-        </plugins>
-    </reporting>
+    <!-- HIBERNATE -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate</artifactId>
+      <version>3.5.6-FINAL</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>3.5.6-Final</version>
+    </dependency>
+
+    <dependency>
+      <groupId>asm</groupId>
+      <artifactId>asm</artifactId>
+      <version>1.5.3</version>
+    </dependency>
+    <dependency>
+      <groupId>asm</groupId>
+      <artifactId>asm-attrs</artifactId>
+      <version>1.5.3</version>
+    </dependency>
+    <dependency>
+      <groupId>asm</groupId>
+      <artifactId>asm-util</artifactId>
+      <version>1.5.3</version>
+    </dependency>
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+      <version>2.1</version>
+    </dependency>
+
+    <!-- XML/XSLT API -->
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.11.0</version>
+    </dependency>
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1.6</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>Saxon-HE</artifactId>
+      <version>9.7.0-20</version>
+    </dependency>
+
+    <!-- com.hp.hpl.jena 2.2 cannot be found in maven central repo -->
+    <dependency>
+      <groupId>jena</groupId>
+      <artifactId>jena</artifactId>
+      <version>2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.ibm.icu</groupId>
+      <artifactId>icu4j</artifactId>
+      <version>59.1</version>
+    </dependency>
+
+
+    <!-- TODO Verify 2.7.1 works with dockerized jython -->
+    <dependency>
+      <groupId>org.python</groupId>
+      <artifactId>jython-standalone</artifactId>
+      <version>2.7.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.myfaces.core</groupId>
+      <artifactId>myfaces-api</artifactId>
+      <version>1.1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.myfaces.core</groupId>
+      <artifactId>myfaces-impl</artifactId>
+      <version>1.1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz</artifactId>
+      <version>2.2.1</version>
+    </dependency>
+    <!-- Version 1.1.2 tomahawk cannot be found in maven central repo -->
+    <dependency>
+      <groupId>tomahawk</groupId>
+      <artifactId>tomahawk</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+    <!--<dependency>
+        <groupId>org.apache.myfaces.tomahawk</groupId>
+        <artifactId>tomahawk</artifactId>
+        <version>1.1.14</version>
+    </dependency>-->
+
+    <!--Central Authentication Service (CAS) Client-->
+    <dependency>
+      <groupId>casclient</groupId>
+      <artifactId>casclient</artifactId>
+      <version>unknown-version</version>
+    </dependency>
+    <!-- unknown version stored -->
+    <dependency>
+      <groupId>htmLib</groupId>
+      <artifactId>htmLib</artifactId>
+      <version>unknown-version</version>
+    </dependency>
+
+    <!-- Java mail reference implementation -->
+    <!-- TODO upgrade to 1.6.0 -->
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>javax.mail</artifactId>
+      <version>1.4.7</version>
+    </dependency>
+
+    <!-- Database dependencies -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.42</version>
+    </dependency>
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
+      <version>2.4.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.igniterealtime.smack</groupId>
+      <artifactId>smack-core</artifactId>
+      <version>4.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.igniterealtime.smack</groupId>
+      <artifactId>smack-tcp</artifactId>
+      <version>4.2.1</version>
+    </dependency>
+
+    <!-- Logging dependencies -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.8.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.25</version>
+    </dependency>
+    <!-- Intercepts logging from log4j and redirects it to slf4j -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>log4j-over-slf4j</artifactId>
+      <version>1.7.25</version>
+    </dependency>
+    <!-- Intercepts logging from apache commons logging and redirects it to slf4j -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>1.7.25</version>
+    </dependency>
+    <!--The Log4j 2 SLF4J Binding allows applications coded to the SLF4J API to use Log4j 2 as the implementation.-->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <version>2.8.2</version>
+    </dependency>
+
+    <!-- Test-time dependencies. -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.dbunit</groupId>
+      <artifactId>dbunit</artifactId>
+      <version>2.5.3</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- LDAP dependencies -->
+    <dependency>
+      <groupId>com.unboundid</groupId>
+      <artifactId>unboundid-ldapsdk</artifactId>
+      <version>3.0.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Liquibase -->
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>3.5.3</version>
+    </dependency>
+
+    <!-- Jetty -->
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
+      <version>9.4.6.v20170531</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-util</artifactId>
+      <version>9.4.6.v20170531</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-webapp</artifactId>
+      <version>9.4.6.v20170531</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.6</version>
+        <configuration>
+          <linkXref>false</linkXref>
+          <sourceEncoding>utf-8</sourceEncoding>
+          <minimumTokens>300</minimumTokens>
+          <targetJdk>${javaVersion}</targetJdk>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>2.17</version>
+        <configuration>
+          <configLocation>${checkstyle.config.location}</configLocation>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>2.5</version>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

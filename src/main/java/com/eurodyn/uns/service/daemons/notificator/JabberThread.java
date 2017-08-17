@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.jivesoftware.smack.SSLXMPPConnection;
-import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.packet.Message;
 
 import com.eurodyn.uns.model.Delivery;
@@ -18,8 +17,12 @@ import com.eurodyn.uns.service.facades.DeliveryFacade;
 
 import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
+import org.jivesoftware.smack.tcp.XMPPTCPConnection;
+import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.net.ssl.SSLContext;
 
 public class JabberThread implements Runnable {
 
@@ -34,8 +37,9 @@ public class JabberThread implements Runnable {
     @Override
     public void run() {
 
+        XMPPTCPConnection conn = null;
         try {
-            XMPPConnection conn = null;
+            SSLContext sslContext = null;
 
             Map configMap = ConfigManager.getInstance().getConfigMap();
             String jabberServer = (String) ((ConfigElement) configMap.get("jabberserver/host")).getValue();
@@ -45,13 +49,22 @@ public class JabberThread implements Runnable {
             Boolean usessl = (Boolean) ((ConfigElement) configMap.get("jabberserver/usessl")).getValue();
             String msg_type = (String) ((ConfigElement) configMap.get("jabberserver/jabber_message_type")).getValue();
 
+            XMPPTCPConnectionConfiguration.Builder config = XMPPTCPConnectionConfiguration.builder();
+
             // Do not connect of the server if host is blank!
             if (StringUtils.isNotBlank(jabberServer)) {
                 if (usessl.booleanValue()) {
-                    conn = new SSLXMPPConnection(jabberServer, jabberPort.intValue());
+                    // TODO verify it still works
+                    config.setSecurityMode(ConnectionConfiguration.SecurityMode.required);
+                    config.setCustomSSLContext(sslContext);
+                    /*conn = new SSLXMPPConnection(jabberServer, jabberPort.intValue());*/
                 } else {
-                    conn = new XMPPConnection(jabberServer, jabberPort.intValue());
+                    /*conn = new XMPPTCPConnection(jabberServer, jabberPort.intValue());*/
                 }
+                config.setHost(jabberServer);
+                config.setPort(jabberPort);
+                config.setUsernameAndPassword(jabberUsername, jabberPassword);
+                conn = new XMPPTCPConnection(config.build());
                 conn.login(jabberUsername, jabberPassword);
             } else {
                 LOGGER.info("Jabber server URL is blank, no notifications will be sent!");
@@ -116,11 +129,10 @@ public class JabberThread implements Runnable {
                     deliveryFacade.updateDelivery(delivery);
                 }
             }
-            if (conn != null) {
-                conn.close();
-            }
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
+        } finally {
+            conn.disconnect();
         }
     }
 

@@ -7,7 +7,6 @@ import com.eurodyn.uns.model.DeliveryAddress;
 import com.eurodyn.uns.model.DeliveryType;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.TestUtils;
-import org.apache.commons.collections.map.HashedMap;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.sql.DataSource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import static org.junit.Assert.assertEquals;
@@ -46,7 +46,7 @@ public class UserUpdaterServiceTest {
 
     List sourceUsers = new ArrayList<User>();
     User user1 = new User("sofiageo");
-    Map ua1 = new HashedMap();
+    Map ua1 = new HashMap();
     DeliveryAddress a1 = new DeliveryAddress(1, "gsf@mockmail.com");
     a1.setDeliveryType(new DeliveryType(DeliveryType.EMAIL));
     ua1.put(1, a1);
@@ -56,7 +56,7 @@ public class UserUpdaterServiceTest {
     sourceUsers.add(user1);
 
     User user2 = new User("erviszyka");
-    Map ua2 = new HashedMap();
+    Map ua2 = new HashMap();
     DeliveryAddress a2 = new DeliveryAddress(1, "ervzyka@mockmail.com");
     a2.setDeliveryType(new DeliveryType(DeliveryType.EMAIL));
     ua2.put(1, a2);
