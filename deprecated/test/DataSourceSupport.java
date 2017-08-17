@@ -1,18 +1,12 @@
-package eionet.uns;
-
-import java.io.InputStream;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Properties;
+package com.eurodyn.uns;
 
 import javax.sql.DataSource;
-
-import com.eurodyn.uns.SpringApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Support functions to set up MySQL data source
+ *
  */
 public class DataSourceSupport {
 

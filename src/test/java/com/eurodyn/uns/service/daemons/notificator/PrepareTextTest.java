@@ -1,23 +1,3 @@
-/*
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is Web Questionnaires 2
- *
- * The Initial Owner of the Original Code is European Environment
- * Agency. Portions created by TripleDev are Copyright
- * (C) European Environment Agency.  All Rights Reserved.
- *
- * Contributor(s):
- *        Anton Dmitrijev
- */
 package com.eurodyn.uns.service.daemons.notificator;
 
 import java.net.URLEncoder;
@@ -27,19 +7,25 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
+import com.eurodyn.uns.ApplicationTestContext;
 import junit.framework.TestCase;
-
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.EventMetadata;
 import com.eurodyn.uns.model.NotificationTemplate;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.model.User;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import static org.junit.Assert.*;
 
 /**
  */
-public class PrepareTextTest extends TestCase {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { ApplicationTestContext.class })
+public class PrepareTextTest {
 
     public static final String SUBSCRIPTION_SECONDARY_ID = "secondary_id";
     public static final String HOME_URL = "http://europe.eu";
@@ -67,30 +53,35 @@ public class PrepareTextTest extends TestCase {
     public static final String DEFAULT_CHANNEL_TITLE = "Channel title";
     public static final String DEFAULT_USER_FULL_NAME = "Test User";
 
+    @Test
     public void test_ifTextContainsUnsubscribePlaceHolder_replaceItWithUnsubscribeLink() throws Exception {
         HashMap prepare = prepareText(TEMPLATE, false);
 
         assertTrue(prepare.get(PrepareText.PLAIN_TEXT_NOTIFICATION).toString().contains(UNSUBSCRIBE_LINK));
     }
 
+    @Test
     public void test_ifTextContainsMisspelledUnsubscribePlaceHolder_replaceItWithUnsubscribeLink() throws Exception {
         HashMap prepare = prepareText(TEMPLATE_WITH_MISSPELLED_UNSUBSCRIBE_PLACEHOLDER, false);
 
         assertTrue(prepare.get(PrepareText.PLAIN_TEXT_NOTIFICATION).toString().contains(UNSUBSCRIBE_LINK));
     }
 
+    @Test
     public void test_ifUserPrefersHtml_replaceUnsubscribeLinkWithHtml() throws Exception {
         HashMap preparedText = prepareText(TEMPLATE, true);
 
         assertTrue(preparedText.get(PrepareText.HTML_NOTIFICATION).toString().contains(UNSUBSCRIBE_HTML_LINK));
     }
 
+    @Test
     public void test_ifUserPrefersHtmlAndUnsubscribePlaceholderMisspelled_replaceUnsubscribeLinkWithHtml() throws Exception {
         HashMap preparedText = prepareText(TEMPLATE_WITH_MISSPELLED_UNSUBSCRIBE_PLACEHOLDER, true);
 
         assertTrue(preparedText.get(PrepareText.HTML_NOTIFICATION).toString().contains(UNSUBSCRIBE_HTML_LINK));
     }
 
+    @Test
     public void test_eventTitleIsSelectedByRSSPredicateAndReplacedInTemplate() throws Exception {
         Event event = createEventWithTitleUsingPredicate(PrepareText.TITLE_RSS_PREDICATE);
 
@@ -99,6 +90,7 @@ public class PrepareTextTest extends TestCase {
         assertEventTitleReplaced(prepareText.get(PrepareText.PLAIN_TEXT_NOTIFICATION).toString(), EVENT_TITLE);
     }
 
+    @Test
     public void test_eventTitleIsSelectedByElementsPredicateAndReplacedInTemplate() throws Exception {
         Event event = createEventWithTitleUsingPredicate(PrepareText.TITLE_ELEMENTS_PREDICATE);
 
@@ -107,6 +99,7 @@ public class PrepareTextTest extends TestCase {
         assertEventTitleReplaced(prepareText.get(PrepareText.PLAIN_TEXT_NOTIFICATION).toString(), EVENT_TITLE);
     }
 
+    @Test
     public void test_replacesAllSummaryPlaceholdersInPlainTextAndHtmlAndSubject() throws Exception {
         Event event = createEventWithTitleUsingPredicate(PrepareText.TITLE_ELEMENTS_PREDICATE);
         HashMap<String, String> preparedTexts = prepareText(createTemplate(TEMPLATE), event, createSubscription());
@@ -116,6 +109,7 @@ public class PrepareTextTest extends TestCase {
         assertNoSummaryPlaceholdersInText(preparedTexts.get(PrepareText.NOTIFICATION_SUBJECT));
     }
 
+    @Test
     public void test_ifEventTitleNotFound_replacePlaceholderWithEmptyString() throws Exception {
         Event event = createEvent();
         event.setEventMetadata(new HashMap());
@@ -125,12 +119,14 @@ public class PrepareTextTest extends TestCase {
         assertEventTitleReplaced(prepareText.get(PrepareText.PLAIN_TEXT_NOTIFICATION).toString(), "");
     }
 
+    @Test
     public void test_ifUserDoesNotWantToReceiveHtml_htmlTextWillNotBePrepared() throws Exception {
         HashMap prepareText = prepareText(TEMPLATE, false);
 
         assertNull(prepareText.get(PrepareText.HTML_NOTIFICATION));
     }
 
+    @Test
     public void test_noExceptionsIfTemplatePlainTextNotSet() throws Exception {
         NotificationTemplate template = createTemplate(TEMPLATE);
         template.setPlainText(null);
@@ -140,6 +136,7 @@ public class PrepareTextTest extends TestCase {
         assertNull(prepareText.get(PrepareText.PLAIN_TEXT_NOTIFICATION));
     }
 
+    @Test
     public void test_noExceptionsIfTemplateHtmlTextNotSet() throws Exception {
         NotificationTemplate template = createTemplate(TEMPLATE);
         template.setHtmlText(null);
@@ -149,24 +146,28 @@ public class PrepareTextTest extends TestCase {
         assertNull(prepareText.get(PrepareText.HTML_NOTIFICATION));
     }
 
+    @Test
     public void test_localNameIsCalculatedBySplittingPredicateBySharpSymbol() throws Exception {
         String localName = PrepareText.getLocalName("test.predicate#localNameBySharp");
 
         assertEquals("localNameBySharp", localName);
     }
 
+    @Test
     public void test_ifMultipleSharpSymbols_localNameIsTakenFromSecondToken() throws Exception {
         String localName = PrepareText.getLocalName("test.predicate#localName#BySharp");
 
         assertEquals("localName", localName);
     }
 
+    @Test
     public void test_ifNoSharpSymbol_localNameIsCalculatedBySplittingOnForwardSlashSymbol() throws Exception {
         String localName = PrepareText.getLocalName("predicate.test/localNameBySlash");
 
         assertEquals("localNameBySlash", localName);
     }
 
+    @Test
     public void test_ifNoSharpOrSlashSymbol_localNameEqualsPredicate() throws Exception {
         String predicate = "predicate.test.localName";
         String localName = PrepareText.getLocalName(predicate);
@@ -174,6 +175,7 @@ public class PrepareTextTest extends TestCase {
         assertEquals(predicate, localName);
     }
 
+    @Test
     public void test_replacesChannelInspectorsPlaceholder() throws Exception {
         NotificationTemplate template = getNotificationTemplateForInspector();
 
@@ -183,6 +185,7 @@ public class PrepareTextTest extends TestCase {
         assertFalse(preparedText.get(PrepareText.PLAIN_TEXT_NOTIFICATION).contains(CHANNEL_INSPECTORS_PLACEHOLDER));
     }
 
+    @Test
     public void test_ifNotifiedUserIsChannelInspector_replacePlaceHolderWithALink() throws Exception {
         Subscription subscription = createSubscription();
         subscription.getChannel().setInspectorsCsv(TEST_USER_EXTERNAL_ID + ",otheruser");
@@ -193,6 +196,7 @@ public class PrepareTextTest extends TestCase {
         assertTrue(plainTextNotification.contains(PrepareText.INSPECTOR_LINK_PATH));
     }
 
+    @Test
     public void test_ifNotifiedUserIsNotChannelInspector_replacePlaceHolderWithEmptyString() throws Exception {
         HashMap<String, String> prepareText =
                 prepareText(getNotificationTemplateForInspector(), createEvent(), createSubscription());
@@ -202,6 +206,7 @@ public class PrepareTextTest extends TestCase {
         assertFalse(plainTextNotification.contains(PrepareText.INSPECTOR_LINK_PATH));
     }
 
+    @Test
     public void test_placeholdersInSubjectShouldBeSubstitutedWithRightData() throws Exception {
         NotificationTemplate template = new NotificationTemplate();
         template.setSubject(subjectTemplate(EVENT_CHANNEL_PLACEHOLDER, EVENT_DATE_PLACEHOLDER, EVENT_TITLE_PLACEHOLDER,
@@ -219,6 +224,7 @@ public class PrepareTextTest extends TestCase {
         assertEquals(subjectTemplate, notificationSubject);
     }
 
+    @Test
     public void test_createsTextFromEventsMetadata() throws Exception {
         Event event = createEvent();
         Map<String, EventMetadata> eventMetadata = new LinkedHashMap<String, EventMetadata>();
@@ -237,6 +243,7 @@ public class PrepareTextTest extends TestCase {
                 prepareText.get(PrepareText.HTML_NOTIFICATION));
     }
 
+    @Test
     public void test_placeholdersInPlainTextAndHtmlShouldBeSubstitutedWithRightData() throws Exception {
         String templatePrefix = "Text with all placeholders: ";
         String subject = "Notification subject";

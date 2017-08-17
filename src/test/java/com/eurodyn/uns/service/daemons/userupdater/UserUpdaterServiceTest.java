@@ -7,28 +7,18 @@ import com.eurodyn.uns.model.DeliveryAddress;
 import com.eurodyn.uns.model.DeliveryType;
 import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.util.TestUtils;
-import eionet.uns.DataSourceSupport;
-import eionet.uns.JNDISupport;
 import org.apache.commons.collections.map.HashedMap;
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -46,15 +36,6 @@ public class UserUpdaterServiceTest {
   @Before
   public void setUp() throws Exception {
     TestUtils.setUpDatabase(ds, "seed-users.xml");
-    /*JNDISupport.setUpCore();
-    JNDISupport.addSubCtxToTomcat("jdbc");
-    JNDISupport.addPropToTomcat("jdbc/UNS_DS", ds);
-    JNDISupport.addPropToTomcat("APPLICATION_HOME", "target/test-classes");*/
-  }
-
-  @After
-  public void cleanUpIC() throws Exception {
-    /*JNDISupport.cleanUp();*/
   }
 
   @Test

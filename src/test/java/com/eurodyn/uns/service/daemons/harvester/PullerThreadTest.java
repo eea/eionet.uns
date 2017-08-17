@@ -9,29 +9,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-
 import com.eurodyn.uns.ApplicationTestContext;
 import com.eurodyn.uns.util.TestUtils;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.eclipse.jetty.server.Server;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mortbay.jetty.Server;
-
 import com.eurodyn.uns.dao.jdbc.BaseJdbcDao;
 import com.eurodyn.uns.dao.jdbc.JdbcEventMetadataDao;
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.service.facades.ChannelFacade;
-
-import eionet.uns.test.util.JettyUtil;
+import com.eurodyn.uns.util.JettyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import javax.sql.DataSource;
-
 import static com.eurodyn.uns.dao.jdbc.BaseJdbcDao.closeAllResources;
 import static org.junit.Assert.*;
 
@@ -54,16 +47,6 @@ public class PullerThreadTest {
     public void setUp() throws Exception {
         TestUtils.setUpDatabase(ds, "seed-puller-thread.xml");
     }
-
-    /*
-     * (non-Javadoc)
-     * @see eionet.uns.test.util.UnsDatabaseTestCase#getDataSet()
-     */
-/*
-    protected IDataSet getDataSet() throws Exception {
-        return new FlatXmlDataSet(getClass().getClassLoader().getResourceAsStream("seed-puller-thread.xml"));
-    }
-*/
 
     /**
      * Test that new events will be created upon discovery from feed, and already existing events get their LAST_SEEN updated.

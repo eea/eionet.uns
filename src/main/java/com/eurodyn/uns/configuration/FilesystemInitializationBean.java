@@ -1,6 +1,7 @@
 package com.eurodyn.uns.configuration;
 
 import com.eurodyn.uns.Properties;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.DependsOn;
@@ -28,6 +29,16 @@ public class FilesystemInitializationBean {
         initAclDirectory();
         initXslDirectory();
         initEmptyDirectories();
+        initPythonDirectory();
+    }
+
+    private void initPythonDirectory() throws URISyntaxException, IOException {
+        String pythonDirectory = Properties.getStringProperty("uns_python_source.home");
+        URL sourceURL = this.getClass().getClassLoader().getResource("python/");
+
+        File sourceDirectory = new File(sourceURL.toURI());
+        File destDirectory = new File(pythonDirectory);
+        FileUtils.copyDirectory(sourceDirectory, destDirectory);
     }
 
     private void initAclDirectory() throws URISyntaxException, IOException {

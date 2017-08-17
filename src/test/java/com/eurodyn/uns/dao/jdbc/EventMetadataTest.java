@@ -4,12 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import com.eurodyn.uns.ApplicationTestContext;
 import com.eurodyn.uns.util.TestUtils;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
-
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.model.Channel;
 import org.junit.Before;
@@ -18,9 +16,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import javax.sql.DataSource;
-
 import static com.eurodyn.uns.dao.jdbc.BaseJdbcDao.closeAllResources;
 import static org.junit.Assert.assertEquals;
 
@@ -68,16 +64,6 @@ public class EventMetadataTest {
         JdbcEventMetadataDao em = new JdbcEventMetadataDao();
         em.findChoosableStatements(channel);
     }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.eurodyn.uns.dao.jdbc.UnsDatabaseTestCase#getDataSet()
-     */
-    @SuppressWarnings("deprecation")
-/*    protected IDataSet getDataSet() throws Exception {
-        return new FlatXmlDataSet(getClass().getClassLoader().getResourceAsStream("seed-event.xml"));
-    }*/
 
     /**
      * Returns the number of rows in the given table.

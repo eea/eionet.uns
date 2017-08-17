@@ -9,13 +9,6 @@ import com.eurodyn.uns.service.facades.ChannelFacade;
 import com.eurodyn.uns.service.facades.NotificationFacade;
 import com.eurodyn.uns.service.facades.UserFacade;
 import com.eurodyn.uns.util.TestUtils;
-import eionet.uns.DataSourceSupport;
-import eionet.uns.JNDISupport;
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -55,15 +48,6 @@ public class HibernateNotificationDaoTest {
   @Before
   public void setUpIC() throws Exception {
     TestUtils.setUpDatabase(ds, "seed-event.xml");
- /*   JNDISupport.setUpCore();
-    JNDISupport.addSubCtxToTomcat("jdbc");
-    JNDISupport.addPropToTomcat("jdbc/UNS_DS", ds);
-    JNDISupport.addPropToTomcat("APPLICATION_HOME", "target/test-classes");*/
-  }
-
-  @After
-  public void cleanUpIC() throws Exception {
-    /*JNDISupport.cleanUp();*/
   }
 
   @Test
