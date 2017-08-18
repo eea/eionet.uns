@@ -14,20 +14,14 @@
   <bean id="appConfigDefinitionProvider" class="eionet.propertyplaceholderresolver.ConfigurationDefinitionProviderImpl">
     <constructor-arg index="0">
       <array>
-        <value>env.properties</value>
+        <value>jenkins.properties</value>
         <value>acl.properties</value>
         <value>uns.properties</value>
         <value>eionetdir.properties</value>
       </array>
     </constructor-arg>
   </bean>
-<!--
-  <value>gdem.properties</value>
-  <value>CatalogManager.properties</value>
-  <value>fme.properties</value>
-  <value>ApplicationResources.properties</value>
-  <value>cache.properties</value>
-  <value>http.properties</value>-->
+
   <bean id="configurationPropertyResolver" class="eionet.propertyplaceholderresolver.ConfigurationPropertyResolverImpl">
     <constructor-arg ref="appConfigDefinitionProvider" />
   </bean>

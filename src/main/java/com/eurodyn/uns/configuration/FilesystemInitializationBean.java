@@ -42,7 +42,7 @@ public class FilesystemInitializationBean {
     }
 
     private void initAclDirectory() throws URISyntaxException, IOException {
-        String appHome = Properties.getStringProperty("app.home");
+        String appHome = Properties.getStringProperty("uns.home");
         appHome = appHome + "/acl/";
         URL sourceURL = this.getClass().getClassLoader().getResource("acl/");
 
@@ -57,7 +57,7 @@ public class FilesystemInitializationBean {
     }
 
     private void initXslDirectory() throws URISyntaxException, IOException {
-        String appHome = Properties.getStringProperty("app.home");
+        String appHome = Properties.getStringProperty("uns.home");
         appHome = appHome + "/xsl/";
         URL sourceURL = this.getClass().getClassLoader().getResource("xsl/");
 
@@ -70,7 +70,7 @@ public class FilesystemInitializationBean {
     }
 
     private void initEmptyDirectories() {
-        String appHome = Properties.getStringProperty("app.home");
+        String appHome = Properties.getStringProperty("uns.home");
         String pythonHome = appHome + Properties.getStringProperty("uns_python_source.home");
         String[] folders = {"/log/", pythonHome };
         for (String folder : folders) {

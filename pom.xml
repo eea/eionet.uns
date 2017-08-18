@@ -129,8 +129,8 @@
             </goals>
             <configuration>
               <tasks>
-                <copy file="${basedir}/${env}.properties"
-                      toFile="${project.build.directory}/test-classes/env.properties"/>
+                <copy file="${basedir}/jenkins.properties"
+                      toFile="${project.build.directory}/test-classes/jenkins.properties"/>
                 <copy file="${basedir}/sql/uns-struct.xml"
                       toFile="${project.build.directory}/test-classes/uns-struct.xml"/>
                 <copy toDir="${project.build.directory}/test-classes/acl">
@@ -192,14 +192,6 @@
             <filter>${basedir}/${env}.properties</filter>
           </filters>
           <webResources>
-            <!--                       <resource>
-                                       <directory>${basedir}/src/main/webapp/META-INF</directory>
-                                       <filtering>true</filtering>
-                                       <targetPath>META-INF</targetPath>
-                                       <includes>
-                                           <include>context.xml</include>
-                                       </includes>
-                                   </resource>-->
             <resource>
               <directory>${basedir}/src/main/webapp/WEB-INF</directory>
               <filtering>true</filtering>
@@ -407,13 +399,6 @@
       <artifactId>eionet-dir</artifactId>
       <version>2.5</version>
     </dependency>
-    <!-- Used in uit.properties: componentservices.HelpService.provider=eionet.help.RemoteService -->
-    <dependency>
-      <groupId>eionet</groupId>
-      <artifactId>help</artifactId>
-      <version>2.0</version>
-    </dependency>
-
     <!-- Servlet Dependencies -->
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -466,6 +451,12 @@
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>batik-transcoder</artifactId>
       <version>1.9.1</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.python</groupId>
+          <artifactId>jython</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- HIBERNATE -->
@@ -480,7 +471,7 @@
       <version>3.5.6-Final</version>
     </dependency>
 
-    <dependency>
+<!--    <dependency>
       <groupId>asm</groupId>
       <artifactId>asm</artifactId>
       <version>1.5.3</version>
@@ -494,12 +485,12 @@
       <groupId>asm</groupId>
       <artifactId>asm-util</artifactId>
       <version>1.5.3</version>
-    </dependency>
-    <dependency>
+    </dependency>-->
+<!--    <dependency>
       <groupId>cglib</groupId>
       <artifactId>cglib</artifactId>
       <version>2.1</version>
-    </dependency>
+    </dependency>-->
 
     <!-- XML/XSLT API -->
     <dependency>
@@ -714,6 +705,18 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
         <version>2.5</version>
+      </plugin>
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>2.1.0</version>
+        <!--<executions>
+            <execution>
+                <goals>
+                    <goal>check</goal>
+                </goals>
+            </execution>
+        </executions>-->
       </plugin>
     </plugins>
   </reporting>

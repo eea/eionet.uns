@@ -132,7 +132,9 @@ public class JabberThread implements Runnable {
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         } finally {
-            conn.disconnect();
+            if (conn != null) {
+                conn.disconnect();
+            }
         }
     }
 
