@@ -23,6 +23,7 @@ import java.net.URL;
 public class FilesystemInitializationBean {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FilesystemInitializationBean.class);
+    private String appHome = Properties.getStringProperty("uns.home");
 
     @PostConstruct
     public void init() throws URISyntaxException, IOException {
@@ -30,6 +31,17 @@ public class FilesystemInitializationBean {
         initXslDirectory();
         initEmptyDirectories();
         initPythonDirectory();
+    }
+
+    /**
+     * This method is not being used at the moment. The Services file is being read from the classpath
+     * @throws IOException
+     * @throws URISyntaxException
+     */
+    private void copyXmlrpcFiles() throws IOException, URISyntaxException {
+        URL xmlrpcServicesURL = this.getClass().getClassLoader().getResource("UNSServices.xml");
+        File xmlrpcServicesFile = new File(xmlrpcServicesURL.toURI());
+        copyFile(xmlrpcServicesURL, appHome + "/" + xmlrpcServicesFile.getName());
     }
 
     private void initPythonDirectory() throws URISyntaxException, IOException {
@@ -42,37 +54,36 @@ public class FilesystemInitializationBean {
     }
 
     private void initAclDirectory() throws URISyntaxException, IOException {
-        String appHome = Properties.getStringProperty("uns.home");
-        appHome = appHome + "/acl/";
         URL sourceURL = this.getClass().getClassLoader().getResource("acl/");
+        String target  = appHome + "/acl/";
 
         File sourceFolder = new File(sourceURL.toURI());
 
         File[] files = sourceFolder.listFiles();
+        // FIXME this doesn't work as intended, permission files don't get replaced
+        // Fix for XMLCONV - copy code from dd
         for (File file:files) {
-            if (file.getName().contains(".prms") || file.getName().contains(".permissions") || !((new File(appHome + (file.getName())).exists()))) {
-                copyFile(file.toURI().toURL(), appHome + (file.getName()));
+            if (file.getName().contains(".prms") || file.getName().contains(".permissions") || !((new File(target + (file.getName())).exists()))) {
+                copyFile(file.toURI().toURL(), target + (file.getName()));
             }
         }
     }
 
     private void initXslDirectory() throws URISyntaxException, IOException {
-        String appHome = Properties.getStringProperty("uns.home");
-        appHome = appHome + "/xsl/";
+        String target = appHome + "/xsl/";
         URL sourceURL = this.getClass().getClassLoader().getResource("xsl/");
 
         File sourceFolder = new File(sourceURL.toURI());
 
         File[] files = sourceFolder.listFiles();
         for (File file:files) {
-            copyFile(file.toURI().toURL(), appHome + (file.getName()));
+            copyFile(file.toURI().toURL(), target + (file.getName()));
         }
     }
 
     private void initEmptyDirectories() {
-        String appHome = Properties.getStringProperty("uns.home");
         String pythonHome = appHome + Properties.getStringProperty("uns_python_source.home");
-        String[] folders = {"/log/", pythonHome };
+        String[] folders = {pythonHome};
         for (String folder : folders) {
             File f = new File(appHome + folder);
             if (!f.isDirectory()) {

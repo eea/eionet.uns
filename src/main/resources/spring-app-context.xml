@@ -17,6 +17,7 @@
         <value>env.properties</value>
         <value>acl.properties</value>
         <value>uns.properties</value>
+        <value>rpc.properties</value>
         <value>eionetdir.properties</value>
       </array>
     </constructor-arg>
@@ -45,10 +46,10 @@
     <property name="fileLocalusers" value="${file.localusers}" />
     <property name="fileLocalgroups" value="${file.localgroups}" />
     <property name="filePermissions" value="${file.permissions}" />
-    <property name="dbDriver" value="${acl.db.driver}" />
-    <property name="dbUrl" value="${acl.db.url}" />
-    <property name="dbUser" value="${acl.db.user}" />
-    <property name="dbPwd" value="${acl.db.pwd}" />
+    <property name="dbDriver" value="${db.driver}" />
+    <property name="dbUrl" value="${db.url}" />
+    <property name="dbUser" value="${db.user}" />
+    <property name="dbPwd" value="${db.password}" />
   </bean>
 
   <bean id="accessController" class="eionet.acl.AccessController">

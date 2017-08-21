@@ -118,6 +118,14 @@
               <tasks>
                 <copy file="${basedir}/${env}.properties"
                       toFile="${project.build.directory}/classes/env.properties"/>
+                <copy file="${basedir}/sql/uns-struct.xml"
+                      toFile="${project.build.directory}/classes/sql/uns-struct.xml"/>
+                <copy toDir="${project.build.directory}/classes/acl">
+                  <fileset dir="${basedir}/acl"/>
+                </copy>
+                <copy toDir="${project.build.directory}/classes/python">
+                  <fileset dir="${basedir}/src/main/python"/>
+                </copy>
               </tasks>
             </configuration>
           </execution>
@@ -207,23 +215,6 @@
               <includes>
                 <include>dropdownmenus.txt</include>
               </includes>
-            </resource>
-            <resource>
-              <directory>${basedir}/sql</directory>
-              <targetPath>WEB-INF/classes/sql</targetPath>
-              <includes>
-                <include>uns-struct.xml</include>
-              </includes>
-            </resource>
-            <resource>
-              <directory>${basedir}/acl</directory>
-              <targetPath>WEB-INF/classes/acl</targetPath>
-              <filtering>false</filtering>
-            </resource>
-            <resource>
-              <directory>${basedir}/src/main/python</directory>
-              <targetPath>WEB-INF/classes/python</targetPath>
-              <filtering>false</filtering>
             </resource>
           </webResources>
         </configuration>

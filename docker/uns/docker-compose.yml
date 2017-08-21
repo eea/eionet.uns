@@ -7,7 +7,7 @@ services:
 
   ## UNS Tomcat Service
   tomcat:
-    image: sofiageo/uns:2017-08-18T1803
+    image: sofiageo/uns:2017-08-21T1705
     env_file: docker.env
     volumes:
       - uns:/opt/uns
@@ -23,6 +23,8 @@ services:
       - MYSQL_ROOT_PASSWORD=12345
     volumes:
       - uns-database:/var/lib/mysql
+    labels:
+      io.rancher.scheduler.affinity:host_label: "haspublicip=yes"
 
 volumes:
   uns-database:
