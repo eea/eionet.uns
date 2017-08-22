@@ -26,6 +26,13 @@ services:
     labels:
       io.rancher.scheduler.affinity:host_label: "haspublicip=yes"
 
+  ## MockMail service
+#  mockmail:
+#    image: djfarrelly/maildev:latest
+#    ports:
+#      - 2580:80
+#    labels:
+#      io.rancher.scheduler.affinity:host_label: "haspublicip=yes"
 volumes:
   uns-database:
   uns:

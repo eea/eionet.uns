@@ -6,6 +6,9 @@ import eionet.propertyplaceholderresolver.UnresolvedPropertyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 /**
  *
  *
@@ -14,10 +17,12 @@ public class Properties {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Properties.class);
     private static ConfigurationPropertyResolver configurationService;
+    private static ConcurrentMap<String, String> concurrentMap;
 
 
     static {
         configurationService = (ConfigurationPropertyResolver) SpringApplicationContext.getBean("configurationPropertyResolver");
+        concurrentMap = new ConcurrentHashMap<>();
     }
     /**
      * Gets property value from key
@@ -25,17 +30,23 @@ public class Properties {
      * @return Value
      */
     public static String getStringProperty(String key) {
-        try {
-            return configurationService.resolveValue(key);
+        String lookup = concurrentMap.get(key);
+        if (lookup == null) {
+            lookup = concurrentMap.computeIfAbsent(key, n -> {
+                try {
+                    return configurationService.resolveValue(key);
+                } catch (UnresolvedPropertyException e) {
+                    LOGGER.error(e.getMessage());
+                } catch (CircularReferenceException e) {
+                    LOGGER.error(e.getMessage());
+                }
+                return "";
+            });
+            if (lookup == null) {
+                lookup = "";
+            }
         }
-        catch (CircularReferenceException ex) {
-            LOGGER.error(ex.getMessage());
-            return null;
-        }
-        catch (UnresolvedPropertyException ex) {
-            LOGGER.error(ex.getMessage());
-            return null;
-        }
+        return lookup;
     }
 
     /**
@@ -43,7 +54,7 @@ public class Properties {
      * @param key Key
      * @return Value
      */
-    private static int getIntProperty(String key) {
+    public static int getIntProperty(String key) {
         String value = getStringProperty(key);
 
         try {
@@ -54,7 +65,7 @@ public class Properties {
         }
     }
 
-    private static long getLongProperty(String key) {
+    public static long getLongProperty(String key) {
         String value = getStringProperty(key);
 
         try {
