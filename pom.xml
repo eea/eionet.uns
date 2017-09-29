@@ -511,13 +511,10 @@
       <artifactId>icu4j</artifactId>
       <version>59.1</version>
     </dependency>
-
-
-    <!-- TODO Verify 2.7.1 works with dockerized jython -->
     <dependency>
       <groupId>org.python</groupId>
       <artifactId>jython-standalone</artifactId>
-      <version>2.7.1</version>
+      <version>2.5.3</version>
     </dependency>
     <dependency>
       <groupId>org.apache.myfaces.core</groupId>
