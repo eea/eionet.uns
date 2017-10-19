@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<methodCall>
+  <methodName>UNSService.createChannel</methodName>
+  <params>
+    <param>
+      <value><string>channel_name</string></value>
+    </param>
+    <param>
+      <value><string>channel_description</string></value>
+    </param>
+  </params>
+</methodCall>

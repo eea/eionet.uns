@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+  <context:component-scan base-package="com.eurodyn.uns" />
+
+  <bean id="appConfigDefinitionProvider" class="eionet.propertyplaceholderresolver.ConfigurationDefinitionProviderImpl">
+    <constructor-arg index="0">
+      <array>
+        <value>jenkins.properties</value>
+        <value>acl.properties</value>
+        <value>uns.properties</value>
+        <value>eionetdir.properties</value>
+      </array>
+    </constructor-arg>
+  </bean>
+
+  <bean id="configurationPropertyResolver" class="eionet.propertyplaceholderresolver.ConfigurationPropertyResolverImpl">
+    <constructor-arg ref="appConfigDefinitionProvider" />
+  </bean>
+
+  <bean id="configurationPostProcessor" class="eionet.propertyplaceholderresolver.spring.EionetPlaceholderConfigurer">
+    <constructor-arg ref="configurationPropertyResolver" />
+  </bean>
+
+  <!--<bean id="catalogCopyManager" class="com.eurodyn.uns.configuration.CopyCatalogFileAction" depends-on="configurationPostProcessor"/>
+
+  <bean id="copyAclFiles" class="com.eurodyn.uns.configuration.CopyAclFiles" depends-on="configurationPostProcessor"/>-->
+
+  <bean id="aclProperties" class="eionet.acl.AclProperties">
+    <property name="ownerPermission" value="${owner.permission}" />
+    <property name="anonymousAccess" value="${anonymous.access}" />
+    <property name="authenticatedAccess" value="${authenticated.access}" />
+    <property name="defaultdocPermissions" value="${defaultdoc.permissions}" />
+    <property name="persistenceProvider" value="${persistence.provider}" />
+    <property name="initialAdmin" value="${initial.admin}" />
+    <property name="fileAclfolder" value="${file.aclfolder}" />
+    <property name="fileLocalusers" value="${file.localusers}" />
+    <property name="fileLocalgroups" value="${file.localgroups}" />
+    <property name="filePermissions" value="${file.permissions}" />
+    <property name="dbDriver" value="${acl.db.driver}" />
+    <property name="dbUrl" value="${acl.db.url}" />
+    <property name="dbUser" value="${acl.db.user}" />
+    <property name="dbPwd" value="${acl.db.pwd}" />
+  </bean>
+
+  <bean id="accessController" class="eionet.acl.AccessController">
+    <constructor-arg index="0" ref="aclProperties" />
+  </bean>
+
+<!--  <bean name="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+    <property name="driverClassName" value="${db.driver}" />
+    <property name="username" value="${db.user}" />
+    <property name="password" value="${db.password}" />
+    <property name="url" value="${db.url}" />
+    <property name="suppressClose" value="true" />
+  </bean>-->
+
+  <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+    <constructor-arg ref="hikariConfig" />
+  </bean>
+
+  <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+    <property name="poolName" value="springHikariCP" />
+    <property name="minimumIdle" value="5"/>
+    <property name="maximumPoolSize" value="30"/>
+    <property name="dataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
+    <property name="dataSourceProperties">
+      <props>
+        <prop key="url">${db.url}</prop>
+        <prop key="user">${db.user}</prop>
+        <prop key="password">${db.password}</prop>
+        <prop key="cachePrepStmts">true</prop>
+        <prop key="prepStmtCacheSize">250</prop>
+        <prop key="prepStmtCacheSqlLimit">2048</prop>
+      </props>
+    </property>
+  </bean>
+
+  <!-- Runs on Tomcat startup. -->
+  <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+    <property name="dataSource" ref="dataSource" />
+    <property name="changeLog" value="uns-struct.xml" />
+  </bean>
+
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="hibernateProperties">
+      <props>
+        <!--<prop key="hibernate.connection.url">${db.url}</prop>
+        <prop key="hibernate.connection.username">${db.user}</prop>
+        <prop key="hibernate.connection.password">${db.password}</prop>
+        <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>-->
+        <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+      </props>
+    </property>
+    <property name="mappingResources">
+      <list>
+        <value>hibernate/Channel.hbm.xml</value>
+        <value>hibernate/User.hbm.xml</value>
+        <value>hibernate/Stylesheet.hbm.xml</value>
+        <value>hibernate/Role.hbm.xml</value>
+        <value>hibernate/MetadataElement.hbm.xml</value>
+        <value>hibernate/DeliveryType.hbm.xml</value>
+        <value>hibernate/Delivery.hbm.xml</value>
+        <value>hibernate/NotificationTemplate.hbm.xml</value>
+        <value>hibernate/Subscription.hbm.xml</value>
+        <value>hibernate/Filter.hbm.xml</value>
+        <value>hibernate/EventMetadata.hbm.xml </value>
+        <value>hibernate/Event.hbm.xml </value>
+        <value>hibernate/Notification.hbm.xml </value>
+      </list>
+    </property>
+  </bean>
+
+</beans>

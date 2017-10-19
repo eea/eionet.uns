@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+CURL EXAMPLE : curl - -data @xmlrpc.xml -u myuser:mypassword http://localhost:8080/uns/rpcrouter
+-->
+<methodCall>
+  <methodName>UNSService.sendNotification</methodName>
+  <params>
+    <param>
+      <value>14381777462221</value>
+    </param>
+    <param>
+      <value>
+        <array>
+          <data>
+            <value>
+              <array>
+                <data>
+                  <value><string>testc</string></value>
+                  <value><string>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</string></value>
+                  <value><string>testv</string></value>
+                </data>
+              </array>
+            </value>
+          </data>
+        </array>
+      </value>
+    </param>
+  </params>
+</methodCall>

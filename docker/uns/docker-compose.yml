@@ -1,0 +1,38 @@
+##
+# @author George Sofianos
+##
+
+version: '2'
+services:
+
+  ## UNS Tomcat Service
+  tomcat:
+    image: sofiageo/uns:2017-08-21T1705
+    env_file: docker.env
+    volumes:
+      - uns:/opt/uns
+    links:
+      - database
+
+  ## MySQL Service
+  database:
+    image: mysql:5.5
+#    ports:
+#      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+    volumes:
+      - uns-database:/var/lib/mysql
+    labels:
+      io.rancher.scheduler.affinity:host_label: "haspublicip=yes"
+
+  ## MockMail service
+#  mockmail:
+#    image: djfarrelly/maildev:latest
+#    ports:
+#      - 2580:80
+#    labels:
+#      io.rancher.scheduler.affinity:host_label: "haspublicip=yes"
+volumes:
+  uns-database:
+  uns:
