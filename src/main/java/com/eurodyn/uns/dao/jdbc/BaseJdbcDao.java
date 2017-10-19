@@ -9,7 +9,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.eurodyn.uns.util.common.AppConfigurator;
+
+import com.eurodyn.uns.SpringApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,16 @@ public class BaseJdbcDao {
         ds = dataSource;
     }
 
-    public static DataSource getDatasource() {
+    private static final DataSource DATASOURCE;
+
+    static {
+        DATASOURCE = (DataSource) SpringApplicationContext.getBean("dataSource");
+    }
+
+    public static Connection getConnection() throws SQLException {
+        return DATASOURCE.getConnection();
+    }
+    /*public static DataSource getDatasource() {
         try {
             if (ds == null) {
                 Context initContext = new InitialContext();
@@ -36,7 +46,7 @@ public class BaseJdbcDao {
             LOGGER.error(e.getMessage(), e);
         }
         return ds;
-    }
+    }*/
 
     public static void closeAllResources(ResultSet rs, Statement stmt, Connection conn) {
         try {

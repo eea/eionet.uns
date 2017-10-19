@@ -25,11 +25,7 @@ public class ShowEventMetadata {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ShowEventMetadata.class);
 
-<<<<<<< HEAD:src/test/java/ShowEventMetadata.java
-    public static void main(String[] args) {
-=======
 /*    public static void main(String[] args) {
->>>>>>> dockerize_86798:deprecated/test/ShowEventMetadata.java
 
         try {
             int test = 0;
@@ -48,11 +44,7 @@ public class ShowEventMetadata {
             LOGGER.error("Error", e);
         }
 
-<<<<<<< HEAD:src/test/java/ShowEventMetadata.java
-    }
-=======
     }*/
->>>>>>> dockerize_86798:deprecated/test/ShowEventMetadata.java
 
     private static void testChoosableElements() {
         // EventMetadataFacade eventMetadataFacade = new EventMetadataFacade();

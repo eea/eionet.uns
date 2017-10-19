@@ -14,10 +14,7 @@ import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
-<<<<<<< HEAD:src/test/java/eionet/uns/test/util/UnsDatabaseTestCase.java
-=======
 import org.junit.Before;
->>>>>>> dockerize_86798:deprecated/test/UnsDatabaseTestCase.java
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -31,22 +28,14 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  *
  * @author Jaanus
  */
-<<<<<<< HEAD:src/test/java/eionet/uns/test/util/UnsDatabaseTestCase.java
-public abstract class UnsDatabaseTestCase extends TestCase {
-=======
 public abstract class UnsDatabaseTestCase {
->>>>>>> dockerize_86798:deprecated/test/UnsDatabaseTestCase.java
 
     /*
      * (non-Javadoc)
      *
      * @see junit.framework.TestCase#setUp()
      */
-<<<<<<< HEAD:src/test/java/eionet/uns/test/util/UnsDatabaseTestCase.java
-    @Override
-=======
     @Before
->>>>>>> dockerize_86798:deprecated/test/UnsDatabaseTestCase.java
     public void setUp() throws Exception {
         System.setProperty("hibernate-config-file", "hibernate-test.cfg.xml");
         InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream("hibernate-test.cfg.xml");
@@ -124,11 +113,7 @@ public abstract class UnsDatabaseTestCase {
      * Provide a connection to the database.
      */
     protected IDatabaseConnection getConnection() throws Exception {
-<<<<<<< HEAD:src/test/java/eionet/uns/test/util/UnsDatabaseTestCase.java
-        Connection conn = BaseJdbcDao.getDatasource().getConnection();
-=======
         Connection conn = BaseJdbcDao.getConnection();
->>>>>>> dockerize_86798:deprecated/test/UnsDatabaseTestCase.java
         return new DatabaseConnection(conn);
     }
 

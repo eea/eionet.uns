@@ -1,8 +1,4 @@
-<<<<<<< HEAD:src/test/java/eionet/uns/PythonTemplatesTest.java
-package eionet.uns;
-=======
 package com.eurodyn.uns;
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/PythonTemplatesTest.java
 
 import java.io.InputStream;
 import java.util.Date;
@@ -11,20 +7,13 @@ import java.util.Map;
 import java.util.Properties;
 import javax.sql.DataSource;
 import static org.hamcrest.CoreMatchers.allOf;
-<<<<<<< HEAD:src/test/java/eionet/uns/PythonTemplatesTest.java
-=======
 import com.eurodyn.uns.util.TestUtils;
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/PythonTemplatesTest.java
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
-<<<<<<< HEAD:src/test/java/eionet/uns/PythonTemplatesTest.java
-
-=======
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/PythonTemplatesTest.java
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.model.EventMetadata;
@@ -33,81 +22,37 @@ import com.eurodyn.uns.model.User;
 import com.eurodyn.uns.service.facades.NotificationTemplateFacade;
 import com.eurodyn.uns.web.jsf.admin.templates.NotificationTemplateInterpreter;
 import com.hp.hpl.jena.vocabulary.RSS;
-<<<<<<< HEAD:src/test/java/eionet/uns/PythonTemplatesTest.java
-
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
-=======
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/PythonTemplatesTest.java
 
 /**
  * Tests for the Python templates.
  */
-<<<<<<< HEAD:src/test/java/eionet/uns/PythonTemplatesTest.java
-public class PythonTemplatesTest {
-
-    private static DataSource ds;
-=======
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ApplicationTestContext.class })
 public class PythonTemplatesTest {
 
     @Autowired
     private DataSource ds;
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/PythonTemplatesTest.java
 
     private static Properties templateMap;
 
     @BeforeClass
     public static void createDataSource() throws Exception {
-<<<<<<< HEAD:src/test/java/eionet/uns/PythonTemplatesTest.java
-        ds = DataSourceSupport.getDataSource();
-=======
         /*ds = DataSourceSupport.getDataSource();*/
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/PythonTemplatesTest.java
         templateMap = new Properties();
         InputStream inStream = PythonTemplatesTest.class.getResourceAsStream("/templates.xml");
         templateMap.loadFromXML(inStream);
         inStream.close();
-<<<<<<< HEAD:src/test/java/eionet/uns/PythonTemplatesTest.java
-        loadData("/seed-event.xml");
-    }
-
-    private static void loadData(String seedFileName) throws Exception {
-        IDatabaseConnection dbConn = new DatabaseConnection(ds.getConnection());
-        IDataSet dataSet = new FlatXmlDataSet(PythonTemplatesTest.class.getResourceAsStream(seedFileName));
-        DatabaseOperation.CLEAN_INSERT.execute(dbConn, dataSet);
-=======
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/PythonTemplatesTest.java
     }
 
     @Before
     public void setUpIC() throws Exception {
-<<<<<<< HEAD:src/test/java/eionet/uns/PythonTemplatesTest.java
-        JNDISupport.setUpCore();
-        JNDISupport.addSubCtxToTomcat("jdbc");
-        JNDISupport.addPropToTomcat("jdbc/UNS_DS", ds);
-        JNDISupport.addPropToTomcat("APPLICATION_HOME", "target/test-classes");
-    }
-
-    @After
-    public void cleanUpIC() throws Exception {
-        JNDISupport.cleanUp();
-    }
-
-
-=======
         TestUtils.setUpDatabase(ds, "seed-event.xml");
     }
 
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/PythonTemplatesTest.java
     /**
      * Template 1
      */

@@ -1,8 +1,4 @@
-<<<<<<< HEAD:src/test/java/eionet/uns/JNDISupport.java
-package eionet.uns;
-=======
 package com.eurodyn.uns;
->>>>>>> dockerize_86798:deprecated/test/JNDISupport.java
 
 import java.util.ArrayList;
 import javax.naming.Context;

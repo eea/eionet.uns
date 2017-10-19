@@ -1,6 +1,5 @@
 package com.eurodyn.uns.dao.hibernate;
 
-
 import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -8,12 +7,18 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
+import com.eurodyn.uns.ApplicationTestContext;
 import junit.framework.TestCase;
-
 import org.apache.xerces.parsers.DOMParser;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -34,52 +39,16 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RSS;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
+import javax.sql.DataSource;
 
-public class EventMetadataTest extends TestCase {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { ApplicationTestContext.class })
+public class EventMetadataTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EventMetadataTest.class);
 
-    @Override
-    public void setUp() throws Exception {
-        System.setProperty("hibernate-config-file", "/hibernate-test.cfg.xml");
-        InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(
-                "hibernate-test.cfg.xml");
-        DOMParser parser = new DOMParser();
-
-        parser.parse(new InputSource(in));
-        Document doc = parser.getDocument();
-
-        String connectionUrl = "";
-        String connectionUserName = "";
-        String connectionPassword = "";
-
-        NodeList nodeList = doc.getElementsByTagName("property");
-
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Node node = nodeList.item(i);
-            String attribute = node.getAttributes().getNamedItem("name").getNodeValue();
-
-            if (attribute.equals("hibernate.connection.url")) {
-                connectionUrl = getFirstChildNodeValue(node);
-            }
-            if (attribute.equals("hibernate.connection.username")) {
-                connectionUserName = getFirstChildNodeValue(node);
-            }
-            if (attribute.equals("hibernate.connection.password")) {
-                connectionPassword = getFirstChildNodeValue(node);
-            }
-
-        }
-
-        MysqlDataSource mds = new MysqlDataSource();
-
-        mds.setUrl(connectionUrl);
-        mds.setUser(connectionUserName);
-        mds.setPassword(connectionPassword);
-
-        BaseJdbcDao.setDataSouce(mds);
-
-    }
+    @Autowired
+    private DataSource ds;
 
     /**
      * Returns the string value of the first child node of the given node.
@@ -106,6 +75,7 @@ public class EventMetadataTest extends TestCase {
         return result == null ? "" : result;
     }
 
+    @Test
     public void testChoosableElements() {
         // EventMetadataFacade eventMetadataFacade = new EventMetadataFacade();
         Channel channel = new Channel();
@@ -120,6 +90,8 @@ public class EventMetadataTest extends TestCase {
 
     }
 
+    @Test
+    @Ignore
     public void x_testValues() throws Exception {
         String value = "gas";
         HibernateEventMetadataDao hibernateEventMetadataDao = new HibernateEventMetadataDao();
@@ -138,6 +110,7 @@ public class EventMetadataTest extends TestCase {
 
     }
 
+    @Test
     public void x_testFilterDeletion() throws Exception {
         Channel channel = new Channel();
 
@@ -151,6 +124,7 @@ public class EventMetadataTest extends TestCase {
 
     }
 
+    @Test
     public void testEventDate() throws Exception {
         Channel channel = new Channel();
 
@@ -171,6 +145,7 @@ public class EventMetadataTest extends TestCase {
 
     }
 
+    @Test
     public void x_testDeliveryReports() throws Exception {
         // HibernateEventMetadataDao hibernateEventMetadataDao = new HibernateEventMetadataDao();
         // Channel channel = new Channel();
@@ -186,6 +161,7 @@ public class EventMetadataTest extends TestCase {
         // hibernateEventMetadataDao.testDeliveryReport(fromDate,toDate,null,null);
     }
 
+    @Test
     public void x_testRssFeed() {
         String result = "";
         Model rdf = ModelFactory.createDefaultModel();

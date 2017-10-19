@@ -1,22 +1,9 @@
-<<<<<<< HEAD:src/test/java/eionet/uns/test/UnicodeTest.java
-package eionet.uns.test;
-=======
 package com.eurodyn.uns;
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/UnicodeTest.java
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-<<<<<<< HEAD:src/test/java/eionet/uns/test/UnicodeTest.java
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.junit.Test;
-
-import com.eurodyn.uns.dao.jdbc.BaseJdbcDao;
-
-import eionet.uns.test.util.UnsDatabaseTestCase;
-=======
 import com.eurodyn.uns.ApplicationTestContext;
 import com.eurodyn.uns.util.TestUtils;
 import org.dbunit.dataset.IDataSet;
@@ -35,16 +22,12 @@ import javax.sql.DataSource;
 import static com.eurodyn.uns.dao.jdbc.BaseJdbcDao.closeAllResources;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/UnicodeTest.java
 
 /**
  * Some Unicode related tests.
  *
  * @author jaanus.heinlaid@gmail.com
  */
-<<<<<<< HEAD:src/test/java/eionet/uns/test/UnicodeTest.java
-public class UnicodeTest extends UnsDatabaseTestCase {
-=======
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ApplicationTestContext.class })
 public class UnicodeTest {
@@ -56,7 +39,6 @@ public class UnicodeTest {
     public void setup() throws Exception {
         TestUtils.setUpDatabase(ds, "seed-unicode.xml");
     }
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/UnicodeTest.java
 
     /**
      * A round-trip database storage-retrieval test for UTF-8 characters, executed on the NOTIFICATION_TEMPLATE table.
@@ -78,11 +60,7 @@ public class UnicodeTest {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-<<<<<<< HEAD:src/test/java/eionet/uns/test/UnicodeTest.java
-            conn = BaseJdbcDao.getDatasource().getConnection();
-=======
             conn = BaseJdbcDao.getConnection();
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/UnicodeTest.java
 
             pstmt = conn.prepareStatement("insert into NOTIFICATION_TEMPLATE (NAME, SUBJECT, TEXT_PLAIN) values ('Name', ?, ?)");
             pstmt.setString(1, testStr);
@@ -111,16 +89,4 @@ public class UnicodeTest {
         }
     }
 
-<<<<<<< HEAD:src/test/java/eionet/uns/test/UnicodeTest.java
-    /*
-     * (non-Javadoc)
-     *
-     * @see eionet.uns.test.util.UnsDatabaseTestCase#getDataSet()
-     */
-    @Override
-    protected IDataSet getDataSet() throws Exception {
-        return new FlatXmlDataSet(getClass().getClassLoader().getResourceAsStream("seed-unicode.xml"));
-    }
-=======
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/UnicodeTest.java
 }

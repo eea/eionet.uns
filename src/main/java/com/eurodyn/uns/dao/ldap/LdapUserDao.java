@@ -39,6 +39,7 @@ import javax.naming.ldap.LdapContext;
 import javax.naming.ldap.PagedResultsControl;
 import javax.naming.ldap.PagedResultsResponseControl;
 
+import com.eurodyn.uns.Properties;
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.IUserDao;
 
@@ -58,8 +59,8 @@ public class LdapUserDao extends BaseLdapDao implements IUserDao {
     protected String uidAttribute;
 
     public LdapUserDao() {
-        usersDn = conf.getString("ldap.user.dir") + "," + baseDn;
-        uidAttribute = conf.getString("ldap.attr.uid");
+        usersDn = Properties.getStringProperty("ldap.user.dir") + "," + baseDn;
+        uidAttribute = Properties.getStringProperty("ldap.attr.uid");
     }
 
     public User findUser(String username) throws DAOException {
@@ -74,8 +75,8 @@ public class LdapUserDao extends BaseLdapDao implements IUserDao {
         List ldapUsers = new ArrayList<User>();
         try {
             LdapContext ctx = getPagedLdapContext();
-            usersDn = conf.getString("ldap.user.dir") + "," + baseDn;
-            uidAttribute = conf.getString("ldap.attr.uid");
+            usersDn = Properties.getStringProperty("ldap.user.dir") + "," + baseDn;
+            uidAttribute = Properties.getStringProperty("ldap.attr.uid");
             int pageSize = 50;
             SearchControls ctls = new SearchControls();
             ctls.setSearchScope(SearchControls.SUBTREE_SCOPE);

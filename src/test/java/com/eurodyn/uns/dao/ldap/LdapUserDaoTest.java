@@ -1,5 +1,6 @@
 package com.eurodyn.uns.dao.ldap;
 
+import com.eurodyn.uns.ApplicationTestContext;
 import com.eurodyn.uns.model.User;
 import com.unboundid.ldap.listener.InMemoryDirectoryServer;
 import com.unboundid.ldap.listener.InMemoryDirectoryServerConfig;
@@ -8,7 +9,9 @@ import com.unboundid.ldap.sdk.persist.LDAPDNField;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.naming.ldap.Control;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
@@ -16,7 +19,6 @@ import javax.naming.ldap.PagedResultsControl;
 import java.net.InetAddress;
 import java.util.Hashtable;
 import java.util.List;
-
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -25,7 +27,8 @@ import static org.mockito.Mockito.when;
  *
  * @author George Sofianos
  */
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { ApplicationTestContext.class })
 public class LdapUserDaoTest {
 
   private InMemoryDirectoryServer ds;

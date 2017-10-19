@@ -67,7 +67,7 @@ response.setDateHeader("Expires", 0);
 				    return null;
 				}
 				eionetLoginCookieValue = get_cookie("<%= EionetCASFilter.EIONET_LOGIN_COOKIE_NAME %>");
-				if (eionetLoginCookieValue != null && eionetLoginCookieValue == "loggedIn"){	
+				if (eionetLoginCookieValue != null && eionetLoginCookieValue == "loggedIn"){
 					window.location="<%=EionetCASFilter.getEionetCookieCASLoginURL(request) %>";
 				}
 			//]]>

@@ -25,11 +25,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.eurodyn.uns.Properties;
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.dao.IRoleDao;
 import com.eurodyn.uns.model.Role;
-import com.eurodyn.uns.util.common.AppConfigurator;
+
 import com.eurodyn.uns.util.common.ConfiguratorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,11 +45,7 @@ public class RoleFacade {
     private DAOFactory daoFactory;
 
     static {
-        try {
-            SYNC_PERIOD=60 * 1000 * Integer.parseInt(AppConfigurator.getInstance().getBoundle("uns").getString("ldap.sync_period"));
-        } catch (ConfiguratorException e) {
-            LOGGER.error("Error", e);
-        }
+        SYNC_PERIOD=60 * 1000 * Integer.parseInt(Properties.getStringProperty("ldap.sync_period"));
     }
 
     public RoleFacade() {

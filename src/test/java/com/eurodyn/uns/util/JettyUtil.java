@@ -1,13 +1,3 @@
-<<<<<<< HEAD:src/test/java/eionet/uns/test/util/JettyUtil.java
-package eionet.uns.test.util;
-
-import java.io.File;
-import java.net.URL;
-
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.webapp.WebAppContext;
-
-=======
 package com.eurodyn.uns.util;
 
 import org.eclipse.jetty.server.Server;
@@ -15,7 +5,6 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import java.io.File;
 import java.net.URL;
 
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/util/JettyUtil.java
 /**
  * Utility methods for dealing with Jetty's Java API.
  *
@@ -49,11 +38,7 @@ public class JettyUtil {
         webAppContext.setContextPath(contextPath);
         webAppContext.setResourceBase(resourceFolderPath);
         webAppContext.setClassLoader(classLoader);
-<<<<<<< HEAD:src/test/java/eionet/uns/test/util/JettyUtil.java
-        server.addHandler(webAppContext);
-=======
         server.setHandler(webAppContext);
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/util/JettyUtil.java
         server.start();
 
         return server;

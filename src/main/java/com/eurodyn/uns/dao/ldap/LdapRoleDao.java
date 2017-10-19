@@ -30,6 +30,7 @@ import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
+import com.eurodyn.uns.Properties;
 import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.IRoleDao;
 import com.eurodyn.uns.model.Role;
@@ -43,8 +44,8 @@ public class LdapRoleDao extends BaseLdapDao implements IRoleDao {
     //secret
 
     public LdapRoleDao() {
-        rolesDn = conf.getString("ldap.role.dir") + "," + baseDn;
-        usersDn = conf.getString("ldap.user.dir") + "," + baseDn;
+        rolesDn = Properties.getStringProperty("ldap.role.dir") + "," + baseDn;
+        usersDn = Properties.getStringProperty("ldap.user.dir") + "," + baseDn;
     }
 
     public List findAllRoles() throws DAOException {

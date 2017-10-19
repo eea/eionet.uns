@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
+import com.eurodyn.uns.Properties;
 import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class UnsProperties {
      */
     public void setLdapParams(String url, String context, String userDir, String attrUid) throws Exception {
 
-        String filePath = AppConfigurator.getInstance().getApplicationHome() + File.separatorChar + "eionetdir.properties";
+        String filePath = Properties.getStringProperty("uns.home") + File.separatorChar + "eionetdir.properties";
 
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line = null;
@@ -78,15 +79,8 @@ public class UnsProperties {
 
         int defaultValue = 60;
 
-        try {
-            String strValue = AppConfigurator.getInstance().getBoundle("uns").getString("oldEventsThreshold");
-            System.out.println("strValue = " + strValue);
-            return NumberUtils.toInt(strValue, defaultValue);
-        } catch (ConfiguratorException e) {
-            System.out.println("****************************************************");
-            LOGGER.error(e.getMessage(), e);
-            System.out.println("****************************************************");
-            return defaultValue;
-        }
+        String strValue = Properties.getStringProperty("config.oldEventsThreshold");
+        System.out.println("strValue = " + strValue);
+        return NumberUtils.toInt(strValue, defaultValue);
     }
 }

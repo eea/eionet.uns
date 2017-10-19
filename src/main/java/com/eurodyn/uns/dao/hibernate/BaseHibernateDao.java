@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.eurodyn.uns.SpringApplicationContext;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -47,8 +48,8 @@ public abstract class BaseHibernateDao {
     protected static ThreadLocal threadedSessions = new ThreadLocal();
 
     static {
-        try {
-        String configFileLocation = System.getProperty("hibernate-config-file");
+        sessionFactory = (SessionFactory) SpringApplicationContext.getBean("sessionFactory");
+        /*String configFileLocation = System.getProperty("hibernate-config-file");
         if (configFileLocation == null)
             sessionFactory = new Configuration().configure().buildSessionFactory();
         else{
@@ -56,8 +57,8 @@ public abstract class BaseHibernateDao {
         }
         } catch (Throwable ex) {
             LOGGER.error(ex.getMessage(), ex);
+        }*/
         }
-    }
 
     /**
      * Return the specific Object class that will be used for class-specific

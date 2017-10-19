@@ -9,38 +9,43 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
+import com.eurodyn.uns.ApplicationTestContext;
+import com.eurodyn.uns.util.TestUtils;
+import org.eclipse.jetty.server.Server;
+import org.junit.Before;
 import org.junit.Test;
-import org.mortbay.jetty.Server;
-
+import org.junit.runner.RunWith;
 import com.eurodyn.uns.dao.jdbc.BaseJdbcDao;
 import com.eurodyn.uns.dao.jdbc.JdbcEventMetadataDao;
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Event;
 import com.eurodyn.uns.service.facades.ChannelFacade;
-
-import eionet.uns.test.util.JettyUtil;
-import eionet.uns.test.util.UnsDatabaseTestCase;
+import com.eurodyn.uns.util.JettyUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import javax.sql.DataSource;
+import static com.eurodyn.uns.dao.jdbc.BaseJdbcDao.closeAllResources;
+import static org.junit.Assert.*;
 
 /**
  * Unit tests for the {@link PullerThread}.
  *
  * @author Jaanus
  */
-public class PullerThreadTest extends UnsDatabaseTestCase {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { ApplicationTestContext.class })
+public class PullerThreadTest {
 
     /** SQL for finding an event by its external ID. */
     private static final String FIND_EVENT_BY_EXT_ID_SQL = "SELECT * FROM EVENT WHERE EXT_ID=?";
 
-    /*
-     * (non-Javadoc)
-     * @see eionet.uns.test.util.UnsDatabaseTestCase#getDataSet()
-     */
-    @Override
-    protected IDataSet getDataSet() throws Exception {
-        return new FlatXmlDataSet(getClass().getClassLoader().getResourceAsStream("seed-puller-thread.xml"));
+    @Autowired
+    private DataSource ds;
+
+    @Before
+    public void setUp() throws Exception {
+        TestUtils.setUpDatabase(ds, "seed-puller-thread.xml");
     }
 
     /**
@@ -138,7 +143,7 @@ public class PullerThreadTest extends UnsDatabaseTestCase {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            conn = BaseJdbcDao.getDatasource().getConnection();
+            conn = BaseJdbcDao.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT COUNT(*) FROM " + table);
             return rs.next() ? rs.getInt(1) : 0;
@@ -161,7 +166,7 @@ public class PullerThreadTest extends UnsDatabaseTestCase {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            conn = BaseJdbcDao.getDatasource().getConnection();
+            conn = BaseJdbcDao.getConnection();
             stmt = conn.prepareStatement(FIND_EVENT_BY_EXT_ID_SQL);
             stmt.setString(1, extId);
             rs = stmt.executeQuery();

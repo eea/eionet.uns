@@ -1,40 +1,23 @@
-<<<<<<< HEAD:src/test/java/eionet/uns/JythonTest.java
-package eionet.uns;
-
-import org.junit.Ignore;
-=======
 package com.eurodyn.uns;
 
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/JythonTest.java
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 import org.python.core.Py;
 import org.python.core.PyObject;
-<<<<<<< HEAD:src/test/java/eionet/uns/JythonTest.java
-import org.python.core.PyInteger;
-import org.python.core.PyException;
-import org.python.core.PyString;
-import org.python.core.PySystemState;
-import org.python.util.PythonInterpreter;
-=======
 import org.python.core.PyString;
 import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/JythonTest.java
 
 /**
  * Tests for the Python templates.
  */
 public class JythonTest {
 
-<<<<<<< HEAD:src/test/java/eionet/uns/JythonTest.java
-=======
     private Logger LOGGER = LoggerFactory.getLogger(JythonTest.class);
 
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/JythonTest.java
     /**
      * Test 2 + 2 is 4
      */
@@ -55,8 +38,6 @@ public class JythonTest {
         interp.exec("import re");
     }
 
-<<<<<<< HEAD:src/test/java/eionet/uns/JythonTest.java
-=======
     @Test
     public void testUnicode() {
         PythonInterpreter interpreter = new PythonInterpreter();
@@ -74,5 +55,4 @@ public class JythonTest {
         LOGGER.info(String.valueOf(myStr));
     }
 
->>>>>>> dockerize_86798:src/test/java/com/eurodyn/uns/JythonTest.java
 }

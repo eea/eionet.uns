@@ -28,11 +28,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import com.eurodyn.uns.Properties;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 
-import com.eurodyn.uns.util.common.AppConfigurator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +51,7 @@ public class URLReader {
 
     static {
         try {
-            socketTimeout=1000*Integer.parseInt(AppConfigurator.getInstance().getBoundle("uns").getString("channel.socket_timeout"));
+            socketTimeout=1000*Integer.parseInt(Properties.getStringProperty("channel.socket_timeout"));
         } catch (Exception e) {
             socketTimeout = DEFAULT_SOCKET_TIMEOUT;
             LOGGER.info("Could not load socket timeout from configuration, assuming default: " + DEFAULT_SOCKET_TIMEOUT);

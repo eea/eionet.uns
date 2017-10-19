@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--
-     You can run this change log on your database as many times as you want, it will ignore the
-     changes that are already applied. It also means that you can't modify an existing revision.
-     Always add to the end.
-
-     Use the maven goals: liquibase:update, liquibase:status or liquibase:changelogSync
-      Potentially with -Dliquibase.dropFirst=true
-     $Id$
- -->
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <property name="afterburner" value=" ENGINE=InnoDB DEFAULT CHARSET=utf8" dbms="mysql"/>
 
@@ -17,10 +13,10 @@
             <column defaultValueNumeric="0" name="ACL_ID" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column defaultValue="'object'" name="TYPE" type="enum('object','doc','dcc')">
+            <column defaultValue="object" name="TYPE" type="enum('object','doc','dcc')">
                 <constraints nullable="false"/>
             </column>
-            <column defaultValue="'user'" name="ENTRY_TYPE" type="enum('owner','user','localgroup','other','foreign','unauthenticated','authenticated','mask')">
+            <column defaultValue="user" name="ENTRY_TYPE" type="enum('owner','user','localgroup','other','foreign','unauthenticated','authenticated','mask')">
                 <constraints nullable="false"/>
             </column>
             <column defaultValue="" name="PRINCIPAL" type="CHAR(16)">
