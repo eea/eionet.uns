@@ -29,9 +29,9 @@ response.setDateHeader("Expires", 0);
 				}
 			}
 		%>
-		<link rel="stylesheet" type="text/css" href="http://www.eionet.europa.eu/styles/eionet2007/print.css" media="print" />
-		<link rel="stylesheet" type="text/css" href="http://www.eionet.europa.eu/styles/eionet2007/handheld.css" media="handheld" />		
-		<link rel="stylesheet" type="text/css" href="http://www.eionet.europa.eu/styles/eionet2007/screen.css" media="screen" title="Eionet 2007 style" />
+		<link rel="stylesheet" type="text/css" href="https://www.eionet.europa.eu/styles/eionet2007/print.css" media="print" />
+		<link rel="stylesheet" type="text/css" href="https://www.eionet.europa.eu/styles/eionet2007/handheld.css" media="handheld" />
+		<link rel="stylesheet" type="text/css" href="https://www.eionet.europa.eu/styles/eionet2007/screen.css" media="screen" title="Eionet 2007 style" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/portlet.css"/>" media="screen" title="Eionet 2007 style" />
 		<link type="text/css" media="print" href="<c:url value="/css/print.css"/>" rel="stylesheet"></link>
 		<link rel="shortcut icon" href="<c:url value="/favicon.ico"/>" type="image/x-icon" />
