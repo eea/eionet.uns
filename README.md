@@ -1,50 +1,55 @@
+## Unified Notification Service (UNS) software
 
-*********************************************************************
-This is the Reportnet's Unified Notification Service (UNS) software.
-*********************************************************************
+### Prerequisites
 
-For doing a quick-start installation, read the following instructions. They
-give some hints on how to quickly checkout UNS code from SVN, and how to set
-it up as a Tomcat web application.
+* Java 1.8
+* Maven 3.3.9
+* Tomcat 8.5 or higher
+* MySQL 5.5
+* Docker 1.12 or higher
 
-****************************************************************************
+## Installation Guide
 
-1. Install Jython
-
-shell> sudo yum -y install jython
-
-2. Create build directory for GitHub checkout
-
-shell> cd /var/local/build
-shell> git clone https://github.com/eea/eionet.uns.git
+Create directory for GitHub checkout e.g /home/user/eea/uns
 
 NB! The resulting /var/local/build/uns directory will be denoted below as $CHECKOUT_HOME
 
-3. Modify the version of Jython in pom.xml to match the one install by yum
+```shell
+cd $CHECKOUT_HOME 
+git clone https://github.com/eea/eionet.uns.git
+```
 
-4. Create local.properties file by making a copy of default.properties.
+Create local.properties file by making a copy of default.properties.
 
-shell> cd $CHECKOUT_HOME
-shell> cp default.properties local.properties
+```shell
+cp default.properties local.properties
+```
 
-5. In the freshly created local.properties file, change property values as
+In the freshly created local.properties file, change property values as
    appropriate for your environment. You will find meanings of every property
    from inside the file as comments.
 
-6. Create UNS database and database user in MySql matching the values in local.properties.
+Create UNS database and database user in MySql matching the values in local.properties.
 
-mysql> CREATE DATABASE uns;
-mysql> CREATE USER 'unsuser'@'localhost' IDENTIFIED BY 'password-here';
-mysql> GRANT ALL PRIVILEGES ON uns.* TO 'unsuser'@'localhost'
+```mysql
+CREATE DATABASE uns;
+CREATE USER 'unsuser'@'localhost' IDENTIFIED BY 'password-here';
+GRANT ALL PRIVILEGES ON uns.* TO 'unsuser'@'localhost'
+```
 
-5. Import initial database structure and init data
+(Optional) Import initial database structure and init data. UNS is using a liquibase script to create the new database
+so this step can be skipped.
 
-shell> cd $CHECKOUT_HOME/sql
-shell> mysql -u root -p uns < UNS2-create
+```shell
+cd $CHECKOUT_HOME/sql
+mysql -u root -p uns < UNS2-create
+```
 
-6. Build the DD web application by issuing the following Maven command
+Build the UNS web application by issuing the following maven command
 
-shell> cd $CHECKOUT_HOME
-shell> mvn -Dmaven.test.skip=true clean install
+```shell
+cd $CHECKOUT_HOME
+mvn -Denv=local -Dmaven.test.skip=true clean install
+```
 
-7. Place the resulting $CHECKOUT_HOME/target/uns.war into Tomcat's webapps directory, and start Tomcat.
+Place the resulting $CHECKOUT_HOME/target/uns.war into Tomcat's webapps directory, and start Tomcat.
