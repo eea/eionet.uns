@@ -12,7 +12,7 @@
 
 Create directory for GitHub checkout e.g /home/user/eea/uns
 
-NB! The resulting /var/local/build/uns directory will be denoted below as $CHECKOUT_HOME
+NB! The resulting /home/user/eea/uns directory will be denoted below as $CHECKOUT_HOME
 
 ```shell
 cd $CHECKOUT_HOME 
