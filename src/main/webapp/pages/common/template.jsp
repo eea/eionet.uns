@@ -105,7 +105,7 @@ response.setDateHeader("Expires", 0);
 					<a id="printlink" title="Print this page" href="javascript:this.print();"><span>Print</span></a>
 			        <a id="fullscreenlink" href="javascript:toggleFullScreenMode()" title="Switch to/from full screen mode"><span>Switch to/from full screen mode</span></a>
 			        <a id="acronymlink" href="http://www.eionet.europa.eu/acronyms" title="Look up acronyms"><span>Acronyms</span></a>
-			        <form action="http://search.eionet.europa.eu/search.jsp" method="get">
+			        <form action="https://search.eionet.europa.eu/search.jsp" method="get">
 						<div id="freesrchform"><label for="freesrchfld">Search</label>
 							<input type="text" id="freesrchfld" name="query"/>
 							<input id="freesrchbtn" type="image" src="<c:url value="/images/button_go.gif" />" alt="Go"/>
@@ -127,7 +127,7 @@ response.setDateHeader("Expires", 0);
 					You are here:
 				</div>
 				<div class="breadcrumbitem">
-					<a href="http://www.eionet.europa.eu">EIONET</a>
+					<a href="https://www.eionet.europa.eu">EIONET</a>
 				</div>
 				</f:verbatim>
 					<h:outputText escape="false" value="#{ breadCrumbBean.breadCumbs}" />

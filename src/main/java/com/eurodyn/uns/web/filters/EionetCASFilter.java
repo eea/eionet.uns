@@ -179,7 +179,7 @@ public class EionetCASFilter extends CASFilter {
         String where = "/subscriptions/subscriptions.jsf";
         if (request.isUserInRole("xmlrpc"))
             where = "/xmlrpc/rpcUserChannels.jsf";
-        String redirectUrl = SERVER_NAME.startsWith("http") ? ((SERVER_NAME + request.getContextPath() + where)) : (("http://" + SERVER_NAME + request.getContextPath() + where));
+        String redirectUrl = "https://" + SERVER_NAME + where;
         response.sendRedirect(redirectUrl);     
     }
     
