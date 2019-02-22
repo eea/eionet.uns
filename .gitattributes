@@ -11,6 +11,7 @@
 *.gif binary
 *.odt binary
 *.doc binary
+*.docx binary
 *.ods binary
 *.jpg binary
 *.mdb binary
