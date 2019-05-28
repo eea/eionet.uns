@@ -73,11 +73,11 @@ public class LdapUserDao extends BaseLdapDao implements IUserDao {
 
     public List findAllUsers() throws DAOException {
         List ldapUsers = new ArrayList<User>();
+        LdapContext ctx = null;
         try {
-            LdapContext ctx = getPagedLdapContext();
+            ctx = getPagedLdapContext();
             usersDn = Properties.getStringProperty("ldap.user.dir") + "," + baseDn;
             uidAttribute = Properties.getStringProperty("ldap.attr.uid");
-            int pageSize = 50;
             SearchControls ctls = new SearchControls();
             ctls.setSearchScope(SearchControls.SUBTREE_SCOPE);
             ctls.setCountLimit(0);
@@ -146,13 +146,15 @@ public class LdapUserDao extends BaseLdapDao implements IUserDao {
                     }
                     // Re-activate paged results
                     ctx.setRequestControls(new Control[]{
-                            new PagedResultsControl(pageSize, cookie, Control.CRITICAL)});
+                            new PagedResultsControl(PAGE_SIZE, cookie, Control.CRITICAL)});
                 } while (cookie != null);
             }
         } catch (NamingException e) {
             throw new DAOException("Error: " + e);
         } catch (IOException e) {
             throw new DAOException("Error: " + e);
+        } finally {
+            closeContext(ctx);
         }
         return ldapUsers;
     }
@@ -165,8 +167,9 @@ public class LdapUserDao extends BaseLdapDao implements IUserDao {
 
     public void fillUserAttributes(User user) {
 
+        DirContext ctx = null;
         try {
-            DirContext ctx = getDirContext();
+            ctx = getDirContext();
             String userDn = uidAttribute + "=" + user.getExternalId() + "," + usersDn;
             NamingEnumeration results = ctx.getAttributes(userDn, new String[] {"mail", "cn", "employeeType"}).getAll();
             while (results != null && results.hasMore()) {
@@ -193,6 +196,8 @@ public class LdapUserDao extends BaseLdapDao implements IUserDao {
             }
         } catch (NamingException ne) {
             // ignore it is probably local user
+        } finally {
+            closeContext(ctx);
         }
 
     }

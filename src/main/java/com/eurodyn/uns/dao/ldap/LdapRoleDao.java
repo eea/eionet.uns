@@ -21,6 +21,7 @@
 
 package com.eurodyn.uns.dao.ldap;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,10 @@ import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
+import javax.naming.ldap.Control;
+import javax.naming.ldap.LdapContext;
+import javax.naming.ldap.PagedResultsControl;
+import javax.naming.ldap.PagedResultsResponseControl;
 
 import com.eurodyn.uns.Properties;
 import com.eurodyn.uns.dao.DAOException;
@@ -50,24 +55,51 @@ public class LdapRoleDao extends BaseLdapDao implements IRoleDao {
 
     public List findAllRoles() throws DAOException {
         List result = new ArrayList(1);
+        LdapContext ctx = null;
         try {
-            DirContext ctx = getDirContext();
+            ctx = getPagedLdapContext();
             String myFilter = "objectclass=groupOfUniqueNames";
             SearchControls sc = new SearchControls();
             sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
+            sc.setCountLimit(0);
+            sc.setTimeLimit(0);
+            sc.setReturningObjFlag(true);
+
+            byte[] cookie = null;
+            int total;
+            do {
             NamingEnumeration results = ctx.search(rolesDn, myFilter, sc);
             while (results != null && results.hasMore()) {
                 SearchResult sr = (SearchResult) results.next();
                 String dn = sr.getName();
-                if (dn != null && dn.length() > 0){
+                if (dn != null && dn.length() > 0) {
                     Role r = new Role();
                     r.setFullDn(dn + "," + baseDn);
                     r.setName(dn);
                     result.add(r);
                 }
             }
+            Control[] controls = ctx.getResponseControls();
+            if (controls != null) {
+                for (int i = 0; i < controls.length; i++) {
+                    if (controls[i] instanceof PagedResultsResponseControl) {
+                        PagedResultsResponseControl prrc =
+                                (PagedResultsResponseControl) controls[i];
+                        total = prrc.getResultSize();
+                        cookie = prrc.getCookie();
+                    }
+                }
+            }
+            // Re-activate paged results
+            ctx.setRequestControls(new Control[]{
+                    new PagedResultsControl(PAGE_SIZE, cookie, Control.CRITICAL)});
+            } while (cookie != null);
         } catch (NamingException e) {
             throw new DAOException(e);
+        } catch (IOException e) {
+            throw new DAOException("Error: " + e);
+        } finally {
+            closeContext(ctx);
         }
         return result;
     }
@@ -81,8 +113,9 @@ public class LdapRoleDao extends BaseLdapDao implements IRoleDao {
 
     public List findUserRoles(String user) throws DAOException {
         List result = new ArrayList();
+        DirContext ctx = null;
         try {
-            DirContext ctx = getDirContext();
+            ctx = getDirContext();
             String myFilter = "(&(objectClass=groupOfUniqueNames)(uniqueMember=uid=" + user + "," + usersDn + "))";
             SearchControls sc = new SearchControls();
             sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
@@ -99,6 +132,8 @@ public class LdapRoleDao extends BaseLdapDao implements IRoleDao {
             }
         } catch (NamingException e) {
             throw new DAOException(e);
+        } finally {
+            closeContext(ctx);
         }
         return result;
     }

@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.ResourceBundle;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -43,22 +42,13 @@ public abstract class BaseLdapDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseLdapDao.class);
 
+    public static final int PAGE_SIZE = 1000;
+
     protected static String baseDn;
 
     static {
         baseDn = Properties.getStringProperty("ldap.context");
     }
-/*    protected static ResourceBundle conf;
-    protected static String baseDn;*/
-
-/*    static  {
-        try {
-            conf = ResourceBundle.getBundle("eionetdir");
-            baseDn = conf.getString("ldap.context");
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
-        }
-    }*/
 
     protected DirContext getDirContext() throws NamingException {
         Hashtable env = new Hashtable();
@@ -72,7 +62,6 @@ public abstract class BaseLdapDao {
     }
 
     protected LdapContext getPagedLdapContext() throws NamingException, IOException {
-        int pageSize = 50;
         Hashtable env = new Hashtable();
         env.put(LdapContext.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         env.put(LdapContext.PROVIDER_URL, Properties.getStringProperty("ldap.url"));
@@ -81,14 +70,18 @@ public abstract class BaseLdapDao {
         env.put(LdapContext.SECURITY_CREDENTIALS, Properties.getStringProperty("ldap.password"));
         LdapContext ctx = new InitialLdapContext(env, null);
         ctx.setRequestControls(new Control[]{
-                new PagedResultsControl(pageSize, Control.CRITICAL)
+                new PagedResultsControl(PAGE_SIZE, Control.CRITICAL)
         });
         return ctx;
     }
 
-    protected void closeContext(DirContext ctx) throws NamingException {
+    protected void closeContext(DirContext ctx) {
         if (ctx != null) {
-            ctx.close();
+            try {
+                ctx.close();
+            } catch (NamingException e) {
+                // do nothing
+            }
         }
     }
 
