@@ -104,7 +104,7 @@ public class SendMail implements java.io.Serializable {
         LOGGER.info("E-mail sent, id=" + id);
     } catch (Exception ex) {
         LOGGER.error(ex.getMessage(), ex);
-        throw new Exception("Error occured when trying to send an e-mail: " + ex.toString());
+        throw new Exception("Error occurred when trying to send an e-mail: " + ex.toString());
     }
   }
 }

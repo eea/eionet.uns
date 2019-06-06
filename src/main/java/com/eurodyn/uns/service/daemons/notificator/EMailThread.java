@@ -45,7 +45,7 @@ public class EMailThread implements Runnable {
                     Notification notif = (Notification)it.next();
 
                     DeliveryType dt = new DeliveryType();
-                    dt.setId(new Integer(notif.getDeliveryTypeId()));
+                    dt.setId(notif.getDeliveryTypeId());
 
                     Delivery delivery = new Delivery();
                     delivery.setNotification(notif);
@@ -67,7 +67,7 @@ public class EMailThread implements Runnable {
                     String subj = notif.getSubject();
                     String body = notif.getContent();
                     String html = notif.getHtmlContent();
-                    String id = new Integer(notif.getId()).toString();
+                    String id = Integer.toString(notif.getId());
                     try{
                         if(to != null && to.length() > 0){
                             SendMail.sendMail(to, subj, body, html, id, smtpServer, smtpPort, smtpUsername, smtpPassword, smtpSender);

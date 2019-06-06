@@ -52,7 +52,7 @@ public class NotificatorJob implements Job {
             deliver();
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
-            throw new JobExecutionException("Error occured when executing notification job: "+ e.toString());
+            throw new JobExecutionException("Error occurred when executing notification job: "+ e.toString());
         }
     }
 
@@ -64,7 +64,7 @@ public class NotificatorJob implements Job {
             int i = 0;
             for (Iterator it = channels.keySet().iterator(); it.hasNext();){
                 String channel_id = (String) it.next();
-                Channel channel = channelFacade.getChannel(new Integer(channel_id));
+                Channel channel = channelFacade.getChannel(Integer.valueOf(channel_id));
                 NotificationTemplate template = channel.getNotificationTemplate();
                 List subscriptions = subscriptionFacade.findSubscriptionsForChannel(channel);
                 List events = (List) channels.get(channel_id);
@@ -83,7 +83,7 @@ public class NotificatorJob implements Job {
                             }
                         }
                     }
-                    event.setProcessed((new Integer(1)).byteValue());
+                    event.setProcessed((Integer.valueOf(1)).byteValue());
                     channelFacade.updateEvent(event);
                 }
             }
@@ -124,7 +124,7 @@ public class NotificatorJob implements Job {
             }
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
-            throw new Exception("Error occured when checking filters: " + e.toString());
+            throw new Exception("Error occurred when checking filters: " + e.toString());
         }
         return ret;
     }
@@ -159,7 +159,7 @@ public class NotificatorJob implements Job {
     private void deliver() throws Exception {
         try{
             List email_messages = new ArrayList();
-            List jabber_messages = new ArrayList();
+//            List jabber_messages = new ArrayList();
 
             List new_items = notificationFacade.getNewNotifications();
             List failed_items = notificationFacade.getFailedDeliveries();
@@ -176,26 +176,28 @@ public class NotificatorJob implements Job {
                 int dtid = notif.getDeliveryTypeId();
                 if (dtid == 1) {
                     email_messages.add(notif);
-                } else if (dtid == 2) {
-                    jabber_messages.add(notif);
                 }
+//                else if (dtid == 2) {
+//                    jabber_messages.add(notif);
+//                }
             }
             LOGGER.info("Notifications prepared. " +
-                    "e-mails=" + email_messages.size() + ", jabber=" + jabber_messages.size());
+                    "e-mails=" + email_messages.size());
+//            + ", jabber=" + jabber_messages.size());
             Thread emailThread = new Thread(new EMailThread(email_messages));
-            Thread jabberThread = new Thread(new JabberThread(jabber_messages));
+//            Thread jabberThread = new Thread(new JabberThread(jabber_messages));
 
             LOGGER.info("Start sending notifications.");
             emailThread.start();
-            jabberThread.start();
+//            jabberThread.start();
             try{
                 LOGGER.info("Sending e-mails.");
                 emailThread.join();
                 LOGGER.info("Done sending e-mails.");
 
-                LOGGER.info("Sending jabber messages.");
-                jabberThread.join();
-                LOGGER.info("Done sending jabber messages.");
+//                LOGGER.info("Sending jabber messages.");
+//                jabberThread.join();
+//                LOGGER.info("Done sending jabber messages.");
             } catch (InterruptedException ie){
                 LOGGER.error(ie.getMessage(), ie);
             }

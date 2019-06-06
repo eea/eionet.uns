@@ -83,7 +83,7 @@ public class BreadCrumbBean extends BaseBean {
         breadcrumbsMap.put("config", new String[] {null, "Config", "/admin/config/general.jsf" });
         breadcrumbsMap.put("mail.jsp", new String[] {"config", "Mail administration", null });
         breadcrumbsMap.put("ldap.jsp", new String[] {"config", "Ldap administration", null });
-        breadcrumbsMap.put("jabber.jsp", new String[] {"config", "Jabber administration", null });
+//        breadcrumbsMap.put("jabber.jsp", new String[] {"config", "Jabber administration", null });
         breadcrumbsMap.put("general.jsp", new String[] {"config", "General administration", null });
         breadcrumbsMap.put("database.jsp", new String[] {"config", "Database administration", null });
 
@@ -99,7 +99,7 @@ public class BreadCrumbBean extends BaseBean {
         breadcrumbsMap.put("subscribers.jsp", new String[] {null, "Subscribers", null });
 
         //cleandb
-        breadcrumbsMap.put("cleandb.jsp", new String[] {null, "Clean database", null });
+//        breadcrumbsMap.put("cleandb.jsp", new String[] {null, "Clean database", null });
 
         // reports
         breadcrumbsMap.put("throughput_criteria.jsp", new String[] {null, "Generate report", "/admin/reports/throughput_criteria.jsf" });
