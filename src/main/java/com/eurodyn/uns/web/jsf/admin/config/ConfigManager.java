@@ -157,13 +157,13 @@ public class ConfigManager {
         configMap.put(createKey(pop3Path, "adminmail"), createValue(pop3Path, "pop3.adminMail", STRING_TYPE));
 
         // Load JABBER configuration elements.
-        String jabberPath = "//uns/jabberserver/";
-        configMap.put(createKey(jabberPath, "host"), createValue(jabberPath, "jabber.host", STRING_TYPE));
-        configMap.put(createKey(jabberPath, "port"), createValue(jabberPath, "jabber.port", STRING_TYPE));
-        configMap.put(createKey(jabberPath, "username"), createValue(jabberPath, "jabber.username", STRING_TYPE));
-        configMap.put(createKey(jabberPath, "password"), createValue(jabberPath, "jabber.password", STRING_TYPE));
-        configMap.put(createKey(jabberPath, "usessl"), createValue(jabberPath, "jabber.useSSL", BOOLEAN_TYPE));
-        configMap.put(createKey(jabberPath, "jabber_message_type"), createValue(jabberPath, "jabber.message_type", STRING_TYPE));
+//        String jabberPath = "//uns/jabberserver/";
+//        configMap.put(createKey(jabberPath, "host"), createValue(jabberPath, "jabber.host", STRING_TYPE));
+//        configMap.put(createKey(jabberPath, "port"), createValue(jabberPath, "jabber.port", STRING_TYPE));
+//        configMap.put(createKey(jabberPath, "username"), createValue(jabberPath, "jabber.username", STRING_TYPE));
+//        configMap.put(createKey(jabberPath, "password"), createValue(jabberPath, "jabber.password", STRING_TYPE));
+//        configMap.put(createKey(jabberPath, "usessl"), createValue(jabberPath, "jabber.useSSL", BOOLEAN_TYPE));
+//        configMap.put(createKey(jabberPath, "jabber_message_type"), createValue(jabberPath, "jabber.message_type", STRING_TYPE));
     }
 
     /**

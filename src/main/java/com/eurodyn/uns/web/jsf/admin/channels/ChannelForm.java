@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.eurodyn.uns.model.ChannelMetadataElement;
+import com.eurodyn.uns.model.DeliveryType;
 import com.eurodyn.uns.model.Role;
 import com.eurodyn.uns.model.Subscription;
 import com.eurodyn.uns.service.facades.ChannelFacade;
@@ -80,6 +81,12 @@ public abstract class ChannelForm extends BaseChannelBean {
         eventMetadataFacade = new EventMetadataFacade();
         subscriptionFacade = new SubscriptionFacade();
         allDeliveryTypes = (List) deliveryTypeFacade.getDeliveryTypes().get("list");
+        for (int i = 0; i < allDeliveryTypes.size(); i++) {
+            DeliveryType deliveryType = (DeliveryType) allDeliveryTypes.get(i);
+            if (deliveryType.getName().equals("JABBER")) {
+                allDeliveryTypes.remove(1);
+            }
+        }
         subscription = new Subscription();
     }
 
@@ -89,7 +96,7 @@ public abstract class ChannelForm extends BaseChannelBean {
             if (currentChannelRoles.length() > 0) {
                 String roles[] = currentChannelRoles.split(";");
                 for (int i = 0; i < roles.length; i++) {
-                    Role role = roleFacade.getRole(new Integer(roles[i]));
+                    Role role = roleFacade.getRole(Integer.valueOf(roles[i]));
                     channelRoles.add(role);
                 }
             }
@@ -105,7 +112,7 @@ public abstract class ChannelForm extends BaseChannelBean {
                 ChannelMetadataElement cme = (ChannelMetadataElement) iter.next();
                 int index = visibleElementsList.indexOf(cme.getMetadataElement().getName());
                 cme.setVisible(index > -1 ? Boolean.TRUE : Boolean.FALSE);
-                cme.setAppearanceOrder(new Integer(index));
+                cme.setAppearanceOrder(Integer.valueOf(index));
             }
         }
     }

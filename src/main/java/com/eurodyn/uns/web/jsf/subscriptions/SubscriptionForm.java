@@ -57,11 +57,11 @@ public class SubscriptionForm extends BaseBean {
         subscriber.setPageRefreshDelay(user.getPageRefreshDelay());
         if (subscriber.getDeliveryAddresses() == null){
             HashMap da = new HashMap();
-            da.put(JABBER, new DeliveryAddress(new DeliveryType(JABBER)));
+            da.put(EMAIL, new DeliveryAddress(new DeliveryType(EMAIL)));
             subscriber.setDeliveryAddresses(da);
         }
-        else if (subscriber.getDeliveryAddresses().get(JABBER) == null) {
-            subscriber.getDeliveryAddresses().put(JABBER, new DeliveryAddress(new DeliveryType(JABBER)));
+        else if (subscriber.getDeliveryAddresses().get(EMAIL) == null) {
+            subscriber.getDeliveryAddresses().put(EMAIL, new DeliveryAddress(new DeliveryType(EMAIL)));
         }
         subscription = new Subscription();
     }

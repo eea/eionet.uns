@@ -10,12 +10,12 @@ import com.eurodyn.uns.model.DeliveryType;
 public class DeliveryTypes implements Converter {
 
     public Object getAsObject(FacesContext arg0, UIComponent arg1, String value)throws ConverterException {
-        return new DeliveryType(new Integer(value));
+        return new DeliveryType(Integer.valueOf(value));
     }
 
     public String getAsString(FacesContext arg0, UIComponent arg1, Object value)
             throws ConverterException {
-        if (value instanceof String) { // when conrols immediate attribute is set to "true" 
+        if (value instanceof String) { // when controls immediate attribute is set to "true"
             return (String) value;
         }       
         return ((DeliveryType) value).getId().toString();

@@ -19,11 +19,11 @@
 		<h:panelGrid columns="2" border="0" columnClasses="vertical_align_top">
 			<h:outputLabel value="#{msg['label.address.email']}" for="email_address" />
 			<h:outputText id="email_address" value="#{subscriptionBean.subscriber.deliveryAddresses[applicationScope['EMAIL']].address}" />
-			<h:outputLabel for="jabber_address_1"  value="#{msg['label.address.jabber']}"  />
-			<h:inputText id="jabber_address_1" rendered="#{empty subscriptionBean.subscriber.deliveryAddresses[applicationScope['JABBER']].address}" value="#{subscriptionBean.subscriber.deliveryAddresses[applicationScope['JABBER']].address}" size="30" >
-				<t:validateEmail />
-			</h:inputText>
-			<h:outputText rendered="#{not empty subscriptionBean.subscriber.deliveryAddresses[applicationScope['JABBER']].address}" value="#{subscriptionBean.subscriber.deliveryAddresses[applicationScope['JABBER']].address}" />
+<%--			<h:outputLabel for="jabber_address_1"  value="#{msg['label.address.jabber']}"  />--%>
+<%--			<h:inputText id="jabber_address_1" rendered="#{empty subscriptionBean.subscriber.deliveryAddresses[applicationScope['JABBER']].address}" value="#{subscriptionBean.subscriber.deliveryAddresses[applicationScope['JABBER']].address}" size="30" >--%>
+<%--				<t:validateEmail />--%>
+<%--			</h:inputText>--%>
+<%--			<h:outputText rendered="#{not empty subscriptionBean.subscriber.deliveryAddresses[applicationScope['JABBER']].address}" value="#{subscriptionBean.subscriber.deliveryAddresses[applicationScope['JABBER']].address}" />--%>
 		</h:panelGrid>		
 	</htm:fieldset>
 

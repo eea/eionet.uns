@@ -18,10 +18,10 @@
 				<f:selectItem itemValue="true" itemLabel="HTML" />
 			</h:selectOneRadio>
 
-			<h:outputLabel value="#{msg['label.address.jabber']}" for="jabber_address_1" />
-			<h:inputText id="jabber_address_1" value="#{subscriptionBean.subscriber.deliveryAddresses[applicationScope['JABBER']].address}" size="30" >
-				<t:validateEmail  />
-			</h:inputText>
+<%--			<h:outputLabel value="#{msg['label.address.jabber']}" for="jabber_address_1" />--%>
+<%--			<h:inputText id="jabber_address_1" value="#{subscriptionBean.subscriber.deliveryAddresses[applicationScope['JABBER']].address}" size="30" >--%>
+<%--				<t:validateEmail  />--%>
+<%--			</h:inputText>--%>
 		</h:panelGrid>
 		<h:panelGrid columns="3"  cellpadding="1" cellspacing="1"  columnClasses=".verticalAlignMIddle, verticalAlignTop, verticalAlignTop"  >
 			<h:outputText  value="Dashboard layout" />

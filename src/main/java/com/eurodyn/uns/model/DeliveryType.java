@@ -30,7 +30,7 @@ public class DeliveryType implements Serializable {
     private static final long serialVersionUID = -4294827145445178090L;
 
     public static final int EMAIL = 1;
-    public static final int JABBER = 2;
+//    public static final int JABBER = 2;
     public static final int WDB = 3;
     public static final int RSS = 4;
     

@@ -6,15 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
@@ -43,7 +35,7 @@ public abstract class BaseBean {
 
     protected static final Integer EMAIL = new Integer(1);
 
-    protected static final Integer JABBER = new Integer(2);
+//    protected static final Integer JABBER = new Integer(2);
     
     protected static final Integer WDB = new Integer(3);
 
@@ -57,12 +49,12 @@ public abstract class BaseBean {
 
             deliveryTypesMap = new HashMap(4);
             deliveryTypesMap.put("EMAIL", new DeliveryType(EMAIL, "EMAIL"));
-            deliveryTypesMap.put("JABBER", new DeliveryType(JABBER, "JABBER"));
+//            deliveryTypesMap.put("JABBER", new DeliveryType(JABBER, "JABBER"));
             deliveryTypesMap.put("RSS", new DeliveryType(RSSFEED, "RSS"));
             deliveryTypesMap.put("WDB", new DeliveryType(WDB, "WDB"));
 
             FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("EMAIL", EMAIL);
-            FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("JABBER", JABBER);
+//            FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("JABBER", JABBER);
             FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("RSS", RSSFEED);
             FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("WDB", WDB);
 
@@ -320,6 +312,13 @@ public abstract class BaseBean {
         try {
             Collection list = (Collection) PropertyUtils.getProperty(object, collectionProperty);
             result = toSelectItems(list, null, fieldLabel, localize);
+            for (int i = 0; i < result.size(); i++) {
+                SelectItem selectItem = (SelectItem) result.get(i);
+                selectItem.getLabel();
+                if (selectItem.getLabel().equals("Jabber")){
+                    result.remove(i);
+                }
+            }
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
