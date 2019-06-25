@@ -91,11 +91,11 @@ public class ServiceDispatcher {
             ArrayList dt=new ArrayList();
             for (int i = 1; i < 5; i++) {
                 DeliveryType d1=new DeliveryType();
-                d1.setId(new Integer(i));
+                d1.setId(i);
                 dt.add(d1);
             }
             channel.setDeliveryTypes(dt);
-            channel.setNotificationTemplate(new NotificationTemplate(new Integer(1)));
+            channel.setNotificationTemplate(new NotificationTemplate(1));
             channel.setTransformation(new Stylesheet(1));           
             channelFacade.createChannel(channel);
         } catch (Exception e) {
@@ -121,6 +121,7 @@ public class ServiceDispatcher {
                 if (p.equalsIgnoreCase(RDF.type.toString())) {
                     event.setExtId(s);
                     event.setRtype(o);
+                    event.setLastSeen(DateUtil.getCurrentUTCDate());
                 } else {
                     EventMetadata emd=new EventMetadata();
                     emd.setEvent(event);

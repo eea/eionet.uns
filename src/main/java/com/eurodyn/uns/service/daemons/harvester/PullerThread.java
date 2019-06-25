@@ -90,7 +90,7 @@ public class PullerThread implements Runnable {
                                 event.setChannel(channel);
                                 event.setExtId(eventIdentifier);
                                 event.setCreationDate(harvestDate);
-                                event.setProcessed(new Byte("0").byteValue());
+                                event.setProcessed(Byte.valueOf("0"));
                                 event.setRtype(RSS.item.toString());
                                 event.setLastSeen(harvestDate);
 
