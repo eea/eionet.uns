@@ -9,6 +9,9 @@
         <h:outputLabel value="Harvester interval (minutes):" for="harvester_interval"/>
         <h:outputText id="harvester_interval" value="#{configBean.configMap['daemons/harvester/interval'].tempValue}"/>
 
+        <h:outputLabel value="Event Updater interval (minutes):" for="eventupdater_interval"/>
+        <h:outputText id="eventupdater_interval" value="#{configBean.configMap['daemons/eventupdater/interval'].tempValue}"/>
+
         <h:outputLabel value="Harvester threads:" for="harvester_threads" />
         <h:outputText id="harvester_threads" value="#{configBean.configMap['daemons/harvester/pull_threads'].tempValue}"/>
 

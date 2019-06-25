@@ -73,7 +73,7 @@ public class HarvesterJob implements Job {
 
         } catch(Exception e) {
             LOGGER.error(e.getMessage(), e);
-            throw new JobExecutionException("Error occured when executing harvester job: " + e.toString());
+            throw new JobExecutionException("Error occurred when executing harvester job: " + e.toString());
         }
     }
 

@@ -50,7 +50,7 @@ public class Harvester {
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
-            throw new Exception("Error occured when processing harvester: " + e.toString());
+            throw new Exception("Error occurred when processing harvester: " + e.toString());
         }
     }
 
