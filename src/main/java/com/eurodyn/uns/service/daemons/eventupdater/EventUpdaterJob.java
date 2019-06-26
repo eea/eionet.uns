@@ -25,7 +25,7 @@ public class EventUpdaterJob implements Job {
 
     public void execute(JobExecutionContext context) throws JobExecutionException {
         try {
-            EventUpdaterJob.eventFacade.deleteOldEvents();
+            eventFacade.deleteOldEvents();
         } catch(Exception e) {
             LOGGER.error(e.getMessage(), e);
             throw new JobExecutionException("Error occurred when executing event updater job: " + e.toString());
