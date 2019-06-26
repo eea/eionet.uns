@@ -1,7 +1,5 @@
 package com.eurodyn.uns.service.daemons.userupdater;
 
-import org.apache.commons.logging.Log;
-
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;

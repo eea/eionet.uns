@@ -15,40 +15,27 @@ public class EventUpdaterJobListener implements JobListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EventUpdaterJobListener.class);
 
-    /*
-     * (non-Javadoc)
-     * @see org.quartz.JobListener#getName()
-     */
+    @Override
     public String getName() {
         return this.getClass().getSimpleName();
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.quartz.JobListener#jobExecutionVetoed(org.quartz.JobExecutionContext)
-     */
-    public void jobExecutionVetoed(JobExecutionContext context) {
-        if (context.getJobDetail().getKey().getName().equals("eventUpdaterJob")) {
-            LOGGER.info("Execution vetoed for job " + context.getJobDetail().getKey().getName());
-        }
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see org.quartz.JobListener#jobToBeExecuted(org.quartz.JobExecutionContext)
-     */
+    @Override
     public void jobToBeExecuted(JobExecutionContext context) {
         if (context.getJobDetail().getKey().getName().equals("eventUpdaterJob")) {
             LOGGER.info("EVENT UPDATER PROCESS STARTED");
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.quartz.JobListener#jobWasExecuted(org.quartz.JobExecutionContext, org.quartz.JobExecutionException)
-     */
-    public void jobWasExecuted(JobExecutionContext context, JobExecutionException exception) {
+    @Override
+    public void jobExecutionVetoed(JobExecutionContext context) {
+        if (context.getJobDetail().getKey().getName().equals("eventUpdaterJob")) {
+            LOGGER.info("Execution vetoed for job " + context.getJobDetail().getKey().getName());
+        }
+    }
 
+    @Override
+    public void jobWasExecuted(JobExecutionContext context, JobExecutionException exception) {
         if (context.getJobDetail().getKey().getName().equals("eventUpdaterJob")) {
             LOGGER.info("EVENT UPDATER PROCESS COMPLETED");
         }

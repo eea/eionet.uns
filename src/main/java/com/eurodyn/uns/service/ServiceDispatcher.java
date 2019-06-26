@@ -21,12 +21,7 @@
 
 package com.eurodyn.uns.service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.ChannelMetadataElement;
@@ -61,7 +56,7 @@ public class ServiceDispatcher {
     private UserFacade userFacade=new UserFacade();
     private SubscriptionFacade subsFacade=new SubscriptionFacade();
     private MetadataElementFacade metaFacade=new MetadataElementFacade();
-    
+
     private User rpcUser;
     
     public ServiceDispatcher() {
@@ -108,9 +103,9 @@ public class ServiceDispatcher {
     public String sendNotification(String channel_id, Vector triples) throws Exception {
         //ArrayList events= new ArrayList();
         HashSet sss=new HashSet();
-    
+
         Event event=new Event();
-        
+
         try {
             Channel channel = getPushChannel(channel_id);
             for (int i = 0; i < triples.size(); i++) {
@@ -195,7 +190,7 @@ public class ServiceDispatcher {
                     userSubscription.setSecondaryId(UidGenerator.generate());
                     userSubscription.setUser(userForSubs);
                     userSubscription.setDeliveryTypes(new ArrayList());
-                    DeliveryType d1=new DeliveryType(); d1.setId(new Integer(1));
+                    DeliveryType d1=new DeliveryType(); d1.setId(1);
                     userSubscription.getDeliveryTypes().add(d1); 
                     userForSubs.getSubscriptions().put(channel, userSubscription);
                 } else {
@@ -220,7 +215,7 @@ public class ServiceDispatcher {
         Channel channel=null;
         channel=channelFacade.getChannelBySecId(channel_id);
         if (channel==null) throw new Exception("Channel doesn't exist");
-        if (channel.getStatus().intValue() == 0) throw new Exception("Channel is disabled");
+        if (channel.getStatus() == 0) throw new Exception("Channel is disabled");
         if (this.rpcUser == null || (channel.getCreator().getId().intValue() != this.rpcUser.getId().intValue())) throw new Exception("Not channel owner");
         return channel;     
     }
@@ -256,7 +251,7 @@ public class ServiceDispatcher {
             ChannelMetadataElement cme = (ChannelMetadataElement) iter1.next();
             if (cme.getMetadataElement().getName().equals(metadataElementName)) {
                 hasMetadataElement = true;
-                if( !cme.getFiltered().booleanValue()){
+                if( !cme.getFiltered()){
                     cme.setFiltered(Boolean.TRUE);
                     updatedChannel = true;
                 }
@@ -275,7 +270,7 @@ public class ServiceDispatcher {
             ChannelMetadataElement cme = new ChannelMetadataElement();
             cme.setMetadataElement(me);
             cme.setVisible(Boolean.TRUE);
-            cme.setAppearanceOrder(new Integer(100));
+            cme.setAppearanceOrder(100);
             cme.setObsolete(Boolean.FALSE);
             cme.setFiltered(Boolean.TRUE);
             channelMetadataElements.add(cme);
@@ -283,7 +278,7 @@ public class ServiceDispatcher {
         }
         
         channel.setMetadataElements(channelMetadataElements);
-        if (channel.getId().intValue() != -1 && updatedChannel){
+        if (channel.getId() != -1 && updatedChannel){
             channelFacade.updateChannel(channel);
         }
         

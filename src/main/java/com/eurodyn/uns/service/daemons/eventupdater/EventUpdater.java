@@ -21,7 +21,6 @@ import static org.quartz.TriggerBuilder.newTrigger;
  * @author Vladimiros Fotiadis
  */
 
-
 public class EventUpdater implements ServletContextListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EventUpdater.class);
@@ -46,8 +45,8 @@ public class EventUpdater implements ServletContextListener {
                         .withIntervalInMilliseconds(repeatInterval)
                         .withRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY))
                     .build();
-            scheduler.scheduleJob(job, trigger);
 
+            scheduler.scheduleJob(job, trigger);
             if (!scheduler.isStarted()) {
                 scheduler.start();
             }

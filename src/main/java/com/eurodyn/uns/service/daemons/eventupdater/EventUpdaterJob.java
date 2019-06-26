@@ -1,6 +1,5 @@
 package com.eurodyn.uns.service.daemons.eventupdater;
 
-import com.eurodyn.uns.dao.DAOException;
 import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.service.facades.EventMetadataFacade;
 import org.quartz.Job;
@@ -20,8 +19,6 @@ public class EventUpdaterJob implements Job {
 
     private static EventMetadataFacade eventFacade = null;
 
-    private DAOFactory jdbcDaoFactory;
-
     public EventUpdaterJob() {
         eventFacade = new EventMetadataFacade();
     }
@@ -31,18 +28,7 @@ public class EventUpdaterJob implements Job {
             EventUpdaterJob.eventFacade.deleteOldEvents();
         } catch(Exception e) {
             LOGGER.error(e.getMessage(), e);
-            throw new JobExecutionException("Error occurred when executing eventupdater job: " + e.toString());
+            throw new JobExecutionException("Error occurred when executing event updater job: " + e.toString());
         }
     }
-
-    public void deleteOldEvents(){
-        try {
-            jdbcDaoFactory.getEventMetadataDao().deleteOldEvents();
-        } catch (DAOException e) {
-            LOGGER.error("Error", e);
-        } catch (Exception e) {
-            LOGGER.error("Error", e);
-        }
-    }
-
 }

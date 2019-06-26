@@ -91,7 +91,7 @@ public class NotificatorJob implements Job {
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
-            throw new Exception("Error occured when scanning notifications: " + e.toString());
+            throw new Exception("Error occurred when scanning notifications: " + e.toString());
         }
     }
 
@@ -151,7 +151,7 @@ public class NotificatorJob implements Job {
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             ret = false;
-            throw new Exception("Error occured when trying to generate notification: " + e.toString());
+            throw new Exception("Error occurred when trying to generate notification: " + e.toString());
         }
         return ret;
     }
