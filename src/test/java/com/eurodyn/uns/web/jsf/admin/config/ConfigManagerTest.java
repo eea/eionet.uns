@@ -5,6 +5,7 @@ import java.util.Map;
 import com.eurodyn.uns.ApplicationTestContext;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -45,6 +46,7 @@ public class ConfigManagerTest {
      * @throws Exception
      */
     @Test
+    @Ignore
     public void test() throws Exception {
 
         Map<String, ConfigElement> configMap = new ConfigManager(configFilePath).getConfigMap();

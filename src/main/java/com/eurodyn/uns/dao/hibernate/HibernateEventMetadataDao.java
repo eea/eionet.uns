@@ -123,7 +123,8 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
     }
 
     @Override
-    public void deleteOldEvents() throws DAOException {
+    public Integer deleteOldEvents() throws DAOException {
+        return 0;
     }
 
     @Override

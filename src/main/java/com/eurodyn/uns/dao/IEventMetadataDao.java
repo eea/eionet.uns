@@ -55,7 +55,7 @@ public interface IEventMetadataDao {
      *
      * @throws DAOException All exceptions wrapped into this one.
      */
-    public void deleteOldEvents() throws DAOException;
+    public Integer deleteOldEvents() throws DAOException;
 
     public void deleteEventMetadataByProperty(Channel channel, String value) throws DAOException;
 

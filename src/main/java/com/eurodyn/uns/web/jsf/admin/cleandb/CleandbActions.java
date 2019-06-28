@@ -13,13 +13,16 @@ public class CleandbActions extends BaseBean {
     
     public String clean() {
         try {
-            eventMetadataFacade.deleteOldEvents();
-            addInfoMessage(null, "msg.deleteSuccess", null);
+            int count =  eventMetadataFacade.deleteOldEvents();
+            if (count>0) {
+                addInfoMessage(null, "msg.deleteSuccess", null);
+            } else {
+                addInfoMessage(null, "msg.deleteFailure", null);
+            }
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
         return null;
-
     }
 }

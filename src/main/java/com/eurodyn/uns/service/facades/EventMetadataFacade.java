@@ -162,14 +162,15 @@ public class EventMetadataFacade {
         return daoFactory.getEventMetadataDao().eventExists(extId);
     }
 
-    public void deleteOldEvents(){
+    public Integer deleteOldEvents() throws DAOException {
+        int count = 0;
         try {
-            jdbcDaoFactory.getEventMetadataDao().deleteOldEvents();
+            count = jdbcDaoFactory.getEventMetadataDao().deleteOldEvents();
         } catch (DAOException e) {
             LOGGER.error("Error", e);
         } catch (Exception e) {
             LOGGER.error("Error", e);
         }
-
+        return count;
     }
 }

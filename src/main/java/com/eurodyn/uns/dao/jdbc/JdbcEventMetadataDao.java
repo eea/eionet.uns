@@ -88,9 +88,10 @@ public class JdbcEventMetadataDao extends BaseJdbcDao implements IEventMetadataD
      * @see com.eurodyn.uns.dao.IEventMetadataDao#deleteOldEvents()
      */
     @Override
-    public void deleteOldEvents() throws DAOException {
+    public Integer deleteOldEvents() throws DAOException {
 
         // Delete events older than 60 days, including records from DELIVERY, NOTIFICATION and EVENT_METADATA.
+        int count;
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -106,42 +107,43 @@ public class JdbcEventMetadataDao extends BaseJdbcDao implements IEventMetadataD
 
             // Delete all related deliveries as the most distantly related table.
             LOGGER.debug("Deleting all deliveries of notifications of events that haven't been seen for " + days + " days");
-            LOGGER.info("Deleting all deliveries of notifications of events older than " + days + " days.");
             ps = conn.prepareStatement(DELETE_OLD_DELIVERIES);
             ps.executeUpdate();
+            LOGGER.info("DELIVERIES DELETED: " + ps.getUpdateCount());
             closeAllResources(null, ps, null);
 
             // Delete all related notifications.
             LOGGER.debug("Deleting all notifications of events that haven't been seen for " + days + " days");
-            LOGGER.info("Deleting all notifications of events older than " + days + " days.");
             ps = conn.prepareStatement(DELETE_OLD_NOTIFICATIONS);
             ps.executeUpdate();
+            LOGGER.info("NOTIFICATIONS DELETED: " + ps.getUpdateCount());
             closeAllResources(null, ps, null);
 
             // Delete all related event metadata.
             LOGGER.debug("Deleting metadata of all events that haven't been seen for " + days + " days");
-            LOGGER.info("Deleting metadata of all events older than " + days + " days.");
             ps = conn.prepareStatement(DELETE_OLD_EVENTS_METADATA);
             ps.executeUpdate();
+            LOGGER.info("EVENT METADATA DELETED: " + ps.getUpdateCount());
             closeAllResources(null, ps, null);
 
             // Finally, delete all events themselves.
             LOGGER.debug("Deleting all events that haven't been seen for " + days + " days");
-            LOGGER.info("Deleting all events older than " + days + " days.");
             ps = conn.prepareStatement(DELETE_OLD_EVENTS);
             ps.executeUpdate();
+            count = ps.getUpdateCount();
+            LOGGER.info("EVENTS DELETED: " + ps.getUpdateCount());
 
             // Now do the commit.
             LOGGER.debug("Committing the deletions of metadata, notifications and deliveries of events that haven't been seen for "
                     + days + " days");
             conn.commit();
-            LOGGER.info("Successfully deleted deliveries, notifications, events and metadata older than " + days + " days.");
         } catch (Exception e) {
             rollback(conn);
             throw new DAOException(e);
         } finally {
             closeAllResources(null, ps, conn);
         }
+        return count;
     }
 
     /*
