@@ -10,10 +10,8 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import java.util.Map;
-
+import static org.quartz.CronScheduleBuilder.cronSchedule;
 import static org.quartz.JobBuilder.newJob;
-import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
 /**
@@ -24,14 +22,12 @@ import static org.quartz.TriggerBuilder.newTrigger;
 public class EventUpdater implements ServletContextListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EventUpdater.class);
-    private Integer intervalSeconds;
 
     private Scheduler scheduler;
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         try {
-            long repeatInterval = (long) getIntervalSeconds().intValue() * (long) 1000 * (long) 60;
             scheduler = StdSchedulerFactory.getDefaultScheduler();
             JobDetail job = newJob(EventUpdaterJob.class)
                     .withIdentity("eventUpdaterJob")
@@ -39,12 +35,12 @@ public class EventUpdater implements ServletContextListener {
             EventUpdaterJobListener listener = new EventUpdaterJobListener();
             scheduler.getListenerManager().addJobListener(listener);
 
-
-            SimpleTrigger trigger = newTrigger()
-                    .withSchedule(simpleSchedule()
-                        .withIntervalInMilliseconds(repeatInterval)
-                        .withRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY))
-                    .build();
+            /*
+                Run updating job every night at 03:00AM  :0 0 3 1/1 * ? *
+            */
+            CronTrigger trigger = newTrigger()
+                    .withIdentity("eventTrigger", "events")
+                    .withSchedule(cronSchedule("0 0/6 * 1/1 * ? *")).build();
 
             scheduler.scheduleJob(job, trigger);
             if (!scheduler.isStarted()) {
@@ -67,17 +63,5 @@ public class EventUpdater implements ServletContextListener {
         } catch (InterruptedException e) {
             LOGGER.error(e.getMessage(), e);
         }
-    }
-
-    public Integer getIntervalSeconds() {
-        try {
-            if (intervalSeconds == null) {
-                Map configMap = ConfigManager.getInstance().getConfigMap();
-                intervalSeconds = (Integer)((ConfigElement) configMap.get("daemons/eventupdater/interval")).getValue();
-            }
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
-        }
-        return intervalSeconds;
     }
 }

@@ -1,6 +1,5 @@
 package com.eurodyn.uns.service.daemons.eventupdater;
 
-import com.eurodyn.uns.dao.DAOFactory;
 import com.eurodyn.uns.service.facades.EventMetadataFacade;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

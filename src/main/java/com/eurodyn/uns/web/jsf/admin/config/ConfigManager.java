@@ -118,8 +118,6 @@ public class ConfigManager {
         // Load general configuration elements.
         String generalPath = "//uns/daemons/notificator/";
         configMap.put(createKey(generalPath, "interval"), createValue(generalPath, "notificator.intervalMinutes", INTEGER_TYPE));
-        generalPath = "//uns/daemons/eventupdater/";
-        configMap.put(createKey(generalPath, "interval"), createValue(generalPath, "eventupdater.intervalMinutes", INTEGER_TYPE));
         generalPath = "//uns/daemons/harvester/";
         configMap.put(createKey(generalPath, "interval"), createValue(generalPath, "harvester.intervalMinutes", INTEGER_TYPE));
         configMap.put(createKey(generalPath, "pull_threads"), createValue(generalPath, "harvester.noOfThreads", INTEGER_TYPE));
