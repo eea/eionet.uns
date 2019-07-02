@@ -80,7 +80,7 @@ public class UnsProperties {
         int defaultValue = 60;
 
         String strValue = Properties.getStringProperty("config.oldEventsThreshold");
-        System.out.println("strValue = " + strValue);
+        System.out.println("Old Events threshold:  = " + strValue + " days.");
         return NumberUtils.toInt(strValue, defaultValue);
     }
 }

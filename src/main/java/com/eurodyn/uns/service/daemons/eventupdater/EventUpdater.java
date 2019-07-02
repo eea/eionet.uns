@@ -40,7 +40,7 @@ public class EventUpdater implements ServletContextListener {
             */
             CronTrigger trigger = newTrigger()
                     .withIdentity("eventTrigger", "events")
-                    .withSchedule(cronSchedule("0 0/6 * 1/1 * ? *")).build();
+                    .withSchedule(cronSchedule("0 0 2 ? * SUN *")).build();
 
             scheduler.scheduleJob(job, trigger);
             if (!scheduler.isStarted()) {
