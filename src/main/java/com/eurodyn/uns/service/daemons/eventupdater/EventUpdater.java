@@ -36,7 +36,7 @@ public class EventUpdater implements ServletContextListener {
             scheduler.getListenerManager().addJobListener(listener);
 
             /*
-                Run updating job every night at 03:00AM  :0 0 3 1/1 * ? *
+                Run updating job every Sunday at 02:00 AM
             */
             CronTrigger trigger = newTrigger()
                     .withIdentity("eventTrigger", "events")
