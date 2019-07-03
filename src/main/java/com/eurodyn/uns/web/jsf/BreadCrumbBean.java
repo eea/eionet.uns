@@ -35,9 +35,11 @@ public class BreadCrumbBean extends BaseBean {
                     breadCrumbStack.push(breadcrumbsMap.get(breadcrumb[0]));
                 }
             } else {
-                String[] stackBc = (String[]) breadCrumbStack.peek();
-                if (stackBc[2] == null) {
-                    breadCrumbStack.pop();
+                if (!breadCrumbStack.empty()) {
+                    String[] stackBc = (String[]) breadCrumbStack.peek();
+                    if (stackBc[2] == null) {
+                        breadCrumbStack.pop();
+                    }
                 }
             }
 
