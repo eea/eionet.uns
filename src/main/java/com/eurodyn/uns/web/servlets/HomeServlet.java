@@ -42,7 +42,7 @@ public class HomeServlet extends HttpServlet {
         }
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        doGet(request, response);
-    }
+//    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+//        doGet(request, response);
+//    }
 }
