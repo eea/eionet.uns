@@ -13,10 +13,9 @@
 	</t:div>
 	<t:div style="vertical-align: bottom">
 		<h:form>
-			<h:commandButton action="#{cleandbBean.clean}" value="Delete old events"  />
+			<h:commandButton onclick="eventUpdaterMessage(this)" action="#{cleandbBean.clean}" value="Delete old events"/>
 		</h:form>
 	</t:div>
-
 
 
 

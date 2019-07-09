@@ -10,7 +10,7 @@ public class CleandbActions extends BaseBean {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(CleandbActions.class);
     protected EventMetadataFacade eventMetadataFacade = new EventMetadataFacade();
-    
+
     public String clean() {
         try {
             int count =  eventMetadataFacade.deleteOldEvents();
@@ -23,6 +23,7 @@ public class CleandbActions extends BaseBean {
             LOGGER.error(e.getMessage(), e);
             addSystemErrorMessage();
         }
+        addInfoMessage(null, "msg.finishUpdate", null);
         return null;
     }
 }

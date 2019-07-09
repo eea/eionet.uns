@@ -428,3 +428,16 @@ function nextEvent(where){
 	}
 	selectedRow = sibling;	
 }
+
+function eventUpdaterMessage(element) {
+
+	var newElement = document.createElement("div");
+	newElement.className = 'system-msg';
+
+	var textMessage = document.createTextNode("EVENT UPDATER PROCESS STARTED...");
+	newElement.appendChild(textMessage);
+
+	var parentElement = document.getElementById("workarea");
+	parentElement.insertBefore(newElement, parentElement.childNodes[0]);
+
+}
