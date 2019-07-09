@@ -431,6 +431,10 @@ function nextEvent(where){
 
 function eventUpdaterMessage(element) {
 
+	var historic = document.getElementsByClassName("system-msg").item(0);
+	if (historic!==null)
+		historic.remove();
+
 	var newElement = document.createElement("div");
 	newElement.className = 'system-msg';
 
