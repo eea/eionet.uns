@@ -1,5 +1,21 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
-<t:div id="formInitialization" rendered="#{ not subscriptionsBean.preparedSubscriptions}" />
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%
+	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
+	String userRole = "";
+	String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
+
+	if(request.isUserInRole("admin")){
+		userRole = "admin";
+	}
+	else if(userName != null){
+		userRole = "eea";
+	}
+
+	request.setAttribute("userRole",userRole);
+
+%>
+<c:if test="${userRole == 'admin' || userRole == 'eea'}" >
 <h:form>
 	<htm:h1>
 		<h:outputText value="Existing subscriptions list" />
@@ -82,5 +98,5 @@
 			</h:panelGroup>
 		</h:panelGrid>
 	</t:div>
-
 </h:form>
+</c:if>

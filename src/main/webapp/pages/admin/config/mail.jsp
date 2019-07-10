@@ -1,5 +1,19 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%
+	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
+	String userRole = "";
+	String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
 
+
+	if(request.isUserInRole("admin")){
+		userRole = "admin";
+	}
+
+	request.setAttribute("userRole",userRole);
+
+%>
+<c:if test="${userRole == 'admin'}" >
 <h:form>
 	<htm:h1>
 		<h:outputText value="Mail configuration" />
@@ -49,9 +63,6 @@
 			<h:outputText id="adminmail" value="#{configBean.configMap['pop3server/adminmail'].tempValue}" />
 		</h:panelGrid>
 	</htm:fieldset>
-
-
 	<t:saveState value="#{configBean.configMap}" />
-
-
 </h:form>
+</c:if>

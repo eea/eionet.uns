@@ -1,5 +1,19 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%
+	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
+	String userRole = "";
+	String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
 
+
+	if(request.isUserInRole("admin")){
+		userRole = "admin";
+	}
+
+	request.setAttribute("userRole",userRole);
+
+%>
+<c:if test="${userRole == 'admin'}" >
 <h:form enctype="multipart/form-data">
 	<htm:h1><h:outputText value="&nbsp;" escape="false"/></htm:h1>
 	<h:panelGrid columns="2" border="0" columnClasses="vertical_align_top">
@@ -25,3 +39,4 @@
 		<h:commandButton action="dashTemplates" value="#{msg['label.cancel']}" immediate="true"  style="margin-right:0.3em" />
 	</t:div>
 </h:form>
+</c:if>

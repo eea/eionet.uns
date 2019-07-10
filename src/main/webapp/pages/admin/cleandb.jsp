@@ -1,6 +1,20 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%
+	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
+	String userRole = "";
+	String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
 
-	<htm:h1>
+
+	if(request.isUserInRole("admin")){
+		userRole = "admin";
+	}
+
+	request.setAttribute("userRole",userRole);
+
+%>
+<c:if test="${userRole == 'admin'}" >
+    <htm:h1>
 		<h:outputText value="Clean database" />
 	</htm:h1>
 	<t:div styleClass="caution-msg">
@@ -16,7 +30,7 @@
 			<h:commandButton onclick="eventUpdaterMessage(this)" action="#{cleandbBean.clean}" value="Delete old events"/>
 		</h:form>
 	</t:div>
-
+</c:if>
 
 
 

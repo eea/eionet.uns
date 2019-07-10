@@ -1,4 +1,19 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%
+	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
+	String userRole = "";
+	String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
+
+
+	if(request.isUserInRole("admin")){
+		userRole = "admin";
+	}
+
+	request.setAttribute("userRole",userRole);
+
+%>
+<c:if test="${userRole == 'admin'}" >
 <t:div id="formInitialization" rendered="#{ not templatesBean.preparedStylesheets}" />
 <h:form>
 	<htm:h1>
@@ -68,6 +83,5 @@
 	</t:div>
 	<htm:br/>
 	<t:commandButton value="#{msg['label.common.create']}" action="#{dashTemplateBean.edit}" actionListener="#{dashTemplateBean.reset}" />
-
-
 </h:form>
+</c:if>

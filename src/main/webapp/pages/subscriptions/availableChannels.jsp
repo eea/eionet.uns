@@ -1,4 +1,21 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%
+	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
+	String userRole = "";
+	String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
+
+	if(request.isUserInRole("admin")){
+		userRole = "admin";
+	}
+	else if(userName != null){
+		userRole = "eea";
+	}
+
+	request.setAttribute("userRole",userRole);
+
+%>
+<c:if test="${userRole == 'admin' || userRole == 'eea'}" >
 <t:div id="formInitialization" rendered="#{ not subscriptionsBean.preparedChannels}" />
 <h:form>
 	<htm:h1>
@@ -64,5 +81,5 @@
 	<t:div rendered="#{empty subscriptionsBean.channels}">
 		<h:outputText value="No avaiable channels for subscription" />
 	</t:div>
-
 </h:form>
+</c:if>

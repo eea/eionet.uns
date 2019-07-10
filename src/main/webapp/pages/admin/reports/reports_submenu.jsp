@@ -1,5 +1,24 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%
+	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
+	String userRole = "";
+	String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
 
+
+	if(request.isUserInRole("admin")){
+		userRole = "admin";
+	}
+	else if(userName != null){
+		if(request.isUserInRole("reports")){
+			userRole = "eea";
+		};
+	}
+
+	request.setAttribute("userRole",userRole);
+
+%>
+<c:if test="${userRole == 'admin' || userRole == 'eea'}" >
 <f:verbatim>
 <div id="tabbedmenu">
 	<c:if test="${selectedSubMenu == 'throughput'}">
@@ -25,6 +44,6 @@
     </c:if>
 </div>
 </f:verbatim>
-
+</c:if>
 
 

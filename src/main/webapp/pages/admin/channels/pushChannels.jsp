@@ -1,4 +1,18 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%
+	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
+	String userRole = "";
+	String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
+
+	if(request.isUserInRole("admin")){
+		userRole = "admin";
+	}
+
+	request.setAttribute("userRole",userRole);
+
+%>
+<c:if test="${userRole == 'admin'}" >
 <t:div id="formInitialization" rendered="#{ not channelListBean.preparedPushChannels}" />
 <h:form>
 	<htm:h1><h:outputText value="Push channels list" /></htm:h1>
@@ -125,5 +139,5 @@
 	<t:div rendered="#{empty channelListBean.pushChannels}">
 		<h:outputText value="There is no push channels in the system" />
 	</t:div>
-
 </h:form>
+</c:if>

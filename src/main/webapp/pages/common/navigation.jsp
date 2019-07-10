@@ -16,7 +16,8 @@
 	}
 	else if(userName != null){
 		userRole = "eea";
-	}else if(user != null) {
+	}
+	else if(user != null) {
 		 userRole = "eeaNotLogged";
 	}
 

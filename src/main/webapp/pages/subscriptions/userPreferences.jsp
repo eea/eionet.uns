@@ -1,4 +1,21 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%
+	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
+	String userRole = "";
+	String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
+
+	if(request.isUserInRole("admin")){
+		userRole = "admin";
+	}
+	else if(userName != null){
+		userRole = "eea";
+	}
+
+	request.setAttribute("userRole",userRole);
+
+%>
+<c:if test="${userRole == 'admin' || userRole == 'eea'}" >
 <t:saveState value="#{subscriptionBean.subscriber}" />
 <h:form >
 	<htm:h1><h:outputText value="My preferences" /></htm:h1>
@@ -93,3 +110,4 @@
 	</htm:fieldset>
 	</h:panelGrid>
 </h:form>
+</c:if>

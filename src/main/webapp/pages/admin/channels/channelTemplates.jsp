@@ -1,4 +1,18 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%
+	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
+	String userRole = "";
+	String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
+
+	if(request.isUserInRole("admin")){
+		userRole = "admin";
+	}
+
+	request.setAttribute("userRole",userRole);
+
+%>
+<c:if test="${userRole == 'admin'}" >
 <h:form  onsubmit="submitChannelTemplates(this)">
 	<htm:h1 rendered="#{channelBean.channel.mode != 'PUSH'}">
 		<h:outputText value="Step 3 of 4" />
@@ -74,3 +88,4 @@
 
 	<t:inputHidden id="visibleElements" value="#{channelBean.visibleElements}" />
 </h:form>
+</c:if>

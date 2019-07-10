@@ -1,5 +1,19 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
-<t:div id="formInitialization" rendered="#{ not templatesBean.preparedNotificationTemplates}" />
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%
+	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
+	String userRole = "";
+	String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
+
+
+	if(request.isUserInRole("admin")){
+		userRole = "admin";
+	}
+
+	request.setAttribute("userRole",userRole);
+
+%>
+<c:if test="${userRole == 'admin'}" >
 <h:form>
 	<htm:h1>
 		<h:outputText value="Templates for generating notifications" />
@@ -46,5 +60,5 @@
 	</t:div>
 	<htm:br/>
 	<t:commandButton value="#{msg['label.common.create']}" action="#{notificationTemplateBean.edit}" actionListener="#{notificationTemplateBean.reset}" />
-
 </h:form>
+</c:if>
