@@ -16,6 +16,7 @@
 
 %>
 <c:if test="${userRole == 'admin' || userRole == 'eea'}" >
+<t:div id="formInitialization" rendered="#{ not subscriptionsBean.preparedSubscriptions}" />
 <h:form>
 	<htm:h1>
 		<h:outputText value="Existing subscriptions list" />
