@@ -1,25 +1,23 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%
+	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
+	String userRole = "";
+	String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
 
+	if(request.isUserInRole("admin")){
+		userRole = "admin";
+	}
+
+	request.setAttribute("userRole",userRole);
+
+%>
+<c:if test="${userRole == 'admin'}" >
 <htm:h1>
 	<h:outputText value="Subscribers" />
 </htm:h1>
-<h:form >
+<h:form>
 	<t:div style="width:97%;" rendered="#{ not empty channelBean.channel.subscriptions}">
-	<% 
-		com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
-		String userRole = "";
-		String userName = ((user != null) && (user.isLoggedIn())) ? user.getExternalId() : request.getRemoteUser();
-	
-		
-		if(request.isUserInRole("admin")){
-			userRole = "admin";
-		}
-	
-		request.setAttribute("userRole",userRole);
-	
-	%>
-	<c:if test="${userRole == 'admin'}" > 
 		<htm:fieldset>
 			<htm:legend>
 				<h:outputText value="Add new subscriber" />
@@ -35,7 +33,6 @@
 				<h:commandButton action="#{channelBean.saveSubscriber}" value="#{msg['label.channel.subscribers.add']}" />
 			</h:panelGrid>	
 		</htm:fieldset>
-	</c:if> 
 	<t:dataTable columnClasses=",,textAlignCenter" style="width:100%" styleClass="sortable" rowClasses="zebraeven," var="subscriber" value="#{channelBean.channel.subscriptions}">
 		<h:column>
 			<f:facet name="header">
@@ -56,13 +53,12 @@
 			<f:facet name="header">
 				<h:outputText value="#{msg['label.common.action']}" title="#{msg['label.table.sort.notSortable']}" />
 			</f:facet>
-			<c:if test="${userRole == 'admin'}" >
-				<t:commandLink action="#{channelBean.removeSubscriber}" immediate="true" onclick="if (!approve('Are you sure you want to unsubscribe user from the {} channel',['#{subscriber.channel.title}'])) return false;">
-					<h:graphicImage url="/images/delete.gif" alt="Unsubscribe " title="Unsubscribe" />
-					<t:updateActionListener property="#{channelBean.subscription}" value="#{subscriber}" />
-				</t:commandLink>
-			</c:if> 
+			<t:commandLink action="#{channelBean.removeSubscriber}" immediate="true" onclick="if (!approve('Are you sure you want to unsubscribe user from the {} channel',['#{subscriber.channel.title}'])) return false;">
+				<h:graphicImage url="/images/delete.gif" alt="Unsubscribe " title="Unsubscribe" />
+			    <t:updateActionListener property="#{channelBean.subscription}" value="#{subscriber}" />
+			</t:commandLink>
 		</h:column>
 	</t:dataTable>
 	</t:div>
 </h:form>
+</c:if>
