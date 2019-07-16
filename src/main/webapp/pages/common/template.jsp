@@ -104,13 +104,14 @@ response.setDateHeader("Expires", 0);
 					<a href="#" id="pagehelplink" onclick="javascript:openWindow('<c:url value="/help/help.jsp"/>','onlinehelp');" title="Help"><span><fmt:message key="label.menu.help"/></span></a>
 					<a id="printlink" title="Print this page" href="javascript:this.print();"><span>Print</span></a>
 			        <a id="fullscreenlink" href="javascript:toggleFullScreenMode()" title="Switch to/from full screen mode"><span>Switch to/from full screen mode</span></a>
-			        <a id="acronymlink" href="http://www.eionet.europa.eu/acronyms" title="Look up acronyms"><span>Acronyms</span></a>
-			        <form action="https://search.eionet.europa.eu/search.jsp" method="get">
-						<div id="freesrchform"><label for="freesrchfld">Search</label>
-							<input type="text" id="freesrchfld" name="query"/>
-							<input id="freesrchbtn" type="image" src="<c:url value="/images/button_go.gif" />" alt="Go"/>
-						</div>
-					</form>
+<%--			        <a id="acronymlink" href="http://www.eionet.europa.eu/acronyms" title="Look up acronyms"><span>Acronyms</span></a>--%>
+<%--			        <form action="https://search.eionet.europa.eu/search.jsp" method="get">--%>
+<%--						<div id="freesrchform"><label for="freesrchfld">Search</label>--%>
+<%--							<input type="text" id="freesrchfld" name="query"/>--%>
+<%--							<input id="freesrchbtn" type="image" src="<c:url value="/images/button_go.gif" />" alt="Go"/>--%>
+<%--						</div>--%>
+<%--					</form>--%>
+					<a id="eionetlink" title="Go to Eionet portal" href="https://www.eionet.europa.eu/"><span>Eionet portal</span></a>
 			    </div>
 			</div>
 			<div id="pagehead">
@@ -119,7 +120,6 @@ response.setDateHeader("Expires", 0);
 				</f:subview>			
 			</div><!-- page head -->
 			<div id="menuribbon">
-				<%@ include file="dropdownmenus.txt" %>
 			</div>
 			<f:verbatim>
 			<div class="breadcrumbtrail">
