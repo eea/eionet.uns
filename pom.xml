@@ -16,7 +16,7 @@
     <javaVersion>11</javaVersion>
     <sesame.openrdf.version>2.6.9</sesame.openrdf.version>
     <checkstyle.config.location>${basedir}/doc/checkstyle.xml</checkstyle.config.location>
-    <spring.version>4.3.4.RELEASE</spring.version>
+    <spring.version>4.3.18.RELEASE</spring.version>
   </properties>
 
   <version>1.0-SNAPSHOT</version>
@@ -317,7 +317,7 @@
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
-      <version>1.0</version>
+      <version>1.4</version>
     </dependency>
     <dependency>
       <groupId>commons-codec</groupId>
@@ -680,19 +680,19 @@
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-server</artifactId>
-      <version>9.4.6.v20170531</version>
+      <version>9.4.19.v20190610</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-util</artifactId>
-      <version>9.4.6.v20170531</version>
+      <version>9.4.19.v20190610</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-webapp</artifactId>
-      <version>9.4.6.v20170531</version>
+      <version>9.4.19.v20190610</version>
       <scope>test</scope>
     </dependency>
 
