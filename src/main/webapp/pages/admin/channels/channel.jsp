@@ -32,8 +32,8 @@
 
 			<h:outputLabel for="description" value="#{msg['label.common.description']}" />
 			<h:inputTextarea id="description" rows="2" cols="50" value="#{channelBean.channel.description}" style="width: 48em;" />
-			<h:outputLabel for="language" value="#{msg['label.channels.language']}" />
-			<t:selectOneLanguage style="margin:0;padding:0;" value="#{channelBean.channel.language}" />
+			<h:outputLabel for="language" value="#{msg['label.channels.language']}:" />
+			<t:selectOneLanguage id="language" style="margin:0;padding:0;" value="#{channelBean.channel.language}" />
 			<h:outputLabel for="refreshDelay" value="Refresh delay" rendered="#{channelBean.channel.mode == 'PULL'}" />
 			<h:panelGrid id="refreshDelay" columns="3" rendered="#{channelBean.channel.mode == 'PULL'}">
 				<h:outputText value="Days" style="width:0" />

@@ -134,12 +134,19 @@ public class DashTemplateActions extends DashTemplateForm {
     public String testChannel() {
 
         try {
-            if (testChannel.getFeedUrl().equals(""))
+            if (testChannel.getFeedUrl().equals("")) {
+                if(getId()==null){
+                    addInfoMessage(null,"messages.stylesheet.choose.channel",null);
+                    return null;
+                }
                 testChannel = channelFacade.getChannel(getId());
+            }
             else
                 testChannel.setMode("PULL");
-            
-            
+            if(testChannel==null){
+                addInfoMessage(null,"messages.stylesheet.choose.channel",null);
+                return null;
+            }
             testChannel.setTransformation(stylesheet);
             testChannel.setContent(null);
             String result = ChannelServerDelegate.instance.testNewChannel(testChannel);
@@ -164,7 +171,7 @@ public class DashTemplateActions extends DashTemplateForm {
 
     private boolean checkXML(UploadedFile file) throws IOException {
         boolean valid = true;
-        
+
         try {
             IXmlCtx x = new XmlContext();
             x.setWellFormednessChecking();
@@ -173,14 +180,14 @@ public class DashTemplateActions extends DashTemplateForm {
             addErrorMessage(null,"errors.xsl",null);
             valid = false;
         }
-        
+
         return valid;
     }
 
-    
+
     public void changeAfterTest(ActionEvent event){
         afterTest="editDashTemplate";
     }
 
-    
+
 }
