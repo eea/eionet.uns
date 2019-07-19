@@ -31,7 +31,8 @@
 					<f:selectItems value="#{channelBean.deliveryTypesItems}" />
 				</h:selectManyCheckbox>	
 				<h:commandButton action="#{channelBean.saveSubscriber}" value="#{msg['label.channel.subscribers.add']}" />
-			</h:panelGrid>	
+				<h:column></h:column>
+			</h:panelGrid>
 		</htm:fieldset>
 	<t:dataTable columnClasses=",,textAlignCenter" style="width:100%" styleClass="sortable" rowClasses="zebraeven," var="subscriber" value="#{channelBean.channel.subscriptions}">
 		<h:column>
