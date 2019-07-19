@@ -14,6 +14,7 @@
 
 %>
 <c:if test="${userRole == 'admin'}" >
+<t:div id="formInitialization" rendered="#{ not templatesBean.preparedNotificationTemplates}" />
 <h:form>
 	<htm:h1>
 		<h:outputText value="Templates for generating notifications" />
