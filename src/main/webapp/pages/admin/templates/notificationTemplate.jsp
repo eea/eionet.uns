@@ -30,7 +30,7 @@
 		<h:outputLabel for="plain_text" value="#{msg['label.template.notification.plainText']}" />
 		<h:inputTextarea id="plain_text" rows="10" cols="50" value="#{notificationTemplateBean.notificationTemplate.plainText}" required="true" style="width: 48em;" />
 		<h:outputLabel for="html_text" value="#{msg['label.template.notification.html']}" />
-		<h:inputTextarea id="thtml" rows="15" cols="50" value="#{notificationTemplateBean.notificationTemplate.htmlText}" style="width: 48em;" />
+		<h:inputTextarea id="html_text" rows="15" cols="50" value="#{notificationTemplateBean.notificationTemplate.htmlText}" style="width: 48em;" />
 	</h:panelGrid>
 
 	<htm:br/>
