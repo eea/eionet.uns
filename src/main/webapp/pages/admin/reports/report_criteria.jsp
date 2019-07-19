@@ -19,7 +19,6 @@
 
 %>
 <c:if test="${userRole == 'admin' || userRole == 'eea'}" >
-<t:div id="formInitialization" rendered="#{ not subscriptionsBean.preparedSubscriptions}" />
 <t:div id="formInitialization" rendered="#{not reportBean.preparedForm}" />
 
 <h:form>
