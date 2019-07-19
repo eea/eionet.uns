@@ -33,7 +33,7 @@
 		<htm:legend>
 			<h:outputText value="Your preferences" />
 		</htm:legend>
-		<h:panelGrid columns="2" border="0" columnClasses="vertical_align_top">
+		<h:panelGrid columns="1" border="0" columnClasses="vertical_align_top">
 			<h:outputLabel value="#{msg['label.address.email']}" for="email_address" />
 			<h:outputText id="email_address" value="#{subscriptionBean.subscriber.deliveryAddresses[applicationScope['EMAIL']].address}" />
 <%--			<h:outputLabel for="jabber_address_1"  value="#{msg['label.address.jabber']}"  />--%>
@@ -41,7 +41,7 @@
 <%--				<t:validateEmail />--%>
 <%--			</h:inputText>--%>
 <%--			<h:outputText rendered="#{not empty subscriptionBean.subscriber.deliveryAddresses[applicationScope['JABBER']].address}" value="#{subscriptionBean.subscriber.deliveryAddresses[applicationScope['JABBER']].address}" />--%>
-		</h:panelGrid>		
+		</h:panelGrid>
 	</htm:fieldset>
 
 	<htm:fieldset>
@@ -161,22 +161,23 @@
 					<h:outputText value="" />
 					<h:selectOneMenu id="stylesheetId" style="width:220px;" value="#{subscriptionBean.value}">
 						<f:selectItems value="#{subscriptionBean.propertyValuesItems}" />
-					</h:selectOneMenu>					
+					</h:selectOneMenu>
 				</h:panelGrid>
 			</t:div>
 			<h:panelGrid columns="2">
 				<h:commandButton rendered="#{not empty subscriptionBean.filter.statements }" action="#{subscriptionBean.addFilter}" value="Save Filter" />
 				<h:commandButton  rendered="#{ not empty subscriptionBean.availableProperties}" action="#{subscriptionBean.addStatement}" value="Add condition"  />				
 				<h:outputText  value="" rendered="#{empty subscriptionBean.availableProperties}" />
-			</h:panelGrid>
+                <h:column></h:column>
+            </h:panelGrid>
 		</t:div>
 		<%--	statements and properties end --%>
 
 
 	</htm:fieldset>
 
-	<htm:br />
-	<h:panelGrid columns="3">
+<%--	<htm:br />--%>
+	<h:panelGrid columns="2">
 		<h:commandButton action="#{subscriptionBean.save}" value="#{msg['label.save']}" />
 		<h:commandButton action="avChannels" value="#{msg['label.cancel']}" immediate="true" rendered="#{empty subscriptionBean.subscription.id}" />
 		<h:commandButton action="subscriptions" value="#{msg['label.cancel']}" immediate="true" rendered="#{not empty subscriptionBean.subscription.id}" />
