@@ -71,15 +71,17 @@
 		<htm:legend>
 			<h:outputText value="Allowed delivery types" />
 		</htm:legend>
+		<h:panelGrid columns="2" border="0">
 		<h:outputLabel for="Delivery_types" value="Delivery types" />
 		<h:selectManyCheckbox id="Delivery_types" value="#{channelBean.channel.deliveryTypes}" required="true">
 			<f:converter converterId="ed.DeliveryTypes" />
 			<f:selectItems value="#{channelBean.deliveryTypesItems}" />
 		</h:selectManyCheckbox>
+		</h:panelGrid>
 	</htm:fieldset>
 
 	<htm:br/>
-	<h:panelGrid columns="4">
+	<h:panelGrid columns="3">
 		<h:commandButton action="channelUrl" value="#{msg['label.back']}" rendered="#{channelBean.channel.mode != 'PUSH'}" />
 		<h:commandButton action="#{channelBean.prepareTemplates}" value="#{msg['label.next']}" />
 		<h:commandButton action="#{channelBean.save}" value="#{msg['label.save']}" />
