@@ -181,9 +181,9 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
             Query countQuery = session.createQuery("select count( distinct em.value) from EventMetadata em, Event as e where e.channel = :channel and em.event = e and em.property = :property and em.value like '%" + value + "%' ");
             countQuery.setString("property", property);
             countQuery.setEntity("channel", channel);
-            Integer count = (Integer) countQuery.uniqueResult();
+            Long count = (Long) countQuery.uniqueResult();
             if (count.intValue() > searchLimit) {
-                rDto.put("limit", new Integer(searchLimit));
+                rDto.put("limit", searchLimit);
                 rDto.setResultAsFailure();
             } else {
                 String q = "select em  from EventMetadata as em  , Event as e where e.channel = :channel and em.event = e and em.property = :property and em.value like '%" + value + "%' group by em.value";
