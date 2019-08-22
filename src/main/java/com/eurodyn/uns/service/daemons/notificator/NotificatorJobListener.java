@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.quartz.*;
 
-import com.eurodyn.uns.service.daemons.harvester.Harvester;
+//import com.eurodyn.uns.service.daemons.harvester.Harvester;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,10 +68,10 @@ public class NotificatorJobListener implements JobListener {
                     }
                 }
             }
-            if (!exists) {
-                Harvester harvester = new Harvester();
-                harvester.start();
-            }
+//            if (!exists) {
+//                Harvester harvester = new Harvester();
+//                harvester.start();
+//            }
 
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);

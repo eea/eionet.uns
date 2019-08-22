@@ -21,11 +21,11 @@
 
     <h:panelGrid columns="2">
 
-        <h:outputLabel value="Harvester interval (minutes):" for="harvester_interval"/>
-        <h:outputText id="harvester_interval" value="#{configBean.configMap['daemons/harvester/interval'].tempValue}"/>
+<%--        <h:outputLabel value="Harvester interval (minutes):" for="harvester_interval"/>--%>
+<%--        <h:outputText id="harvester_interval" value="#{configBean.configMap['daemons/harvester/interval'].tempValue}"/>--%>
 
-        <h:outputLabel value="Harvester threads:" for="harvester_threads" />
-        <h:outputText id="harvester_threads" value="#{configBean.configMap['daemons/harvester/pull_threads'].tempValue}"/>
+<%--        <h:outputLabel value="Harvester threads:" for="harvester_threads" />--%>
+<%--        <h:outputText id="harvester_threads" value="#{configBean.configMap['daemons/harvester/pull_threads'].tempValue}"/>--%>
 
         <h:outputLabel value="Notificator interval (minutes):" for="notificator_interval" />
         <h:outputText id="notificator_interval" value="#{configBean.configMap['daemons/notificator/interval'].tempValue}"/>

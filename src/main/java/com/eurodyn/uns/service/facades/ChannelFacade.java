@@ -75,17 +75,17 @@ public class ChannelFacade {
         return result;
     }
     
-    public List findHarvestChannels(){
-        List channels = null;
-        try {
-            channels = daoFactory.getChannelDao().findHarvestChannels();
-        } catch (DAOException e) {
-            LOGGER.error("Error", e);
-        } catch (Exception e) {
-            LOGGER.error("Error", e);
-        }
-        return channels;
-    }
+//    public List findHarvestChannels(){
+//        List channels = null;
+//        try {
+//            channels = daoFactory.getChannelDao().findHarvestChannels();
+//        } catch (DAOException e) {
+//            LOGGER.error("Error", e);
+//        } catch (Exception e) {
+//            LOGGER.error("Error", e);
+//        }
+//        return channels;
+//    }
     
     public HashMap findUnprocessedEvents() {
         List channels = null;
