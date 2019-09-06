@@ -3,7 +3,7 @@
 ### Prerequisites
 
 * Java 11
-* Maven 3.3.9
+* Maven 3.6.1
 * Tomcat 9.x or higher
 * MySQL 5.5
 * Docker 1.12 or higher
