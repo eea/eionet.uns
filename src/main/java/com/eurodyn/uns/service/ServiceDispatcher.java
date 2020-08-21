@@ -118,6 +118,9 @@ public class ServiceDispatcher {
                     event.setRtype(o);
                     event.setLastSeen(DateUtil.getCurrentUTCDate());
                 } else {
+                    event.setExtId(s);
+                    event.setRtype(o);
+                    event.setLastSeen(DateUtil.getCurrentUTCDate());
                     EventMetadata emd=new EventMetadata();
                     emd.setEvent(event);
                     emd.setProperty(p);
