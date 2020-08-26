@@ -113,4 +113,14 @@
     </property>
   </bean>
 
+  <bean id="directoryProperties" class="eionet.directory.DynamicProperties">
+    <property name="ldapPrincipal" value="${config.ldap.principal}" />
+    <property name="ldapPassword" value="${config.ldap.password}" />
+    <property name="ldapUrl" value="${config.ldap.url}"/>
+  </bean>
+
+  <bean id="directoryPropertiesLoader" class="eionet.directory.DynamicPropertiesLoader">
+    <property name="dynamicProperties" ref="directoryProperties"/>
+  </bean>
+
 </beans>
