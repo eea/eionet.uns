@@ -32,7 +32,7 @@ In the freshly created local.properties file, change property values as
 Create UNS database and database user in MySql matching the values in local.properties.
 
 ```mysql
-CREATE DATABASE uns;
+CREATE DATABASE UNS2;
 CREATE USER 'unsuser'@'localhost' IDENTIFIED BY 'password-here';
 GRANT ALL PRIVILEGES ON uns.* TO 'unsuser'@'localhost'
 ```
