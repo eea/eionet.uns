@@ -63,7 +63,8 @@ public class EionetCASFilter extends CASFilter {
             HttpSession session = httpRequest.getSession();
             if (session != null && ( session.getAttribute("user") == null ||  !((User) session.getAttribute("user")).isLoggedIn() ) ) {
                 User user = (User) session.getAttribute("user");
-                logIn(httpRequest,httpResponse,user);
+//                logIn(httpRequest,httpResponse,user);
+                logIn2(httpRequest);
                 LOGGER.debug("Logged in user " + session.getAttribute(CAS_FILTER_USER));
                 String requestURI = httpRequest.getRequestURI();
                 if (requestURI.indexOf(EIONET_COOKIE_LOGIN_PATH) > -1) {
@@ -179,8 +180,9 @@ public class EionetCASFilter extends CASFilter {
         String where = "/subscriptions/subscriptions.jsf";
         if (request.isUserInRole("xmlrpc"))
             where = "/xmlrpc/rpcUserChannels.jsf";
-        String redirectUrl = "https://" + SERVER_NAME + where;
-        response.sendRedirect(redirectUrl);     
+//        String redirectUrl = "https://" + SERVER_NAME + where;
+        String redirectUrl = "http://" + SERVER_NAME + where;
+        response.sendRedirect(redirectUrl);
     }
     
       public static String forRegex(String aRegexFragment){
