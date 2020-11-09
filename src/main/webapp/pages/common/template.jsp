@@ -1,6 +1,7 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
 <%@ page isELIgnored="false" contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%@ page import="com.eurodyn.uns.web.filters.EULoginCASFilter" %>
 
 <%
 String a=request.getContextPath(); 
@@ -60,7 +61,7 @@ response.setDateHeader("Expires", 0);
 			//<![CDATA[
 				function get_cookie( cookie_name )
 				{
-				  var results = document.cookie.match ( cookie_name + '=(.*?)(;|$)' );				
+				  var results = document.cookie.match ( cookie_name + '=(.*?)(;|$)' );
 				  if ( results )
 				    return ( unescape ( results[1] ) );
 				  else
@@ -70,10 +71,15 @@ response.setDateHeader("Expires", 0);
 				if (eionetLoginCookieValue != null && eionetLoginCookieValue == "loggedIn"){
 					window.location="<%=EionetCASFilter.getEionetCookieCASLoginURL(request) %>";
 				}
+
+				euLoginCookieValue = get_cookie("<%= EULoginCASFilter.EU_LOGIN_COOKIE_NAME %>");
+				if (euLoginCookieValue != null && euLoginCookieValue == "loggedIn"){
+					window.location="<%=EULoginCASFilter.getEuLoginCookieCASLoginURL(request) %>";
+				}
 			//]]>
 		</script>
 		<%}%>
-		
+
 		<link rel="alternate" type="application/rss+xml" title="Unified Notification Service RSS" href="http://uns.eionet.europa.eu/events" />
 		
 	</head>
@@ -99,7 +105,9 @@ response.setDateHeader("Expires", 0);
 					<h:panelGroup rendered="#{(empty sessionScope.user) or not sessionScope.user.loggedIn }">
 						<f:verbatim>
 							<a id="loginlink" href="<%=EionetCASFilter.getCASLoginURL(request)%>" title="Login">Login</a>
-						</f:verbatim>
+							<a id="loginlink" href="<%=EULoginCASFilter.getCASLoginURL(request)%>" title="EU Login">EU Login</a>
+<%--							<a id="loginlink" href="<c:url value="/pages/login.jsp" />" title="Login">Login</a>--%>
+					</f:verbatim>
 					</h:panelGroup>
 					<a href="#" id="pagehelplink" onclick="javascript:openWindow('<c:url value="/help/help.jsp"/>','onlinehelp');" title="Help"><span><fmt:message key="label.menu.help"/></span></a>
 					<a id="printlink" title="Print this page" href="javascript:this.print();"><span>Print</span></a>

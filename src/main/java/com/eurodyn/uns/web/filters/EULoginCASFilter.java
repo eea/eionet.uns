@@ -26,34 +26,34 @@ import org.slf4j.LoggerFactory;
 
 import edu.yale.its.tp.cas.client.filter.CASFilter;
 
-public class EionetCASFilter extends CASFilter {
+public class EULoginCASFilter extends CASFilter {
 
-    public static final String EIONET_LOGIN_COOKIE_NAME = "eionetCasLogin";
+    public static final String EU_LOGIN_COOKIE_NAME = "euLoginCasLogin";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EionetCASFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EULoginCASFilter.class);
 
-    private static final String EIONET_COOKIE_LOGIN_PATH = "eionetCookieLogin";
+    private static final String EU_LOGIN_COOKIE_LOGIN_PATH = "euLoginCookieLogin";
 
     private static String CAS_LOGIN_URL = null;
 
     private static String SERVER_NAME = null;
 
-    private static String EIONET_LOGIN_COOKIE_DOMAIN = null;
+    private static String EU_LOGIN_COOKIE_DOMAIN = null;
     
     private UserFacade userFacade = new UserFacade();
 
     public void init(FilterConfig config) throws ServletException {
-        CASFilterConfig casFilterConfig = CASFilterConfig.getInstance(config);
+        EULoginCASFilterConfig casFilterConfig = EULoginCASFilterConfig.getInstance(config);
         CAS_LOGIN_URL = casFilterConfig.getInitParameter(LOGIN_INIT_PARAM);
         SERVER_NAME = casFilterConfig.getInitParameter(SERVERNAME_INIT_PARAM);
-        EIONET_LOGIN_COOKIE_DOMAIN = Properties.getStringProperty("eionetLoginCookieDomain");
+        EU_LOGIN_COOKIE_DOMAIN = Properties.getStringProperty("EULoginCookieDomain");
         super.init(casFilterConfig);
 
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain fc) throws ServletException, IOException {
-        LOGGER.debug("Request hits the EionetCASFilter ");
-        CASFilterChain chain = new CASFilterChain();
+        LOGGER.debug("Request hits the EULoginCASFilter ");
+        EULoginCASFilterChain chain = new EULoginCASFilterChain();
         super.doFilter(request, response, chain);
 
         if (chain.isDoNext()) {
@@ -67,11 +67,11 @@ public class EionetCASFilter extends CASFilter {
 //                logIn2(httpRequest);
                 LOGGER.debug("Logged in user " + session.getAttribute(CAS_FILTER_USER));
                 String requestURI = httpRequest.getRequestURI();
-                if (requestURI.indexOf(EIONET_COOKIE_LOGIN_PATH) > -1) {
-                    redirectAfterEionetCookieLogin(httpRequest, httpResponse);
+                if (requestURI.indexOf(EU_LOGIN_COOKIE_LOGIN_PATH) > -1) {
+                    redirectAfterEuLoginCookieLogin(httpRequest, httpResponse);
                     return;
                 } else if (requestURI.indexOf("/login/") > -1) {
-                    attachEionetLoginCookie(httpResponse,true);
+                    attachEULoginCookie(httpResponse,true);
                     redirectAfterLogin(httpRequest,httpResponse);
                     return;
                 }
@@ -82,11 +82,11 @@ public class EionetCASFilter extends CASFilter {
         LOGGER.debug("chain.isDoNext() is false");
     }
 
-    public static void attachEionetLoginCookie(HttpServletResponse response, boolean isLoggedIn){
-        Cookie tgc = new Cookie(EIONET_LOGIN_COOKIE_NAME, isLoggedIn?"loggedIn":"loggedOut");
+    public static void attachEULoginCookie(HttpServletResponse response, boolean isLoggedIn){
+        Cookie tgc = new Cookie(EU_LOGIN_COOKIE_NAME, isLoggedIn?"loggedIn":"loggedOut");
         tgc.setMaxAge(-1);
-        if (!EIONET_LOGIN_COOKIE_DOMAIN.equalsIgnoreCase("localhost"))
-            tgc.setDomain(EIONET_LOGIN_COOKIE_DOMAIN);
+        if (!EU_LOGIN_COOKIE_DOMAIN.equalsIgnoreCase("localhost"))
+            tgc.setDomain(EU_LOGIN_COOKIE_DOMAIN);
         tgc.setPath("/");           
         response.addCookie(tgc);        
     }
@@ -101,7 +101,7 @@ public class EionetCASFilter extends CASFilter {
     }
     
     
-    public static String getEionetCookieCASLoginURL(HttpServletRequest request) {
+    public static String getEuLoginCookieCASLoginURL(HttpServletRequest request) {
 
         String contextPath = request.getContextPath();
         String serviceURL =  request.getRequestURL().toString(); 
@@ -113,15 +113,15 @@ public class EionetCASFilter extends CASFilter {
 
         if (contextPath.equals("")) {
             if (serviceURI.equals("/"))
-                serviceURL = serviceURL + EIONET_COOKIE_LOGIN_PATH + "/";
+                serviceURL = serviceURL + EU_LOGIN_COOKIE_LOGIN_PATH + "/";
             else
-                serviceURL = serviceURL.replaceFirst(forRegex(serviceURI), "/" + EIONET_COOKIE_LOGIN_PATH + serviceURI);
+                serviceURL = serviceURL.replaceFirst(forRegex(serviceURI), "/" + EU_LOGIN_COOKIE_LOGIN_PATH + serviceURI);
         } else {
             String servletPath = serviceURI.substring(contextPath.length(), serviceURI.length());
             if (serviceURI.equals("/"))
-                serviceURL = serviceURL + EIONET_COOKIE_LOGIN_PATH + "/";
+                serviceURL = serviceURL + EU_LOGIN_COOKIE_LOGIN_PATH + "/";
             else
-                serviceURL = serviceURL.replaceFirst(forRegex(serviceURI), contextPath + "/" + EIONET_COOKIE_LOGIN_PATH + servletPath);
+                serviceURL = serviceURL.replaceFirst(forRegex(serviceURI), contextPath + "/" + EU_LOGIN_COOKIE_LOGIN_PATH + servletPath);
         }
 
         try {
@@ -135,13 +135,13 @@ public class EionetCASFilter extends CASFilter {
 
     }
 
-    private void redirectAfterEionetCookieLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void redirectAfterEuLoginCookieLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String requestUri = request.getRequestURI() + (request.getQueryString() != null ? ("?" +request.getQueryString()):"" );
         String realURI = null;
-        if (requestUri.endsWith(EIONET_COOKIE_LOGIN_PATH + "/"))
-            realURI = requestUri.replaceFirst(EIONET_COOKIE_LOGIN_PATH + "/", "");
+        if (requestUri.endsWith(EU_LOGIN_COOKIE_LOGIN_PATH + "/"))
+            realURI = requestUri.replaceFirst(EU_LOGIN_COOKIE_LOGIN_PATH + "/", "");
         else
-            realURI = requestUri.replaceFirst("/" + EIONET_COOKIE_LOGIN_PATH, "");
+            realURI = requestUri.replaceFirst("/" + EU_LOGIN_COOKIE_LOGIN_PATH, "");
         response.sendRedirect(realURI);
     }
 
@@ -250,7 +250,7 @@ public class EionetCASFilter extends CASFilter {
 
 }
 
-class CASFilterChain implements FilterChain {
+class EULoginCASFilterChain implements FilterChain {
 
     private boolean doNext = false;
 
