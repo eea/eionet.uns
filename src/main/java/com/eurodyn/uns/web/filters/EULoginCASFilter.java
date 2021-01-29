@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.yale.its.tp.cas.client.filter.CASFilter;
+import org.springframework.web.util.WebUtils;
 
 public class EULoginCASFilter extends CASFilter {
 
@@ -64,13 +65,12 @@ public class EULoginCASFilter extends CASFilter {
             if (session != null && ( session.getAttribute("user") == null ||  !((User) session.getAttribute("user")).isLoggedIn() ) ) {
                 User user = (User) session.getAttribute("user");
                 logIn(httpRequest,httpResponse,user);
-//                logIn2(httpRequest);
                 LOGGER.debug("Logged in user " + session.getAttribute(CAS_FILTER_USER));
                 String requestURI = httpRequest.getRequestURI();
                 if (requestURI.indexOf(EU_LOGIN_COOKIE_LOGIN_PATH) > -1) {
                     redirectAfterEuLoginCookieLogin(httpRequest, httpResponse);
                     return;
-                } else if (requestURI.indexOf("/login/") > -1) {
+                } else if (requestURI.indexOf("/eu-login/") > -1) {
                     attachEULoginCookie(httpResponse,true);
                     redirectAfterLogin(httpRequest,httpResponse);
                     return;
@@ -88,12 +88,20 @@ public class EULoginCASFilter extends CASFilter {
         if (!EU_LOGIN_COOKIE_DOMAIN.equalsIgnoreCase("localhost"))
             tgc.setDomain(EU_LOGIN_COOKIE_DOMAIN);
         tgc.setPath("/");           
-        response.addCookie(tgc);        
+        response.addCookie(tgc);
     }
-    
-    
+
+    public static boolean checkEULoginCookie(HttpServletRequest request) {
+        Cookie cookie = WebUtils.getCookie(request, EU_LOGIN_COOKIE_NAME);
+        if(cookie != null && cookie.getValue().equals("loggedIn")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static String getCASLoginURL(HttpServletRequest request) {
-        return CAS_LOGIN_URL + "?service=" + request.getScheme() + "://" + SERVER_NAME + request.getContextPath() + "/login/home.jsf";
+        return CAS_LOGIN_URL + "?service=" + request.getScheme() + "://" + SERVER_NAME + request.getContextPath() + "/eu-login/home.jsf";
     }
 
     public static String getCASLogoutURL(HttpServletRequest request) {
@@ -179,8 +187,7 @@ public class EULoginCASFilter extends CASFilter {
         String where = "/subscriptions/subscriptions.jsf";
         if (request.isUserInRole("xmlrpc"))
             where = "/xmlrpc/rpcUserChannels.jsf";
-//        String redirectUrl = "https://" + SERVER_NAME + where;
-        String redirectUrl = "http://" + SERVER_NAME + where;
+        String redirectUrl = "https://" + SERVER_NAME + where;
         response.sendRedirect(redirectUrl);
     }
     

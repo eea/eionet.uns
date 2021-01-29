@@ -39,7 +39,7 @@ public class EionetCASFilter extends CASFilter {
     private static String SERVER_NAME = null;
 
     private static String EIONET_LOGIN_COOKIE_DOMAIN = null;
-    
+
     private UserFacade userFacade = new UserFacade();
 
     public void init(FilterConfig config) throws ServletException {
@@ -61,18 +61,17 @@ public class EionetCASFilter extends CASFilter {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             HttpSession session = httpRequest.getSession();
-            if (session != null && ( session.getAttribute("user") == null ||  !((User) session.getAttribute("user")).isLoggedIn() ) ) {
+            if (session != null && (session.getAttribute("user") == null || !((User) session.getAttribute("user")).isLoggedIn())) {
                 User user = (User) session.getAttribute("user");
-                logIn(httpRequest,httpResponse,user);
-//                logIn2(httpRequest);
+                logIn(httpRequest, httpResponse, user);
                 LOGGER.debug("Logged in user " + session.getAttribute(CAS_FILTER_USER));
                 String requestURI = httpRequest.getRequestURI();
                 if (requestURI.indexOf(EIONET_COOKIE_LOGIN_PATH) > -1) {
                     redirectAfterEionetCookieLogin(httpRequest, httpResponse);
                     return;
                 } else if (requestURI.indexOf("/login/") > -1) {
-                    attachEionetLoginCookie(httpResponse,true);
-                    redirectAfterLogin(httpRequest,httpResponse);
+                    attachEionetLoginCookie(httpResponse, true);
+                    redirectAfterLogin(httpRequest, httpResponse);
                     return;
                 }
             }
@@ -82,30 +81,30 @@ public class EionetCASFilter extends CASFilter {
         LOGGER.debug("chain.isDoNext() is false");
     }
 
-    public static void attachEionetLoginCookie(HttpServletResponse response, boolean isLoggedIn){
-        Cookie tgc = new Cookie(EIONET_LOGIN_COOKIE_NAME, isLoggedIn?"loggedIn":"loggedOut");
+    public static void attachEionetLoginCookie(HttpServletResponse response, boolean isLoggedIn) {
+        Cookie tgc = new Cookie(EIONET_LOGIN_COOKIE_NAME, isLoggedIn ? "loggedIn" : "loggedOut");
         tgc.setMaxAge(-1);
         if (!EIONET_LOGIN_COOKIE_DOMAIN.equalsIgnoreCase("localhost"))
             tgc.setDomain(EIONET_LOGIN_COOKIE_DOMAIN);
-        tgc.setPath("/");           
-        response.addCookie(tgc);        
+        tgc.setPath("/");
+        response.addCookie(tgc);
     }
-    
-    
+
+
     public static String getCASLoginURL(HttpServletRequest request) {
         return CAS_LOGIN_URL + "?service=" + request.getScheme() + "://" + SERVER_NAME + request.getContextPath() + "/login/home.jsf";
     }
 
     public static String getCASLogoutURL(HttpServletRequest request) {
-        return CAS_LOGIN_URL.replaceFirst("/login","/logout")+ "?url=" + request.getScheme() + "://" + SERVER_NAME + request.getContextPath();
+        return CAS_LOGIN_URL.replaceFirst("/login", "/logout") + "?url=" + request.getScheme() + "://" + SERVER_NAME + request.getContextPath();
     }
-    
-    
+
+
     public static String getEionetCookieCASLoginURL(HttpServletRequest request) {
 
         String contextPath = request.getContextPath();
-        String serviceURL =  request.getRequestURL().toString(); 
-        if (request.getQueryString() != null && request.getQueryString().length() > 0){
+        String serviceURL = request.getRequestURL().toString();
+        if (request.getQueryString() != null && request.getQueryString().length() > 0) {
             serviceURL = serviceURL + "?" + request.getQueryString();
         }
 
@@ -125,18 +124,18 @@ public class EionetCASFilter extends CASFilter {
         }
 
         try {
-            serviceURL = URLEncoder.encode(serviceURL,"UTF-8");
+            serviceURL = URLEncoder.encode(serviceURL, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             LOGGER.error("Error", e);
         }
-        
-        return CAS_LOGIN_URL + "?service=" +   serviceURL ;
+
+        return CAS_LOGIN_URL + "?service=" + serviceURL;
 
 
     }
 
     private void redirectAfterEionetCookieLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String requestUri = request.getRequestURI() + (request.getQueryString() != null ? ("?" +request.getQueryString()):"" );
+        String requestUri = request.getRequestURI() + (request.getQueryString() != null ? ("?" + request.getQueryString()) : "");
         String realURI = null;
         if (requestUri.endsWith(EIONET_COOKIE_LOGIN_PATH + "/"))
             realURI = requestUri.replaceFirst(EIONET_COOKIE_LOGIN_PATH + "/", "");
@@ -145,22 +144,23 @@ public class EionetCASFilter extends CASFilter {
         response.sendRedirect(realURI);
     }
 
-    private void  logIn(HttpServletRequest request, HttpServletResponse response, User user){
+    private void logIn(HttpServletRequest request, HttpServletResponse response, User user) {
         HttpSession session = request.getSession();
         if (user == null || !user.getExternalId().equals(session.getAttribute(CAS_FILTER_USER)))
-            user = userFacade.getUser( (String)session.getAttribute(CAS_FILTER_USER), true);
-        
+            user = userFacade.getUser((String) session.getAttribute(CAS_FILTER_USER), true);
+
         String cookieId = UserFacade.hasPerm(user.getExternalId(), "/" + "xmlrpc", "x") ? "-1" : user.getId().toString();
         Cookie cookie = new Cookie("unsDashboard", cookieId);
         cookie.setMaxAge(30 * 24 * 60 * 60); // 30 days
-        cookie.setPath(request.getContextPath().equals("")?"/":request.getContextPath());
+        cookie.setPath(request.getContextPath().equals("") ? "/" : request.getContextPath());
         response.addCookie(cookie);
         user.setLoggedIn(true);
         request.getSession().setAttribute("user", user);
 
+
     }
-    
-    public static String logIn2(HttpServletRequest request) throws IOException{
+
+    public static String logIn2(HttpServletRequest request) throws IOException {
 
         User user = new User();
         user.setFullName("Risto Alt");
@@ -170,83 +170,67 @@ public class EionetCASFilter extends CASFilter {
         roles.add("admin");
         user.setUserRoles(roles);
         request.getSession().setAttribute("user", user);
-        return "http://localhost:8080/subscriptions/subscriptions.jsf";     
-        
+        return "http://localhost:8080/subscriptions/subscriptions.jsf";
+
     }
-    
-    
-    private void redirectAfterLogin(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+
+    private void redirectAfterLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String where = "/subscriptions/subscriptions.jsf";
         if (request.isUserInRole("xmlrpc"))
             where = "/xmlrpc/rpcUserChannels.jsf";
-//        String redirectUrl = "https://" + SERVER_NAME + where;
-        String redirectUrl = "http://" + SERVER_NAME + where;
+        String redirectUrl = "https://" + SERVER_NAME + where;
         response.sendRedirect(redirectUrl);
     }
-    
-      public static String forRegex(String aRegexFragment){
-            final StringBuffer result = new StringBuffer();
 
-            final StringCharacterIterator iterator = new StringCharacterIterator(aRegexFragment);
-            char character =  iterator.current();
-            while (character != CharacterIterator.DONE ){
-              /*
-              * All literals need to have backslashes doubled.
-              */
-              if (character == '.') {
+    public static String forRegex(String aRegexFragment) {
+        final StringBuffer result = new StringBuffer();
+
+        final StringCharacterIterator iterator = new StringCharacterIterator(aRegexFragment);
+        char character = iterator.current();
+        while (character != CharacterIterator.DONE) {
+            /*
+             * All literals need to have backslashes doubled.
+             */
+            if (character == '.') {
                 result.append("\\.");
-              }
-              else if (character == '\\') {
+            } else if (character == '\\') {
                 result.append("\\\\");
-              }
-              else if (character == '?') {
+            } else if (character == '?') {
                 result.append("\\?");
-              }
-              else if (character == '*') {
+            } else if (character == '*') {
                 result.append("\\*");
-              }
-              else if (character == '+') {
+            } else if (character == '+') {
                 result.append("\\+");
-              }
-              else if (character == '&') {
+            } else if (character == '&') {
                 result.append("\\&");
-              }
-              else if (character == ':') {
+            } else if (character == ':') {
                 result.append("\\:");
-              }
-              else if (character == '{') {
+            } else if (character == '{') {
                 result.append("\\{");
-              }
-              else if (character == '}') {
+            } else if (character == '}') {
                 result.append("\\}");
-              }
-              else if (character == '[') {
+            } else if (character == '[') {
                 result.append("\\[");
-              }
-              else if (character == ']') {
+            } else if (character == ']') {
                 result.append("\\]");
-              }
-              else if (character == '(') {
+            } else if (character == '(') {
                 result.append("\\(");
-              }
-              else if (character == ')') {
+            } else if (character == ')') {
                 result.append("\\)");
-              }
-              else if (character == '^') {
+            } else if (character == '^') {
                 result.append("\\^");
-              }
-              else if (character == '$') {
+            } else if (character == '$') {
                 result.append("\\$");
-              }
-              else {
+            } else {
                 //the char is not a special one
                 //add it to the result as is
                 result.append(character);
-              }
-              character = iterator.next();
             }
-            return result.toString();
-          }
+            character = iterator.next();
+        }
+        return result.toString();
+    }
 
 }
 
@@ -262,6 +246,3 @@ class CASFilterChain implements FilterChain {
         return doNext;
     }
 }
-
-
-

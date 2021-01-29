@@ -2,9 +2,13 @@
 <%@page import="com.eurodyn.uns.service.facades.ChannelFacade"%>
 <%@page import="java.util.*"%>
 <%@page import="com.eurodyn.uns.model.Channel"%>
+<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
+<%@ page import="com.eurodyn.uns.web.filters.EULoginCASFilter" %>
+
 <f:verbatim >
-	<br />
-	
+	<h:panelGroup rendered="true">
+		<br />
+		<f:verbatim>
 	<div style="width:99%;">
 		<div class="box"> 
 			<div class="boxleft"> 
@@ -36,11 +40,43 @@
 			</div>
 		</div>
 	</div>
-	
-	<br/>
+			<br/>
+		</f:verbatim>
+	</h:panelGroup>
+
+	<h:panelGroup rendered="#{(empty sessionScope.user) or not sessionScope.user.loggedIn }">
+		<f:verbatim>
+		<div style="width:99%;">
+				<div class="box">
+					<div class="boxleft">
+						<div class="boxtop">
+							<div></div>
+						</div>
+						<h4 style="font-size: 120%; background: #00446A; border-top: 0px; color: white">Login</h4>
+						<div class="boxcontent" style="height: 210px;">
+							<p>Please login with an user authorised to access the resources you need</p>
+							<div style="width: 45%; float: left; text-align: center;">
+								<a href="<%=EULoginCASFilter.getCASLoginURL(request)%>" title="EU Login"><img src="../images/login/eu_logo.jpg" alt="EU Login"/></a>
+								<br/>
+								<h5>EU Login</h5>
+							</div>
+							<div style="width: 45%; float: right; text-align: center;">
+								<a href="<%=EionetCASFilter.getCASLoginURL(request)%>" title="EIONET Login"><img src="../images/login/logo_eionet.png" alt="EIONET Login"/></a>
+								<br/>
+								<h5>EIONET Login</h5>
+							</div>
+						</div>
+						<div class="boxbottom">
+							<div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br/>
+		</f:verbatim>
+	</h:panelGroup>
 	
 	<div id="table" >
-
 		<div class="dashcolumn" style="width:49%; float:left;">
 			<div id="channelid_1" class="box"> 
 				<div class="boxleft"> 
