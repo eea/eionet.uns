@@ -1,6 +1,6 @@
 pipeline {
   agent {
-            node { label "docker-host" }
+            node { label "eea-host" }
   }
 
   environment {
