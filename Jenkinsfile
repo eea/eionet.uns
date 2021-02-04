@@ -22,7 +22,7 @@ pipeline {
   stages {
     stage('Project Build') {
       steps {
-          sh 'mvn clean -B -V verify  -Dmaven.test.skip=true'
+          sh 'mvn clean -B -V verify  -Dmaven.test.skip=true -Xmx2048m'
       }
       post {
           success {
