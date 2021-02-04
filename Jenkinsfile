@@ -1,6 +1,6 @@
 pipeline {
   agent {
-            node { label "eea-host" }
+            node { label "eea" }
   }
 
   environment {
