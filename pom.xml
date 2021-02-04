@@ -114,7 +114,7 @@
           <source>${javaVersion}</source>
           <target>${javaVersion}</target>
           <meminitial>1024m</meminitial>
-          <maxmem>2048m</maxmem>
+          <maxmem>4096m</maxmem>
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
