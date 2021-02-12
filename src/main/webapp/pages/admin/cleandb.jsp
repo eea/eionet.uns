@@ -1,5 +1,4 @@
 <%@ include file="/pages/common/taglibs.jsp"%>
-<%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
 <%
 	com.eurodyn.uns.model.User user =  (com.eurodyn.uns.model.User) com.eurodyn.uns.web.jsf.LoginBean.getUser(request);
 	String userRole = "";

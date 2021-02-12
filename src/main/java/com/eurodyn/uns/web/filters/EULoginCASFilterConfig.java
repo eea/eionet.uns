@@ -12,8 +12,8 @@ import java.util.Hashtable;
  * CAS Filter Config.
  *
  */
-public class CASFilterConfig extends Hashtable<String, String> implements FilterConfig {
-    private static volatile CASFilterConfig instance;
+public class EULoginCASFilterConfig extends Hashtable<String, String> implements FilterConfig {
+    private static volatile EULoginCASFilterConfig instance;
     private String filterName;
     private ServletContext servletContext;
 
@@ -21,7 +21,7 @@ public class CASFilterConfig extends Hashtable<String, String> implements Filter
      *
      * @param defaultConfig
      */
-    private CASFilterConfig(FilterConfig defaultConfig) {
+    private EULoginCASFilterConfig(FilterConfig defaultConfig) {
         super();
         if (defaultConfig != null) {
             // load default configuration supplied by CAS
@@ -49,13 +49,13 @@ public class CASFilterConfig extends Hashtable<String, String> implements Filter
      *
      * @param defaultConfig
      */
-    public static CASFilterConfig getInstance(FilterConfig defaultConfig) {
+    public static EULoginCASFilterConfig getInstance(FilterConfig defaultConfig) {
         if (instance == null) {
-            synchronized (CASFilterConfig.class) {
+            synchronized (EULoginCASFilterConfig.class) {
                 // double-checked locking pattern
                 // (http://www.ibm.com/developerworks/java/library/j-dcl.html)
                 if (instance == null) {
-                    instance = new CASFilterConfig(defaultConfig);
+                    instance = new EULoginCASFilterConfig(defaultConfig);
                 }
             }
         }
@@ -96,10 +96,7 @@ public class CASFilterConfig extends Hashtable<String, String> implements Filter
 
     private enum CASInitParam {
 
-//        CAS_LOGIN_URL(CASFilter.LOGIN_INIT_PARAM),
-//        CAS_VALIDATE_URL(CASFilter.VALIDATE_INIT_PARAM),
         CAS_SERVER_NAME(CASFilter.SERVERNAME_INIT_PARAM);
-//        CAS_WRAP_REQUEST(CASFilter.WRAP_REQUESTS_INIT_PARAM);
 
         /** */
         private String propertyName;
