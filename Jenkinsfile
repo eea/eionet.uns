@@ -39,11 +39,7 @@ pipeline {
           steps {
                         sh '''mvn clean -B -V -P  verify  '''
           }
-          post {
-            always {
-                junit 'target/failsafe-reports/*.xml'
-            }
-          }
+
         }
 
         stage ('Docker build and push') {
