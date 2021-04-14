@@ -31,6 +31,21 @@ pipeline {
       }
     }
 
+
+    stage ('Unit Tests') {
+          when {
+            not { buildingTag() }
+          }
+          steps {
+                        sh '''mvn clean -B -V -P  verify  '''
+          }
+          post {
+            always {
+                junit 'target/failsafe-reports/*.xml'
+            }
+          }
+        }
+
         stage ('Docker build and push') {
       when {
           environment name: 'CHANGE_ID', value: ''
