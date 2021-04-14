@@ -84,7 +84,7 @@
             </column>
             <column name="FEED_URL" type="VARCHAR(255)"/>
             <column defaultValueNumeric="600" name="REFRESH_DELAY" type="INT UNSIGNED"/>
-            <column defaultValue="0000-00-00 00:00:00" name="CREATION_DATE" type="DATETIME">
+            <column defaultValue="1000-01-01 00:00:00" name="CREATION_DATE" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
             <column defaultValueBoolean="false" name="CSTATUS" type="BIT">
@@ -210,7 +210,7 @@
             <column defaultValueNumeric="0" name="DELIVERY_STATUS" type="INT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
-            <column defaultValue="0000-00-00 00:00:00" name="DELIVERY_TIME" type="DATETIME">
+            <column defaultValue="1000-01-01 00:00:00" name="DELIVERY_TIME" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -328,7 +328,7 @@
             <column defaultValue="" name="EXT_ID" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column defaultValue="0000-00-00 00:00:00" name="CREATION_DATE" type="DATETIME">
+            <column defaultValue="1000-01-01 00:00:00" name="CREATION_DATE" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
             <column defaultValue="" name="RTYPE" type="VARCHAR(255)">
@@ -545,7 +545,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="LEAD_TIME" type="INT UNSIGNED"/>
-            <column defaultValue="0000-00-00 00:00:00" name="CREATION_DATE" type="DATETIME">
+            <column defaultValue="1000-01-01 00:00:00" name="CREATION_DATE" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
             <column defaultValue="" name="SECONDARY_ID" type="VARCHAR(255)">
