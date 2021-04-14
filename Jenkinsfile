@@ -37,7 +37,7 @@ pipeline {
             not { buildingTag() }
           }
           steps {
-                        sh '''mvn clean -B -V -P  verify  '''
+                        sh '''mvn clean -B -V   verify  '''
           }
 
         }
