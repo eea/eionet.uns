@@ -66,6 +66,10 @@ public class ServiceDispatcher {
     public ServiceDispatcher(AppUser user) {
         this.rpcUser=userFacade.getUser(user.getUserName(),true);
     }
+
+    public ServiceDispatcher(String userName) {
+        this.rpcUser=userFacade.getUser(userName,true);
+    }
     
     public String test() {
         return "Nedjo";     
