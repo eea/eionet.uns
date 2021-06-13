@@ -1,8 +1,8 @@
 package com.eurodyn.uns.service;
 
+import com.eurodyn.uns.model.User;
+import com.eurodyn.uns.service.facades.UserFacade;
 import com.eurodyn.uns.web.exceptions.EndpointCallException;
-import eionet.acl.AppUser;
-import eionet.acl.SignOnException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,12 +34,13 @@ public class UserBasicAuthenticationService {
         String providedUserName = decodedUsernamePassword[0];
         String providedPassword = decodedUsernamePassword[1];
 
-        AppUser user = new AppUser();
-        try {
-            user.authenticate(providedUserName, providedPassword);
-        }
-        catch(SignOnException soe){
+        UserFacade userFacade = new UserFacade();
+        User user = userFacade.authenticate(providedUserName, providedPassword);
+        if(user == null){
             throw new EndpointCallException("User was not authenticated. Invalid credentials");
+        }
+        if(!userFacade.hasPerm(providedUserName, "/" + "rest", "x")){
+            throw new EndpointCallException("User was not authenticated. User" + providedUserName + " does not have permission.");
         }
         return providedUserName;
     }

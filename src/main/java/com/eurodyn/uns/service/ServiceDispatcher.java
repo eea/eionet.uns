@@ -223,7 +223,11 @@ public class ServiceDispatcher {
         channel=channelFacade.getChannelBySecId(channel_id);
         if (channel==null) throw new Exception("Channel doesn't exist");
         if (channel.getStatus() == 0) throw new Exception("Channel is disabled");
-        if (this.rpcUser == null || (channel.getCreator().getId().intValue() != this.rpcUser.getId().intValue())) throw new Exception("Not channel owner");
+        if (this.rpcUser == null || (channel.getCreator().getId().intValue() != this.rpcUser.getId().intValue())) {
+            //TODO the following check will be removed once xmlrpc is removed and only rest endpoints are used
+            if(this.rpcUser != null && (!this.rpcUser.getExternalId().equals("datadict") && !this.rpcUser.getExternalId().equals("xmlconv")))
+            throw new Exception("Not channel owner");
+        }
         return channel;     
     }
     

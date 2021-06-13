@@ -3,8 +3,6 @@ package com.eurodyn.uns.web;
 import com.eurodyn.uns.service.ServiceDispatcher;
 import com.eurodyn.uns.service.UserBasicAuthenticationService;
 import com.eurodyn.uns.web.exceptions.EndpointCallException;
-import eionet.acl.AppUser;
-import eionet.acl.SignOnException;
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.Vector;
 
 @Controller
@@ -46,11 +42,11 @@ public class UNSEventController {
     public String createChannel(HttpServletRequest request, @PathVariable String channel_name, @PathVariable String description) throws Exception {
         /* Get Basic Authentication header*/
         String authentication = request.getHeader("Authorization");
-        String username = userBasicAuthenticationService.checkUserAuthentication(authentication);
+        String username = getUserBasicAuthenticationService().checkUserAuthentication(authentication);
 
-        serviceDispatcher = new ServiceDispatcher(username);
+        initServiceDispatcher(username);
         LOGGER.info("User " + username + " called method createChannel");
-        return serviceDispatcher.createChannel(channel_name, description);
+        return getServiceDispatcher().createChannel(channel_name, description);
     }
 
     @RequestMapping(value = "sendNotification/{channel_id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -58,7 +54,7 @@ public class UNSEventController {
     public String sendNotification(HttpServletRequest request, @PathVariable String channel_id) throws Exception {
         /* Get Basic Authentication header*/
         String authentication = request.getHeader("Authorization");
-        String username = userBasicAuthenticationService.checkUserAuthentication(authentication);
+        String username = getUserBasicAuthenticationService().checkUserAuthentication(authentication);
 
         String triplesStr = request.getParameter("triples");
         if (triplesStr == null){
@@ -69,9 +65,9 @@ public class UNSEventController {
         ByteArrayInputStream in = new ByteArrayInputStream(Hex.decodeHex(triplesStr.toCharArray()));
         Vector triples = (Vector) new ObjectInputStream(in).readObject();
 
-        serviceDispatcher = new ServiceDispatcher(username);
+        initServiceDispatcher(username);
         LOGGER.info("User " + username + " called method create channel");
-        return serviceDispatcher.sendNotification(channel_id, triples);
+        return getServiceDispatcher().sendNotification(channel_id, triples);
     }
 
     @RequestMapping(value = "sendNotificationRDF/{channel_id}/{rdf}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -79,11 +75,11 @@ public class UNSEventController {
     public String sendNotificationRDF(HttpServletRequest request, @PathVariable String channel_id, @PathVariable String rdf) throws Exception {
         /* Get Basic Authentication header*/
         String authentication = request.getHeader("Authorization");
-        String username = userBasicAuthenticationService.checkUserAuthentication(authentication);
+        String username = getUserBasicAuthenticationService().checkUserAuthentication(authentication);
 
-        serviceDispatcher = new ServiceDispatcher(username);
+        initServiceDispatcher(username);
         LOGGER.info("User " + username + " called method sendNotificationRDF");
-        return serviceDispatcher.sendNotificationRDF(channel_id, rdf);
+        return getServiceDispatcher().sendNotificationRDF(channel_id, rdf);
     }
 
     @RequestMapping(value = "canSubscribe/{channel_id}/{subscriberUserName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -91,11 +87,11 @@ public class UNSEventController {
     public Boolean canSubscribe(HttpServletRequest request, @PathVariable String channel_id, @PathVariable String subscriberUserName) throws Exception {
         /* Get Basic Authentication header*/
         String authentication = request.getHeader("Authorization");
-        String username = userBasicAuthenticationService.checkUserAuthentication(authentication);
+        String username = getUserBasicAuthenticationService().checkUserAuthentication(authentication);
 
-        serviceDispatcher = new ServiceDispatcher(username);
+        initServiceDispatcher(username);
         LOGGER.info("User " + username + " called method create channel");
-        return serviceDispatcher.canSubscribe(channel_id, subscriberUserName);
+        return getServiceDispatcher().canSubscribe(channel_id, subscriberUserName);
     }
 
     @RequestMapping(value = "makeSubscription/{channel_id}/{subscriberUserName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -103,7 +99,7 @@ public class UNSEventController {
     public String makeSubscription(HttpServletRequest request, @PathVariable String channel_id, @PathVariable String subscriberUserName) throws Exception {
         /* Get Basic Authentication header*/
         String authentication = request.getHeader("Authorization");
-        String username = userBasicAuthenticationService.checkUserAuthentication(authentication);
+        String username = getUserBasicAuthenticationService().checkUserAuthentication(authentication);
 
         String filtersStr = request.getParameter("filters");
         if (filtersStr == null){
@@ -114,8 +110,20 @@ public class UNSEventController {
         ByteArrayInputStream in = new ByteArrayInputStream(Hex.decodeHex(filtersStr.toCharArray()));
         Vector filters = (Vector) new ObjectInputStream(in).readObject();
 
-        serviceDispatcher = new ServiceDispatcher(username);
+        initServiceDispatcher(username);
         LOGGER.info("User " + username + " called method create channel");
-        return serviceDispatcher.makeSubscription(channel_id, subscriberUserName, filters);
+        return getServiceDispatcher().makeSubscription(channel_id, subscriberUserName, filters);
+    }
+
+    public ServiceDispatcher getServiceDispatcher() {
+        return serviceDispatcher;
+    }
+
+    protected void initServiceDispatcher(String username){
+        this.serviceDispatcher = new ServiceDispatcher(username);
+    }
+
+    public UserBasicAuthenticationService getUserBasicAuthenticationService() {
+        return userBasicAuthenticationService;
     }
 }
