@@ -226,7 +226,7 @@ public class ServiceDispatcher {
         if (this.rpcUser == null || (channel.getCreator().getId().intValue() != this.rpcUser.getId().intValue())) {
             //TODO the following check will be removed once xmlrpc is removed and only rest endpoints are used
             if(this.rpcUser != null && (!this.rpcUser.getExternalId().equals("datadict") && !this.rpcUser.getExternalId().equals("xmlconv")))
-            throw new Exception("Not channel owner");
+                throw new Exception("Not channel owner");
         }
         return channel;     
     }

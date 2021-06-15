@@ -39,6 +39,7 @@ public class UNSEventControllerTest {
         when(unsEventController.getUserBasicAuthenticationService()).thenReturn(userBasicAuthenticationService);
         when(unsEventController.getServiceDispatcher()).thenReturn(serviceDispatcher);
         doNothing().when(unsEventController).initServiceDispatcher(Mockito.anyString());
+        doNothing().when(unsEventController).initUserBasicAuthenticationService();
     }
 
 

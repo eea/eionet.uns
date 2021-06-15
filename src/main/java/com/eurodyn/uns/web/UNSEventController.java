@@ -2,6 +2,7 @@ package com.eurodyn.uns.web;
 
 import com.eurodyn.uns.service.ServiceDispatcher;
 import com.eurodyn.uns.service.UserBasicAuthenticationService;
+import com.eurodyn.uns.service.impl.UserBasicAuthenticationServiceImpl;
 import com.eurodyn.uns.web.exceptions.EndpointCallException;
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
@@ -33,11 +34,11 @@ public class UNSEventController {
     private UserBasicAuthenticationService userBasicAuthenticationService;
 
     @Autowired
-    public UNSEventController(UserBasicAuthenticationService userBasicAuthenticationService) {
-        this.userBasicAuthenticationService = userBasicAuthenticationService;
+    public UNSEventController() {
+        initUserBasicAuthenticationService();
     }
 
-    @RequestMapping(value = "createChannel/{channel_name}/{description}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/createChannel/{channel_name}/{description}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String createChannel(HttpServletRequest request, @PathVariable String channel_name, @PathVariable String description) throws Exception {
         /* Get Basic Authentication header*/
@@ -49,7 +50,7 @@ public class UNSEventController {
         return getServiceDispatcher().createChannel(channel_name, description);
     }
 
-    @RequestMapping(value = "sendNotification/{channel_id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/legacy/sendNotification/{channel_id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String sendNotification(HttpServletRequest request, @PathVariable String channel_id) throws Exception {
         /* Get Basic Authentication header*/
@@ -70,7 +71,7 @@ public class UNSEventController {
         return getServiceDispatcher().sendNotification(channel_id, triples);
     }
 
-    @RequestMapping(value = "sendNotificationRDF/{channel_id}/{rdf}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/sendNotificationRDF/{channel_id}/{rdf}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String sendNotificationRDF(HttpServletRequest request, @PathVariable String channel_id, @PathVariable String rdf) throws Exception {
         /* Get Basic Authentication header*/
@@ -82,7 +83,7 @@ public class UNSEventController {
         return getServiceDispatcher().sendNotificationRDF(channel_id, rdf);
     }
 
-    @RequestMapping(value = "canSubscribe/{channel_id}/{subscriberUserName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/canSubscribe/{channel_id}/{subscriberUserName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Boolean canSubscribe(HttpServletRequest request, @PathVariable String channel_id, @PathVariable String subscriberUserName) throws Exception {
         /* Get Basic Authentication header*/
@@ -94,7 +95,7 @@ public class UNSEventController {
         return getServiceDispatcher().canSubscribe(channel_id, subscriberUserName);
     }
 
-    @RequestMapping(value = "makeSubscription/{channel_id}/{subscriberUserName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/legacy/makeSubscription/{channel_id}/{subscriberUserName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String makeSubscription(HttpServletRequest request, @PathVariable String channel_id, @PathVariable String subscriberUserName) throws Exception {
         /* Get Basic Authentication header*/
@@ -126,4 +127,9 @@ public class UNSEventController {
     public UserBasicAuthenticationService getUserBasicAuthenticationService() {
         return userBasicAuthenticationService;
     }
+
+    protected void initUserBasicAuthenticationService(){
+        this.userBasicAuthenticationService = new UserBasicAuthenticationServiceImpl();
+    }
+
 }
