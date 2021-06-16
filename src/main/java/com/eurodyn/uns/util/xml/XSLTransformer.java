@@ -35,12 +35,14 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXTransformerFactory;
@@ -82,10 +84,14 @@ public class XSLTransformer {
                     // { throw new TransformException(
                     // "Invalid SAX Tranformer. Doesn't support SAX"); }
                     transformerFactory = ((SAXTransformerFactory) tFactory);
+                    transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+                    transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
                 }
 
             } catch (MissingResourceException mre) {
                 LOGGER.error(mre.getMessage(), mre);
+            } catch (TransformerConfigurationException e) {
+                LOGGER.error(e.getMessage(), e);
             }
 
         }
