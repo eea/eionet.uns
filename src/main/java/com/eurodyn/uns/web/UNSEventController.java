@@ -46,8 +46,9 @@ public class UNSEventController {
         String username = getUserBasicAuthenticationService().checkUserAuthentication(authentication);
 
         initServiceDispatcher(username);
+        String result = getServiceDispatcher().createChannel(channel_name, description);
         LOGGER.info("User " + username + " called method createChannel");
-        return getServiceDispatcher().createChannel(channel_name, description);
+        return result;
     }
 
     @RequestMapping(value = "/legacy/sendNotification/{channel_id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -67,8 +68,9 @@ public class UNSEventController {
         Vector triples = (Vector) new ObjectInputStream(in).readObject();
 
         initServiceDispatcher(username);
-        LOGGER.info("User " + username + " called method create channel");
-        return getServiceDispatcher().sendNotification(channel_id, triples);
+        String result = getServiceDispatcher().sendNotification(channel_id, triples);
+        LOGGER.info("User " + username + " called method send notification");
+        return result;
     }
 
     @RequestMapping(value = "/sendNotificationRDF/{channel_id}/{rdf}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -79,8 +81,9 @@ public class UNSEventController {
         String username = getUserBasicAuthenticationService().checkUserAuthentication(authentication);
 
         initServiceDispatcher(username);
-        LOGGER.info("User " + username + " called method sendNotificationRDF");
-        return getServiceDispatcher().sendNotificationRDF(channel_id, rdf);
+        String result = getServiceDispatcher().sendNotificationRDF(channel_id, rdf);
+        LOGGER.info("User " + username + " called method send notification RDF");
+        return result;
     }
 
     @RequestMapping(value = "/canSubscribe/{channel_id}/{subscriberUserName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -91,8 +94,9 @@ public class UNSEventController {
         String username = getUserBasicAuthenticationService().checkUserAuthentication(authentication);
 
         initServiceDispatcher(username);
-        LOGGER.info("User " + username + " called method create channel");
-        return getServiceDispatcher().canSubscribe(channel_id, subscriberUserName);
+        Boolean result = getServiceDispatcher().canSubscribe(channel_id, subscriberUserName);
+        LOGGER.info("User " + username + " called method can subscribe");
+        return result;
     }
 
     @RequestMapping(value = "/legacy/makeSubscription/{channel_id}/{subscriberUserName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -112,8 +116,9 @@ public class UNSEventController {
         Vector filters = (Vector) new ObjectInputStream(in).readObject();
 
         initServiceDispatcher(username);
-        LOGGER.info("User " + username + " called method create channel");
-        return getServiceDispatcher().makeSubscription(channel_id, subscriberUserName, filters);
+        String result = getServiceDispatcher().makeSubscription(channel_id, subscriberUserName, filters);
+        LOGGER.info("User " + username + " called method make subscription");
+        return result;
     }
 
     public ServiceDispatcher getServiceDispatcher() {
