@@ -1,2 +1,3 @@
 admin:roug,peifer,fotiavla,niikkpek
 xmlrpc:cdrrpc,cdrtestrpc,cfengine,ddnotif,rodrpc,uns
+rest:datadict,xmlconv
