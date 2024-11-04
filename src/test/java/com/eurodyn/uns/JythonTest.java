@@ -3,10 +3,7 @@ package com.eurodyn.uns;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-import org.python.core.Py;
-import org.python.core.PyObject;
-import org.python.core.PyString;
-import org.python.core.PySystemState;
+import org.python.core.*;
 import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +43,7 @@ public class JythonTest {
         PyObject myStr = interpreter.get("mystr");
         LOGGER.info(String.valueOf(myStr));
 
-        interpreter.set("mystr", new PyString("€ as Java String"));
+        interpreter.set("mystr", new PyUnicode("€ as Java String"));
         myStr = interpreter.get("mystr");
         LOGGER.info(String.valueOf(myStr));
 
