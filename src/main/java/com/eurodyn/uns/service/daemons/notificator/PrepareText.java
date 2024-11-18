@@ -7,10 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.python.core.PyList;
-import org.python.core.PyObject;
-import org.python.core.PyString;
-import org.python.core.PyStringMap;
+import org.python.core.*;
 
 import com.eurodyn.uns.model.Channel;
 import com.eurodyn.uns.model.Event;
@@ -142,11 +139,11 @@ public class PrepareText {
 
     private static PyStringMap setupPythonNamespace(PrepareTextContext context) {
         PyStringMap pyUser = new PyStringMap();
-        pyUser.__setitem__("fullName", new PyString(context.user.getFullName()));
-        pyUser.__setitem__("externalId", new PyString(context.user.getExternalId()));
+        pyUser.__setitem__("fullName", new PyUnicode(context.user.getFullName()));
+        pyUser.__setitem__("externalId", new PyUnicode(context.user.getExternalId()));
 
         PyStringMap channel = new PyStringMap();
-        channel.__setitem__("title", new PyString(context.subscription.getChannel().getTitle()));
+        channel.__setitem__("title", new PyUnicode(context.subscription.getChannel().getTitle()));
 
         PyStringMap pysubscription = new PyStringMap();
         pysubscription.__setitem__("channel", channel);
@@ -162,7 +159,7 @@ public class PrepareText {
             String property = em.getProperty();
             String val = StringUtils.defaultString(em.getValue());
 
-            event_metadata.__setitem__(property, new PyString(val));
+            event_metadata.__setitem__(property, new PyUnicode(val));
             PyObject dict_val = metadata_dict.get(new PyString(property), new PyString());
             String dval = dict_val.toString() + val;
             if (property != null && isMultiple(property, context.eventMetadata)) {
@@ -171,13 +168,13 @@ public class PrepareText {
                     list = multipleMap.get(property);
                 }
                 if (list != null) {
-                    list.add(new PyString(dval));
+                    list.add(new PyUnicode(dval));
                     multipleMap.put(property, list);
                 }
             } else {
-                metadata_dict.__setitem__(property, new PyString(dval));
+                metadata_dict.__setitem__(property, new PyUnicode(dval));
             }
-            metadata_list.add(new PyString(dval));
+            metadata_list.add(new PyUnicode(dval));
         }
         for (Map.Entry<String, PyList> entry : multipleMap.entrySet()) {
             metadata_dict.__setitem__(entry.getKey(), entry.getValue());
@@ -185,7 +182,7 @@ public class PrepareText {
 
         PyStringMap pyevent = new PyStringMap();
         pyevent.__setitem__("date", new PyString(context.eventCreationDate));
-        pyevent.__setitem__("title", new PyString(context.eventTitle));
+        pyevent.__setitem__("title", new PyUnicode(context.eventTitle));
         pyevent.__setitem__("metadata", event_metadata);
 
         PyStringMap templ_namespace = new PyStringMap();
