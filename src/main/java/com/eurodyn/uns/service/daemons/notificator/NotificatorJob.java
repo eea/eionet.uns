@@ -135,7 +135,7 @@ public class NotificatorJob implements Job {
             Notification notification = new Notification();
             NotificationFacade notificationFacade = new NotificationFacade();
             String homeUrl = Properties.getStringProperty("home.url");
-            HashMap map = PrepareText.prepare(template, event, subscription, homeUrl);
+            HashMap<String, String> map = PrepareText.prepare(template, event, subscription, homeUrl);
 
             notification.seteventId(event.getId());
             notification.setEvent(event);
