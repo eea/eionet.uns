@@ -5,42 +5,41 @@
 <%@ page import="com.eurodyn.uns.web.filters.EionetCASFilter" %>
 <%@ page import="com.eurodyn.uns.web.filters.EULoginCASFilter" %>
 
-<f:verbatim >
 	<h:panelGroup rendered="true">
-		<br />
 		<f:verbatim>
-	<div style="width:99%;">
-		<div class="box"> 
-			<div class="boxleft"> 
-				<div class="boxtop">
-					<div></div>
-				</div> 
-				<h4 style="font-size: 120%; background: #00446A; border-top: 0px; color: white">Unified Notification Service</h4> 
-				<div class="boxcontent">
-					<ul>
-						<li>
-							<p style="font-size: 120%">
-							The Unified Notification System is part of the ReportNet architecture.
-							It provides key stakeholders in international environmental reporting 
-							with notifications presenting summary information harvested from ReportNet modules, 
-							as well as from other Agency systems based on predefined profiles.
-							</p>
-							<br />
-						</li>
-						<li>
-							<p style="font-size: 120%">
-							In order to define desired notification profile and set up personal preferences you need to login.
-							</p>
-						</li>
-					</ul>
+		<br />
+		<div style="width:99%;">
+			<div class="box">
+				<div class="boxleft">
+					<div class="boxtop">
+						<div></div>
+					</div>
+					<h4 style="font-size: 120%; background: #00446A; border-top: 0px; color: white">Unified Notification Service</h4>
+					<div class="boxcontent">
+						<ul>
+							<li>
+								<p style="font-size: 120%">
+								The Unified Notification System is part of the ReportNet architecture.
+								It provides key stakeholders in international environmental reporting
+								with notifications presenting summary information harvested from ReportNet modules,
+								as well as from other Agency systems based on predefined profiles.
+								</p>
+								<br />
+							</li>
+							<li>
+								<p style="font-size: 120%">
+								In order to define desired notification profile and set up personal preferences you need to login.
+								</p>
+							</li>
+						</ul>
+					</div>
+					<div class="boxbottom">
+						<div></div>
+					</div>
 				</div>
-				<div class="boxbottom">
-					<div></div>
-				</div> 
 			</div>
 		</div>
-	</div>
-			<br/>
+		<br/>
 		</f:verbatim>
 	</h:panelGroup>
 
@@ -120,14 +119,5 @@
 					<div class="boxbottom"><div></div></div> 
 				</div> 
 			</div>
-		</div>	
-		
+		</div>
 	</div>
-</f:verbatim>
-
-
-
-
-
-	
-
