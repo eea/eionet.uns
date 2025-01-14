@@ -77,15 +77,11 @@ public class SendMail implements java.io.Serializable {
 
             Multipart mp = new MimeMultipart("alternative");
 
-            BodyPart textPart = new MimeBodyPart();
-            textPart.setText(body); // sets type to "text/plain"
-            textPart.setHeader("Content-Type", "text/plain; charset=\"utf-8\"");
-            textPart.setHeader("Content-Transfer-Encoding", "quoted-printable");
+            MimeBodyPart textPart = new MimeBodyPart();
+            textPart.setText(body, "UTF-8"); // sets type to "text/plain"
 
             BodyPart pixPart = new MimeBodyPart();
-            pixPart.setContent(html, "text/html");
-            pixPart.setHeader("Content-Type", "text/html; charset=\"utf-8\"");
-            pixPart.setHeader("Content-Transfer-Encoding", "quoted-printable");
+            pixPart.setContent(html, "text/html; charset=UTF-8");
 
             // Collect the Parts into the MultiPart
             mp.addBodyPart(textPart);
@@ -94,7 +90,7 @@ public class SendMail implements java.io.Serializable {
             // Put the MultiPart into the Message
             msg.setContent(mp);
         } else {
-            msg.setText(body);
+            msg.setText(body, "UTF-8");
         }
 
         msg.setSentDate(new Date());
