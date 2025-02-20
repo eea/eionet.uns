@@ -108,9 +108,9 @@
 					<h4 style="font-size: 120%; background: #00446A; border-top: 0px; color: white">Support</h4> 
 					<div class="boxcontent" style="height:200px;">
 						<p style="font-size: 100%">
-						If you experience any problem using Unified Notification System, please let the Eionet Helpdesk know immediately. 
-						You can email the helpdesk at any time:
-						<a href="mailto:helpdesk@eionet.europa.eu">helpdesk@eionet.europa.eu</a>.
+						If you experience any problem using Unified Notification System, please let the Eionet Service Desk know immediately.
+						You can email the Service Desk at any time:
+						<a href="mailto:ServiceDesk@eea.europa.eu">ServiceDesk@eea.europa.eu</a>.
 						</p>
 						<p style="font-size: 100%">
 						Do not hesitate, we are here to help!
