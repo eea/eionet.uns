@@ -237,7 +237,13 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
             String property = st.getProperty();
             String value = st.getValue();
             session = getSession();
-            Query query = session.createQuery("select filter from Subscription subscription join subscription.filters as filter join filter.statements as statement   where subscription.channel =:channel and (statement.property = :property or statement.value = :value) )");
+            Query query = session.createQuery(
+                    "select filter from Subscription subscription " +
+                            "join subscription.filters as filter " +
+                            "join filter.statements as statement " +
+                            "where subscription.channel = :channel " +
+                            "and (statement.property = :property or statement.value = :value)"
+            );
             query.setEntity("channel", channel);
             query.setString("property", property);
             query.setString("value", value);
