@@ -1,16 +1,11 @@
 package com.eurodyn.uns.dao.hibernate;
 
-import java.io.BufferedWriter;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import com.eurodyn.uns.ApplicationTestContext;
-import junit.framework.TestCase;
-import org.apache.xerces.parsers.DOMParser;
-import org.junit.Before;
+import com.eurodyn.uns.dao.jdbc.JdbcFeedDao;
+import com.eurodyn.uns.model.*;
+import com.eurodyn.uns.model.Statement;
+import com.hp.hpl.jena.rdf.model.*;
+import com.hp.hpl.jena.vocabulary.RSS;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,27 +14,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import com.eurodyn.uns.dao.jdbc.BaseJdbcDao;
-import com.eurodyn.uns.dao.jdbc.JdbcFeedDao;
-import com.eurodyn.uns.model.Channel;
-import com.eurodyn.uns.model.EventMetadata;
-import com.eurodyn.uns.model.RDFThing;
-import com.eurodyn.uns.model.Statement;
-import com.eurodyn.uns.model.User;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.RDFWriter;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.vocabulary.RSS;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import javax.sql.DataSource;
+import java.io.BufferedWriter;
+import java.io.StringWriter;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ApplicationTestContext.class })
