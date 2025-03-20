@@ -83,7 +83,7 @@
     <property name="changeLog" value="classpath:sql/uns-struct.xml" />
   </bean>
 
-  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
     <property name="dataSource" ref="dataSource" />
     <property name="hibernateProperties">
       <props>
@@ -106,9 +106,9 @@
         <value>hibernate/NotificationTemplate.hbm.xml</value>
         <value>hibernate/Subscription.hbm.xml</value>
         <value>hibernate/Filter.hbm.xml</value>
-        <value>hibernate/EventMetadata.hbm.xml </value>
-        <value>hibernate/Event.hbm.xml </value>
-        <value>hibernate/Notification.hbm.xml </value>
+        <value>hibernate/EventMetadata.hbm.xml</value>
+        <value>hibernate/Event.hbm.xml</value>
+        <value>hibernate/Notification.hbm.xml</value>
       </list>
     </property>
   </bean>
