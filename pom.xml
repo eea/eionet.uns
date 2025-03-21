@@ -673,7 +673,7 @@
     <dependency>
       <groupId>com.unboundid</groupId>
       <artifactId>unboundid-ldapsdk</artifactId>
-      <version>3.0.0</version>
+      <version>4.0.14</version>
       <scope>test</scope>
     </dependency>
 
