@@ -32,8 +32,6 @@ import com.eurodyn.uns.service.channelserver.rendering.GenericRenderer;
 import com.eurodyn.uns.service.channelserver.rendering.RenderingEngine;
 import com.eurodyn.uns.service.channelserver.rendering.XslRenderer;
 import com.eurodyn.uns.service.facades.ChannelFacade;
-
-import com.eurodyn.uns.util.common.ConfiguratorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

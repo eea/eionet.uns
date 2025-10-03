@@ -1,7 +1,5 @@
 package com.eurodyn.uns.service.daemons.eventupdater;
 
-import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
-import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;

@@ -1,12 +1,8 @@
 package com.eurodyn.uns.service.daemons.notificator;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 import org.quartz.*;
-
-//import com.eurodyn.uns.service.daemons.harvester.Harvester;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -41,7 +41,6 @@ import com.eurodyn.uns.util.uid.UidGenerator;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigElement;
 import com.eurodyn.uns.web.jsf.admin.config.ConfigManager;
 import com.eurodyn.uns.web.jsf.admin.templates.NotificationTemplateInterpreter;
-import com.eurodyn.uns.web.jsf.subscriptions.SubscriptionActions;
 import com.eurodyn.uns.web.jsf.util.Period;
 
 import com.sun.mail.smtp.SMTPTransport;
