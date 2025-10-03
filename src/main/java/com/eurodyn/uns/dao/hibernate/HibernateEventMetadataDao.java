@@ -134,7 +134,7 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
             session = getSession();
             // Bug in Hibernate 3.1.3 HHH-1765 - HQL Alias Regression
             // Query query = session.createQuery(" delete from EventMetadata em where exists ( select e.id from Event e where e.channel =:channel and em.event = e and em.value = :value)");
-            Query query = session.createQuery(" select em from EventMetadata em ,Event e where e.channel =:channel and  em.event = e and em.value = :value)");
+            Query query = session.createQuery(" select em from EventMetadata em, Event e where e.channel =:channel and em.event = e and em.value = :value");
             query.setString("value", value);
             query.setEntity("channel", channel);
             List eventMetadataList = query.list();
@@ -156,7 +156,7 @@ public class HibernateEventMetadataDao extends BaseHibernateDao implements IEven
             session = getSession();
             // Bug in Hibernate 3.1.3 HHH-1765 - HQL Alias Regression
             // Query query = session.createQuery(" delete from EventMetadata em where exists ( select e.id from Event e where e.channel =:channel and em.event = e and em.property = :property)");
-            Query query = session.createQuery(" select em from EventMetadata em ,Event e where e.channel =:channel and  em.event = e and em.property = :property)");
+            Query query = session.createQuery("select em from EventMetadata em, Event e where e.channel =:channel and em.event = e and em.property = :property");
             query.setString("property", property);
             query.setEntity("channel", channel);
             List eventMetadataList = query.list();

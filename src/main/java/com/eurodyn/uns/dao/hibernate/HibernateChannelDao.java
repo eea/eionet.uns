@@ -124,19 +124,6 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         }
     }
 
-    public List findAllChannelsWithEvents() throws DAOException {
-        Session session = null;
-        try {
-            session = getSession();
-            Query query = session.createQuery("select c from Channel as c, Event e where exist( e.channel =:c) )");
-            return query.list();
-        } catch (HibernateException e) {
-            throw new DAOException(e);
-        } finally {
-            closeSession(session);
-        }
-    }
-
     @Override
     public List findUnprocessedEvents() throws DAOException {
         Session session = null;
@@ -289,7 +276,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         try {
             session = getSession();
 
-            Query query = session.createQuery("select e  from Event as e , Channel c group by e.channel ) ");
+            Query query = session.createQuery("select e from Event as e, Channel c group by e.channel");
             List result = query.list();
             return result;
         } catch (HibernateException e) {
@@ -304,7 +291,7 @@ public class HibernateChannelDao extends BaseHibernateDao implements IChannelDao
         Session session = null;
         try {
             session = getSession();
-            Query query = session.createQuery("select e  from Event as e where e.channel=:channel order by e.id desc) ");
+            Query query = session.createQuery("select e from Event as e where e.channel=:channel order by e.id desc");
             query.setEntity("channel", channel);
             query.setMaxResults(10);
             Map things = new HashMap();
