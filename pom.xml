@@ -313,16 +313,16 @@
 
   <dependencies>
 
-    <!-- Apache  Commons -->
     <dependency>
-      <groupId>commons-httpclient</groupId>
-      <artifactId>commons-httpclient</artifactId>
-      <version>3.1</version>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+      <version>5.5.1</version>
     </dependency>
+    <!-- Apache  Commons -->
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
-      <version>1.5</version>
+      <version>1.6.0</version>
     </dependency>
     <dependency>
       <groupId>commons-codec</groupId>
@@ -332,7 +332,7 @@
     <dependency>
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
-      <version>1.9.4</version>
+      <version>1.11.0</version>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
