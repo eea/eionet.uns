@@ -53,15 +53,92 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <valid.images>mysql, tomcat, httpd</valid.images>
+        <env>jenkins</env>
+        <!-- docker.host.address will be set by docker-maven-plugin via exposeContainerInfo -->
+        <mysql.port>3306</mysql.port>
+        <valid.images>mysql</valid.images>
+        <!--<valid.images>mysql,tomcat</valid.images>-->
       </properties>
     </profile>
     <profile>
       <id>local</id>
       <properties>
-        <docker.host.address>localhost</docker.host.address>
+        <docker.host.address>172.17.0.1</docker.host.address>
         <valid.images>none</valid.images>
       </properties>
+    </profile>
+    <profile>
+      <id>network-diagnostics</id>
+      <properties>
+        <network.diagnostics>true</network.diagnostics>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <configuration>
+              <images>
+                <image>
+                  <alias>mysql</alias>
+                  <name>docker.io/library/mysql:5.5</name>
+                  <run>
+                    <network>
+                      <mode>custom</mode>
+                      <name>uns-diag-network</name>
+                      <alias>mysql</alias>
+                    </network>
+                    <env>
+                      <MYSQL_ROOT_PASSWORD>12345</MYSQL_ROOT_PASSWORD>
+                      <MYSQL_DATABASE>uns_test</MYSQL_DATABASE>
+                      <MYSQL_USER>testuser</MYSQL_USER>
+                      <MYSQL_PASSWORD>testpassword</MYSQL_PASSWORD>
+                    </env>
+                    <wait>
+                      <tcp>
+                        <mode>mapped</mode>
+                        <host>127.0.0.1</host>
+                        <ports>
+                          <port>3306</port>
+                        </ports>
+                      </tcp>
+                      <time>120000</time>
+                    </wait>
+                  </run>
+                </image>
+                <image>
+                  <alias>tomcat</alias>
+                  <name>eionet/uns-test:${project.version}</name>
+                  <run>
+                    <network>
+                      <mode>custom</mode>
+                      <name>uns-diag-network</name>
+                      <alias>tomcat</alias>
+                    </network>
+                    <links>
+                      <link>mysql</link>
+                    </links>
+                    <dependsOn>
+                      <container>mysql</container>
+                    </dependsOn>
+                    <env>
+                      <DOCKER_HOST_ADDRESS>mysql</DOCKER_HOST_ADDRESS>
+                      <MYSQL_PORT>3306</MYSQL_PORT>
+                      <JAVA_OPTS>-Dnetwork.diagnostics.enabled=true -Dnetwork.diagnostics.verbose=true</JAVA_OPTS>
+                    </env>
+                    <wait>
+                      <http>
+                        <url>http://localhost:${tomcat.port}/health</url>
+                      </http>
+                      <time>180000</time>
+                    </wait>
+                  </run>
+                </image>
+              </images>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 
@@ -154,8 +231,8 @@
         <version>2.19.1</version>
         <configuration>
           <systemPropertyVariables>
-            <docker.host.address>${docker.host.address}</docker.host.address>
-            <mysql.port>${mysql.port}</mysql.port>
+            <docker.host.address>${mysql.ip}</docker.host.address>
+            <mysql.port>${mysql.mapped.port}</mysql.port>
           </systemPropertyVariables>
           <includes>
             <include>**/*Test.java</include>
@@ -209,15 +286,30 @@
         <version>0.46.0</version>
         <extensions>true</extensions>
         <configuration>
+          <verbose>true</verbose>
+          <showLogs>true</showLogs>
+          <logStdout>true</logStdout>
           <filter>${valid.images}</filter>
+          <exposeContainerInfo>true</exposeContainerInfo>
+          <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
+          <containerNamePattern>%a</containerNamePattern>
           <images>
             <image>
               <alias>mysql</alias>
-              <name>mysql:5.5</name>
+              <name>docker.io/library/mysql:5.5</name>
+              <build>
+                <skip>true</skip>
+              </build>
               <run>
+                <network>
+                  <mode>custom</mode>
+                  <name>uns-test-network</name>
+                  <alias>mysql</alias>
+                </network>
                 <ports>
-                  <port>mysql.port:3306</port>
+                  <port>mysql.mapped.port:3306</port>
                 </ports>
+                <exposedPropertyKey>mysql.ip</exposedPropertyKey>
                 <env>
                   <MYSQL_ROOT_PASSWORD>12345</MYSQL_ROOT_PASSWORD>
                   <MYSQL_DATABASE>uns_test</MYSQL_DATABASE>
@@ -226,16 +318,54 @@
                 </env>
                 <wait>
                   <tcp>
-                    <mode>direct</mode>
+                    <mode>mapped</mode>
+                    <host>127.0.0.1</host>
                     <ports>
                       <port>3306</port>
                     </ports>
                   </tcp>
-                  <time>200000</time>
+                  <time>120000</time>
+                  <exec>
+                    <postStart>sleep 15</postStart>
+                  </exec>
                 </wait>
                 <tmpfs>
                   <mount>/var/lib/mysql:size=1G</mount>
                 </tmpfs>
+              </run>
+            </image>
+            <image>
+              <alias>tomcat</alias>
+              <name>eionet/uns-test:${project.version}</name>
+              <build>
+                <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+              </build>
+              <run>
+                <network>
+                  <mode>custom</mode>
+                  <name>uns-test-network</name>
+                  <alias>tomcat</alias>
+                </network>
+                <links>
+                  <link>mysql</link>
+                </links>
+                <dependsOn>
+                  <container>mysql</container>
+                </dependsOn>
+                <ports>
+                  <port>tomcat.port:8080</port>
+                </ports>
+                <env>
+                  <DOCKER_HOST_ADDRESS>mysql</DOCKER_HOST_ADDRESS>
+                  <MYSQL_PORT>3306</MYSQL_PORT>
+                  <JAVA_OPTS>-Ddocker.host.address=mysql -Dmysql.port=3306</JAVA_OPTS>
+                </env>
+                <wait>
+                  <http>
+                    <url>http://localhost:${tomcat.port}</url>
+                  </http>
+                  <time>180000</time>
+                </wait>
               </run>
             </image>
           </images>
