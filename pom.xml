@@ -290,7 +290,6 @@
           <showLogs>true</showLogs>
           <logStdout>true</logStdout>
           <filter>${valid.images}</filter>
-          <exposeContainerInfo>true</exposeContainerInfo>
           <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
           <containerNamePattern>%a</containerNamePattern>
           <images>
