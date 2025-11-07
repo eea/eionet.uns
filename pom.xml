@@ -53,7 +53,6 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <env>jenkins</env>
         <!-- docker.host.address will be set by docker-maven-plugin via exposeContainerInfo -->
         <mysql.port>3306</mysql.port>
         <valid.images>mysql</valid.images>

@@ -35,6 +35,7 @@ pipeline {
       post {
           success {
           archiveArtifacts artifacts: 'target/*.war', fingerprint: true
+          stash includes: 'target/*.war', name: 'app-war'
                     }
       }
     }
@@ -45,7 +46,7 @@ pipeline {
             not { buildingTag() }
           }
           steps {
-              sh '''mvn clean -B -V -P docker verify pmd:pmd pmd:cpd spotbugs:spotbugs checkstyle:checkstyle'''
+              sh '''mvn clean -B -V -P docker verify -Denv=jenkins pmd:pmd pmd:cpd spotbugs:spotbugs checkstyle:checkstyle'''
           }
           post {
                   always {
@@ -90,6 +91,7 @@ pipeline {
           environment name: 'CHANGE_ID', value: ''
       }
       steps {
+        unstash 'app-war'
         script{
 
                  if (env.BRANCH_NAME == 'master') {
