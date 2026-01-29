@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Apr 16, 2006 9:40:13 PM by Hibernate Tools 3.1.0.beta4 -->
 <hibernate-mapping>
 	<class name="com.eurodyn.uns.model.Subscription" table="SUBSCRIPTION" lazy="false">
@@ -37,11 +37,9 @@
 			<column name="EEA_USER_ID" not-null="true" />
 		</many-to-one>
 
-
 		<bag name="deliveryTypes" table="SUBSCRIPTION_DT" lazy="false" cascade="none">
 			<key column="SUBSCRIPTION_ID" />
-			
-			<many-to-many class="com.eurodyn.uns.model.DeliveryType" column="DELIVERY_TYPE_ID" outer-join="auto" />
+			<many-to-many class="com.eurodyn.uns.model.DeliveryType" column="DELIVERY_TYPE_ID" />
 		</bag>
 
 		<bag name="filters" inverse="true" lazy="true" cascade="all-delete-orphan">

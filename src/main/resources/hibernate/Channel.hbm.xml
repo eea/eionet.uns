@@ -2,7 +2,7 @@
 
 <!DOCTYPE hibernate-mapping PUBLIC
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
-    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
 	<class name="com.eurodyn.uns.model.Channel" table="CHANNEL" lazy="false">
@@ -10,7 +10,6 @@
 		<id name="id" column="ID" type="java.lang.Integer">
 			<generator class="native" />
 		</id>
-
 
 		<property name="description" type="java.lang.String" update="true" insert="true" column="DESCRIPTION" length="255" />
 
@@ -42,10 +41,9 @@
 
 		<many-to-one name="creator" class="com.eurodyn.uns.model.User" cascade="none" outer-join="auto" update="false" insert="true" column="CREATOR" />
 
-
 		<set name="roles" table="CHANNEL_ROLE" lazy="true" cascade="none" sort="unsorted">
 			<key column="CHANNEL_ID"></key>
-			<many-to-many class="com.eurodyn.uns.model.Role" column="EEA_ROLE_ID" outer-join="auto" />
+			<many-to-many class="com.eurodyn.uns.model.Role" column="EEA_ROLE_ID" />
 		</set>
 
 		<bag name="metadataElements" table="CHANNEL_METADATA_ELEMENTS" lazy="false" cascade="none">
@@ -61,7 +59,7 @@
 
 		<bag name="deliveryTypes" table="CHANNEL_DELIVERY_TYPE" lazy="true" cascade="none">
 			<key column="CHANNEL_ID" />
-			<many-to-many class="com.eurodyn.uns.model.DeliveryType" column="DELIVERY_TYPE_ID" outer-join="auto" />
+			<many-to-many class="com.eurodyn.uns.model.DeliveryType" column="DELIVERY_TYPE_ID" />
 		</bag>
 
 	</class>
