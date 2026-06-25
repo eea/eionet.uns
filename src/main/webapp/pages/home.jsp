@@ -55,12 +55,12 @@
 						<div class="boxcontent" style="height: 210px;">
 							<p>Please login with an user authorised to access the resources you need</p>
 							<div style="width: 45%; float: left; text-align: center;">
-								<a href="<%=EULoginCASFilter.getCASLoginURL(request)%>" title="EU Login"><img src="../images/login/eu_logo.jpg" alt="EU Login"/></a>
+								<a href="<%=EULoginCASFilter.getCASLoginURL(request)%>" title="EU Login"><img src="<c:url value="/images/login/eu_logo.jpg" />" alt="EU Login"/></a>
 								<br/>
 								<h5>EU Login</h5>
 							</div>
 							<div style="width: 45%; float: right; text-align: center;">
-								<a href="<%=EionetCASFilter.getCASLoginURL(request)%>" title="EIONET Login"><img src="../images/login/logo_eionet.png" alt="EIONET Login"/></a>
+								<a href="<%=EionetCASFilter.getCASLoginURL(request)%>" title="EIONET Login"><img src="<c:url value="/images/login/logo_eionet.png" />" alt="EIONET Login"/></a>
 								<br/>
 								<h5>EIONET Login</h5>
 							</div>
