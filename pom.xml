@@ -10,7 +10,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <env>default</env>
-    <javaVersion>11</javaVersion>
+    <javaVersion>17</javaVersion>
     <sesame.openrdf.version>2.6.9</sesame.openrdf.version>
     <checkstyle.config.location>${basedir}/doc/checkstyle.xml</checkstyle.config.location>
     <spring.version>5.3.39</spring.version>
@@ -531,7 +531,7 @@
     <dependency>
       <groupId>eionet</groupId>
       <artifactId>acl</artifactId>
-      <version>4.0-SNAPSHOT</version>
+      <version>5.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -618,13 +618,13 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>5.3.37.Final</version>
+      <version>5.6.15.Final</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
-      <version>5.3.37.Final</version>
+      <version>5.6.15.Final</version>
     </dependency>
     <dependency>
       <groupId>net.bytebuddy</groupId>
@@ -689,7 +689,7 @@
     <dependency>
       <groupId>org.quartz-scheduler</groupId>
       <artifactId>quartz</artifactId>
-      <version>2.5.0-rc1</version>
+      <version>2.5.2</version>
     </dependency>
     <!-- Tomahawk -->
     <dependency>
@@ -751,7 +751,7 @@
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.25.3</version>
+      <version>2.26.1</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -852,13 +852,6 @@
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-maven</artifactId>
         <version>5.1.1</version>
-<!--        <reportSets>-->
-<!--          <reportSet>-->
-<!--            <reports>-->
-<!--              <report>aggregate</report>-->
-<!--            </reports>-->
-<!--          </reportSet>-->
-<!--        </reportSets>-->
       </plugin>
     </plugins>
   </reporting>

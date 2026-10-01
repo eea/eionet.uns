@@ -2,7 +2,7 @@
 
 ### Prerequisites
 
-* Java 11
+* Java 17
 * Maven 3.6.1
 * Tomcat 9.x or higher
 * MySQL 5.5
